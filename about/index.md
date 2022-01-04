@@ -5,5 +5,5 @@
 技能点主要是软件定义网络（SDN，software defined network）、电子设计以及Python  
 First to create,then protect it.
 ## 友链 
-- lgt的博客：https://ayamir.github.io/
-- 黄鸡的博客：https://hyiker.com/
+- lgt的博客：[https://ayamir.github.io/](https://ayamir.github.io/)
+- 黄鸡的博客：[https://hyiker.com/](https://hyiker.com/)
