@@ -136,6 +136,16 @@ $t_w=RCln \frac{\mathrm{Vcc}}{Vcc-\frac{2}{3} Vcc} =RCln 3 \approx 1.1 RC$</li>
 <p><br>
 电路行为与理论分析一致，根据理论分析公式
 $\mathrm{t}_{\mathrm{w}}=1.1 \times 10 \mathrm{k} \times 4.7 \mathrm{u}=51.7 \mathrm{~ms} $,仿真测得充电时间为50.94ms，且充满后电压为2.985V，与理论分析相符的很好。</p>
+<h3 id="总结">总结</h3>
+<p>该单稳态触发器的功能总结为：将低电平脉冲信号（持续时间小于1.1RC）转化为持续时间为1.1RC的高电平信号，持续时间大于1.1RC的话，就只是由低电平转化为高电平。</p>
+<h2 id="参考文献及备注">参考文献及备注</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://blog.csdn.net/acslsr/article/details/105730908" target="_blank" rel="noopener noreffer">555定时器及应用</a><br>
+<a href="https://baike.baidu.com/item/%E7%94%B5%E5%8E%8B%E6%AF%94%E8%BE%83%E5%99%A8/775444" target="_blank" rel="noopener noreffer">电压比较器_百度百科</a> <br>
+<a href="https://baike.baidu.com/item/555%E5%AE%9A%E6%97%B6%E5%99%A8/6740686" target="_blank" rel="noopener noreffer">555定时器_百度百科</a><br>
+<a href="https://item.szlcsc.com/47753.html" target="_blank" rel="noopener noreffer">NE555P_立创商城</a></p>
+<h3 id="备注">备注</h3>
+<p>仿真文件及数据手册：<a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/555timer" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/555timer</a></p>
 ]]></description>
 </item>
 </channel>
