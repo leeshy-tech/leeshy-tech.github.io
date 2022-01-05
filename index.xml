@@ -4,17 +4,31 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 02 Jan 2022 22:07:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 04 Jan 2022 21:29:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>三控电子狗原理分析————光控、磁控、声控</title>
+    <link>https://leeshy-tech.github.io/electronic_dog/</link>
+    <pubDate>Tue, 04 Jan 2022 21:29:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/electronic_dog/</guid>
+    <description><![CDATA[<blockquote>
+<p>注：本项目来自BUPT课程《电子工艺实习》</p>
+</blockquote>
+<h2 id="导入">导入</h2>
+<p>一个普通的电子狗该如何制作呢？</p>
+<p>不考虑腿部的机械结构</p>
+<p>电池、开关、电机串联即可</p>
+<p>如果我们要使用光信号、磁信号、声信号来控制</p>
+]]></description>
+</item>
+<item>
     <title>555定时器</title>
     <link>https://leeshy-tech.github.io/555timer/</link>
     <pubDate>Sun, 02 Jan 2022 22:07:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/555timer/</guid>
     <description><![CDATA[<h2 id="什么是555定时器">什么是555定时器</h2>
 <p>555定时器是一种集成电路芯片，常被用于定时器、脉冲产生器和振荡电路。555可被作为电路中的延时器件、触发器或起振元件。<br>
-<br>
-内部组成如下：由比较器C1C2、RS触发器、缓冲非门G、放电二极管T组成
 </p>
+<p>内部组成如下：由比较器C1C2、RS触发器、缓冲非门G、放电二极管T组成</p>
+<p></p>
 <h2 id="芯片分析">芯片分析</h2>
 <p>电压比较器：一种模拟输入、数字输出的接口电路，输出特性如下：</p>
 <table>
