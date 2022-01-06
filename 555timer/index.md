@@ -50,7 +50,7 @@ u_C=\frac{2}{3} V_{cc}$
 $t_w=RCln \frac{\mathrm{Vcc}}{Vcc-\frac{2}{3} Vcc} =RCln 3 \approx 1.1 RC$
 - 当输入信号回到高电平且电容充电完毕后，输出回到低电平，放电二极管截止。  
 ### 仿真验证
-使用Mutisim仿真，电路如下： 
+使用Multisim仿真，电路如下： 
 
 ![单稳态电路仿真](/image/555timer/mutisim.jpg)
 
@@ -62,7 +62,7 @@ $t_w=RCln \frac{\mathrm{Vcc}}{Vcc-\frac{2}{3} Vcc} =RCln 3 \approx 1.1 RC$
 $\mathrm{t}_{\mathrm{w}}=1.1 \times 10 \mathrm{k} \times 4.7 \mathrm{u}=51.7 \mathrm{~ms} $,仿真测得充电时间为50.94ms，且充满后电压为2.985V，与理论分析相符的很好。
 ### 总结
 该单稳态触发器的功能总结为：将低电平脉冲信号（持续时间小于1.1RC）转化为持续时间为1.1RC的高电平信号，持续时间大于1.1RC的话，就只是由低电平转化为高电平。
-## 参考文献及备注
+## 结束语
 ### 参考文献
 [555定时器及应用](https://blog.csdn.net/acslsr/article/details/105730908)  
 [电压比较器_百度百科](https://baike.baidu.com/item/%E7%94%B5%E5%8E%8B%E6%AF%94%E8%BE%83%E5%99%A8/775444)    
