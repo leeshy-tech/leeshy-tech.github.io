@@ -1,0 +1,71 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>MIC - 标签 - Leeshy&#39;s Blog</title>
+        <link>https://leeshy-tech.github.io/tags/mic/</link>
+        <description>MIC - 标签 - Leeshy&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 04 Jan 2022 21:29:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/mic/" rel="self" type="application/rss+xml" /><item>
+    <title>三控电子狗原理分析——光控、磁控、声控</title>
+    <link>https://leeshy-tech.github.io/electronic_dog/</link>
+    <pubDate>Tue, 04 Jan 2022 21:29:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/electronic_dog/</guid>
+    <description><![CDATA[<blockquote>
+<p>注：本项目来自BUPT课程《电子工艺实习》</p>
+</blockquote>
+<h2 id="导入">导入</h2>
+<p>电子狗是声控、光控、磁控机电一体化电动玩具。主要工作原理：利用555构成的单稳态触发器，在三种不同的控制方法下，均给以低电平触发，促使电机转动，从而达到了机器狗停走的目的。即：拍手即走、光照即走、磁铁靠近即走，但都只是持续一段时间后就停会下，再满足其中一条件时将继续行走。<br>
+原理图如下：
+</p>
+<p>整个系统可分为信号转化、单稳态触发器以及电机驱动三个部分。</p>
+<h2 id="单稳态触发器以555定时器为核心">单稳态触发器————以555定时器为核心</h2>
+<blockquote>
+<p>这部分的功能是：将持续时间很短的低电平信号转换为固定时间间隔（1.1RC）的高电平信号以控制电子狗走路持续时间（控制R和C的数值）。</p>
+</blockquote>
+<p>关于单稳态触发器的原理分析可参考以下文章： 
+<a href="https://leeshy-tech.github.io/555timer/" target="_blank" rel="noopener noreffer">555定时器</a></p>
+<h2 id="信号转化">信号转化</h2>
+<blockquote>
+<p>这部分的功能是将磁、光、声信号转换为低电平电信号。</p>
+</blockquote>
+<h3 id="磁信号">磁信号</h3>
+<p></p>
+<ul>
+<li>磁信号向电信号的转换通过干簧管传感器实现，干簧片的电路模型类似于一个磁控开关，外加磁场时开关闭合，常态开关断开（也有常态是闭合的干簧管），详细原理如下：</li>
+<li>干簧片相当于一个磁通导体，在尚未操作时，两片簧片并未接触；在通过永久磁铁或电磁线圈产生的磁场时，外加的磁场使两片簧片端点位置附近产生不同的极性, 当磁力超过簧片本身的弹力时，这两片簧片会吸合导通电路；当磁场减弱或消失后,干簧片由于本身的弹性而释放，触面就会分开从而打开电路。</li>
+<li>接上拉电阻即可实现常驻高电平，外加磁场时开关闭合输出低电平。<br>
+</li>
+</ul>
+<h3 id="光信号">光信号</h3>
+<p></p>
+<ul>
+<li>光信号向电信号的转变通过光敏三极管实现，电路模型相当于光控开关，光照相当于开关闭合，详细原理如下：</li>
+<li>光敏三极管的发射极具有光敏特性。它的集电极则与普通晶体管一样，可以获得电流增益，基极一般没有引线。当受到光照时CE两极导通，相当于开关闭合。</li>
+<li>同样使用上拉电阻，不再赘述。</li>
+</ul>
+<h3 id="声信号">声信号</h3>
+<p></p>
+<ul>
+<li>声信号向电信号的转变通过麦克风实现，目前常用的麦克风有驻极体电容麦克风（ECM）和微机电麦克风（MEMS Micphone）。在电子狗实验中使用的是ECM，声波压力推动极板后退使得电容两极电压升高，从而将声信号转换为了电压信号。</li>
+<li>因需要对电压放大，驻极体麦克风内部有一个场效应管，正常工作需要加一个直流偏置，其驱动电路之一为：<br>
+ <br>
+电容的作用是隔直流。</li>
+<li>应用于电子狗的电路设计如下：<br>
+ <br>
+左侧为驱动电路，中间加一级共射放大器，右侧是二极管反相器，当麦克风接收到声音信号时，产生交流电压，放大到二级管基极，二极管导通，输出接地，即输出低电平。</li>
+</ul>
+<h2 id="电机驱动">电机驱动</h2>
+<blockquote>
+<p>此部分的功能是利用555定时器输出的高电平信号驱动电机转动</p>
+</blockquote>
+<p>电动机是怎么驱动的？非常简单，电池分别接正负极即可。 <br>
+但是，在已有的场景下，不能使用这种方式，即把555定时器的输出端3号管脚接到电动机正极，地接电动机负极。
+原因是：555定时器的驱动能力不足。<br>
+<br>
+查询555定时器（NE555P）的数据手册可知，输出电流最大只有225mA左右，常见的电动玩具马达空载驱动电流在600mA左右，555定时器是不足以驱动马达的。 <br>
+<br>
+最简单的放大电流的方法就是晶体管反相器，所以电机驱动的电路原理图如下：<br>
+<br>
+并联两个三极管增大放大倍数，二极管是防止电机反转，注意这是一个反相器，所以要接到电动机的负极。</p>
+]]></description>
+</item>
+</channel>
+</rss>
