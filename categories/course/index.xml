@@ -1,8 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Course - 分类 - Leeshy&#39;s Blog</title>
+        <title>Course - 分类 - Leeshy&#39;s Blog | To be humble</title>
         <link>https://leeshy-tech.github.io/categories/course/</link>
-        <description>Course - 分类 - Leeshy&#39;s Blog</description>
+        <description>Course - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
             <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 04 Jan 2022 21:29:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/course/" rel="self" type="application/rss+xml" /><item>
     <title>三控电子狗原理分析——光控、磁控、声控</title>
