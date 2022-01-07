@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>OVS命令笔记 - Leeshy&#39;s Blog</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="OVS命令笔记" />
+<meta property="og:description" content="记录一下OVS常用命令" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/ovs_cli/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-07T16:08:06+08:00" />
+<meta property="article:modified_time" content="2022-01-07T16:08:06+08:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="OVS命令笔记"/>
+<meta name="twitter:description" content="记录一下OVS常用命令"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/ovs_cli/" /><link rel="prev" href="https://leeshy-tech.github.io/electronic_dog/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "OVS命令笔记",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/ovs_cli\/"
+        },"genre": "posts","keywords": "OVS","wordcount":  838 ,
+        "url": "https:\/\/leeshy-tech.github.io\/ovs_cli\/","datePublished": "2022-01-07T16:08:06+08:00","dateModified": "2022-01-07T16:08:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog">Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog">Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">OVS命令笔记</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a>&nbsp;<a href="/categories/ovs/"><i class="far fa-folder fa-fw"></i>OVS</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-07">2022-01-07</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 838 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#查看信息">查看信息</a></li>
+    <li><a href="#网桥操作">网桥操作</a></li>
+    <li><a href="#端口操作">端口操作</a></li>
+    <li><a href="#网卡操作">网卡操作</a></li>
+    <li><a href="#流表操作">流表操作</a>
+      <ul>
+        <li><a href="#流表动作-action">流表动作 action</a></li>
+        <li><a href="#匹配项-match">匹配项 match</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="查看信息">查看信息</h2>
+<p>查看openvswitch的状态：<code>ovs-vsctl show</code><br>
+查看openvswitch中的所有网桥：<code>ovs-vsctl list-br</code><br>
+查看网桥的信息：<code>ovs-ofctl show br0</code>  <br>
+查看网桥中的所有端口：<code>ovs-vsctl list-ports br0</code><br>
+查看网桥各端口状态：<code>ovs-ofctl dump-ports br0</code><br>
+查看网桥上的流表：<code>ovs-ofctl dump-flows br0</code> <br>
+查看网桥故障模式：<code>ovs-vsctl get-fail-mode br0</code>  <br>
+查看网桥是否开启stp协议：<code>ovs-vsctl get bridge br0 stp_enable</code><br>
+查看网桥所有配置信息：<code>ovs-vsctl list bridge br0</code> <br>
+查看端口所有特性信息：<code>ovs-vsctl list port br0 port1 </code></p>
+<h2 id="网桥操作">网桥操作</h2>
+<p>添加网桥：<code>ovs-vsctl add-br br0</code> <br>
+删除网桥：<code>ovs-vsctl del-br br0</code> <br>
+将网桥连接到控制器：<code>ovs-vsctl set-controller br0 tcp:&lt;controller IP&gt;:&lt;port&gt;</code><br>
+设置网桥的故障模式：<code>ovs-vsctl set-fail-mode br0 &lt;secure or standalone&gt; </code><br>
+给网桥开启stp协议：<code>ovs-vsctl set bridge br0 stp_enable=true</code></p>
+<h2 id="端口操作">端口操作</h2>
+<p>增加端口：<code>ovs-vsctl add-port br0 port1</code><br>
+删除端口：<code>ovs-vsctl del-port br0 port1</code> <br>
+设置端口号：<code>ovs-vsctl set Interface port1 ofport_request=&lt;number&gt;</code> <br>
+设置端口类型：<code>ovs-vsctl set Interface p4 type=&lt;type&gt;</code>    </p>
+<table>
+<thead>
+<tr>
+<th>端口类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normal</td>
+<td>普通端口</td>
+</tr>
+<tr>
+<td>Internal</td>
+<td>这个端口相当于一个虚拟网卡</td>
+</tr>
+<tr>
+<td>Patch</td>
+<td>用于连接两个网桥的端口</td>
+</tr>
+<tr>
+<td>Tunne</td>
+<td>隧道端口是一种虚拟端口，支持使用gre或vxlan等隧道技术与位于网络上其他位置的远程端口通讯。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="网卡操作">网卡操作</h2>
+<p>将物理网卡挂接到网桥：<code>ovs-vsctl add-port br0 eth0</code><br>
+列出所有挂接到网卡的网桥：<code>ovs-vsctl port-to-br eth0</code><br>
+删除网桥上已经挂接的网卡：<code>ovs-vsctl del-port br0 eth0</code></p>
+<h2 id="流表操作">流表操作</h2>
+<p>添加流表：<code>ovs-ofctl add-flow br0 &lt;match&gt;,&lt;action&gt;</code>   <br>
+删除流表：<code>ovs-ofctl add-flow br0 &lt;match&gt;</code></p>
+<h3 id="流表动作-action">流表动作 action</h3>
+<p>从端口转发：<code>actions=output:&lt;number&gt;</code>  <br>
+丢弃数据包：<code>actions=drop</code><br>
+广播：<code>actions=NORMAL</code></p>
+<h3 id="匹配项-match">匹配项 match</h3>
+<p>如有多个匹配项，之间用逗号隔开。  </p>
+<table>
+<thead>
+<tr>
+<th>匹配项</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>in_port=port</td>
+<td>网桥端口号</td>
+</tr>
+<tr>
+<td>dl_vlan=vlan</td>
+<td>数据包的 VLAN Tag 值</td>
+</tr>
+<tr>
+<td>dl_vlan_pcp=priority</td>
+<td>VLAN 优先级，改值取值区间为[0-7]。数字越大，优先级越高。</td>
+</tr>
+<tr>
+<td>dl_src=<!-- raw HTML omitted -->,dl_dst=<!-- raw HTML omitted --></td>
+<td>匹配源或者目标的 MAC 地址</td>
+</tr>
+<tr>
+<td>dl_type=ethertype</td>
+<td>匹配以太网协议类型 ,IPv4:0x0800,IPv6:0x086dd,ARP:0x0806</td>
+</tr>
+<tr>
+<td>nw_src=<!-- raw HTML omitted -->,nw_dst=<!-- raw HTML omitted --></td>
+<td>匹配源或目的IP，前提要设定dl_type</td>
+</tr>
+<tr>
+<td>table=number</td>
+<td>指定流表编号</td>
+</tr>
+<tr>
+<td>reg<!-- raw HTML omitted -->=value[/mask]</td>
+<td>网桥中寄存器的值</td>
+</tr>
+<tr>
+<td>tp_src=number,tp_dst=number</td>
+<td>TCP协议源或目的端口</td>
+</tr>
+</tbody>
+</table>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/ovs/">OVS</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-01-07</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/ovs_cli/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/electronic_dog/" class="prev" rel="prev" title="三控电子狗原理分析——光控、磁控、声控"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
