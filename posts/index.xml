@@ -4,7 +4,93 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 07 Jan 2022 16:08:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>在树莓派上构建SDWN网络教程</title>
+    <link>https://leeshy-tech.github.io/sdn_on_raspberry/</link>
+    <pubDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/sdn_on_raspberry/</guid>
+    <description><![CDATA[<h2 id="导入">导入</h2>
+<p>在SDN领域的学习，几乎所有的入门实践都是以mininet平台为基础，搭配开源控制器进行实验，但这种实验本质上也只是在一台linux设备上进行SDN网络的仿真罢了，实际应用还是要构建一个实际的物理网络。本文以OVS、ryu控制器和树莓派构建一个SDWN物理网络，SDWN是将SDN对于无线场景的应用，实际区别在于底层网络。 <br>
+OVS：OpenvSwitch的简称，他是一种支持OpenFlow协议的软交换机。 <br>
+ryu：基于Python开发的SDN开源控制器。</p>
+<h2 id="准备工作">准备工作</h2>
+<ul>
+<li>树莓派搭载linux操作系统，有无线网卡，利用<code>ifconfig</code>命令查得无线网卡名称。</li>
+<li>树莓派之间先组成adhoc网络，参考文章：<a href="https://blog.csdn.net/lby0910/article/details/53420459" target="_blank" rel="noopener noreffer">在树莓派上搭建ad-hoc网络教程</a></li>
+<li>在两台树莓派上安装OVS，参考文章：<a href="https://www.cnblogs.com/goldsunshine/p/10331606.html" target="_blank" rel="noopener noreffer">Open vSwitch系列之二 安装指定版本ovs</a></li>
+<li>在其中一台树莓派上安装ryu控制器。</li>
+</ul>
+<h2 id="组网步骤">组网步骤</h2>
+<p>假设两台树莓派的IP分别为10.0.0.1和10.0.0.2，两台树莓派的无线网卡名均为wlan0，在10.0.0.1上搭载控制器，则网络结构如下图： 
+</p>
+<h3 id="控制节点-ip--10001">控制节点 IP = 10.0.0.1</h3>
+<p>开启控制器（进入ryu/ryu/app/文件夹执行）：</p>
+<pre tabindex="0"><code>ryu-manager simple_switch.py
+</code></pre><p>OVS的相关操作需要进入管理员模式：</p>
+<pre tabindex="0"><code>sudo su
+</code></pre><p>开启OVS</p>
+<pre tabindex="0"><code>export PATH=$PATH:/usr/local/share/openvswitch/scripts
+ovs-ctl start 
+</code></pre><p>创建交换机：</p>
+<pre tabindex="0"><code>ovs-vsctl add-br s1
+</code></pre><p>将无线网卡挂接到交换机的一个端口：</p>
+<pre tabindex="0"><code>ovs-vsctl add-port s1 wlan0
+</code></pre><p>网卡设置，此部分详解见下方解释：</p>
+<pre tabindex="0"><code>ifconfig wlan0 0
+ifconfig s1 10.0.0.1
+ifconfig s1 up
+</code></pre><p>交换机连接控制器：</p>
+<pre tabindex="0"><code>ovs-vsctl set-controller s1 tcp:10.0.0.1:6653
+</code></pre><h3 id="普通节点-ip--10002">普通节点 IP = 10.0.0.2</h3>
+<p>OVS的相关操作需要进入管理员模式：</p>
+<pre tabindex="0"><code>sudo su
+</code></pre><p>开启OVS</p>
+<pre tabindex="0"><code>export PATH=$PATH:/usr/local/share/openvswitch/scripts
+ovs-ctl start 
+</code></pre><p>创建交换机：</p>
+<pre tabindex="0"><code>ovs-vsctl add-br s1
+</code></pre><p>将无线网卡挂接到交换机的一个端口：</p>
+<pre tabindex="0"><code>ovs-vsctl add-port s1 wlan0
+</code></pre><p>网卡设置，此部分详解见下方解释：</p>
+<pre tabindex="0"><code>ifconfig wlan0 0
+ifconfig s1 10.0.0.2
+ifconfig s1 up
+</code></pre><p>交换机连接控制器：</p>
+<pre tabindex="0"><code>ovs-vsctl set-controller s1 tcp:10.0.0.1:6653
+</code></pre><h3 id="关于网卡设置的解释">关于网卡设置的解释</h3>
+<p>对于一般的adhoc网络，主机产生的数据包是由无线网卡进行发送的，当我们使用OVS接管了无线网卡wlan0后，主机产生的数据包已经无法从无线网卡发出了，并且，无线网卡连接到OVS后成为了交换机的一个普通端口，交换机端口只有mac地址没有IP地址，也就是原主机IP失效，所以此时ping该主机时是ping不通的。而OVS的交换机在创建之后带有一个同名的Internal类型端口，它类似于一个虚拟网卡，将原主机的IP转移到该网卡上就能解决这个问题。所以执行了以下三条命令： <br>
+取消wlan0设置的IP地址：<code>ifconfig wlan0 0</code><br>
+设置网卡s1的IP地址为原主机地址：<code>ifconfig s1 10.0.0.1</code><br>
+开启网卡s1：<code>ifconfig s1 up</code></p>
+<h2 id="测试">测试</h2>
+<blockquote>
+<p>如何证明我们成功搭载了SDN网络，而不是之前的adhoc网络呢？</p>
+</blockquote>
+<p>注意我们开启的控制器是simple_switch.py，这个文件是一个实现自学习功能的控制器应用。   <br>
+查询两个交换机的流表信息：   <br>
+<code>ovs-ofctl dump-flows s1</code>    <br>
+输出为空，此时交换机中没有流表。 <br>
+在控制节点ping普通节点： <br>
+<code>ping 10.0.0.2</code><br>
+发现可以ping通，同时可以在控制器窗口看到PacketIn消息。<br>
+再次查询流表：<code>ovs-ofctl dump-flows s1</code>  <br>
+发现多了两条流表，说明此时交换机已经明确了两台主机的IP地址所对应的端口号。</p>
+<h2 id="应用">应用</h2>
+<p>模拟控制节点向普通节点分发命令，在两台树莓派上分别运行socket通信程序：<br>
+控制节点：<code>python3 SDN_on_Raspberry_pi/client.py</code><br>
+普通节点：<code>python3 SDN_on_Raspberry_pi/sever.py</code> <br>
+从程序中我们可以看出，这与adhoc网络或者有线网络的socket编程是一模一样的，因为应用层编程不需要考虑网络层架构，只要能ping通即可。</p>
+<h2 id="结束语">结束语</h2>
+<p>因财力有限，本文只用了两台树莓派进行组网，多台组网操作也是一样的。</p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://blog.csdn.net/lby0910/article/details/53420459" target="_blank" rel="noopener noreffer">在树莓派上搭建ad-hoc网络教程</a><br>
+<a href="https://www.sdnlab.com/sdn-guide/14747.html" target="_blank" rel="noopener noreffer">OVS初级教程：使用Open vSwitch构建虚拟网络</a><br>
+<a href="https://www.cnblogs.com/goldsunshine/p/10331606.html" target="_blank" rel="noopener noreffer">Open vSwitch系列之二 安装指定版本ovs</a><br>
+<a href="https://www.cnblogs.com/mrwuzs/p/10242737.html" target="_blank" rel="noopener noreffer">ovs之组网实验</a><br>
+<a href="https://www.bilibili.com/video/BV1ft4y1a7ip?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click" target="_blank" rel="noopener noreffer">SDN系列学习课程-OpenFlow-Ryu-Mininet</a><br>
+<a href="https://www.bilibili.com/video/BV1eg411G7pW?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click" target="_blank" rel="noopener noreffer">TCP/IP网络通信之Socket编程入门</a></p>
+]]></description>
+</item>
+<item>
     <title>OVS命令笔记</title>
     <link>https://leeshy-tech.github.io/ovs_cli/</link>
     <pubDate>Fri, 07 Jan 2022 16:08:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/ovs_cli/</guid>
