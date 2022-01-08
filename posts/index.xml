@@ -4,7 +4,49 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 08 Jan 2022 21:46:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>ryu源码解读————simple_switch.py</title>
+    <link>https://leeshy-tech.github.io/simple_switch_note/</link>
+    <pubDate>Sat, 08 Jan 2022 21:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_switch_note/</guid>
+    <description><![CDATA[<h2 id="总览">总览</h2>
+<p>simple_switch.py共110行
+1-18：注释
+21-29：引库
+32-110：继承类RyuApp</p>
+<h2 id="32-37">32-37</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">SimpleSwitch</span><span class="p">(</span><span class="n">app_manager</span><span class="o">.</span><span class="n">RyuApp</span><span class="p">):</span>
+    <span class="n">OFP_VERSIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">ofproto_v1_0</span><span class="o">.</span><span class="n">OFP_VERSION</span><span class="p">]</span>   <span class="c1"># 声明支持的Open Flow版本</span>
+    <span class="c1"># 继承，调用构造函数并添加一个新属性 mac_to_port</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SimpleSwitch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span> <span class="o">=</span> <span class="p">{}</span>
+</code></pre></div><h2 id="39-51">39-51</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="c1"># 函数：添加流表</span>
+<span class="k">def</span> <span class="nf">add_flow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">in_port</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
+        <span class="n">ofproto</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
+
+        <span class="n">match</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPMatch</span><span class="p">(</span>
+            <span class="n">in_port</span><span class="o">=</span><span class="n">in_port</span><span class="p">,</span>
+            <span class="n">dl_dst</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span> <span class="n">dl_src</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="c1"># 源和目的mac地址</span>
+            <span class="p">)</span>
+
+        <span class="n">mod</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPFlowMod</span><span class="p">(</span>
+            <span class="n">datapath</span><span class="o">=</span><span class="n">datapath</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">match</span><span class="p">,</span> <span class="n">cookie</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">command</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFC_ADD</span><span class="p">,</span> <span class="c1"># 命令：添加新流表</span>
+            <span class="n">idle_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hard_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+            <span class="n">priority</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFP_DEFAULT_PRIORITY</span><span class="p">,</span> <span class="c1"># 优先级：默认</span>
+            <span class="n">flags</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFF_SEND_FLOW_REM</span><span class="p">,</span> 
+            <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">)</span>
+        <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>      <span class="c1">#控制器下发消息</span>
+</code></pre></div><p>OFPFlowMod：修改流条目消息，控制器发送此消息来修改流表。
+OFPMatch：流匹配规则。
+flags：以下三个值之一 
+| OFPFF_SEND_FLOW_REM   当流过期或删除时，发送删除流消息。
+| OFPFF_CHECK_OVERLAP   首先检查重叠的条目。
+| OFPFF_EMERG           标记为紧急情况。</p>
+]]></description>
+</item>
+<item>
     <title>在树莓派上构建SDWN网络教程</title>
     <link>https://leeshy-tech.github.io/sdn_on_raspberrypi/</link>
     <pubDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/sdn_on_raspberrypi/</guid>
