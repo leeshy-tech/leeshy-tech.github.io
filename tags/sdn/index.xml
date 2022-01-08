@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
             <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/sdn/" rel="self" type="application/rss+xml" /><item>
     <title>在树莓派上构建SDWN网络教程</title>
-    <link>https://leeshy-tech.github.io/sdn_on_raspberry/</link>
-    <pubDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/sdn_on_raspberry/</guid>
+    <link>https://leeshy-tech.github.io/sdn_on_raspberrypi/</link>
+    <pubDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/sdn_on_raspberrypi/</guid>
     <description><![CDATA[<h2 id="导入">导入</h2>
 <p>在SDN领域的学习，几乎所有的入门实践都是以mininet平台为基础，搭配开源控制器进行实验，但这种实验本质上也只是在一台linux设备上进行SDN网络的仿真罢了，实际应用还是要构建一个实际的物理网络。本文以OVS、ryu控制器和树莓派构建一个SDWN物理网络，SDWN是将SDN对于无线场景的应用，实际区别在于底层网络。 <br>
 OVS：OpenvSwitch的简称，他是一种支持OpenFlow协议的软交换机。 <br>
@@ -57,7 +57,12 @@ ifconfig s1 up
 </code></pre><p>交换机连接控制器：</p>
 <pre tabindex="0"><code>ovs-vsctl set-controller s1 tcp:10.0.0.1:6653
 </code></pre><h3 id="关于网卡设置的解释">关于网卡设置的解释</h3>
-<p>对于一般的adhoc网络，主机产生的数据包是由无线网卡进行发送的，当我们使用OVS接管了无线网卡wlan0后，主机产生的数据包已经无法从无线网卡发出了，并且，无线网卡连接到OVS后成为了交换机的一个普通端口，交换机端口只有mac地址没有IP地址，也就是原主机IP失效，所以此时ping该主机时是ping不通的。而OVS的交换机在创建之后带有一个同名的Internal类型端口，它类似于一个虚拟网卡，将原主机的IP转移到该网卡上就能解决这个问题。所以执行了以下三条命令： <br>
+<blockquote>
+<p>将网卡wlan0接到OVS上之后，两主机会ping不通，原因如下：</p>
+</blockquote>
+<p>无线网卡连接到OVS后成为了交换机的一个普通端口，交换机端口只有mac地址没有IP地址，原主机的IP会失效。</p>
+<p>对于一般的adhoc网络，主机产生的数据包直接交给无线网卡进行发送。  <br>
+创建OVS交换机之后，主机产生的数据包通过交换机的同名端口进入交换机，这个同名端口是Internal类型，类似于一个虚拟网卡，所以我们要将主机的IP地址转移到该虚拟网卡上，就有了以下三条命令：<br>
 取消wlan0设置的IP地址：<code>ifconfig wlan0 0</code><br>
 设置网卡s1的IP地址为原主机地址：<code>ifconfig s1 10.0.0.1</code><br>
 开启网卡s1：<code>ifconfig s1 up</code></p>
