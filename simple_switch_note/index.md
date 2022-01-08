@@ -1,10 +1,10 @@
 # ryu源码解读————simple_switch.py
 
 ## 总览
-simple_switch.py共110行
-1-18：注释
-21-29：引库
-32-110：继承类RyuApp
+simple_switch.py共110行  
+1-18：注释  
+21-29：引库  
+32-110：继承类RyuApp  
 ## 32-37
 ```py
 class SimpleSwitch(app_manager.RyuApp):
@@ -34,9 +34,10 @@ def add_flow(self, datapath, in_port, dst, src, actions):
             actions=actions)
         datapath.send_msg(mod)      #控制器下发消息
 ```
-OFPFlowMod：修改流条目消息，控制器发送此消息来修改流表。
-OFPMatch：流匹配规则。
-flags：以下三个值之一 
-    | OFPFF_SEND_FLOW_REM   当流过期或删除时，发送删除流消息。
-    | OFPFF_CHECK_OVERLAP   首先检查重叠的条目。
-    | OFPFF_EMERG           标记为紧急情况。
+OFPFlowMod：修改流条目消息，控制器发送此消息来修改流表。  
+OFPMatch：流匹配规则。  
+flags：以下三个值之一
+: | OFPFF_SEND_FLOW_REM   当流过期或删除时，发送删除流消息。  
+: | OFPFF_CHECK_OVERLAP   首先检查重叠的条目。  
+: | OFPFF_EMERG           标记为紧急情况。  
+

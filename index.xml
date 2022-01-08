@@ -11,9 +11,9 @@
     <link>https://leeshy-tech.github.io/simple_switch_note/</link>
     <pubDate>Sat, 08 Jan 2022 21:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_switch_note/</guid>
     <description><![CDATA[<h2 id="总览">总览</h2>
-<p>simple_switch.py共110行
-1-18：注释
-21-29：引库
+<p>simple_switch.py共110行<br>
+1-18：注释<br>
+21-29：引库<br>
 32-110：继承类RyuApp</p>
 <h2 id="32-37">32-37</h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">SimpleSwitch</span><span class="p">(</span><span class="n">app_manager</span><span class="o">.</span><span class="n">RyuApp</span><span class="p">):</span>
@@ -40,12 +40,14 @@
             <span class="n">flags</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFF_SEND_FLOW_REM</span><span class="p">,</span> 
             <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">)</span>
         <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>      <span class="c1">#控制器下发消息</span>
-</code></pre></div><p>OFPFlowMod：修改流条目消息，控制器发送此消息来修改流表。
-OFPMatch：流匹配规则。
-flags：以下三个值之一 
-| OFPFF_SEND_FLOW_REM   当流过期或删除时，发送删除流消息。
-| OFPFF_CHECK_OVERLAP   首先检查重叠的条目。
-| OFPFF_EMERG           标记为紧急情况。</p>
+</code></pre></div><dl>
+<dt>OFPFlowMod：修改流条目消息，控制器发送此消息来修改流表。</dt>
+<dt>OFPMatch：流匹配规则。</dt>
+<dt>flags：以下三个值之一</dt>
+<dd>| OFPFF_SEND_FLOW_REM   当流过期或删除时，发送删除流消息。</dd>
+<dd>| OFPFF_CHECK_OVERLAP   首先检查重叠的条目。</dd>
+<dd>| OFPFF_EMERG           标记为紧急情况。</dd>
+</dl>
 ]]></description>
 </item>
 <item>
