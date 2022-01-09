@@ -4,7 +4,43 @@
         <link>https://leeshy-tech.github.io/tags/sdn/</link>
         <description>SDN - 标签 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 08 Jan 2022 21:46:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/sdn/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 09 Jan 2022 20:56:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/sdn/" rel="self" type="application/rss+xml" /><item>
+    <title>ryu开发——集线器</title>
+    <link>https://leeshy-tech.github.io/simple_hub/</link>
+    <pubDate>Sun, 09 Jan 2022 20:56:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_hub/</guid>
+    <description><![CDATA[<h2 id="什么是集线器">什么是集线器</h2>
+<p>集线器是运作在OSI模型中的物理层，它将某个端口收到的包向所有端口广播（也叫洪泛，flood）。</p>
+<h2 id="实现代码">实现代码</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="c1"># simple_hub.py</span>
+<span class="kn">from</span> <span class="nn">ryu.base</span> <span class="kn">import</span> <span class="n">app_manager</span>
+<span class="kn">from</span> <span class="nn">ryu.controller</span> <span class="kn">import</span> <span class="n">ofp_event</span>
+<span class="kn">from</span> <span class="nn">ryu.controller.handler</span> <span class="kn">import</span> <span class="n">MAIN_DISPATCHER</span>
+<span class="kn">from</span> <span class="nn">ryu.controller.handler</span> <span class="kn">import</span> <span class="n">set_ev_cls</span>
+ 
+<span class="k">class</span> <span class="nc">L2Switch</span><span class="p">(</span><span class="n">app_manager</span><span class="o">.</span><span class="n">RyuApp</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">L2Switch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+ 
+    <span class="nd">@set_ev_cls</span><span class="p">(</span><span class="n">ofp_event</span><span class="o">.</span><span class="n">EventOFPPacketIn</span><span class="p">,</span> <span class="n">MAIN_DISPATCHER</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">packet_in_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">msg</span>
+        <span class="n">datapath</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">datapath</span>
+        <span class="n">ofp</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
+        <span class="n">ofp_parser</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span>
+ 
+        <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="n">ofp_parser</span><span class="o">.</span><span class="n">OFPActionOutput</span><span class="p">(</span><span class="n">ofp</span><span class="o">.</span><span class="n">OFPP_FLOOD</span><span class="p">)]</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">ofp_parser</span><span class="o">.</span><span class="n">OFPPacketOut</span><span class="p">(</span>
+            <span class="n">datapath</span><span class="o">=</span><span class="n">datapath</span><span class="p">,</span> <span class="n">buffer_id</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">buffer_id</span><span class="p">,</span> <span class="n">in_port</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">in_port</span><span class="p">,</span>
+            <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">)</span>
+        <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
+</code></pre></div><h2 id="实现逻辑">实现逻辑</h2>
+<p>当控制器收到PacketIn消息，下发PacketOut消息，指示交换机将该包洪泛（FLOOD）。</p>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.sdnlab.com/1785.html" target="_blank" rel="noopener noreffer">RYU入门教程</a></p>
+]]></description>
+</item>
+<item>
     <title>ryu源码解读——simple_switch.py</title>
     <link>https://leeshy-tech.github.io/simple_switch_note/</link>
     <pubDate>Sat, 08 Jan 2022 21:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_switch_note/</guid>
