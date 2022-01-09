@@ -9,4 +9,5 @@
 - lgt的博客：[https://ayamir.github.io/](https://ayamir.github.io/)
 - 黄鸡的博客：[https://hyiker.com/](https://hyiker.com/)
 - ClSlaid的博客：[https://clslaid.icu/](https://clslaid.icu/)
+- liCheng前辈的博客：[http://www.muzixing.com/](http://www.muzixing.com/)
 - 广告位招租
