@@ -24,7 +24,7 @@ ping命令使用ICMP传输协议，用于测试两主机之间的网络连通性
 - h1 ping h2，观察PacketIn消息。
 - 查看s1的流表变化。  
   
-这里不用mininet平台搭建网络的原因是：mininet交换机会定时检查与控制器的连接，导致出现很多的冗余PacketIn消息，不利于观察。
+这里不用mininet平台搭建网络的原因是：mininet主机会定时检查与交换机的连接，导致出现很多的冗余PacketIn消息，不利于观察。
 ### 实验结果
 ![PacketIn](/image/simple_switch_analyse/packetin.jpg)  
 当h1 ping h2时，出现3条PacketIn消息，之后再ping，不再出现PacketIn消息。   

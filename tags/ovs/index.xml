@@ -35,7 +35,7 @@
 <li>h1 ping h2，观察PacketIn消息。</li>
 <li>查看s1的流表变化。</li>
 </ul>
-<p>这里不用mininet平台搭建网络的原因是：mininet交换机会定时检查与控制器的连接，导致出现很多的冗余PacketIn消息，不利于观察。</p>
+<p>这里不用mininet平台搭建网络的原因是：mininet主机会定时检查与交换机的连接，导致出现很多的冗余PacketIn消息，不利于观察。</p>
 <h3 id="实验结果">实验结果</h3>
 <p><br>
 当h1 ping h2时，出现3条PacketIn消息，之后再ping，不再出现PacketIn消息。<br>

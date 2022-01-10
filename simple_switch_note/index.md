@@ -22,21 +22,21 @@ class SimpleSwitch(app_manager.RyuApp):
 ```py
 # 函数：添加流表
 def add_flow(self, datapath, in_port, dst, src, actions):
-        ofproto = datapath.ofproto
+    ofproto = datapath.ofproto
 
-        match = datapath.ofproto_parser.OFPMatch(
-            in_port=in_port,
-            dl_dst=haddr_to_bin(dst), dl_src=haddr_to_bin(src)# 源和目的mac地址
-            )
+    match = datapath.ofproto_parser.OFPMatch(
+        in_port=in_port,
+        dl_dst=haddr_to_bin(dst), dl_src=haddr_to_bin(src)# 源和目的mac地址
+        )
 
-        mod = datapath.ofproto_parser.OFPFlowMod(
-            datapath=datapath, match=match, cookie=0,
-            command=ofproto.OFPFC_ADD, # 命令：添加新流表
-            idle_timeout=0, hard_timeout=0,
-            priority=ofproto.OFP_DEFAULT_PRIORITY, # 优先级：默认
-            flags=ofproto.OFPFF_SEND_FLOW_REM, 
-            actions=actions)
-        datapath.send_msg(mod)      #控制器下发消息
+    mod = datapath.ofproto_parser.OFPFlowMod(
+        datapath=datapath, match=match, cookie=0,
+        command=ofproto.OFPFC_ADD, # 命令：添加新流表
+        idle_timeout=0, hard_timeout=0,
+        priority=ofproto.OFP_DEFAULT_PRIORITY, # 优先级：默认
+        flags=ofproto.OFPFF_SEND_FLOW_REM, 
+        actions=actions)
+    datapath.send_msg(mod)      #控制器下发消息
 ```
 ### datapath
 控制器与交换机之间是一条Open Flow数据通路，所以控制器通过datapath来区分不同的交换机，datapath具有一个ofproto参数指示OpenFlow协议内容。ofproto的ofproto_parser定义了协议相关的数据结构。

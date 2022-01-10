@@ -37,7 +37,7 @@
 <li>h1 ping h2，观察PacketIn消息。</li>
 <li>查看s1的流表变化。</li>
 </ul>
-<p>这里不用mininet平台搭建网络的原因是：mininet交换机会定时检查与控制器的连接，导致出现很多的冗余PacketIn消息，不利于观察。</p>
+<p>这里不用mininet平台搭建网络的原因是：mininet主机会定时检查与交换机的连接，导致出现很多的冗余PacketIn消息，不利于观察。</p>
 <h3 id="实验结果">实验结果</h3>
 <p><br>
 当h1 ping h2时，出现3条PacketIn消息，之后再ping，不再出现PacketIn消息。<br>
@@ -131,21 +131,21 @@ simple_switch.py共110行<br>
 </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="c1"># 函数：添加流表</span>
 <span class="k">def</span> <span class="nf">add_flow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">in_port</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
-        <span class="n">ofproto</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
+    <span class="n">ofproto</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
 
-        <span class="n">match</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPMatch</span><span class="p">(</span>
-            <span class="n">in_port</span><span class="o">=</span><span class="n">in_port</span><span class="p">,</span>
-            <span class="n">dl_dst</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span> <span class="n">dl_src</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="c1"># 源和目的mac地址</span>
-            <span class="p">)</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPMatch</span><span class="p">(</span>
+        <span class="n">in_port</span><span class="o">=</span><span class="n">in_port</span><span class="p">,</span>
+        <span class="n">dl_dst</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span> <span class="n">dl_src</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="c1"># 源和目的mac地址</span>
+        <span class="p">)</span>
 
-        <span class="n">mod</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPFlowMod</span><span class="p">(</span>
-            <span class="n">datapath</span><span class="o">=</span><span class="n">datapath</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">match</span><span class="p">,</span> <span class="n">cookie</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">command</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFC_ADD</span><span class="p">,</span> <span class="c1"># 命令：添加新流表</span>
-            <span class="n">idle_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hard_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-            <span class="n">priority</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFP_DEFAULT_PRIORITY</span><span class="p">,</span> <span class="c1"># 优先级：默认</span>
-            <span class="n">flags</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFF_SEND_FLOW_REM</span><span class="p">,</span> 
-            <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">)</span>
-        <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>      <span class="c1">#控制器下发消息</span>
+    <span class="n">mod</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPFlowMod</span><span class="p">(</span>
+        <span class="n">datapath</span><span class="o">=</span><span class="n">datapath</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">match</span><span class="p">,</span> <span class="n">cookie</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">command</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFC_ADD</span><span class="p">,</span> <span class="c1"># 命令：添加新流表</span>
+        <span class="n">idle_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hard_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+        <span class="n">priority</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFP_DEFAULT_PRIORITY</span><span class="p">,</span> <span class="c1"># 优先级：默认</span>
+        <span class="n">flags</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFF_SEND_FLOW_REM</span><span class="p">,</span> 
+        <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">)</span>
+    <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>      <span class="c1">#控制器下发消息</span>
 </code></pre></div><h3 id="datapath">datapath</h3>
 <p>控制器与交换机之间是一条Open Flow数据通路，所以控制器通过datapath来区分不同的交换机，datapath具有一个ofproto参数指示OpenFlow协议内容。ofproto的ofproto_parser定义了协议相关的数据结构。</p>
 <h3 id="协议细节">协议细节</h3>
