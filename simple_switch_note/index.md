@@ -77,7 +77,7 @@ def _packet_in_handler(self, ev):
     # 记录此包对应的mac_port对应规则
     self.mac_to_port[dpid][src] = msg.in_port
 
-    # 如果目的IP的对应端口已经知道，就直接设置为输出端口，否则就洪泛
+    # 如果目的mac的对应端口已经知道，就直接设置为输出端口，否则就洪泛
     if dst in self.mac_to_port[dpid]:
         out_port = self.mac_to_port[dpid][dst]
     else:
@@ -86,7 +86,7 @@ def _packet_in_handler(self, ev):
     # 封装一个OFPActionOutput类型动作：从out_port端口输出
     actions = [datapath.ofproto_parser.OFPActionOutput(out_port)]
 
-    # 如果已经明确了目的IP的输出端口，那么就下发一条流表
+    # 如果已经明确了目的mac的输出端口，那么就下发一条流表
     if out_port != ofproto.OFPP_FLOOD:
         self.add_flow(datapath, msg.in_port, dst, src, actions)
 
@@ -108,9 +108,9 @@ def _packet_in_handler(self, ev):
 所以PacketIn消息应当包含这个包，在控制器处理逻辑里面首先就是解析出这个包。  
 PacketOut消息应当包含一个action，当交换机收到PacketOut时执行这个action。    
 ### 处理逻辑
-- 解析出数据包，根据数据包的IP和输入端口，绑定这个IP和交换机端口。
-- 如果目的IP对应的交换机端口已知，那么就把输出端口赋这个值。如果未知，就指示交换机洪泛这个包。
-- 如果输出不是洪泛，那么就可以下发流表，绑定目的IP和源IP的转发关系。
+- 解析出数据包，根据数据包的mac和输入端口，绑定这个mac和交换机端口。
+- 如果目的mac对应的交换机端口已知，那么就把输出端口赋这个值。如果未知，就指示交换机洪泛这个包。
+- 如果输出不是洪泛，那么就可以下发流表，绑定目的mac和源mac的转发关系。
 - 封装PacketOut消息，下发。
   
 ### buffer_id与data

@@ -122,7 +122,7 @@ simple_switch.py共110行<br>
     <span class="c1"># 记录此包对应的mac_port对应规则</span>
     <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span><span class="p">[</span><span class="n">dpid</span><span class="p">][</span><span class="n">src</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">in_port</span>
 
-    <span class="c1"># 如果目的IP的对应端口已经知道，就直接设置为输出端口，否则就洪泛</span>
+    <span class="c1"># 如果目的mac的对应端口已经知道，就直接设置为输出端口，否则就洪泛</span>
     <span class="k">if</span> <span class="n">dst</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span><span class="p">[</span><span class="n">dpid</span><span class="p">]:</span>
         <span class="n">out_port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span><span class="p">[</span><span class="n">dpid</span><span class="p">][</span><span class="n">dst</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
@@ -131,7 +131,7 @@ simple_switch.py共110行<br>
     <span class="c1"># 封装一个OFPActionOutput类型动作：从out_port端口输出</span>
     <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPActionOutput</span><span class="p">(</span><span class="n">out_port</span><span class="p">)]</span>
 
-    <span class="c1"># 如果已经明确了目的IP的输出端口，那么就下发一条流表</span>
+    <span class="c1"># 如果已经明确了目的mac的输出端口，那么就下发一条流表</span>
     <span class="k">if</span> <span class="n">out_port</span> <span class="o">!=</span> <span class="n">ofproto</span><span class="o">.</span><span class="n">OFPP_FLOOD</span><span class="p">:</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_flow</span><span class="p">(</span><span class="n">datapath</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">in_port</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">actions</span><span class="p">)</span>
 
@@ -153,9 +153,9 @@ simple_switch.py共110行<br>
 PacketOut消息应当包含一个action，当交换机收到PacketOut时执行这个action。</p>
 <h3 id="处理逻辑">处理逻辑</h3>
 <ul>
-<li>解析出数据包，根据数据包的IP和输入端口，绑定这个IP和交换机端口。</li>
-<li>如果目的IP对应的交换机端口已知，那么就把输出端口赋这个值。如果未知，就指示交换机洪泛这个包。</li>
-<li>如果输出不是洪泛，那么就可以下发流表，绑定目的IP和源IP的转发关系。</li>
+<li>解析出数据包，根据数据包的mac和输入端口，绑定这个mac和交换机端口。</li>
+<li>如果目的mac对应的交换机端口已知，那么就把输出端口赋这个值。如果未知，就指示交换机洪泛这个包。</li>
+<li>如果输出不是洪泛，那么就可以下发流表，绑定目的mac和源mac的转发关系。</li>
 <li>封装PacketOut消息，下发。</li>
 </ul>
 <h3 id="buffer_id与data">buffer_id与data</h3>
