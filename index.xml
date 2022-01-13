@@ -4,9 +4,46 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 10 Jan 2022 17:56:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 11 Jan 2022 21:46:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>论文笔记——A Survey of SDN</title>
+    <link>https://leeshy-tech.github.io/a_survey_of_sdn_note/</link>
+    <pubDate>Tue, 11 Jan 2022 21:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/a_survey_of_sdn_note/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p><a href="https://ieeexplore.ieee.org/abstract/document/6739370" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/abstract/document/6739370</a> <br>
+IEEE Communications Surveys &amp; Tutorials  <br>
+Volume 16 Issue 3</p>
+<h2 id="摘要">摘要</h2>
+<p>本文综述了可编程网络的最新进展，重点介绍了SDN。我们提供了可编程网络的历史视角，从早期的想法到最近的发展。然后介绍了SDN网络的体系结构和OpenFlow标准，讨论了当前基于SDN的协议和服务的实现和测试的替代方案，考察了当前和未来的SDN应用，并探讨了基于SDN模式的有前景的研究方向。</p>
+<h2 id="1-引言">1 引言</h2>
+<p>传统网络出现的问题：网络管理和性能调优困难，网络僵化。
+可编程网络具有革命性，比如软件定义网络，网络设备成为简单的包转发设备，可以通过开放的接口进行编程。
+第二节：早期可编程网络 <br>
+第三节：SDN及其体系结构，以及OpenFlow协议。  <br>
+第四节：开发和测试SDN的平台和工具。<br>
+第五节：在数据中心和无线网络的应用。 <br>
+第六节：面临的挑战和未来发展的方向。</p>
+<h2 id="2-早期可编程网络">2 早期可编程网络</h2>
+<p>描述了一些SDN和OpenFlow概念的前身，在早期的一些项目中已经有了关于可编程网络和数控平面分离的思想。</p>
+<h2 id="3-sdn体系结构">3 SDN体系结构</h2>
+<p>路由器和交换机通常是封闭的系统，只有很少的提供给供应商的接口。适配新版本的协议（比如Ipv6）非常困难，更不用说部署全新的协议和服务。网络僵化效应主要是由于设备的数据和控制平面紧密耦合，新的app或功能的部署需要直接实现在物理设施中。解决网络僵化的一个手段是使用中间设备，比如CDN（内容交付网络）。<br>
+软件定义网络将转发硬件和控制逻辑分离，可以更容易地部署新协议和应用程序。</p>
+<h3 id="a-当前sdn架构">A 当前SDN架构</h3>
+<p>目前有两种SDN架构：ForCES和OpenFlow      <br>
+</p>
+<ul>
+<li>ForCES将单个设备中的控制元素与转发元素分开，意图实现在单一网络设备中将转发硬件与第三方控制相结合。它定义了两个逻辑实体，转发元素FE和控制元素CE，它们通过ForCES协议通信，FE负责使用底层硬件来提供每个数据包的处理。CE执行控制和信令功能。</li>
+<li>OpenFlow完全将控制平面从网络设备上剥离，转发设备基于流表进行转发，流表控制着转发规则。没有匹配流表时按照“table-miss”流表项执行相应的动作，比如丢弃、转发给控制器。控制平面与转发平面通过OpenFlow协议进行通信，远程控制器可以添加、删除或更新交换机的流表项。</li>
+</ul>
+<h2 id="语句摘录">语句摘录</h2>
+<p>As a result, network management and performance tuning is quite challenging and thus error-prone.<br>
+因此，网络管理和性能调优非常具有挑战性，所以很容易出错。 <br>
+Because of its huge deployment base and the fact it is considered part of our society’s critical infrastructure (just like transportation and power grids), the Internet has become extremely difficult to evolve both in terms of its physical infrastructure as well as its protocols and performance.<br>
+由于其庞大的部署基础，且被视为我们社会关键基础设施(就像交通和电网)的一部分，所以互联网在其物理基础设施、协议和性能方面的发展已经变得极其困难。</p>
+]]></description>
+</item>
+<item>
     <title>SDN自学习交换机工作原理分析</title>
     <link>https://leeshy-tech.github.io/simple_switch_analyse/</link>
     <pubDate>Mon, 10 Jan 2022 17:56:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_switch_analyse/</guid>
@@ -125,7 +162,11 @@ simple_switch.py共110行<br>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SimpleSwitch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span> <span class="o">=</span> <span class="p">{}</span>
-</code></pre></div><h2 id="39-51">39-51</h2>
+</code></pre></div><ul>
+<li>编写的程序实际上是Ryu控制器的APP，需要继承类RyuApp。</li>
+<li>自学习交换机需要控制器来维护交换机的帧交换表，帧交换便就是mac地址与端口号的对应关系，所以添加一个新属性mac_to_port。</li>
+</ul>
+<h2 id="39-51">39-51</h2>
 <blockquote>
 <p>实现一个添加流表的函数</p>
 </blockquote>
@@ -231,7 +272,8 @@ PacketOut消息应当包含一个action，当交换机收到PacketOut时执行�
 </ul>
 <h2 id="96-110">96-110</h2>
 <blockquote>
-<p>如果端口发生了一些变化，比如端口增加或者删除，那就在命令行打印相关的消息</p>
+<p>如果端口发生了一些变化，比如端口增加或者删除，那就在命令行打印相关的消息。
+这个部分不是自学习交换机必需的。</p>
 </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="nd">@set_ev_cls</span><span class="p">(</span><span class="n">ofp_event</span><span class="o">.</span><span class="n">EventOFPPortStatus</span><span class="p">,</span> <span class="n">MAIN_DISPATCHER</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_port_status_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">):</span>

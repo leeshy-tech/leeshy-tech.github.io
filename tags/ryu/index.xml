@@ -123,7 +123,11 @@ simple_switch.py共110行<br>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">SimpleSwitch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span> <span class="o">=</span> <span class="p">{}</span>
-</code></pre></div><h2 id="39-51">39-51</h2>
+</code></pre></div><ul>
+<li>编写的程序实际上是Ryu控制器的APP，需要继承类RyuApp。</li>
+<li>自学习交换机需要控制器来维护交换机的帧交换表，帧交换便就是mac地址与端口号的对应关系，所以添加一个新属性mac_to_port。</li>
+</ul>
+<h2 id="39-51">39-51</h2>
 <blockquote>
 <p>实现一个添加流表的函数</p>
 </blockquote>
@@ -229,7 +233,8 @@ PacketOut消息应当包含一个action，当交换机收到PacketOut时执行�
 </ul>
 <h2 id="96-110">96-110</h2>
 <blockquote>
-<p>如果端口发生了一些变化，比如端口增加或者删除，那就在命令行打印相关的消息</p>
+<p>如果端口发生了一些变化，比如端口增加或者删除，那就在命令行打印相关的消息。
+这个部分不是自学习交换机必需的。</p>
 </blockquote>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="nd">@set_ev_cls</span><span class="p">(</span><span class="n">ofp_event</span><span class="o">.</span><span class="n">EventOFPPortStatus</span><span class="p">,</span> <span class="n">MAIN_DISPATCHER</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">_port_status_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">):</span>

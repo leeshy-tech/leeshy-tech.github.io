@@ -4,32 +4,32 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>SDN自学习交换机工作原理分析 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="SDN自学习交换机工作原理分析" />
-<meta property="og:description" content="基于ryu控制器实现的自学习交换机simple_switch.py，搭建实际网络分析其工作过程。" />
+        <title>论文笔记——A Survey of SDN - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="论文笔记——A Survey of SDN" />
+<meta property="og:description" content="A Survey of Software-Defined Networking：Past，Present，and Future of Programmable Networks" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://leeshy-tech.github.io/simple_switch_analyse/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-01-10T17:56:06+08:00" />
-<meta property="article:modified_time" content="2022-01-10T17:56:06+08:00" />
+<meta property="og:url" content="https://leeshy-tech.github.io/a_survey_of_sdn_note/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-11T21:46:06+08:00" />
+<meta property="article:modified_time" content="2022-01-11T21:46:06+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
 
-<meta name="twitter:title" content="SDN自学习交换机工作原理分析"/>
-<meta name="twitter:description" content="基于ryu控制器实现的自学习交换机simple_switch.py，搭建实际网络分析其工作过程。"/>
+<meta name="twitter:title" content="论文笔记——A Survey of SDN"/>
+<meta name="twitter:description" content="A Survey of Software-Defined Networking：Past，Present，and Future of Programmable Networks"/>
 <meta name="application-name" content="Leeshy&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/simple_switch_analyse/" /><link rel="prev" href="https://leeshy-tech.github.io/simple_hub/" /><link rel="next" href="https://leeshy-tech.github.io/a_survey_of_sdn_note/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/a_survey_of_sdn_note/" /><link rel="prev" href="https://leeshy-tech.github.io/simple_switch_analyse/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "SDN自学习交换机工作原理分析",
+        "headline": "论文笔记——A Survey of SDN",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/leeshy-tech.github.io\/simple_switch_analyse\/"
-        },"genre": "posts","keywords": "Ryu, SDN, OVS","wordcount":  1731 ,
-        "url": "https:\/\/leeshy-tech.github.io\/simple_switch_analyse\/","datePublished": "2022-01-10T17:56:06+08:00","dateModified": "2022-01-10T17:56:06+08:00","publisher": {
+            "@id": "https:\/\/leeshy-tech.github.io\/a_survey_of_sdn_note\/"
+        },"genre": "posts","keywords": "SDN","wordcount":  1061 ,
+        "url": "https:\/\/leeshy-tech.github.io\/a_survey_of_sdn_note\/","datePublished": "2022-01-11T21:46:06+08:00","dateModified": "2022-01-11T21:46:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
                 "@type": "Person",
@@ -115,10 +115,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">SDN自学习交换机工作原理分析</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/sdn/"><i class="far fa-folder fa-fw"></i>SDN</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-10">2022-01-10</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1731 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">论文笔记——A Survey of SDN</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a>&nbsp;<a href="/categories/sdn/"><i class="far fa-folder fa-fw"></i>SDN</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-11">2022-01-11</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1061 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -128,105 +128,64 @@
                     </div>
                     <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#自学习交换机">自学习交换机</a></li>
-    <li><a href="#ping命令过程">ping命令过程</a></li>
-    <li><a href="#实验分析">实验分析</a>
+    <li><a href="#论文概况">论文概况</a></li>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#1-引言">1 引言</a></li>
+    <li><a href="#2-早期可编程网络">2 早期可编程网络</a></li>
+    <li><a href="#3-sdn体系结构">3 SDN体系结构</a>
       <ul>
-        <li><a href="#实验内容">实验内容</a></li>
-        <li><a href="#实验结果">实验结果</a></li>
-        <li><a href="#流程分析">流程分析</a></li>
+        <li><a href="#a-当前sdn架构">A 当前SDN架构</a></li>
       </ul>
     </li>
-    <li><a href="#结束语">结束语</a>
-      <ul>
-        <li><a href="#总结">总结</a></li>
-        <li><a href="#参考文献">参考文献</a></li>
-      </ul>
-    </li>
+    <li><a href="#语句摘录">语句摘录</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h2 id="自学习交换机">自学习交换机</h2>
-<p>交换机上电启动时，帧交换表为空，随着各主机间的通信，通过自学习算法自动逐渐建立帧交换表。帧交换表是mac地址和端口号的对应关系，交换机端口是固定的，连接的设备是可变的，所以只有建立起帧交换表之后才能明确某目的mac地址的数据包该向哪个端口转发。</p>
-<p>SDN的自学习交换机跟传统交换机不一样的点有：</p>
-<ol>
-<li>帧交换表是由控制器来维护的，比如ryu里的数据结构：mac_to_port[dpid][mac] = port，控制器维护所有与之相连的交换机的帧交换表。</li>
-<li>自学习的过程中可能会有流表的变化。</li>
-</ol>
-<h2 id="ping命令过程">ping命令过程</h2>
-<p>ping命令使用ICMP传输协议，用于测试两主机之间的网络连通性。<br>
-局域网ping命令的执行过程：<br>
-网络模型为：h1  &mdash;-  s1  &mdash;-  h2，两台主机连接到同一个交换机。
-假设h1 ping h2</p>
-<ul>
-<li>首先h1查询自己的mac地址表，若有h2对应的mac地址，就直接设为目的mac，否则发送一个ARP广播包，目的mac设为ff:ff:ff:ff。</li>
-<li>交换机收到ARP后，如果交换机中有h2对应的mac地址，就返回给h1，否则向所有端口发送ARP广播。</li>
-<li>h2收到ARP报文后，返回ARP应答报文，告诉h1自己的mac地址，同时学习到h1的mac地址。</li>
-<li>h1收到应答后，学习到h2的mac地址，封装ICMP报文给h2。</li>
-<li>h2收到报文后应答，ping完成。</li>
-</ul>
-<h2 id="实验分析">实验分析</h2>
-<h3 id="实验内容">实验内容</h3>
-<ul>
-<li>通过ryu控制器实现一个SDN自学习交换机simple_switch.py，分析博客：<a href="http://localhost:1313/simple_switch_note/" target="_blank" rel="noopener noreffer">ryu源码解读——simple_switch.py</a>。</li>
-<li>使用OVS搭建网络模型：h1  &mdash;-  s1  &mdash;-  h2，将s1连接到控制器。</li>
-<li>h1 ping h2，观察PacketIn消息。</li>
-<li>查看s1的流表变化。</li>
-</ul>
-<p>这里不用mininet平台搭建网络的原因是：mininet主机会定时检查与交换机的连接，导致出现很多的冗余PacketIn消息，不利于观察。</p>
-<h3 id="实验结果">实验结果</h3>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/image/simple_switch_analyse/packetin.jpg"
-        data-srcset="/image/simple_switch_analyse/packetin.jpg, /image/simple_switch_analyse/packetin.jpg 1.5x, /image/simple_switch_analyse/packetin.jpg 2x"
-        data-sizes="auto"
-        alt="/image/simple_switch_analyse/packetin.jpg"
-        title="PacketIn" /><br>
-当h1 ping h2时，出现3条PacketIn消息，之后再ping，不再出现PacketIn消息。<br>
-使用<code>ovs-ofctl dump-flows s1</code>命令观察流表，结果如下：  <br>
+                </div><div class="content" id="content"><h2 id="论文概况">论文概况</h2>
+<p><a href="https://ieeexplore.ieee.org/abstract/document/6739370" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/abstract/document/6739370</a> <br>
+IEEE Communications Surveys &amp; Tutorials  <br>
+Volume 16 Issue 3</p>
+<h2 id="摘要">摘要</h2>
+<p>本文综述了可编程网络的最新进展，重点介绍了SDN。我们提供了可编程网络的历史视角，从早期的想法到最近的发展。然后介绍了SDN网络的体系结构和OpenFlow标准，讨论了当前基于SDN的协议和服务的实现和测试的替代方案，考察了当前和未来的SDN应用，并探讨了基于SDN模式的有前景的研究方向。</p>
+<h2 id="1-引言">1 引言</h2>
+<p>传统网络出现的问题：网络管理和性能调优困难，网络僵化。
+可编程网络具有革命性，比如软件定义网络，网络设备成为简单的包转发设备，可以通过开放的接口进行编程。
+第二节：早期可编程网络 <br>
+第三节：SDN及其体系结构，以及OpenFlow协议。  <br>
+第四节：开发和测试SDN的平台和工具。<br>
+第五节：在数据中心和无线网络的应用。 <br>
+第六节：面临的挑战和未来发展的方向。</p>
+<h2 id="2-早期可编程网络">2 早期可编程网络</h2>
+<p>描述了一些SDN和OpenFlow概念的前身，在早期的一些项目中已经有了关于可编程网络和数控平面分离的思想。</p>
+<h2 id="3-sdn体系结构">3 SDN体系结构</h2>
+<p>路由器和交换机通常是封闭的系统，只有很少的提供给供应商的接口。适配新版本的协议（比如Ipv6）非常困难，更不用说部署全新的协议和服务。网络僵化效应主要是由于设备的数据和控制平面紧密耦合，新的app或功能的部署需要直接实现在物理设施中。解决网络僵化的一个手段是使用中间设备，比如CDN（内容交付网络）。<br>
+软件定义网络将转发硬件和控制逻辑分离，可以更容易地部署新协议和应用程序。</p>
+<h3 id="a-当前sdn架构">A 当前SDN架构</h3>
+<p>目前有两种SDN架构：ForCES和OpenFlow      <br>
 <img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/simple_switch_analyse/%e6%b5%81%e8%a1%a8.jpg"
-        data-srcset="/image/simple_switch_analyse/%e6%b5%81%e8%a1%a8.jpg, /image/simple_switch_analyse/%e6%b5%81%e8%a1%a8.jpg 1.5x, /image/simple_switch_analyse/%e6%b5%81%e8%a1%a8.jpg 2x"
+        data-src="/image/A_Survey_of_SDN_note/SDN%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84.jpg"
+        data-srcset="/image/A_Survey_of_SDN_note/SDN%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84.jpg, /image/A_Survey_of_SDN_note/SDN%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84.jpg 1.5x, /image/A_Survey_of_SDN_note/SDN%e4%bd%93%e7%b3%bb%e7%bb%93%e6%9e%84.jpg 2x"
         data-sizes="auto"
-        alt="/image/simple_switch_analyse/流表.jpg"
-        title="流表" /><br>
-执行完ping命令后多了两条流表。</p>
-<h3 id="流程分析">流程分析</h3>
-<p>日志的输出格式是：packet in &lt;交换机标号&gt; &lt;源mac&gt; &lt;目的mac&gt; &lt;输入端口&gt;<br>
-h1：mac地址mac1 = 3e:3b:50:01:23:e6，连接到s1的1号端口。 <br>
-h2：mac地址mac2 = d6:07:97:03:df:5b，连接到s1的2号端口。</p>
-<ol>
-<li>h1 ping h2，h1发送一个目的mac为ff:ff:ff:ff的ARP包，s1流表为空，发送PacketIn消息。</li>
-<li>控制器学习到<code>mac1--端口1</code>，查找不到h2连接的端口，发送PacketOut消息指示s1广播这个ARP包。</li>
-<li>s1广播，h2收到并学习到h1的mac地址，发送<code>&lt;src = mac2，dst = mac1&gt;</code>的ARP应答报文，s1流表为空，发送PacketIn消息。</li>
-<li>控制器学习到<code>mac2--端口2</code>，查找到mac1的对应端口为1，此时下发一条流表<code>in_port=2,output:1</code>，发送PacketOut消息指示s1把这个应答报文转发到端口1。</li>
-<li>h1收到应答报文，学习到h2的mac地址，发送<code>&lt;src = mac1，dst = mac2&gt;</code>的ICMP报文。</li>
-<li>此时s1中只有一条流表<code>in_port=2,output:1</code>，仍然发送PacketIn消息。</li>
-<li>控制器查找到mac2的对应端口为2，下发一条流表<code>in_port=1,output:2</code>，发送PacketOut消息指示s1把这个报文转发到端口2。</li>
-<li>之后略</li>
-</ol>
-<p>所以，整个过程中一共上传了三次PacketIn消息，分别是<code>ma1 ff:ff:ff:ff 1</code>，<code>mac2 mac1 2</code>，<code>mac1 mac2 1</code>。<br>
-过程结束s1中有两条流表，分别是<code>in_port=2,src=mac2,dst=mac1,action=output:1</code>,<code>in_port=1,src=mac1,dst=mac2,action=output:2</code>。 
-有了这两条流表之后，s1完全按照流表转发，不会产生PacketIn消息和新的流表。</p>
-<h2 id="结束语">结束语</h2>
-<h3 id="总结">总结</h3>
-<p>要始终用流表的思想看待整个过程，PacketIn消息产生的原因是没有匹配的流表。</p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://blog.51cto.com/wanicy/335207" target="_blank" rel="noopener noreffer">Ping过程 详解 </a><br>
-<a href="http://localhost:1313/simple_switch_note/" target="_blank" rel="noopener noreffer">ryu源码解读——simple_switch.py</a></p>
+        alt="/image/A_Survey_of_SDN_note/SDN体系结构.jpg"
+        title="SDN体系结构" /></p>
+<ul>
+<li>ForCES将单个设备中的控制元素与转发元素分开，意图实现在单一网络设备中将转发硬件与第三方控制相结合。它定义了两个逻辑实体，转发元素FE和控制元素CE，它们通过ForCES协议通信，FE负责使用底层硬件来提供每个数据包的处理。CE执行控制和信令功能。</li>
+<li>OpenFlow完全将控制平面从网络设备上剥离，转发设备基于流表进行转发，流表控制着转发规则。没有匹配流表时按照“table-miss”流表项执行相应的动作，比如丢弃、转发给控制器。控制平面与转发平面通过OpenFlow协议进行通信，远程控制器可以添加、删除或更新交换机的流表项。</li>
+</ul>
+<h2 id="语句摘录">语句摘录</h2>
+<p>As a result, network management and performance tuning is quite challenging and thus error-prone.<br>
+因此，网络管理和性能调优非常具有挑战性，所以很容易出错。 <br>
+Because of its huge deployment base and the fact it is considered part of our society’s critical infrastructure (just like transportation and power grids), the Internet has become extremely difficult to evolve both in terms of its physical infrastructure as well as its protocols and performance.<br>
+由于其庞大的部署基础，且被视为我们社会关键基础设施(就像交通和电网)的一部分，所以互联网在其物理基础设施、协议和性能方面的发展已经变得极其困难。</p>
 </div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/ryu/">ryu</a>
-                </span><span><a href="/tags/sdn/">SDN</a>
-                </span><span><a href="/tags/ovs/">OVS</a>
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/sdn/">SDN</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2022-01-10</span>
+                <span>更新于 2022-01-11</span>
             </div><div class="post-info-mod"><span>
-                            <a class="link-to-markdown" href="/simple_switch_analyse/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/a_survey_of_sdn_note/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-        </div></div><div class="post-nav"><a href="/simple_hub/" class="prev" rel="prev" title="ryu开发——集线器"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/a_survey_of_sdn_note/" class="next" rel="next" title="论文笔记——A Survey of SDN">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+        </div></div><div class="post-nav"><a href="/simple_switch_analyse/" class="prev" rel="prev" title="SDN自学习交换机工作原理分析"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
 </div></article></div>
             </main>
             <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
