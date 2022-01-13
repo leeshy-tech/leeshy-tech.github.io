@@ -22,10 +22,31 @@ Volume 16 Issue 3
 ### A 当前SDN架构
 目前有两种SDN架构：ForCES和OpenFlow         
 ![SDN体系结构](/image/A_Survey_of_SDN_note/SDN体系结构.jpg)     
-- ForCES将单个设备中的控制元素与转发元素分开，意图实现在单一网络设备中将转发硬件与第三方控制相结合。它定义了两个逻辑实体，转发元素FE和控制元素CE，它们通过ForCES协议通信，FE负责使用底层硬件来提供每个数据包的处理。CE执行控制和信令功能。    
+- ForCES将单个设备中的控制元素与转发元素分开，意图实现在单一网络设备中将转发硬件与第三方控制相结合。它定义了两个逻辑实体，转发元素FE和控制元素CE，它们通过ForCES协议通信，FE负责使用底层硬件来提供每个数据包的处理。CE执行控制和信令功能。ForCES还有一个重要功能块LFB（逻辑功能块），它安装在FE上，通过CE进行控制，实现FE的配置和数据包处理。   
 - OpenFlow完全将控制平面从网络设备上剥离，转发设备基于流表进行转发，流表控制着转发规则。没有匹配流表时按照“table-miss”流表项执行相应的动作，比如丢弃、转发给控制器。控制平面与转发平面通过OpenFlow协议进行通信，远程控制器可以添加、删除或更新交换机的流表项。
+- ForCES和OpenFlow的模型不同，但是可以实现相似的功能。
+- OpenFlow得到了各界的大力支持，以至于被认为是SDN的官方标准。
+### B 转发设备
+底层网络中，转发设备有路由器、交换机、无线接入点等。但是在SDN中，控制逻辑和算法都由控制器维护，基本转发硬件均被称为switches——交换机。   
+规则空间是OpenFlow可扩展性的瓶颈，在尊重网络策略和约束的同时，优化使用规则空间来服务于一定数量的流条目是一个具有挑战性和重要的课题。
+### C 控制器
+单个控制器能够处理惊人数量的新流请求，并且应该能够管理除最大的网络之外的所有网络。  
+交换机控制延迟对网络的整体行为有重大影响，因为每个交换机在从控制器收到插入流表中适当规则的消息之前不能转发数据。这个间隔可能会随着链路延迟而增加，并显著影响网络应用程序的性能。    
+控制建模对网络的可扩展性影响很大。    
+集中式和分布式：软件定义的网络可能具有集中式或分布式的控制平面。OpenFlow允许多个控制器连接到一台交换机上，这将允许备份控制器在出现故障时接管。软件定义的网络还可以具有一定程度的逻辑去中心化，具有多个逻辑控制器。  
+粒度控制：传统网络的基本元素是包。在软件定义网络中，网络元素是远程控制的，开销是由数据平面和控制平面之间的通信引起的。控制器对每个包做决策会增加额外的延迟，对流的第一个包所做的决策可以应用于该流的所有后续包，通过将流分组可以进一步减少开销。
+被动控制和主动控制：这部分没看懂 P1624。
+### D 南向接口：控制器——交换机
+OpenFlow本身就是控制器——交换机交互的一种实现。
+### E 北向接口：控制器——服务
+目前还没有公认的针对北向交互的标准，而且它们更有可能在特定应用程序的特殊基础上实现。
+### F 标准化工作
+
+## 重点参考文献
+[26]：讨论了ForCES和OpenFlow的异同，
 ## 语句摘录
 As a result, network management and performance tuning is quite challenging and thus error-prone.   
 因此，网络管理和性能调优非常具有挑战性，所以很容易出错。    
 Because of its huge deployment base and the fact it is considered part of our society’s critical infrastructure (just like transportation and power grids), the Internet has become extremely difficult to evolve both in terms of its physical infrastructure as well as its protocols and performance.   
 由于其庞大的部署基础，且被视为我们社会关键基础设施(就像交通和电网)的一部分，所以互联网在其物理基础设施、协议和性能方面的发展已经变得极其困难。
+
