@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/leeshy-tech.github.io\/a_survey_of_sdn_note\/"
-        },"genre": "posts","keywords": "SDN","wordcount":  3413 ,
+        },"genre": "posts","keywords": "SDN","wordcount":  4952 ,
         "url": "https:\/\/leeshy-tech.github.io\/a_survey_of_sdn_note\/","datePublished": "2022-01-11T21:46:06+08:00","dateModified": "2022-01-11T21:46:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
@@ -117,8 +117,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">论文笔记——A Survey of SDN</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a>&nbsp;<a href="/categories/sdn/"><i class="far fa-folder fa-fw"></i>SDN</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-11">2022-01-11</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3413 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 7 分钟</span>&nbsp;</div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-11">2022-01-11</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 4952 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 10 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -160,7 +160,17 @@
         <li><a href="#e-家庭和小型企业">E 家庭和小型企业</a></li>
       </ul>
     </li>
-    <li><a href="#重点参考文献">重点参考文献</a></li>
+    <li><a href="#5-研究所面临的挑战和未来的发展方向">5 研究所面临的挑战和未来的发展方向</a>
+      <ul>
+        <li><a href="#a-控制器和交换机设计">A 控制器和交换机设计</a></li>
+        <li><a href="#b-软件定义互联网">B 软件定义互联网</a></li>
+        <li><a href="#c-控制器服务交互">C 控制器——服务交互</a></li>
+        <li><a href="#d-虚拟化和云服务">D 虚拟化和云服务</a></li>
+        <li><a href="#e-以信息为中心的网络">E 以信息为中心的网络</a></li>
+        <li><a href="#f-异构网络支持">F 异构网络支持</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-结束语">7 结束语</a></li>
     <li><a href="#语句摘录">语句摘录</a></li>
   </ul>
 </nav></div>
@@ -272,13 +282,46 @@ OpenRadio：专注于部署可编程无线数据平面，在PHY和MAC层而不�
 Calvert建议将控制器作为“家庭网络数据记录器”，创建可用于故障排除或其他目的日志。  <br>
 Feamster建议外包第三方专家，通过远程控制可编程交换机和分布式网络监控和推理算法，来检测可能的安全问题。   <br>
 文献[94]-[97]</p>
-<h2 id="重点参考文献">重点参考文献</h2>
-<p>[26]：讨论了ForCES和OpenFlow的异同，</p>
+<h2 id="5-研究所面临的挑战和未来的发展方向">5 研究所面临的挑战和未来的发展方向</h2>
+<h3 id="a-控制器和交换机设计">A 控制器和交换机设计</h3>
+<p>可扩展性、性能、鲁棒性、安全性
+DIFANE：流被主动推到交换机上，试图减少向控制器的请求数量。   <br>
+Devoflow：建议处理交换机中的短寿命流和控制器中的长寿流，以减少流设置延迟和控制器开销。   <br>
+[28]：主张用一系列规则匹配记录来替换ASIC上的计数器，并在CPU中处理它们，以允许高效访问计数器。    <br>
+FLARE：专注于“深度可编程网络”的新型网络节点模型，它为数据平面、控制平面以及它们之间的接口提供了可编程性。    <br>
+为了提高可扩展性，特别是为了可靠性和鲁棒性，人们已经认识到逻辑集中的控制器必须是物理分布的。</p>
+<h3 id="b-软件定义互联网">B 软件定义互联网</h3>
+<p>目前许多关于SDN的工作都是在单个管理域的上下文中检查或提出解决方案。然而，那些管理本质上是分散的环境，比如互联网，需要一个逻辑分布的控制平面。</p>
+<h3 id="c-控制器服务交互">C 控制器——服务交互</h3>
+<p>目前南向接口定义的相当好，但是北向接口却没有统一的标准，一种可能的解释是，北向接口完全是在软件中定义的，而南向接口必须支持硬件实现。     <br>
+如果我们认为控制器是一个“网络操作系统”，那么应该有一个明确定义的接口，应用程序可以访问底层硬件（交换机），与其他应用程序共存和交互，并利用系统服务（例如拓扑发现、转发），而不需要应用程序开发人员知道控制器的实现细节。 <br>
+此外，北向的API应该允许应用程序对同一流应用不同的策略(例如，通过目的地进行转发和通过源IP进行监控)。</p>
+<h3 id="d-虚拟化和云服务">D 虚拟化和云服务</h3>
+<h3 id="e-以信息为中心的网络">E 以信息为中心的网络</h3>
+<p>信息中心网络(ICN)是针对未来互联网架构提出的一种新的范式，它旨在提高内容交付的效率和内容可用性。他们的驱动动机是，当前的互联网是信息驱动的，但网络技术仍然专注于基于位置的寻址和主机对主机的通信的想法。通过提出一种处理命名数据而不是命名主机的体系结构，内容分发可以直接实现到网络结构中，而不是依赖于目前用于将内容映射到单个位置的复杂映射、可用性和安全机制。    <br>
+ICN中信息处理和转发的分离与SDN中数据平面和控制平面的解耦相一致。然后，问题就变成了如何将ICN和SDN结合起来。</p>
+<h3 id="f-异构网络支持">F 异构网络支持</h3>
+<p>未来网络面临的一个主要挑战是资源的有效利用；在无线多跳自组网中尤其如此，因为可用的无线容量本质上是有限的。这是由于许多因素，包括共享物理介质的使用、无线信道损坏和受管理基础设施的缺乏。自组织网络缺乏专用资源，而且连接性的变化使容量共享变得困难。底层网络的异构特性（例如，物理介质、拓扑结构、稳定性）和节点（例如，缓冲区大小、功率限制、移动性）在考虑路由和资源分配时也增加了另一个重要的因素。   <br>
+迄今为止的SDN技术，如OpenFlow，主要针对基于基础设施的网络。它们促进了一种不适合在无基础设施环境中出现的分散、中断和延迟级别的集中控制机制。虽然之前的工作已经研究了SDN在无线环境中的使用，但其范围主要集中在基于基础设施的部署。</p>
+<h2 id="7-结束语">7 结束语</h2>
+<p>在本文中，我们提供了一个可编程网络的概述，并在此背景下，考察了软件定义网络(SDN)的新兴领域。我们来看看可编程网络的历史，从早期的想法到最近的发展。我们特别详细描述了SDN体系结构以及OpenFlow[2]标准。我们介绍了当前的SDN实现和测试平台，并检查了基于SDN范式开发的网络服务和应用程序。最后，我们讨论了SDN所支持的未来发展方向，从支持异构网络到信息中心网络(ICN)。</p>
 <h2 id="语句摘录">语句摘录</h2>
+<blockquote>
 <p>As a result, network management and performance tuning is quite challenging and thus error-prone.<br>
-因此，网络管理和性能调优非常具有挑战性，所以很容易出错。 <br>
-Because of its huge deployment base and the fact it is considered part of our society’s critical infrastructure (just like transportation and power grids), the Internet has become extremely difficult to evolve both in terms of its physical infrastructure as well as its protocols and performance.<br>
+因此，网络管理和性能调优非常具有挑战性，所以很容易出错。</p>
+</blockquote>
+<blockquote>
+<p>Because of its huge deployment base and the fact it is considered part of our society’s critical infrastructure (just like transportation and power grids), the Internet has become extremely difficult to evolve both in terms of its physical infrastructure as well as its protocols and performance.<br>
 由于其庞大的部署基础，且被视为我们社会关键基础设施(就像交通和电网)的一部分，所以互联网在其物理基础设施、协议和性能方面的发展已经变得极其困难。</p>
+</blockquote>
+<blockquote>
+<p>As SDN becomes more widely adopted and protocols such as OpenFlow are further defined, new solutions are proposed and new challenges arise.<br>
+随着SDN被广泛采用，并且OpenFlow等协议被进一步定义，新的解决方案被提出，新的挑战出现.</p>
+</blockquote>
+<blockquote>
+<p>The Internet has revolutionized the way we, as individuals and as a society, live, work, conduct business, socialize, get entertainment, etc. As a result, the Internet is now considered part of our society’s critical infrastructure much like the power, water, and transportation grids.<br>
+互联网已经彻底改变了我们作为个人和社会、生活、工作、做生意、社交、获得娱乐等方面的方式。因此，互联网现在被认为是我们社会关键基础设施的一部分，就像电力、水和交通电网一样。</p>
+</blockquote>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/sdn/">SDN</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
