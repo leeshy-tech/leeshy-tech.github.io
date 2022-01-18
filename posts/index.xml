@@ -4,7 +4,21 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 11 Jan 2022 21:46:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 18 Jan 2022 23:09:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>论文笔记——On Scalability of SDN</title>
+    <link>https://leeshy-tech.github.io/on_scalability_of_sdn_note/</link>
+    <pubDate>Tue, 18 Jan 2022 23:09:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/on_scalability_of_sdn_note/</guid>
+    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
+<p><a href="https://ieeexplore.ieee.org/abstract/document/6461198" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/abstract/document/6461198</a><br>
+IEEE Communications Magazine  <br>
+Volume 51 Issue 2</p>
+<h2 id="摘要">摘要</h2>
+<p>在本文中，我们解构了软件定义网络中的可扩展性问题，并认为它们不是SDN所独有的。我们探讨了在不同环境中经常出现的问题，讨论了SDN设计空间中可扩展性的权衡，并介绍了一些关于SDN可扩展性的最新研究。此外，我们还列举了在可扩展性方面的重要机遇和挑战。</p>
+<h2 id="引言">引言</h2>
+<p>普遍认为SDN的控制是集中的，这导致了对SDN规模的能力和弹性的担忧。毕竟，无论控制器的能力如何，中央控制器都不会随着网络的增长而扩展(增加交换机、流量、带宽等的数量)，并且在提供相同的服务保证的同时也无法处理所有传入的请求。此外，由于大多数早期的SDN提议是基于流的，额外的流初始化延迟成为一个问题。</p>
+]]></description>
+</item>
+<item>
     <title>论文笔记——A Survey of SDN</title>
     <link>https://leeshy-tech.github.io/a_survey_of_sdn_note/</link>
     <pubDate>Tue, 11 Jan 2022 21:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/a_survey_of_sdn_note/</guid>
