@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/leeshy-tech.github.io\/on_scalability_of_sdn_note\/"
-        },"genre": "posts","keywords": "SDN","wordcount":  291 ,
+        },"genre": "posts","keywords": "SDN, Paper","wordcount":  1103 ,
         "url": "https:\/\/leeshy-tech.github.io\/on_scalability_of_sdn_note\/","datePublished": "2022-01-18T23:09:06+08:00","dateModified": "2022-01-18T23:09:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
@@ -117,8 +117,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">论文笔记——On Scalability of SDN</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a>&nbsp;<a href="/categories/sdn/"><i class="far fa-folder fa-fw"></i>SDN</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-18">2022-01-18</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 291 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟</span>&nbsp;</div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-18">2022-01-18</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1103 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -131,6 +131,8 @@
     <li><a href="#论文概况">论文概况</a></li>
     <li><a href="#摘要">摘要</a></li>
     <li><a href="#引言">引言</a></li>
+    <li><a href="#sdn中可扩展性的根源">SDN中可扩展性的根源</a></li>
+    <li><a href="#控制器可扩展性">控制器可扩展性</a></li>
   </ul>
 </nav></div>
                 </div><div class="content" id="content"><h2 id="论文概况">论文概况</h2>
@@ -140,9 +142,18 @@ Volume 51 Issue 2</p>
 <h2 id="摘要">摘要</h2>
 <p>在本文中，我们解构了软件定义网络中的可扩展性问题，并认为它们不是SDN所独有的。我们探讨了在不同环境中经常出现的问题，讨论了SDN设计空间中可扩展性的权衡，并介绍了一些关于SDN可扩展性的最新研究。此外，我们还列举了在可扩展性方面的重要机遇和挑战。</p>
 <h2 id="引言">引言</h2>
-<p>普遍认为SDN的控制是集中的，这导致了对SDN规模的能力和弹性的担忧。毕竟，无论控制器的能力如何，中央控制器都不会随着网络的增长而扩展(增加交换机、流量、带宽等的数量)，并且在提供相同的服务保证的同时也无法处理所有传入的请求。此外，由于大多数早期的SDN提议是基于流的，额外的流初始化延迟成为一个问题。</p>
+<p>普遍认为SDN中的控制是集中的，这导致了对SDN可伸缩性和弹性的关注。毕竟，无论控制器的能力如何，中央控制器都不会随着网络的增长而扩展(增加交换机、流量、带宽等的数量)，并且在提供相同的服务保证的同时也无法处理所有传入的请求。此外，由于大多数早期的SDN提议都是基于流的，额外的流启动延迟成为一个问题。  <br>
+我们认为SDN的可扩展性没有固有的瓶颈;我们认为这些可扩展性限制并不局限于SDN;传统的控制协议设计也面临着同样的挑战。虽然这并没有解决这些问题，但这表明我们在SDN中不需要比在传统网络中更担心可扩展性。</p>
+<h2 id="sdn中可扩展性的根源">SDN中可扩展性的根源</h2>
+<p>SDN与传统数据网络的根本区别在于控制与转发平面的分离。这种解耦导致了一些有趣的特性。  <br>
+然而，这种解耦也有它自己的陷阱。在这两个平面之间定义一个标准的API是绝对重要的。从技术上讲，这个API应该能够处理各种体系结构的需求，并且应该能够促进这两个平面的独立演化。此外，所有或大多数交换机供应商应该采用相同的标准API，以使其有用；否则，网络将与特定的供应商绑定，会阻碍网络的快速变化和创新。将传统的本地控制功能移动到远程控制器可能会导致新的瓶颈。它还可能导致信令开销。  <br>
+在接下来的内容中，我们首先讨论SDN控制器的可扩展性，概述为什么它一直受到关注，以及最近在这个领域的工作。然后，我们回顾一些其他经常提到的SDN可扩展性问题，包括流程设置开销和故障恢复能力。我们认为，尽管这些问题不是SDN特有的，但它们可以通过另一种设计来缓解(其中一些设计现在很常见)。</p>
+<h2 id="控制器可扩展性">控制器可扩展性</h2>
+<p>一种可能的SDN设计是将所有的控制功能推到一个集中式控制器上。控制器有可能成为网络操作中的瓶颈，随着网络规模的增长，更多的事件和请求会被发送到控制器，并且在某个时刻，控制器无法处理所有传入的请求。缓解这种担忧的一种方法是在多核系统中提高并行性，并提高IO性能。第二种方法是减少转发到控制器的请求数量，比如DevoFlow通过底层网络约束，牺牲细粒度流级可见性（ fine-grained flow-level visibility）换来了可扩展性。<br>
+或者，还可以将控制功能的状态和/或计算分配到多个控制器上。提供一个严格一致的集中视图可能会阻碍响应时间和吞吐量。在保持可用性和分区容差的同时实现强一致性并不总是可行的。因此，选择一个合适的一致性水平是SDN中一个重要的设计权衡。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/sdn/">SDN</a>
+                </span><span><a href="/tags/paper/">Paper</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
                 <span>更新于 2022-01-18</span>
             </div><div class="post-info-mod"><span>
