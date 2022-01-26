@@ -8,8 +8,9 @@
 ~~你们这些学法的到底保护了些什么啊ちくしょう~~
 但是我会永远遵守开源精神，附上我的博客参考的一切。
 ## 友链 
-- lgt的博客：[https://ayamir.github.io/](https://ayamir.github.io/)
-- 黄鸡的博客：[https://hyiker.com/](https://hyiker.com/)
-- ClSlaid的博客：[https://clslaid.icu/](https://clslaid.icu/)
-- liCheng前辈的博客：[http://www.muzixing.com/](http://www.muzixing.com/)
+- lgt：[https://ayamir.github.io/](https://ayamir.github.io/)
+- 黄鸡：[https://hyiker.com/](https://hyiker.com/)
+- ClSlaid：[https://clslaid.icu/](https://clslaid.icu/)
+- liCheng前辈：[http://www.muzixing.com/](http://www.muzixing.com/)
+- Fine：[https://ffa2000.github.io/](https://ffa2000.github.io/)
 - 广告位招租

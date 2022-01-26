@@ -4,7 +4,86 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 18 Jan 2022 23:09:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发笔记——Ability</title>
+    <link>https://leeshy-tech.github.io/harmonyos_ability_note/</link>
+    <pubDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability_note/</guid>
+    <description><![CDATA[<h1 id="ability">Ability</h1>
+<p>官方解释如下：</p>
+<blockquote>
+<p>Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力（即可以包含多个Ability），HarmonyOS支持应用以Ability为单位进行部署。</p>
+</blockquote>
+<p>Ability相当于功能集合，把实现某个具体功能的逻辑归类到一起。分类如下：</p>
+<pre tabindex="0"><code>└─ Ability                     
+    ├─ FA   
+        └─ Page Ability：页面，可以与用户交互。     
+    └─ PA   
+        ├─ Service Ability：后台任务。      
+        └─ Data Ability：统一数据访问抽象。     
+</code></pre><h2 id="注册ability">注册Ability</h2>
+<p>要使用Ability必须要在config.json里进行配置，格式如下:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="nt">&#34;module&#34;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&#34;abilities&#34;</span><span class="p">:</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;page&#34;</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><p>配置项：<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/basic-config-file-elements-0000000000034463#ZH-CN_TOPIC_0000001064016070__table593616515457" target="_blank" rel="noopener noreffer">abilities&ndash;应用配置文件</a></p>
+<h2 id="page-ability">Page Ability</h2>
+<blockquote>
+<p>一个Page可以由一个或多个AbilitySlice构成，AbilitySlice是指应用的单个页面及其控制逻辑的总和。</p>
+</blockquote>
+<p>Page是Slice的集合，Slice = 页面 + 控制逻辑</p>
+<h3 id="ability生存周期">Ability生存周期</h3>
+<p>如图所示：<br>
+</p>
+<ul>
+<li>onStart()
+当系统首次创建Page实例时触发。开发者必须重写该方法，并在此配置默认显示的Slice。
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">setMainRoute</span><span class="o">(</span><span class="n">FooSlice</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div></li>
+<li>onActive()
+Page进入ACTIVE状态时调用，Page保持在此状态除非：应用进入后台或导航到其他页面，从而进入INACTIVE状态。</li>
+<li>onInactive()
+Page进入INACTIVE状态时调用。</li>
+<li>onBackground()
+Page由前台进入后台时调用，其调用之前一定会调用onInactive()。</li>
+<li>onForeground()
+Page由后台进入前台时调用，其调用之后一定会调用onActive()。</li>
+<li>onStop()
+系统销毁Page时调用。</li>
+</ul>
+<h3 id="abilityslice生命周期">AbilitySlice生命周期</h3>
+<blockquote>
+<p>AbilitySlice和Page具有相同的生命周期状态和同名的回调，当Page生命周期发生变化时，它的AbilitySlice也会发生相同的生命周期变化。此外，AbilitySlice还具有独立于Page的生命周期变化，这发生在同一Page中的AbilitySlice之间导航时，此时Page的生命周期状态不会改变。</p>
+</blockquote>
+<p>开发者必须重写AbilitySlice的onStart()回调，并在此方法中通过setUIContent()方法设置页面，如下所示：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java">    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+
+        <span class="n">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_main_layout</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div><h3 id="slice间导航">Slice间导航</h3>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999" target="_blank" rel="noopener noreffer">https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999</a></p>
+<h2 id="service-ability">Service Ability</h2>
+<blockquote>
+<p>基于Service模板的Ability主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。</p>
+</blockquote>
+<h2 id="data-ability">Data Ability</h2>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-ability-overview-0000000000029852" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
+]]></description>
+</item>
+<item>
     <title>论文笔记——On Scalability of SDN</title>
     <link>https://leeshy-tech.github.io/on_scalability_of_sdn_note/</link>
     <pubDate>Tue, 18 Jan 2022 23:09:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/on_scalability_of_sdn_note/</guid>
@@ -35,11 +114,11 @@ Kandoo[9]采用了一种不同的方法来分配控制平面。它定义了一�
 <li>包到达但是没有匹配到流规则</li>
 <li>交换机产生一个流请求给控制器</li>
 <li>控制器返回一个新的流转发规则</li>
-<li>交换机更新流表
-前三个步骤和最后一个步骤的性能部分取决于交换机能力和资源(管理CPU、内存等)【？这里为什么要说前三个和最后一个】。以及其软件堆栈的性能。第三步中的延迟是由控制器的资源以及控制程序的性能来决定。最后，交换机的FIB更新时间导致了完成流程设置过程的延迟。 <br>
-目前支持OpenFlow的软交换机性能远好于硬件交换机，原因是交换机上缺乏资源（管理CPU），对交换机芯片组和管理CPU之间的高频通信的支持不足，以及不佳的软件实现。可以预见，FIB更新时间将成为开关侧流设置延迟的主要因素。
-While we argue that controllers and, in the near future, switches would be able to sustain sufficient throughput with negligible latency for reactive flow setup, in the end the control logic determines the scalability of a reactive design. A control program installing an end-to-end path on a per-flow basis does not scale, because the per switch memory is fixed but the number of forwarding entries in the data path grows with the number of active flows in the network. However,  the control program may install aggregate rules matching a large number of micro-flows (thereby facing the same scalability challenges as a proactive design), or proactively install rules in the network core to provide end-to-end connectivity and identify quality of service (QoS) classes, while classifying and reactively labeling flows at the edge.  A viable solution to the scalability challenges of the proactive designs in the former class due to data path memory scarcity is proposed in DIFANE [5]; while the scalability  the latter class follows from the observation that the fanout of an edge switch and thus the number of flows initiated there is bounded (just add edge controllers as the network grows in size).  【没看懂】</li>
+<li>交换机更新流表</li>
 </ul>
+<p>前三个步骤和最后一个步骤的性能部分取决于交换机能力和资源(管理CPU、内存等)【？这里为什么要说前三个和最后一个】。以及其软件堆栈的性能。第三步中的延迟是由控制器的资源以及控制程序的性能来决定。最后，交换机的FIB更新时间导致了完成流程设置过程的延迟。 <br>
+目前支持OpenFlow的软交换机性能远好于硬件交换机，原因是交换机上缺乏资源（管理CPU），对交换机芯片组和管理CPU之间的高频通信的支持不足，以及不佳的软件实现。可以预见，FIB更新时间将成为开关侧流设置延迟的主要因素。
+While we argue that controllers and, in the near future, switches would be able to sustain sufficient throughput with negligible latency for reactive flow setup, in the end the control logic determines the scalability of a reactive design. A control program installing an end-to-end path on a per-flow basis does not scale, because the per switch memory is fixed but the number of forwarding entries in the data path grows with the number of active flows in the network. However,  the control program may install aggregate rules matching a large number of micro-flows (thereby facing the same scalability challenges as a proactive design), or proactively install rules in the network core to provide end-to-end connectivity and identify quality of service (QoS) classes, while classifying and reactively labeling flows at the edge.  A viable solution to the scalability challenges of the proactive designs in the former class due to data path memory scarcity is proposed in DIFANE [5]; while the scalability  the latter class follows from the observation that the fanout of an edge switch and thus the number of flows initiated there is bounded (just add edge controllers as the network grows in size).  【没看懂】</p>
 <h3 id="故障恢复">故障恢复</h3>
 <p>早期的系统为单中心控制的设计树立了榜样，因此对故障的恢复能力一直是一个主要问题。一个状态同步的从控制器将足以从控制器故障中恢复，但一个网络分区将留下一半的网络无脑。在多控制器网络中，如果有适当的控制器发现机制，交换机总是可以发现一个存在于其分区中的控制器。因此，在一个可伸缩的发现机制下，控制器故障不会对SDN的可伸缩性构成挑战。 
 响应于链路失效的收敛有五个步骤。交换机检测到变化。然后交换机通知控制器。在收到通知后，控制程序计算修复操作，并将更新推到受影响的数据路径元素，这些元素反过来更新它们的转发表。在传统网络中，链路故障通知会在整个网络中泛滥，而在SDN中，该信息直接发送到控制器。因此，SDN网络中的信息传播时延并不比传统网络差。另外，SDN的一个优点是，计算是在更有能力的控制机器上进行的，而不是在所有交换机的弱管理cpu上进行的，无论它们是否受到故障的影响。 <br>
