@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>鸿蒙开发实践——页面导航 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="鸿蒙开发实践——页面导航" />
+<meta property="og:description" content="鸿蒙应用开发实践，实现Slice间的导航、PageAbility间的导航以及传参。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/harmonyos_pagetopage/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-01-28T23:32:06+08:00" />
+<meta property="article:modified_time" content="2022-01-28T23:32:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="鸿蒙开发实践——页面导航"/>
+<meta name="twitter:description" content="鸿蒙应用开发实践，实现Slice间的导航、PageAbility间的导航以及传参。"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/harmonyos_pagetopage/" /><link rel="prev" href="https://leeshy-tech.github.io/harmonyos_studioconfig/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "鸿蒙开发实践——页面导航",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/harmonyos_pagetopage\/"
+        },"genre": "posts","keywords": "HarmonyOS, Java, APP","wordcount":  1210 ,
+        "url": "https:\/\/leeshy-tech.github.io\/harmonyos_pagetopage\/","datePublished": "2022-01-28T23:32:06+08:00","dateModified": "2022-01-28T23:32:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">鸿蒙开发实践——页面导航</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/harmonyos/"><i class="far fa-folder fa-fw"></i>HarmonyOS</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-28">2022-01-28</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1210 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#项目简介">项目简介</a>
+      <ul>
+        <li><a href="#项目结构">项目结构</a></li>
+        <li><a href="#效果">效果</a></li>
+      </ul>
+    </li>
+    <li><a href="#intent">intent</a></li>
+    <li><a href="#slice间导航">Slice间导航</a></li>
+    <li><a href="#slice间传参">Slice间传参</a></li>
+    <li><a href="#pageability间导航">PageAbility间导航</a></li>
+    <li><a href="#结束语">结束语</a>
+      <ul>
+        <li><a href="#项目源码">项目源码</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="页面导航">页面导航</h1>
+<h2 id="项目简介">项目简介</h2>
+<h3 id="项目结构">项目结构</h3>
+<pre tabindex="0"><code>├─ entry.src.main
+	├─ com.example.page_to_page
+        ├─slice
+            ├─ AnotherAbilitySlice
+            ├─ MainAbilitySlice
+            └─ SecondAbilitySlice
+        ├─ AnotherAbility	
+        ├─ MainAbility
+        └─ MyApplication
+	└─ resources.base.layout
+        ├─ ability_another.xml
+        ├─ ability_main.xml
+        └─ ability_second.xml
+</code></pre><h3 id="效果">效果</h3>
+<p>点击按钮一，从MainAbilitySlice跳转到SecondAbilitySlice。</p>
+<p>点击按钮二，从MainAbilitySlice跳转到SecondAbilitySlice，并传递参数字符串。</p>
+<p>点击按钮三，从MainAbility的MainAbilitySlice跳转到AnotherAbility的AnotherAbilitySlice。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/PageToPage/20220128_225821.gif"
+        data-srcset="/image/PageToPage/20220128_225821.gif, /image/PageToPage/20220128_225821.gif 1.5x, /image/PageToPage/20220128_225821.gif 2x"
+        data-sizes="auto"
+        alt="/image/PageToPage/20220128_225821.gif"
+        title="20220128_225821" /></p>
+<h2 id="intent">intent</h2>
+<blockquote>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-intent-0000000000038799" target="_blank" rel="noopener noreffer">HarmonyOS文档——intent</a></p>
+</blockquote>
+<p>intent是对象之间传递信息的载体，Slice之间的导航、传参以及Ability之间的导航都是基于intent。Intent的构成元素包括Operation与Parameters。Operation是执行的操作，Parameters则是携带的参数。</p>
+<h2 id="slice间导航">Slice间导航</h2>
+<p>核心代码：</p>
+<p>MainAbilitySlice的onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Button</span> <span class="n">btn1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn1</span><span class="o">);</span>
+<span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span><span class="o">-&gt;</span><span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="k">new</span> <span class="n">Intent</span><span class="o">()));</span>
+</code></pre></div><ul>
+<li>通过id获取按钮对象。</li>
+<li>给按钮绑定事件监听器，执行present方法。</li>
+<li>这里只是导航，没有其他操作，所以传递一个默认intent即可。</li>
+</ul>
+<h2 id="slice间传参">Slice间传参</h2>
+<p>核心代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Button</span> <span class="n">btn2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn2</span><span class="o">);</span>
+<span class="n">btn2</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">Intent</span> <span class="n">intent1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+    <span class="n">intent1</span><span class="o">.</span><span class="na">setParam</span><span class="o">(</span><span class="s">&#34;my_string&#34;</span><span class="o">,</span><span class="s">&#34;从MainAbilitySlice传参&#34;</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent1</span><span class="o">);</span>
+<span class="o">});</span>
+</code></pre></div><p>跟导航部分思路相同。</p>
+<p>传参的关键是构造intent对象的Parameters属性，使用setParam方法存储键值对。setParam方法有很多重载，包括int，string等等，但是没有对象类型，也就是传参不能传对象。</p>
+<h2 id="pageability间导航">PageAbility间导航</h2>
+<p>核心代码：</p>
+<p>MainAbilitySlice类的onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Button</span> <span class="n">btn3</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn3</span><span class="o">);</span>
+<span class="n">btn3</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span> <span class="o">-&gt;</span> <span class="n">navigateToAnotherPage</span><span class="o">(</span><span class="n">listener</span><span class="o">));</span>
+</code></pre></div><p>设置监听器的逻辑相同，不过这次我们让监听器执行我们的自定义函数navigateToAnotherPage。</p>
+<p>MainAbilitySlice类新增:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">navigateToAnotherPage</span><span class="o">(</span><span class="n">Component</span> <span class="n">component</span><span class="o">){</span>
+        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+        <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>						<span class="c1">//空字符串为本机
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.example.page_to_page&#34;</span><span class="o">)</span><span class="c1">//本应用的标识
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.example.page_to_page.AnotherAbility&#34;</span><span class="o">)</span><span class="c1">//想启动的Ability
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="n">intent</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">startAbility</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div><ul>
+<li>使用OperationBuilder构建一个Operation，设置给intent。</li>
+<li>将intent传给监听器</li>
+</ul>
+<p>页面跳转的核心是intent对象的Operation属性，这里构建Operation有三个参数DeviceId、BundleName、AbilityName，因为鸿蒙可以启动任意设备的任意应用的任意Ability，可能这就是万物互联吧。</p>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目源码">项目源码</h3>
+<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/page_to_page" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/page_to_page</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-intent-0000000000038799" target="_blank" rel="noopener noreffer">HarmonyOS文档——intent</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/harmonyos/">HarmonyOS</a>
+                </span><span><a href="/tags/java/">Java</a>
+                </span><span><a href="/tags/app/">APP</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-01-28</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/harmonyos_pagetopage/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/harmonyos_studioconfig/" class="prev" rel="prev" title="鸿蒙开发笔记——开发工具DevEco Studio"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>

@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
             <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 28 Jan 2022 23:32:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/harmonyos/" rel="self" type="application/rss+xml" /><item>
     <title>鸿蒙开发实践——页面导航</title>
-    <link>https://leeshy-tech.github.io/harmony_pagetopage/</link>
-    <pubDate>Fri, 28 Jan 2022 23:32:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmony_pagetopage/</guid>
+    <link>https://leeshy-tech.github.io/harmonyos_pagetopage/</link>
+    <pubDate>Fri, 28 Jan 2022 23:32:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_pagetopage/</guid>
     <description><![CDATA[<h1 id="页面导航">页面导航</h1>
 <h2 id="项目简介">项目简介</h2>
 <h3 id="项目结构">项目结构</h3>
@@ -80,7 +80,7 @@
 <h2 id="结束语">结束语</h2>
 <h3 id="项目源码">项目源码</h3>
 <p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/page_to_page" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/page_to_page</a></p>
-<h2 id="参考文献">参考文献</h2>
+<h3 id="参考文献">参考文献</h3>
 <p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
 <p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-intent-0000000000038799" target="_blank" rel="noopener noreffer">HarmonyOS文档——intent</a></p>
 ]]></description>
@@ -194,8 +194,8 @@
 </item>
 <item>
     <title>程序报错总结——HarmonyOS</title>
-    <link>https://leeshy-tech.github.io/application_error_harmonyos/</link>
-    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/application_error_harmonyos/</guid>
+    <link>https://leeshy-tech.github.io/harmonyos_application_error/</link>
+    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_application_error/</guid>
     <description><![CDATA[<blockquote>
 <p>不可转换的类型；无法将 &lsquo;ohos.agp.components.Component&rsquo; 转换为 &lsquo;ohos.ai.cv.text.Text&rsquo;</p>
 </blockquote>

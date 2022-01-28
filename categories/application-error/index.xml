@@ -6,8 +6,8 @@
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
             <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/application-error/" rel="self" type="application/rss+xml" /><item>
     <title>程序报错总结——HarmonyOS</title>
-    <link>https://leeshy-tech.github.io/application_error_harmonyos/</link>
-    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/application_error_harmonyos/</guid>
+    <link>https://leeshy-tech.github.io/harmonyos_application_error/</link>
+    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_application_error/</guid>
     <description><![CDATA[<blockquote>
 <p>不可转换的类型；无法将 &lsquo;ohos.agp.components.Component&rsquo; 转换为 &lsquo;ohos.ai.cv.text.Text&rsquo;</p>
 </blockquote>
