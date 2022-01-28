@@ -4,7 +4,88 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 28 Jan 2022 23:32:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发实践——页面导航</title>
+    <link>https://leeshy-tech.github.io/harmony_pagetopage/</link>
+    <pubDate>Fri, 28 Jan 2022 23:32:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmony_pagetopage/</guid>
+    <description><![CDATA[<h1 id="页面导航">页面导航</h1>
+<h2 id="项目简介">项目简介</h2>
+<h3 id="项目结构">项目结构</h3>
+<pre tabindex="0"><code>├─ entry.src.main
+	├─ com.example.page_to_page
+        ├─slice
+            ├─ AnotherAbilitySlice
+            ├─ MainAbilitySlice
+            └─ SecondAbilitySlice
+        ├─ AnotherAbility	
+        ├─ MainAbility
+        └─ MyApplication
+	└─ resources.base.layout
+        ├─ ability_another.xml
+        ├─ ability_main.xml
+        └─ ability_second.xml
+</code></pre><h3 id="效果">效果</h3>
+<p>点击按钮一，从MainAbilitySlice跳转到SecondAbilitySlice。</p>
+<p>点击按钮二，从MainAbilitySlice跳转到SecondAbilitySlice，并传递参数字符串。</p>
+<p>点击按钮三，从MainAbility的MainAbilitySlice跳转到AnotherAbility的AnotherAbilitySlice。</p>
+<p></p>
+<h2 id="intent">intent</h2>
+<blockquote>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-intent-0000000000038799" target="_blank" rel="noopener noreffer">HarmonyOS文档——intent</a></p>
+</blockquote>
+<p>intent是对象之间传递信息的载体，Slice之间的导航、传参以及Ability之间的导航都是基于intent。Intent的构成元素包括Operation与Parameters。Operation是执行的操作，Parameters则是携带的参数。</p>
+<h2 id="slice间导航">Slice间导航</h2>
+<p>核心代码：</p>
+<p>MainAbilitySlice的onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Button</span> <span class="n">btn1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn1</span><span class="o">);</span>
+<span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span><span class="o">-&gt;</span><span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="k">new</span> <span class="n">Intent</span><span class="o">()));</span>
+</code></pre></div><ul>
+<li>通过id获取按钮对象。</li>
+<li>给按钮绑定事件监听器，执行present方法。</li>
+<li>这里只是导航，没有其他操作，所以传递一个默认intent即可。</li>
+</ul>
+<h2 id="slice间传参">Slice间传参</h2>
+<p>核心代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Button</span> <span class="n">btn2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn2</span><span class="o">);</span>
+<span class="n">btn2</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">Intent</span> <span class="n">intent1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+    <span class="n">intent1</span><span class="o">.</span><span class="na">setParam</span><span class="o">(</span><span class="s">&#34;my_string&#34;</span><span class="o">,</span><span class="s">&#34;从MainAbilitySlice传参&#34;</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent1</span><span class="o">);</span>
+<span class="o">});</span>
+</code></pre></div><p>跟导航部分思路相同。</p>
+<p>传参的关键是构造intent对象的Parameters属性，使用setParam方法存储键值对。setParam方法有很多重载，包括int，string等等，但是没有对象类型，也就是传参不能传对象。</p>
+<h2 id="pageability间导航">PageAbility间导航</h2>
+<p>核心代码：</p>
+<p>MainAbilitySlice类的onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">Button</span> <span class="n">btn3</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn3</span><span class="o">);</span>
+<span class="n">btn3</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span> <span class="o">-&gt;</span> <span class="n">navigateToAnotherPage</span><span class="o">(</span><span class="n">listener</span><span class="o">));</span>
+</code></pre></div><p>设置监听器的逻辑相同，不过这次我们让监听器执行我们的自定义函数navigateToAnotherPage。</p>
+<p>MainAbilitySlice类新增:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kt">void</span> <span class="nf">navigateToAnotherPage</span><span class="o">(</span><span class="n">Component</span> <span class="n">component</span><span class="o">){</span>
+        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+        <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>						<span class="c1">//空字符串为本机
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.example.page_to_page&#34;</span><span class="o">)</span><span class="c1">//本应用的标识
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.example.page_to_page.AnotherAbility&#34;</span><span class="o">)</span><span class="c1">//想启动的Ability
+</span><span class="c1"></span>                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="n">intent</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">startAbility</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+    <span class="o">}</span>
+</code></pre></div><ul>
+<li>使用OperationBuilder构建一个Operation，设置给intent。</li>
+<li>将intent传给监听器</li>
+</ul>
+<p>页面跳转的核心是intent对象的Operation属性，这里构建Operation有三个参数DeviceId、BundleName、AbilityName，因为鸿蒙可以启动任意设备的任意应用的任意Ability，可能这就是万物互联吧。</p>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目源码">项目源码</h3>
+<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/page_to_page" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/page_to_page</a></p>
+<h2 id="参考文献">参考文献</h2>
+<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-intent-0000000000038799" target="_blank" rel="noopener noreffer">HarmonyOS文档——intent</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发笔记——开发工具DevEco Studio</title>
     <link>https://leeshy-tech.github.io/harmonyos_studioconfig/</link>
     <pubDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_studioconfig/</guid>
@@ -96,6 +177,17 @@
 </ul>
 <p></p>
 <h2 id="项目结构">项目结构</h2>
+<h2 id="调试方法">调试方法</h2>
+<p>鸿蒙项目有两种调试方式：previewer和在设备运行</p>
+<h4 id="previewer">Previewer</h4>
+<p>previewer本质上是个页面预览器，预览的页面是工作区前台的Page。位置在：</p>
+<p></p>
+<h4 id="在设备运行">在设备运行</h4>
+<p>设备有很多种，本地模拟器、远程模拟器、远程真机等等（<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/run_simulator-0000001053303709" target="_blank" rel="noopener noreffer">细节可以看官方文档</a>），都是将整个项目完整的打包成应用在设备上运行。推荐使用远程模拟器，因为本地模拟器会占用相当大一部分的本机资源。在右上角打开设备管理器即可进行管理。</p>
+<p></p>
+<h3 id="选择调试方式">选择调试方式</h3>
+<p>设备：不管是远程还是本地，使用上都会有一定的卡顿，并且项目具有默认显示页面，调试非默认页面时，需要保证跳转逻辑等等无误。</p>
+<p>预览器：工作区打开什么文件就默认预览什么文件，不需要考虑其他页面或者Ability的逻辑，但是，预览器是高度阉割的，某些逻辑不能很好的在预览器运行，比如我昨天遇到一个报错`[ClassCastException: java.lang.Object cannot be cast to java.lang.String，在预览器中运行就会报这个错误无法启动预览器，但是在设备中运行就正常。所以要灵活选择调试方式。当然，不提供页面服务的Ability的肯定要在设备上测试。</p>
 <h2 id="结束语">结束语</h2>
 <h3 id="参考文献">参考文献</h3>
 ]]></description>
@@ -724,121 +816,6 @@ ifconfig s1 up
 <a href="https://www.bilibili.com/video/BV1eg411G7pW?spm_id_from=333.1007.top_right_bar_window_default_collection.content.click" target="_blank" rel="noopener noreffer">TCP/IP网络通信之Socket编程入门</a></p>
 <h3 id="备注">备注</h3>
 <p>本文依赖代码文件：<a href="https://github.com/leeshy-tech/SDN_on_Raspberry_pi" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/SDN_on_Raspberry_pi</a></p>
-]]></description>
-</item>
-<item>
-    <title>OVS命令笔记</title>
-    <link>https://leeshy-tech.github.io/ovs_cli/</link>
-    <pubDate>Fri, 07 Jan 2022 16:08:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/ovs_cli/</guid>
-    <description><![CDATA[<h2 id="查看信息">查看信息</h2>
-<p>查看openvswitch的状态：<code>ovs-vsctl show</code><br>
-查看openvswitch中的所有网桥：<code>ovs-vsctl list-br</code><br>
-查看网桥的信息：<code>ovs-ofctl show br0</code>  <br>
-查看网桥中的所有端口：<code>ovs-vsctl list-ports br0</code><br>
-查看网桥各端口状态：<code>ovs-ofctl dump-ports br0</code><br>
-查看网桥上的流表：<code>ovs-ofctl dump-flows br0</code> <br>
-查看网桥故障模式：<code>ovs-vsctl get-fail-mode br0</code>  <br>
-查看网桥是否开启stp协议：<code>ovs-vsctl get bridge br0 stp_enable</code><br>
-查看网桥所有配置信息：<code>ovs-vsctl list bridge br0</code> <br>
-查看端口所有特性信息：<code>ovs-vsctl list port br0 port1 </code></p>
-<h2 id="网桥操作">网桥操作</h2>
-<p>添加网桥：<code>ovs-vsctl add-br br0</code> <br>
-删除网桥：<code>ovs-vsctl del-br br0</code> <br>
-将网桥连接到控制器：<code>ovs-vsctl set-controller br0 tcp:&lt;controller IP&gt;:&lt;port&gt;</code><br>
-设置网桥的故障模式：<code>ovs-vsctl set-fail-mode br0 &lt;secure or standalone&gt; </code><br>
-给网桥开启stp协议：<code>ovs-vsctl set bridge br0 stp_enable=true</code></p>
-<h2 id="端口操作">端口操作</h2>
-<p>增加端口：<code>ovs-vsctl add-port br0 port1</code><br>
-删除端口：<code>ovs-vsctl del-port br0 port1</code> <br>
-设置端口号：<code>ovs-vsctl set Interface port1 ofport_request=&lt;number&gt;</code> <br>
-设置端口类型：<code>ovs-vsctl set Interface p4 type=&lt;type&gt;</code>    </p>
-<table>
-<thead>
-<tr>
-<th>端口类型</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Normal</td>
-<td>普通端口</td>
-</tr>
-<tr>
-<td>Internal</td>
-<td>这个端口相当于一个虚拟网卡</td>
-</tr>
-<tr>
-<td>Patch</td>
-<td>用于连接两个网桥的端口</td>
-</tr>
-<tr>
-<td>Tunne</td>
-<td>隧道端口是一种虚拟端口，支持使用gre或vxlan等隧道技术与位于网络上其他位置的远程端口通讯。</td>
-</tr>
-</tbody>
-</table>
-<h2 id="网卡操作">网卡操作</h2>
-<p>将物理网卡挂接到网桥：<code>ovs-vsctl add-port br0 eth0</code><br>
-列出所有挂接到网卡的网桥：<code>ovs-vsctl port-to-br eth0</code><br>
-删除网桥上已经挂接的网卡：<code>ovs-vsctl del-port br0 eth0</code></p>
-<h2 id="流表操作">流表操作</h2>
-<p>添加流表：<code>ovs-ofctl add-flow br0 &lt;match&gt;,&lt;action&gt;</code>   <br>
-删除流表：<code>ovs-ofctl add-flow br0 &lt;match&gt;</code></p>
-<h3 id="流表动作-action">流表动作 action</h3>
-<p>从端口转发：<code>actions=output:&lt;number&gt;</code>  <br>
-丢弃数据包：<code>actions=drop</code><br>
-广播：<code>actions=NORMAL</code></p>
-<h3 id="匹配项-match">匹配项 match</h3>
-<p>如有多个匹配项，之间用逗号隔开。  </p>
-<table>
-<thead>
-<tr>
-<th>匹配项</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>in_port=port</td>
-<td>网桥端口号</td>
-</tr>
-<tr>
-<td>dl_vlan=vlan</td>
-<td>数据包的 VLAN Tag 值</td>
-</tr>
-<tr>
-<td>dl_vlan_pcp=priority</td>
-<td>VLAN 优先级，改值取值区间为[0-7]。数字越大，优先级越高。</td>
-</tr>
-<tr>
-<td>dl_src=<!-- raw HTML omitted -->,dl_dst=<!-- raw HTML omitted --></td>
-<td>匹配源或者目标的 MAC 地址</td>
-</tr>
-<tr>
-<td>dl_type=ethertype</td>
-<td>匹配以太网协议类型 ,IPv4:0x0800,IPv6:0x086dd,ARP:0x0806</td>
-</tr>
-<tr>
-<td>nw_src=<!-- raw HTML omitted -->,nw_dst=<!-- raw HTML omitted --></td>
-<td>匹配源或目的IP，前提要设定dl_type</td>
-</tr>
-<tr>
-<td>table=number</td>
-<td>指定流表编号</td>
-</tr>
-<tr>
-<td>reg<!-- raw HTML omitted -->=value[/mask]</td>
-<td>网桥中寄存器的值</td>
-</tr>
-<tr>
-<td>tp_src=number,tp_dst=number</td>
-<td>TCP协议源或目的端口</td>
-</tr>
-</tbody>
-</table>
-<h2 id="参考文献">参考文献</h2>
-<p><a href="https://www.cnblogs.com/goldsunshine/p/11527928.html" target="_blank" rel="noopener noreffer">OpenvSwitch系列</a></p>
 ]]></description>
 </item>
 </channel>

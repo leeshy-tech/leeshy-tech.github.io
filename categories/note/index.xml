@@ -96,6 +96,17 @@
 </ul>
 <p></p>
 <h2 id="项目结构">项目结构</h2>
+<h2 id="调试方法">调试方法</h2>
+<p>鸿蒙项目有两种调试方式：previewer和在设备运行</p>
+<h4 id="previewer">Previewer</h4>
+<p>previewer本质上是个页面预览器，预览的页面是工作区前台的Page。位置在：</p>
+<p></p>
+<h4 id="在设备运行">在设备运行</h4>
+<p>设备有很多种，本地模拟器、远程模拟器、远程真机等等（<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/run_simulator-0000001053303709" target="_blank" rel="noopener noreffer">细节可以看官方文档</a>），都是将整个项目完整的打包成应用在设备上运行。推荐使用远程模拟器，因为本地模拟器会占用相当大一部分的本机资源。在右上角打开设备管理器即可进行管理。</p>
+<p></p>
+<h3 id="选择调试方式">选择调试方式</h3>
+<p>设备：不管是远程还是本地，使用上都会有一定的卡顿，并且项目具有默认显示页面，调试非默认页面时，需要保证跳转逻辑等等无误。</p>
+<p>预览器：工作区打开什么文件就默认预览什么文件，不需要考虑其他页面或者Ability的逻辑，但是，预览器是高度阉割的，某些逻辑不能很好的在预览器运行，比如我昨天遇到一个报错`[ClassCastException: java.lang.Object cannot be cast to java.lang.String，在预览器中运行就会报这个错误无法启动预览器，但是在设备中运行就正常。所以要灵活选择调试方式。当然，不提供页面服务的Ability的肯定要在设备上测试。</p>
 <h2 id="结束语">结束语</h2>
 <h3 id="参考文献">参考文献</h3>
 ]]></description>
