@@ -1,0 +1,20 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Application error - 分类 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/categories/application-error/</link>
+        <description>Application error - 分类 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/application-error/" rel="self" type="application/rss+xml" /><item>
+    <title>程序报错总结——HarmonyOS</title>
+    <link>https://leeshy-tech.github.io/application_error_harmonyos/</link>
+    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/application_error_harmonyos/</guid>
+    <description><![CDATA[<blockquote>
+<p>不可转换的类型；无法将 &lsquo;ohos.agp.components.Component&rsquo; 转换为 &lsquo;ohos.ai.cv.text.Text&rsquo;</p>
+</blockquote>
+<pre tabindex="0"><code>Text text = (Text) findComponentById(ResourceTable.Id_text1);
+</code></pre><p>原因：使用Tab键补全Text时，Studio自动引库引到了错误的库<code>import ohos.ai.cv.text.Text;</code>，实际应当是<code>import ohos.agp.components.Text;</code>。</p>
+<p></p>
+]]></description>
+</item>
+</channel>
+</rss>

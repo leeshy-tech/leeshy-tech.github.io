@@ -1,0 +1,104 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>DevEco Studio - 标签 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/tags/deveco-studio/</link>
+        <description>DevEco Studio - 标签 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/deveco-studio/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发笔记——开发工具DevEco Studio</title>
+    <link>https://leeshy-tech.github.io/harmonyos_studioconfig/</link>
+    <pubDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_studioconfig/</guid>
+    <description><![CDATA[<h1 id="deveco-studio">DevEco Studio</h1>
+<blockquote>
+<p>HUAWEI DevEco Studio（获取工具请<a href="https://developer.harmonyos.com/cn/develop/deveco-studio" target="_blank" rel="noopener noreffer">点击链接下载</a>，以下简称DevEco Studio）是基于IntelliJ IDEA Community开源版本打造，面向华为终端全场景多设备的一站式集成开发环境（IDE），为开发者提供工程模板创建、开发、编译、调试、发布等E2E的HarmonyOS应用/服务开发</p>
+</blockquote>
+<h2 id="配置">配置</h2>
+<p>DevEco是基于IDEA打造的，所以二者非常相似，有些配置不会的话可以直接google IDEA的相关配置。</p>
+<h3 id="界面风格">界面风格</h3>
+<blockquote>
+<p>将界面风格改为暗黑模式</p>
+</blockquote>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Appearance &amp; Behavior &gt; Appearance</p>
+</li>
+<li>
+<p>Theme：改为Darcula，点击OK。</p>
+<p></p>
+</li>
+</ul>
+<h3 id="字体">字体</h3>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; Font</p>
+</li>
+<li>
+<p>Font：字体风格，我个人比较喜欢Inconsolata ; Size：字号 ; Line height：行距</p>
+</li>
+</ul>
+<p></p>
+<h3 id="注释颜色">注释颜色</h3>
+<blockquote>
+<p>初始的注释颜色非常浅，还是灰色，所以想调成亮一点的绿色。</p>
+</blockquote>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; Color Scheme &gt; Language Default</p>
+</li>
+<li>
+<p>点开Comments，其中Block comment是块注释，Line comment是行注释，尽量二者颜色统一吧，颜色栏是可以复制的。</p>
+</li>
+</ul>
+<p></p>
+<h3 id="输入联想大小写不敏感">输入联想——大小写不敏感</h3>
+<blockquote>
+<p>初始的输入联想是大小写敏感的，Str才能补全成String，设置大小写不敏感，使str也能补全成String。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Editor &gt; General &gt; Code Completion</li>
+<li>去掉右侧Match case的勾</li>
+</ul>
+<p></p>
+<p>效果如下：</p>
+<p></p>
+<h3 id="自动引包优化">自动引包优化</h3>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; General &gt; Auto import</p>
+</li>
+<li>
+<p>在右侧勾上如图的两句话。</p>
+<p></p>
+</li>
+</ul>
+<h3 id="汉化">汉化</h3>
+<blockquote>
+<p>编辑器设中文其实意义不大，汉化部分很少，都是一些基础的单词，但是我看到中文有一种莫名的安心感，所以还是汉化了。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Plugins</li>
+<li>搜索chinese，在installed里找到Chinese (Simplified) ，点击enable。</li>
+<li>注意你会在Marketplace里找到Chinese (Simplified) Language Pack，它是IDEA的插件，适配效果没有内置的好。</li>
+</ul>
+<p></p>
+<h2 id="项目结构">项目结构</h2>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+]]></description>
+</item>
+</channel>
+</rss>

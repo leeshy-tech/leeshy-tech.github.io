@@ -4,7 +4,115 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发笔记——开发工具DevEco Studio</title>
+    <link>https://leeshy-tech.github.io/harmonyos_studioconfig/</link>
+    <pubDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_studioconfig/</guid>
+    <description><![CDATA[<h1 id="deveco-studio">DevEco Studio</h1>
+<blockquote>
+<p>HUAWEI DevEco Studio（获取工具请<a href="https://developer.harmonyos.com/cn/develop/deveco-studio" target="_blank" rel="noopener noreffer">点击链接下载</a>，以下简称DevEco Studio）是基于IntelliJ IDEA Community开源版本打造，面向华为终端全场景多设备的一站式集成开发环境（IDE），为开发者提供工程模板创建、开发、编译、调试、发布等E2E的HarmonyOS应用/服务开发</p>
+</blockquote>
+<h2 id="配置">配置</h2>
+<p>DevEco是基于IDEA打造的，所以二者非常相似，有些配置不会的话可以直接google IDEA的相关配置。</p>
+<h3 id="界面风格">界面风格</h3>
+<blockquote>
+<p>将界面风格改为暗黑模式</p>
+</blockquote>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Appearance &amp; Behavior &gt; Appearance</p>
+</li>
+<li>
+<p>Theme：改为Darcula，点击OK。</p>
+<p></p>
+</li>
+</ul>
+<h3 id="字体">字体</h3>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; Font</p>
+</li>
+<li>
+<p>Font：字体风格，我个人比较喜欢Inconsolata ; Size：字号 ; Line height：行距</p>
+</li>
+</ul>
+<p></p>
+<h3 id="注释颜色">注释颜色</h3>
+<blockquote>
+<p>初始的注释颜色非常浅，还是灰色，所以想调成亮一点的绿色。</p>
+</blockquote>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; Color Scheme &gt; Language Default</p>
+</li>
+<li>
+<p>点开Comments，其中Block comment是块注释，Line comment是行注释，尽量二者颜色统一吧，颜色栏是可以复制的。</p>
+</li>
+</ul>
+<p></p>
+<h3 id="输入联想大小写不敏感">输入联想——大小写不敏感</h3>
+<blockquote>
+<p>初始的输入联想是大小写敏感的，Str才能补全成String，设置大小写不敏感，使str也能补全成String。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Editor &gt; General &gt; Code Completion</li>
+<li>去掉右侧Match case的勾</li>
+</ul>
+<p></p>
+<p>效果如下：</p>
+<p></p>
+<h3 id="自动引包优化">自动引包优化</h3>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; General &gt; Auto import</p>
+</li>
+<li>
+<p>在右侧勾上如图的两句话。</p>
+<p></p>
+</li>
+</ul>
+<h3 id="汉化">汉化</h3>
+<blockquote>
+<p>编辑器设中文其实意义不大，汉化部分很少，都是一些基础的单词，但是我看到中文有一种莫名的安心感，所以还是汉化了。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Plugins</li>
+<li>搜索chinese，在installed里找到Chinese (Simplified) ，点击enable。</li>
+<li>注意你会在Marketplace里找到Chinese (Simplified) Language Pack，它是IDEA的插件，适配效果没有内置的好。</li>
+</ul>
+<p></p>
+<h2 id="项目结构">项目结构</h2>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+]]></description>
+</item>
+<item>
+    <title>程序报错总结——HarmonyOS</title>
+    <link>https://leeshy-tech.github.io/application_error_harmonyos/</link>
+    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/application_error_harmonyos/</guid>
+    <description><![CDATA[<blockquote>
+<p>不可转换的类型；无法将 &lsquo;ohos.agp.components.Component&rsquo; 转换为 &lsquo;ohos.ai.cv.text.Text&rsquo;</p>
+</blockquote>
+<pre tabindex="0"><code>Text text = (Text) findComponentById(ResourceTable.Id_text1);
+</code></pre><p>原因：使用Tab键补全Text时，Studio自动引库引到了错误的库<code>import ohos.ai.cv.text.Text;</code>，实际应当是<code>import ohos.agp.components.Text;</code>。</p>
+<p></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发笔记——Ability</title>
     <link>https://leeshy-tech.github.io/harmonyos_ability_note/</link>
     <pubDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability_note/</guid>
@@ -38,27 +146,37 @@
 </blockquote>
 <p>Page是Slice的集合，Slice = 页面 + 控制逻辑</p>
 <h3 id="ability生存周期">Ability生存周期</h3>
-<p>如图所示：<br>
-</p>
+<p>如图所示：  </p>
 <ul>
-<li>onStart()
-当系统首次创建Page实例时触发。开发者必须重写该方法，并在此配置默认显示的Slice。
+<li>
+<p>onStart()
+当系统首次创建Page实例时触发。开发者必须重写该方法，并在此配置默认显示的Slice。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Override</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
     <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
     <span class="kd">super</span><span class="o">.</span><span class="na">setMainRoute</span><span class="o">(</span><span class="n">FooSlice</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
 <span class="o">}</span>
 </code></pre></div></li>
-<li>onActive()
-Page进入ACTIVE状态时调用，Page保持在此状态除非：应用进入后台或导航到其他页面，从而进入INACTIVE状态。</li>
-<li>onInactive()
-Page进入INACTIVE状态时调用。</li>
-<li>onBackground()
-Page由前台进入后台时调用，其调用之前一定会调用onInactive()。</li>
-<li>onForeground()
-Page由后台进入前台时调用，其调用之后一定会调用onActive()。</li>
-<li>onStop()
-系统销毁Page时调用。</li>
+<li>
+<p>onActive()
+Page进入ACTIVE状态时调用，Page保持在此状态除非：应用进入后台或导航到其他页面，从而进入INACTIVE状态。</p>
+</li>
+<li>
+<p>onInactive()
+Page进入INACTIVE状态时调用。</p>
+</li>
+<li>
+<p>onBackground()
+Page由前台进入后台时调用，其调用之前一定会调用onInactive()。</p>
+</li>
+<li>
+<p>onForeground()
+Page由后台进入前台时调用，其调用之后一定会调用onActive()。</p>
+</li>
+<li>
+<p>onStop()
+系统销毁Page时调用。</p>
+</li>
 </ul>
 <h3 id="abilityslice生命周期">AbilitySlice生命周期</h3>
 <blockquote>
@@ -71,8 +189,14 @@ Page由后台进入前台时调用，其调用之后一定会调用onActive()。
 
         <span class="n">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_main_layout</span><span class="o">);</span>
     <span class="o">}</span>
-</code></pre></div><h3 id="slice间导航">Slice间导航</h3>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999" target="_blank" rel="noopener noreffer">https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999</a></p>
+</code></pre></div><blockquote>
+<p>setUIContext( )提供了两个重载：</p>
+<p>setUIContext( int )：通过布局文件的ID，加载layout目录下的xml文件完成页面渲染。</p>
+<p>setUIContext(  ComponentContainer )：加载使用Java创建的组件完成页面渲染。</p>
+</blockquote>
+<h3 id="slice间导航">Slice间导航</h3>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999" target="_blank" rel="noopener noreffer">https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999</a><br>
+<a href="https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent" target="_blank" rel="noopener noreffer">https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent</a></p>
 <h2 id="service-ability">Service Ability</h2>
 <blockquote>
 <p>基于Service模板的Ability主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。</p>
@@ -715,260 +839,6 @@ ifconfig s1 up
 </table>
 <h2 id="参考文献">参考文献</h2>
 <p><a href="https://www.cnblogs.com/goldsunshine/p/11527928.html" target="_blank" rel="noopener noreffer">OpenvSwitch系列</a></p>
-]]></description>
-</item>
-<item>
-    <title>三控电子狗原理分析——光控、磁控、声控</title>
-    <link>https://leeshy-tech.github.io/electronic_dog/</link>
-    <pubDate>Tue, 04 Jan 2022 21:29:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/electronic_dog/</guid>
-    <description><![CDATA[<blockquote>
-<p>注：本项目来自BUPT课程《电子工艺实习》</p>
-</blockquote>
-<h2 id="导入">导入</h2>
-<p>电子狗是声控、光控、磁控机电一体化电动玩具。主要工作原理：利用555构成的单稳态触发器，在三种不同的控制方法下，均给以低电平触发，促使电机转动，从而达到了机器狗停走的目的。即：拍手即走、光照即走、磁铁靠近即走，但都只是持续一段时间后就停会下，再满足其中一条件时将继续行走。<br>
-原理图如下：
-</p>
-<p>整个系统可分为<strong>信号转化</strong>、<strong>单稳态触发器</strong>以及<strong>电机驱动</strong>三个部分。</p>
-<h2 id="单稳态触发器">单稳态触发器</h2>
-<blockquote>
-<p>这部分的功能是：将持续时间很短的低电平信号转换为固定时间间隔（1.1RC）的高电平信号以控制电子狗走路持续时间（控制R和C的数值）。</p>
-</blockquote>
-<p>关于单稳态触发器的原理分析可参考以下文章： 
-<a href="https://leeshy-tech.github.io/555timer/" target="_blank" rel="noopener noreffer">555定时器</a></p>
-<h2 id="信号转换">信号转换</h2>
-<blockquote>
-<p>这部分的功能是将磁、光、声信号转换为低电平电信号。</p>
-</blockquote>
-<h3 id="磁信号">磁信号</h3>
-<p></p>
-<ul>
-<li>磁信号向电信号的转换通过<strong>干簧管</strong>传感器实现，干簧管的电路模型类似于一个磁控开关，外加磁场时开关闭合，常态开关断开（也有常态是闭合的干簧管），详细原理如下：</li>
-<li>干簧片相当于一个磁通导体，在尚未操作时，两片簧片并未接触；在通过永久磁铁或电磁线圈产生的磁场时，外加的磁场使两片簧片端点位置附近产生不同的极性, 当磁力超过簧片本身的弹力时，这两片簧片会吸合导通电路；当磁场减弱或消失后,干簧片由于本身的弹性而释放，触面就会分开从而打开电路。</li>
-<li>接上拉电阻即可实现常驻高电平，外加磁场时开关闭合输出低电平。<br>
-</li>
-</ul>
-<h3 id="光信号">光信号</h3>
-<p></p>
-<ul>
-<li>光信号向电信号的转变通过<strong>光敏三极管</strong>实现，电路模型相当于光控开关，光照相当于开关闭合，详细原理如下：</li>
-<li>光敏三极管的发射极具有光敏特性。它的集电极则与普通晶体管一样，可以获得电流增益，基极一般没有引线。当受到光照时CE两极导通，相当于开关闭合。</li>
-<li>同样使用上拉电阻，不再赘述。</li>
-</ul>
-<h3 id="声信号">声信号</h3>
-<p></p>
-<ul>
-<li>声信号向电信号的转变通过<strong>麦克风</strong>实现，目前常用的麦克风有驻极体电容麦克风（ECM）和微机电麦克风（MEMS Micphone）。在电子狗实验中使用的是ECM，声波压力推动极板后退使得电容两极电压升高，从而将声信号转换为了电压信号。</li>
-<li>因需要对电压放大，驻极体麦克风内部有一个场效应管，正常工作需要加一个直流偏置，其驱动电路之一为：<br>
- <br>
-电容的作用是隔直流。</li>
-<li>应用于电子狗的电路设计如下：<br>
- <br>
-左侧为驱动电路，中间加一级共射放大器，右侧是二极管反相器，当麦克风接收到声音信号时，产生交流电压，放大到二级管基极，二极管截止，输出接地，即输出低电平。</li>
-</ul>
-<h3 id="仿真">仿真</h3>
-<p>干簧管和光敏二极管的电路模型都很简单，没有仿真的必要，以电阻分压的瞬间变化模拟麦克风输出的交流电压，仿真电路如下： <br>
- <br>
-仿真结果显示，开关闭合产生的电压波动输出了约50ms左右的低电平，这是非常不合适的，因为实际的麦克风产生的电压波动情况远远复杂于我们的模拟，会产生持续时间更长的低电平信号，而后级的单稳态触发器，当输入低电平信号持续时间大于1.1RC时，输出高电平的时间会相应的延长，我们想要的应当是一个持续时间很短的电平信号。<br>
- <br>
-解决方法是加入<strong>负反馈</strong>：<br>
-<br>
-图中绿色部分为增加的负反馈电路，当555定时器输出高电平时，C5充电将Q2 B极电位拉高，使其截止，相当于开关闭合，从而将Q3的B极电位拉低，使得Q3的C极低电位只持续很短的时间。<br>
-重新仿真结果如下：<br>
-<br>
-低电平的持续时间变为500us左右。</p>
-<h2 id="电机驱动">电机驱动</h2>
-<blockquote>
-<p>此部分的功能是利用555定时器输出的高电平信号驱动电机转动</p>
-</blockquote>
-<p>电动机是怎么驱动的？非常简单，电池分别接正负极即可。 <br>
-但是，在已有的场景下，不能使用这种方式，即把555定时器的输出端3号管脚接到电动机正极，地接电动机负极。 <br>
-原因是：555定时器的<strong>驱动能力不足</strong>。<br>
-<br>
-查询555定时器（NE555P）的数据手册可知，输出电流最大只有225mA左右，常见的电动玩具马达空载驱动电流在600mA左右，555定时器是远不足以驱动马达的。 <br>
-<br>
-最简单的放大电流的方法就是晶体管反相器，所以电机驱动的电路原理图如下：<br>
-<br>
-并联两个三极管增大放大倍数，二极管是防止电机反转，注意这是一个反相器，所以要接到电动机的负极。<br>
-用灯泡代替电动机，简单仿真如下： <br>
-<br>
-注意此处输入端用单刀双掷开关，单开关断开是悬空状态，不是输入低电平。 <br>
-电源两端并联电容是为了稳压和滤波。</p>
-<h2 id="总体仿真">总体仿真</h2>
-<p>将以上模块合并，仿真图如下（光敏二极管用光耦合器代替）： <br>
-<br>
-仿真结果：<br>
-<br>
-电路启动时触发一次电子狗，三种信号各触发一次，注意这里光信号和磁信号使用的是回弹式开关，为下文埋下了伏笔。</p>
-<h2 id="改进">改进</h2>
-<p>学校提供的原理图的分析就到这里了，但实际做实验的时候有一些不方便的地方，比如实验室是常亮状态，光照就会一直触发电子狗，必须遮住光，暴露一下就要马上再遮住，在仿真中使用回弹式开关也是这个原因，还是在于单稳态触发器的输入信号不能持续太长时间，我提出的改进方法如下：</p>
-<h3 id="改为黑暗触发">改为黑暗触发</h3>
-<p>这种改进方案很简单，在光信号转化模块后面加一个二极管反相器就可以。</p>
-<h3 id="改为边沿触发">改为边沿触发</h3>
-<p>改进方案与仿真结果如图所示：<br>
- <br>
-开关关闭和开启会被转化为一个短暂的低电平信号，这个信号的持续时间可以通过调整R和C的值来改变。<br>
-原理：利用一阶RC电路将原输入信号做一个短暂延时，再与原信号做同或运算，延时的部分就被计算为了0，其他时刻为1。 <br>
-</p>
-<blockquote>
-<p>当初写实验报告的时候只简单写了一个“用边沿触发器实现即可”，现在想想还真不是这么回事。</p>
-</blockquote>
-<h2 id="结束语">结束语</h2>
-<h3 id="体会">体会</h3>
-<p>这门课我还是学到了很多东西的。<del>但是我看了看实验报告的标题“电子狗<strong>组装</strong>”，实在是很让人难蚌。</del></p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://leeshy-tech.github.io/555timer/" target="_blank" rel="noopener noreffer">555定时器_Leeshy&rsquo;s Blog</a><br>
-<a href="https://www.taobao.com/list/item/625943357428.htm?spm=a21wu.10013406-cat.taglist-content.5.36c01e2eQtFCB2" target="_blank" rel="noopener noreffer">小马达电机_淘宝网</a>   <br>
-<a href="http://www.chinahuaren.com/shen-me-shi-gan-huang-guan-yi/582.html" target="_blank" rel="noopener noreffer">干簧管_华壬电子</a> <br>
-<a href="https://baike.baidu.com/item/%E5%85%89%E7%94%B5%E4%B8%89%E6%9E%81%E7%AE%A1/9483833" target="_blank" rel="noopener noreffer">光电三极管_百度百科</a><br>
-<a href="https://blog.csdn.net/weixin_36489344/article/details/113014008" target="_blank" rel="noopener noreffer">一文看懂咪头的工作原理及结构（驻极体话筒）</a></p>
-<h3 id="备注">备注</h3>
-<p>本文仿真使用的是Multisim，原理图绘制使用的是立创EDA。<br>
-本文依赖文件：<a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/e-dog" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/e-dog</a><br>
-NE555P数据手册：<a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/555timer" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/555timer</a></p>
-]]></description>
-</item>
-<item>
-    <title>555定时器</title>
-    <link>https://leeshy-tech.github.io/555timer/</link>
-    <pubDate>Sun, 02 Jan 2022 22:07:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/555timer/</guid>
-    <description><![CDATA[<h2 id="什么是555定时器">什么是555定时器</h2>
-<p>555定时器是一种集成电路芯片，常被用于定时器、脉冲产生器和振荡电路。555可被作为电路中的延时器件、触发器或起振元件。<br>
-</p>
-<p>内部组成如下：由比较器C1C2、RS触发器、缓冲非门G、放电二极管T组成</p>
-<p></p>
-<h2 id="芯片分析">芯片分析</h2>
-<p>电压比较器：一种模拟输入、数字输出的接口电路，输出特性如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">in</th>
-<th style="text-align:center">out</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Vp &gt; Vn</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:left">Vp &lt; Vn</td>
-<td style="text-align:center">0</td>
-</tr>
-</tbody>
-</table>
-<p>在555定时器内部，左侧是纯电阻分压电路，将比较器阈值设置为</p>
-<p>$$
-V_{P1}=\frac{2}{3} V_{cc}, V_{N2}=\frac{1}{3} V_{cc}
-$$</p>
-<p>C1C2的输出特性如下：   </p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">C1</th>
-<th style="text-align:center"></th>
-<th style="text-align:left">C2</th>
-<th style="text-align:center"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">in</td>
-<td style="text-align:center">out</td>
-<td style="text-align:left">in</td>
-<td style="text-align:center">out</td>
-</tr>
-<tr>
-<td style="text-align:left">Vp &gt; 2/3Vcc</td>
-<td style="text-align:center">0</td>
-<td style="text-align:left">Vn &gt; 1/3Vcc</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:left">Vp &gt; 2/3Vcc</td>
-<td style="text-align:center">1</td>
-<td style="text-align:left">Vn &lt; 1/3Vcc</td>
-<td style="text-align:center">0</td>
-</tr>
-</tbody>
-</table>
-<p>结合RS触发器的真值表可得555定时器的真值表如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Ui1</th>
-<th style="text-align:center">Ui2</th>
-<th style="text-align:left">复位Rd</th>
-<th style="text-align:center">Uo</th>
-<th style="text-align:center">放电管T</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">x</td>
-<td style="text-align:center">x</td>
-<td style="text-align:left">0</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">导通</td>
-</tr>
-<tr>
-<td style="text-align:left">&lt;2/3Vcc</td>
-<td style="text-align:center">&lt;1/3Vcc</td>
-<td style="text-align:left">1</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">截止</td>
-</tr>
-<tr>
-<td style="text-align:left">&gt;2/3Vcc</td>
-<td style="text-align:center">&gt;1/3Vcc</td>
-<td style="text-align:left">1</td>
-<td style="text-align:center">0</td>
-<td style="text-align:center">导通</td>
-</tr>
-<tr>
-<td style="text-align:left">&lt;2/3Vcc</td>
-<td style="text-align:center">&gt;1/3Vcc</td>
-<td style="text-align:left">1</td>
-<td style="text-align:center">不变</td>
-<td style="text-align:center">不变</td>
-</tr>
-</tbody>
-</table>
-<h2 id="典型应用">典型应用</h2>
-<ul>
-<li>单稳态电路</li>
-<li>多谐振荡器</li>
-<li>施密特触发器</li>
-</ul>
-<h2 id="555定时器为核心的单稳态电路">555定时器为核心的单稳态电路</h2>
-<h3 id="理论分析">理论分析</h3>
-<p>应用电路如下：<br>
-</p>
-<ul>
-<li>稳定状态时，管脚2输入信号为高电平，管脚6跨电容与地相连，相当于输入低电平，复位引脚4接高电平，故输出保持低电平不变，放电二极管保持导通不变。</li>
-<li>当输入信号的下降沿到来，输出变为高电平，放电二极管截止，管脚7向外放电，电容C开始充电，直到$
-u_C=\frac{2}{3} V_{cc}$
-若忽略晶体管的饱和压降，则充电时间为
-$t_w=RCln \frac{\mathrm{Vcc}}{Vcc-\frac{2}{3} Vcc} =RCln 3 \approx 1.1 RC$</li>
-<li>当输入信号回到高电平且电容充电完毕后，输出回到低电平，放电二极管截止。</li>
-</ul>
-<h3 id="仿真验证">仿真验证</h3>
-<p>使用Multisim仿真，电路如下：</p>
-<p></p>
-<p>选用回弹式开关使输入信号在电容充电完毕之前回到高电平，以便于从示波器图形上测得充电时间。 <br>
-仿真结果：</p>
-<p><br>
-电路行为与理论分析一致，根据理论分析公式
-$\mathrm{t}_{\mathrm{w}}=1.1 \times 10 \mathrm{k} \times 4.7 \mathrm{u}=51.7 \mathrm{~ms} $,仿真测得充电时间为50.94ms，且充满后电压为2.985V，与理论分析相符的很好。</p>
-<h3 id="总结">总结</h3>
-<p>该单稳态触发器的功能总结为：将低电平脉冲信号（持续时间小于1.1RC）转化为持续时间为1.1RC的高电平信号，持续时间大于1.1RC的话，就只是由低电平转化为高电平。</p>
-<h2 id="结束语">结束语</h2>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://blog.csdn.net/acslsr/article/details/105730908" target="_blank" rel="noopener noreffer">555定时器及应用</a><br>
-<a href="https://baike.baidu.com/item/%E7%94%B5%E5%8E%8B%E6%AF%94%E8%BE%83%E5%99%A8/775444" target="_blank" rel="noopener noreffer">电压比较器_百度百科</a> <br>
-<a href="https://baike.baidu.com/item/555%E5%AE%9A%E6%97%B6%E5%99%A8/6740686" target="_blank" rel="noopener noreffer">555定时器_百度百科</a><br>
-<a href="https://item.szlcsc.com/47753.html" target="_blank" rel="noopener noreffer">NE555P_立创商城</a></p>
-<h3 id="备注">备注</h3>
-<p>仿真文件及数据手册：<a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/555timer" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/555timer</a></p>
 ]]></description>
 </item>
 </channel>

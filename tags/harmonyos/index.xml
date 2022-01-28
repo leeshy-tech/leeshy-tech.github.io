@@ -4,7 +4,115 @@
         <link>https://leeshy-tech.github.io/tags/harmonyos/</link>
         <description>HarmonyOS - 标签 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/harmonyos/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/harmonyos/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发笔记——开发工具DevEco Studio</title>
+    <link>https://leeshy-tech.github.io/harmonyos_studioconfig/</link>
+    <pubDate>Fri, 28 Jan 2022 17:21:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_studioconfig/</guid>
+    <description><![CDATA[<h1 id="deveco-studio">DevEco Studio</h1>
+<blockquote>
+<p>HUAWEI DevEco Studio（获取工具请<a href="https://developer.harmonyos.com/cn/develop/deveco-studio" target="_blank" rel="noopener noreffer">点击链接下载</a>，以下简称DevEco Studio）是基于IntelliJ IDEA Community开源版本打造，面向华为终端全场景多设备的一站式集成开发环境（IDE），为开发者提供工程模板创建、开发、编译、调试、发布等E2E的HarmonyOS应用/服务开发</p>
+</blockquote>
+<h2 id="配置">配置</h2>
+<p>DevEco是基于IDEA打造的，所以二者非常相似，有些配置不会的话可以直接google IDEA的相关配置。</p>
+<h3 id="界面风格">界面风格</h3>
+<blockquote>
+<p>将界面风格改为暗黑模式</p>
+</blockquote>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Appearance &amp; Behavior &gt; Appearance</p>
+</li>
+<li>
+<p>Theme：改为Darcula，点击OK。</p>
+<p></p>
+</li>
+</ul>
+<h3 id="字体">字体</h3>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; Font</p>
+</li>
+<li>
+<p>Font：字体风格，我个人比较喜欢Inconsolata ; Size：字号 ; Line height：行距</p>
+</li>
+</ul>
+<p></p>
+<h3 id="注释颜色">注释颜色</h3>
+<blockquote>
+<p>初始的注释颜色非常浅，还是灰色，所以想调成亮一点的绿色。</p>
+</blockquote>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; Color Scheme &gt; Language Default</p>
+</li>
+<li>
+<p>点开Comments，其中Block comment是块注释，Line comment是行注释，尽量二者颜色统一吧，颜色栏是可以复制的。</p>
+</li>
+</ul>
+<p></p>
+<h3 id="输入联想大小写不敏感">输入联想——大小写不敏感</h3>
+<blockquote>
+<p>初始的输入联想是大小写敏感的，Str才能补全成String，设置大小写不敏感，使str也能补全成String。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Editor &gt; General &gt; Code Completion</li>
+<li>去掉右侧Match case的勾</li>
+</ul>
+<p></p>
+<p>效果如下：</p>
+<p></p>
+<h3 id="自动引包优化">自动引包优化</h3>
+<ul>
+<li>
+<p>打开设置：file&gt;settings</p>
+</li>
+<li>
+<p>Editor &gt; General &gt; Auto import</p>
+</li>
+<li>
+<p>在右侧勾上如图的两句话。</p>
+<p></p>
+</li>
+</ul>
+<h3 id="汉化">汉化</h3>
+<blockquote>
+<p>编辑器设中文其实意义不大，汉化部分很少，都是一些基础的单词，但是我看到中文有一种莫名的安心感，所以还是汉化了。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Plugins</li>
+<li>搜索chinese，在installed里找到Chinese (Simplified) ，点击enable。</li>
+<li>注意你会在Marketplace里找到Chinese (Simplified) Language Pack，它是IDEA的插件，适配效果没有内置的好。</li>
+</ul>
+<p></p>
+<h2 id="项目结构">项目结构</h2>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+]]></description>
+</item>
+<item>
+    <title>程序报错总结——HarmonyOS</title>
+    <link>https://leeshy-tech.github.io/application_error_harmonyos/</link>
+    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/application_error_harmonyos/</guid>
+    <description><![CDATA[<blockquote>
+<p>不可转换的类型；无法将 &lsquo;ohos.agp.components.Component&rsquo; 转换为 &lsquo;ohos.ai.cv.text.Text&rsquo;</p>
+</blockquote>
+<pre tabindex="0"><code>Text text = (Text) findComponentById(ResourceTable.Id_text1);
+</code></pre><p>原因：使用Tab键补全Text时，Studio自动引库引到了错误的库<code>import ohos.ai.cv.text.Text;</code>，实际应当是<code>import ohos.agp.components.Text;</code>。</p>
+<p></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发笔记——Ability</title>
     <link>https://leeshy-tech.github.io/harmonyos_ability_note/</link>
     <pubDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability_note/</guid>
@@ -38,27 +146,37 @@
 </blockquote>
 <p>Page是Slice的集合，Slice = 页面 + 控制逻辑</p>
 <h3 id="ability生存周期">Ability生存周期</h3>
-<p>如图所示：<br>
-</p>
+<p>如图所示：  </p>
 <ul>
-<li>onStart()
-当系统首次创建Page实例时触发。开发者必须重写该方法，并在此配置默认显示的Slice。
+<li>
+<p>onStart()
+当系统首次创建Page实例时触发。开发者必须重写该方法，并在此配置默认显示的Slice。</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Override</span>
 <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
     <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
     <span class="kd">super</span><span class="o">.</span><span class="na">setMainRoute</span><span class="o">(</span><span class="n">FooSlice</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
 <span class="o">}</span>
 </code></pre></div></li>
-<li>onActive()
-Page进入ACTIVE状态时调用，Page保持在此状态除非：应用进入后台或导航到其他页面，从而进入INACTIVE状态。</li>
-<li>onInactive()
-Page进入INACTIVE状态时调用。</li>
-<li>onBackground()
-Page由前台进入后台时调用，其调用之前一定会调用onInactive()。</li>
-<li>onForeground()
-Page由后台进入前台时调用，其调用之后一定会调用onActive()。</li>
-<li>onStop()
-系统销毁Page时调用。</li>
+<li>
+<p>onActive()
+Page进入ACTIVE状态时调用，Page保持在此状态除非：应用进入后台或导航到其他页面，从而进入INACTIVE状态。</p>
+</li>
+<li>
+<p>onInactive()
+Page进入INACTIVE状态时调用。</p>
+</li>
+<li>
+<p>onBackground()
+Page由前台进入后台时调用，其调用之前一定会调用onInactive()。</p>
+</li>
+<li>
+<p>onForeground()
+Page由后台进入前台时调用，其调用之后一定会调用onActive()。</p>
+</li>
+<li>
+<p>onStop()
+系统销毁Page时调用。</p>
+</li>
 </ul>
 <h3 id="abilityslice生命周期">AbilitySlice生命周期</h3>
 <blockquote>
@@ -71,8 +189,14 @@ Page由后台进入前台时调用，其调用之后一定会调用onActive()。
 
         <span class="n">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_main_layout</span><span class="o">);</span>
     <span class="o">}</span>
-</code></pre></div><h3 id="slice间导航">Slice间导航</h3>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999" target="_blank" rel="noopener noreffer">https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999</a></p>
+</code></pre></div><blockquote>
+<p>setUIContext( )提供了两个重载：</p>
+<p>setUIContext( int )：通过布局文件的ID，加载layout目录下的xml文件完成页面渲染。</p>
+<p>setUIContext(  ComponentContainer )：加载使用Java创建的组件完成页面渲染。</p>
+</blockquote>
+<h3 id="slice间导航">Slice间导航</h3>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999" target="_blank" rel="noopener noreffer">https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999</a><br>
+<a href="https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent" target="_blank" rel="noopener noreffer">https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent</a></p>
 <h2 id="service-ability">Service Ability</h2>
 <blockquote>
 <p>基于Service模板的Ability主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。</p>

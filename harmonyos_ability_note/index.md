@@ -33,10 +33,11 @@ Ability相当于功能集合，把实现某个具体功能的逻辑归类到一�
 Page是Slice的集合，Slice = 页面 + 控制逻辑
 
 ### Ability生存周期
-如图所示：  
-![生存周期](/image/HamonyOs/生存周期.png)   
+如图所示：  ![生存周期](/image/生存周期.png) 
+
 - onStart()
   当系统首次创建Page实例时触发。开发者必须重写该方法，并在此配置默认显示的Slice。
+  
     ```Java
     @Override
     public void onStart(Intent intent) {
@@ -44,17 +45,24 @@ Page是Slice的集合，Slice = 页面 + 控制逻辑
         super.setMainRoute(FooSlice.class.getName());
     }
     ```
+  
 - onActive()
   Page进入ACTIVE状态时调用，Page保持在此状态除非：应用进入后台或导航到其他页面，从而进入INACTIVE状态。
+  
 - onInactive()
   Page进入INACTIVE状态时调用。
+  
 - onBackground()
   Page由前台进入后台时调用，其调用之前一定会调用onInactive()。
+  
 - onForeground()
   Page由后台进入前台时调用，其调用之后一定会调用onActive()。
+  
 - onStop()
   系统销毁Page时调用。
+
 ### AbilitySlice生命周期
+
 > AbilitySlice和Page具有相同的生命周期状态和同名的回调，当Page生命周期发生变化时，它的AbilitySlice也会发生相同的生命周期变化。此外，AbilitySlice还具有独立于Page的生命周期变化，这发生在同一Page中的AbilitySlice之间导航时，此时Page的生命周期状态不会改变。
 
 开发者必须重写AbilitySlice的onStart()回调，并在此方法中通过setUIContent()方法设置页面，如下所示：
@@ -66,8 +74,17 @@ Page是Slice的集合，Slice = 页面 + 控制逻辑
         setUIContent(ResourceTable.Layout_main_layout);
     }
 ```
+> setUIContext( )提供了两个重载：	
+>
+> setUIContext( int )：通过布局文件的ID，加载layout目录下的xml文件完成页面渲染。
+>
+> setUIContext(  ComponentContainer )：加载使用Java创建的组件完成页面渲染。
+
 ### Slice间导航
-[https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999](https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999)
+
+[https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999](https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999)  
+[https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent](https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent)    
+
 ## Service Ability
 > 基于Service模板的Ability主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。
 
