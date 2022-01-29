@@ -112,9 +112,9 @@
 ]]></description>
 </item>
 <item>
-    <title>鸿蒙开发笔记——Ability</title>
-    <link>https://leeshy-tech.github.io/harmonyos_ability_note/</link>
-    <pubDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability_note/</guid>
+    <title>鸿蒙开发笔记——Ability（上）</title>
+    <link>https://leeshy-tech.github.io/harmonyos_ability_note1/</link>
+    <pubDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability_note1/</guid>
     <description><![CDATA[<h1 id="ability">Ability</h1>
 <p>官方解释如下：</p>
 <blockquote>
@@ -122,9 +122,9 @@
 </blockquote>
 <p>Ability相当于功能集合，把实现某个具体功能的逻辑归类到一起。分类如下：</p>
 <pre tabindex="0"><code>└─ Ability                     
-    ├─ FA   
+    ├─ FA（Feature Ability）   
         └─ Page Ability：页面，可以与用户交互。     
-    └─ PA   
+    └─ PA（Particle Ability）
         ├─ Service Ability：后台任务。      
         └─ Data Ability：统一数据访问抽象。     
 </code></pre><h2 id="注册ability">注册Ability</h2>
@@ -139,9 +139,15 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div><p>配置项：<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/basic-config-file-elements-0000000000034463#ZH-CN_TOPIC_0000001064016070__table593616515457" target="_blank" rel="noopener noreffer">abilities&ndash;应用配置文件</a></p>
+<blockquote>
+<p>并且，要想删除一个Ability，需要将配置信息同步删除，否则编译会失败。</p>
+</blockquote>
+<p>注意：如果通过以下方式新建Ability，则系统会自动注册Ability，不需要手动更改config.json：</p>
+<p></p>
+<p>如果通过新建Java类来新建Ability，则需要手动注册Ability。</p>
 <h2 id="page-ability">Page Ability</h2>
 <blockquote>
-<p>一个Page可以由一个或多个AbilitySlice构成，AbilitySlice是指应用的单个页面及其控制逻辑的总和。</p>
+<p>一个Page由一个或多个AbilitySlice构成，AbilitySlice是指应用的单个页面及其控制逻辑的总和。</p>
 </blockquote>
 <p>Page是Slice的集合，Slice = 页面 + 控制逻辑</p>
 <h3 id="ability生存周期">Ability生存周期</h3>
@@ -194,13 +200,7 @@ Page由后台进入前台时调用，其调用之后一定会调用onActive()。
 <p>setUIContext(  ComponentContainer )：加载使用Java创建的组件完成页面渲染。</p>
 </blockquote>
 <h3 id="slice间导航">Slice间导航</h3>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999" target="_blank" rel="noopener noreffer">https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-page-switching-0000000000037999</a><br>
-<a href="https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent" target="_blank" rel="noopener noreffer">https://developer.huawei.com/consumer/cn/codelabsPortal/carddetails/Ability_Intent</a></p>
-<h2 id="service-ability">Service Ability</h2>
-<blockquote>
-<p>基于Service模板的Ability主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。</p>
-</blockquote>
-<h2 id="data-ability">Data Ability</h2>
+<p>详见另一篇博客<a href="https://leeshy-tech.github.io/harmonyos_pagetopage/" target="_blank" rel="noopener noreffer">https://leeshy-tech.github.io/harmonyos_pagetopage/</a></p>
 <h2 id="结束语">结束语</h2>
 <h3 id="参考文献">参考文献</h3>
 <p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-ability-overview-0000000000029852" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
