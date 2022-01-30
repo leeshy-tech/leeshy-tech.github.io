@@ -1,10 +1,13 @@
 # 鸿蒙开发笔记——Ability（上）
 
 # Ability
-官方解释如下：
-> Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力（即可以包含多个Ability），HarmonyOS支持应用以Ability为单位进行部署。
+
+{{< admonition type=quote title="HarmonyOS文档" open=true >}}
+Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力（即可以包含多个Ability），HarmonyOS支持应用以Ability为单位进行部署。
+{{< /admonition >}}
 
 Ability相当于功能集合，把实现某个具体功能的逻辑归类到一起。分类如下：    
+
 ```
 └─ Ability                     
     ├─ FA（Feature Ability）   

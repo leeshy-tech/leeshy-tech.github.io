@@ -14,3 +14,5 @@
 - liCheng前辈：[http://www.muzixing.com/](http://www.muzixing.com/)
 - Fine：[https://ffa2000.github.io/](https://ffa2000.github.io/)
 - 广告位招租
+## 听首歌
+{{< music url="/music/anhao.flac" name=暗号 artist=周杰伦 cover="/image/music_image/8.png">}}

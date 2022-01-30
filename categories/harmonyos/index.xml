@@ -449,10 +449,14 @@
     <link>https://leeshy-tech.github.io/harmonyos_ability_note1/</link>
     <pubDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability_note1/</guid>
     <description><![CDATA[<h1 id="ability">Ability</h1>
-<p>官方解释如下：</p>
-<blockquote>
-<p>Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力（即可以包含多个Ability），HarmonyOS支持应用以Ability为单位进行部署。</p>
-</blockquote>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力（即可以包含多个Ability），HarmonyOS支持应用以Ability为单位进行部署。</div>
+        </div>
+    </div>
 <p>Ability相当于功能集合，把实现某个具体功能的逻辑归类到一起。分类如下：</p>
 <pre tabindex="0"><code>└─ Ability                     
     ├─ FA（Feature Ability）   
