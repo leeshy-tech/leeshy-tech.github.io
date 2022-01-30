@@ -13,18 +13,21 @@
         ├─ MainAbility	
         ├─ MyService
         └─ MyApplication
-	└─ resources.base.layout
+	├─ resources.base.layout
         └─ ability_main.xml
+    └─ config.json
 ```
 
 ### 效果
-按钮1开启MyService
+按钮1开启MyService。
 
-按钮2连接到MyService
+按钮2连接到MyService。
 
-按钮3断开与MyService的连接
+按钮3断开与MyService的连接。
 
-按钮4关闭MyService
+按钮4关闭MyService。
+
+服务运行时会在状态栏显示。
 
 不同的点击顺序，命令行输出的提示信息不同。	
 
@@ -82,7 +85,7 @@ public class MyService extends Ability {
 
 核心代码：
 
-MainAbilitySlice的onStart方法：
+​	MainAbilitySlice的onStart方法：
 
 ```java
 //按钮1开启MyService
@@ -121,7 +124,7 @@ btn4.setClickedListener(component -> {
 
 核心代码：
 
-MainAbilitySlice的onStart方法：
+​	MainAbilitySlice的onStart方法：
 
 ```java
 //按钮2连接到MyService
@@ -158,7 +161,7 @@ btn2.setClickedListener(component -> {
 
 - 调用connectAbility方法，传递intent和connect对象。
 
-MyService：
+​	MyService：
 
 ```java
 @Override
@@ -189,6 +192,46 @@ btn3.setClickedListener(component -> {
 ```
 
 - 若connection对象存在，就调用**disconnectAbility**方法即可。
+
+## 前台Service
+
+前台Service会始终保持正在运行的图标在系统状态栏显示。
+
+核心代码：
+
+MyService的onStart方法：
+
+```java
+// 创建通知，其中1005为notificationId
+NotificationRequest request = new NotificationRequest(1005);
+NotificationRequest.NotificationNormalContent content = new NotificationRequest.NotificationNormalContent();
+content.setTitle("title").setText("text");
+NotificationRequest.NotificationContent notificationContent = new NotificationRequest.NotificationContent(content);
+request.setContent(notificationContent);
+
+// 绑定通知，1005为创建通知时传入的notificationId
+keepBackgroundRunning(1005, request);
+```
+
+这段进行一个简单的Ctrl+C、V就行，注意以下几个点：
+
+- 1005这个notificationId不能与其他的服务重复
+
+- title和text在图中对应：
+
+  ![image-20220130213356602](/image/ServiceAbility/image-20220130213356602.png)
+
+config.json中还要申请常驻后台权限：
+
+  ```json
+  "reqPermissions": [
+    {"name": "ohos.permission.KEEP_BACKGROUND_RUNNING"}
+  ]
+  ```
+
+  位置如图所示：
+
+  ![image-20220130213954549](/image/ServiceAbility/image-20220130213954549.png)
 
 ## 生命周期分析
 

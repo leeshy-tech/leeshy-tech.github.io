@@ -18,13 +18,15 @@
         ├─ MainAbility	
         ├─ MyService
         └─ MyApplication
-	└─ resources.base.layout
+	├─ resources.base.layout
         └─ ability_main.xml
+    └─ config.json
 </code></pre><h3 id="效果">效果</h3>
-<p>按钮1开启MyService</p>
-<p>按钮2连接到MyService</p>
-<p>按钮3断开与MyService的连接</p>
-<p>按钮4关闭MyService</p>
+<p>按钮1开启MyService。</p>
+<p>按钮2连接到MyService。</p>
+<p>按钮3断开与MyService的连接。</p>
+<p>按钮4关闭MyService。</p>
+<p>服务运行时会在状态栏显示。</p>
 <p>不同的点击顺序，命令行输出的提示信息不同。</p>
 <h2 id="铺垫">铺垫</h2>
 <p>在MyService里的每个生命周期函数里都加一句sout来显示各个方法执行的顺序。</p>
@@ -74,7 +76,7 @@
 <p>此部分和”页面导航“里开启Ability的操作如出一辙，也就是说，我们只是在开启和关闭Ability，至于它是什么类型，无所谓。</p>
 </blockquote>
 <p>核心代码：</p>
-<p>MainAbilitySlice的onStart方法：</p>
+<p>​	MainAbilitySlice的onStart方法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//按钮1开启MyService
 </span><span class="c1"></span><span class="n">Button</span> <span class="n">btn1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn1</span><span class="o">);</span>
 <span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
@@ -105,7 +107,7 @@
 </ul>
 <h2 id="建立连接">建立连接</h2>
 <p>核心代码：</p>
-<p>MainAbilitySlice的onStart方法：</p>
+<p>​	MainAbilitySlice的onStart方法：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//按钮2连接到MyService
 </span><span class="c1"></span><span class="n">Button</span> <span class="n">btn2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn2</span><span class="o">);</span>
 
@@ -146,7 +148,7 @@
 <p>调用connectAbility方法，传递intent和connect对象。</p>
 </li>
 </ul>
-<p>MyService：</p>
+<p>​	MyService：</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
 <span class="kd">public</span> <span class="n">IRemoteObject</span> <span class="nf">onConnect</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
     <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onConnect&#34;</span><span class="o">);</span>
@@ -169,6 +171,35 @@
 </code></pre></div><ul>
 <li>若connection对象存在，就调用<strong>disconnectAbility</strong>方法即可。</li>
 </ul>
+<h2 id="前台service">前台Service</h2>
+<p>前台Service会始终保持正在运行的图标在系统状态栏显示。</p>
+<p>核心代码：</p>
+<p>MyService的onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 创建通知，其中1005为notificationId
+</span><span class="c1"></span><span class="n">NotificationRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NotificationRequest</span><span class="o">(</span><span class="n">1005</span><span class="o">);</span>
+<span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationNormalContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationNormalContent</span><span class="o">();</span>
+<span class="n">content</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&#34;title&#34;</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="s">&#34;text&#34;</span><span class="o">);</span>
+<span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationContent</span> <span class="n">notificationContent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationContent</span><span class="o">(</span><span class="n">content</span><span class="o">);</span>
+<span class="n">request</span><span class="o">.</span><span class="na">setContent</span><span class="o">(</span><span class="n">notificationContent</span><span class="o">);</span>
+
+<span class="c1">// 绑定通知，1005为创建通知时传入的notificationId
+</span><span class="c1"></span><span class="n">keepBackgroundRunning</span><span class="o">(</span><span class="n">1005</span><span class="o">,</span> <span class="n">request</span><span class="o">);</span>
+</code></pre></div><p>这段进行一个简单的Ctrl+C、V就行，注意以下几个点：</p>
+<ul>
+<li>
+<p>1005这个notificationId不能与其他的服务重复</p>
+</li>
+<li>
+<p>title和text在图中对应：</p>
+<p></p>
+</li>
+</ul>
+<p>config.json中还要申请常驻后台权限：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;reqPermissions&#34;</span><span class="err">:</span> <span class="p">[</span>
+  <span class="p">{</span><span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;ohos.permission.KEEP_BACKGROUND_RUNNING&#34;</span><span class="p">}</span>
+<span class="p">]</span>
+</code></pre></div><p>位置如图所示：</p>
+<p></p>
 <h2 id="生命周期分析">生命周期分析</h2>
 <p>整个执行过程如图所示：</p>
 <p></p>
@@ -310,11 +341,17 @@
     <title>程序报错总结——HarmonyOS</title>
     <link>https://leeshy-tech.github.io/harmonyos_application_error/</link>
     <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_application_error/</guid>
-    <description><![CDATA[<blockquote>
+    <description><![CDATA[<h3 id="1">1</h3>
+<blockquote>
 <p>不可转换的类型；无法将 &lsquo;ohos.agp.components.Component&rsquo; 转换为 &lsquo;ohos.ai.cv.text.Text&rsquo;</p>
 </blockquote>
-<pre tabindex="0"><code>Text text = (Text) findComponentById(ResourceTable.Id_text1);
-</code></pre><p>原因：使用Tab键补全Text时，Studio自动引库引到了错误的库<code>import ohos.ai.cv.text.Text;</code>，实际应当是<code>import ohos.agp.components.Text;</code>。</p>
+<p>原因：使用Tab键补全Text时，Studio自动引库引到了错误的库<code>import ohos.ai.cv.text.Text;</code>，实际应当是<code>import ohos.agp.components.Text;</code>。</p>
+<p></p>
+<h3 id="2">2</h3>
+<blockquote>
+<p>java.lang.NullPointerException: Attempt to invoke virtual method &lsquo;void ohos.agp.components.Button.setClickedListener(ohos.agp.components.Component$ClickedListener)&rsquo; on a null object reference</p>
+</blockquote>
+<p>原因：在写xml文件时，误把注释写成了//，应该是<code>&lt;!-- --&gt;</code>。这里它不会直接报错，而是说我获得的按键对象为空，说明xml构建出了问题。</p>
 <p></p>
 ]]></description>
 </item>
