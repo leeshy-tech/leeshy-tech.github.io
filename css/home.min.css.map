@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "home.min.css",
-	"sourceRoot": "C:/Users/13353/Project/leeshy_blog",
+	"sourceRoot": "D:/Project/leeshy_blog",
 	"sources": [
 		"themes/FeelIt/assets/css/home.scss",
 		"themes/FeelIt/assets/css/_core/_modern-normalize.scss",

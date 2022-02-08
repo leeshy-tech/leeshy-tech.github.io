@@ -1,7 +1,7 @@
 {
 	"version": 3,
 	"file": "page.min.css",
-	"sourceRoot": "C:/Users/13353/Project/leeshy_blog",
+	"sourceRoot": "D:/Project/leeshy_blog",
 	"sources": [
 		"themes/FeelIt/assets/css/page.scss",
 		"themes/FeelIt/assets/css/_variables.scss",

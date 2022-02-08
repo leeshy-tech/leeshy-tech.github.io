@@ -4,9 +4,208 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 29 Jan 2022 21:38:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 08 Feb 2022 21:12:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>鸿蒙开发实践——电话簿</title>
+    <link>https://leeshy-tech.github.io/harmonyos_addressbook/</link>
+    <pubDate>Tue, 08 Feb 2022 21:12:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_addressbook/</guid>
+    <description><![CDATA[<h1 id="电话簿">电话簿</h1>
+<h2 id="项目简介">项目简介</h2>
+<h3 id="项目结构">项目结构</h3>
+<pre tabindex="0"><code>├─ entry.src.main
+	├─ com.example.address_book
+        ├─slice
+            ├─ UserAddSlice
+            ├─ UserListSlice
+            └─ MainAbilitySlice
+        ├─ DataBaseAbility	
+        ├─ MainAbility
+        └─ MyApplication
+	└─ resources.base.layout
+        ├─ ability_main.xml
+        ├─ user_add.xml
+        └─ user_list.xml
+</code></pre><h3 id="效果">效果</h3>
+<p></p>
+<h2 id="数据库结构">数据库结构</h2>
+<ul>
+<li>数据库UserStore：本地、关系型
+<ul>
+<li>表users
+<ul>
+<li>属性userId：int、主键、自增</li>
+<li>属性userName：text、不为空</li>
+<li>属性userTel：text、唯一</li>
+<li>属性userAddr：text</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="mainabilityslice">MainAbilitySlice</h2>
+<p>核心代码：</p>
+<p><strong>MainAbilitySlice的onStart方法：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">Button</span> <span class="n">btn1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn1</span><span class="o">);</span>
+<span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span><span class="o">-&gt;</span><span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserAddSlice</span><span class="o">(),</span><span class="k">new</span> <span class="n">Intent</span><span class="o">()));</span>
+
+<span class="n">Button</span> <span class="n">btn2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn2</span><span class="o">);</span>
+<span class="n">btn2</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">listener</span><span class="o">-&gt;</span><span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserListSlice</span><span class="o">(),</span><span class="k">new</span> <span class="n">Intent</span><span class="o">()));</span>
+</code></pre></div><p>执行简单的页面跳转。</p>
+<h2 id="databaseability">DataBaseAbility</h2>
+<p>核心代码：</p>
+<p><strong>DataBaseAbility类：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="n">RdbStore</span> <span class="n">rdbStore</span><span class="o">;</span>
+<span class="kd">private</span> <span class="n">StoreConfig</span> <span class="n">config</span> <span class="o">=</span> <span class="n">StoreConfig</span><span class="o">.</span><span class="na">newDefaultConfig</span><span class="o">(</span><span class="s">&#34;UserStore.db&#34;</span><span class="o">);</span>
+</code></pre></div><p>RdbStore对象：表示与数据库的连接，通过此对象可以完成对数据表中数据的CRUD操作
+StoreConfig对象：关联数据⽂件配置(数据库)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="n">RdbOpenCallback</span> <span class="n">callback</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RdbOpenCallback</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">RdbStore</span> <span class="n">rdbStore</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">//使⽤rdbStore对象执⾏SQL创建数据表
+</span><span class="c1"></span>        <span class="n">rdbStore</span><span class="o">.</span><span class="na">executeSql</span><span class="o">(</span><span class="s">&#34;create table if not exists users(&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;userId integer primary key autoincrement,&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;userName text not null,&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;userTel text not null unique,&#34;</span> <span class="o">+</span>
+                <span class="s">&#34;userAddr text)&#34;</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">};</span>
+</code></pre></div><p>RdbOpenCallback.onCreate()：数据库创建时被回调，初始化，创建数据表users（当其不存在时）。</p>
+<p><strong>DataBaseAbility类的onStart方法：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Override</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+    <span class="n">HiLog</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="n">LABEL_LOG</span><span class="o">,</span> <span class="s">&#34;DataBaseAbility onStart&#34;</span><span class="o">);</span>
+
+    <span class="c1">//初始化与数据库的连接
+</span><span class="c1"></span>    <span class="n">DatabaseHelper</span> <span class="n">helper</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DatabaseHelper</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="n">rdbStore</span> <span class="o">=</span> <span class="n">helper</span><span class="o">.</span><span class="na">getRdbStore</span><span class="o">(</span><span class="n">config</span><span class="o">,</span><span class="n">1</span><span class="o">,</span><span class="n">callback</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div><p><strong>重写insert方法：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">int</span> <span class="nf">insert</span><span class="o">(</span><span class="n">Uri</span> <span class="n">uri</span><span class="o">,</span> <span class="n">ValuesBucket</span> <span class="n">value</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="o">-</span><span class="n">1</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="na">getLastPath</span><span class="o">();</span>
+    <span class="k">if</span><span class="o">(</span><span class="s">&#34;users&#34;</span><span class="o">.</span><span class="na">equalsIgnoreCase</span><span class="o">(</span><span class="n">path</span><span class="o">)){</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="n">rdbStore</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="s">&#34;users&#34;</span><span class="o">,</span><span class="n">value</span><span class="o">);</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><p><strong>重写query、delete、update方法：</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="n">ResultSet</span> <span class="nf">query</span><span class="o">(</span><span class="n">Uri</span> <span class="n">uri</span><span class="o">,</span> <span class="n">String</span><span class="o">[]</span> <span class="n">columns</span><span class="o">,</span> <span class="n">DataAbilityPredicates</span> <span class="n">predicates</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">RdbPredicates</span> <span class="n">rdbPredicates</span> <span class="o">=</span> <span class="n">DataAbilityUtils</span><span class="o">.</span><span class="na">createRdbPredicates</span><span class="o">(</span><span class="n">predicates</span><span class="o">,</span> <span class="s">&#34;users&#34;</span><span class="o">);</span>
+    <span class="n">ResultSet</span> <span class="n">resultSet</span> <span class="o">=</span> <span class="n">rdbStore</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">rdbPredicates</span><span class="o">,</span> <span class="n">columns</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">resultSet</span><span class="o">;</span>
+<span class="o">}</span>
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">delete</span><span class="o">(</span><span class="n">Uri</span> <span class="n">uri</span><span class="o">,</span> <span class="n">DataAbilityPredicates</span> <span class="n">predicates</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">RdbPredicates</span> <span class="n">rdbPredicates</span> <span class="o">=</span> <span class="n">DataAbilityUtils</span><span class="o">.</span><span class="na">createRdbPredicates</span><span class="o">(</span><span class="n">predicates</span><span class="o">,</span> <span class="s">&#34;users&#34;</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">rdbStore</span><span class="o">.</span><span class="na">delete</span><span class="o">(</span><span class="n">rdbPredicates</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">int</span> <span class="nf">update</span><span class="o">(</span><span class="n">Uri</span> <span class="n">uri</span><span class="o">,</span> <span class="n">ValuesBucket</span> <span class="n">value</span><span class="o">,</span> <span class="n">DataAbilityPredicates</span> <span class="n">predicates</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">RdbPredicates</span> <span class="n">rdbPredicates</span> <span class="o">=</span> <span class="n">DataAbilityUtils</span><span class="o">.</span><span class="na">createRdbPredicates</span><span class="o">(</span><span class="n">predicates</span><span class="o">,</span> <span class="s">&#34;users&#34;</span><span class="o">);</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">rdbStore</span><span class="o">.</span><span class="na">update</span><span class="o">(</span><span class="n">value</span><span class="o">,</span> <span class="n">rdbPredicates</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="useraddslice">UserAddSlice</h2>
+<p>核心代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserAddSlice</span> <span class="kd">extends</span> <span class="n">AbilitySlice</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">DataAbilityHelper</span> <span class="n">dataAbilityHelper</span><span class="o">;</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_user_add</span><span class="o">);</span>
+        <span class="n">dataAbilityHelper</span> <span class="o">=</span> <span class="n">DataAbilityHelper</span><span class="o">.</span><span class="na">creator</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="c1">//获取组件对象
+</span><span class="c1"></span>        <span class="n">Button</span> <span class="n">btn_add</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn_add</span><span class="o">);</span>
+        <span class="n">TextField</span> <span class="n">tf1</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextField</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_textField1</span><span class="o">);</span>
+        <span class="n">TextField</span> <span class="n">tf2</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextField</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_textField2</span><span class="o">);</span>
+        <span class="n">TextField</span> <span class="n">tf3</span> <span class="o">=</span> <span class="o">(</span><span class="n">TextField</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_textField3</span><span class="o">);</span>
+        <span class="c1">//绑定事件监听器
+</span><span class="c1"></span>        <span class="n">btn_add</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="n">tf1</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">userTel</span> <span class="o">=</span> <span class="n">tf2</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">userAddr</span> <span class="o">=</span> <span class="n">tf3</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+            <span class="c1">//构造VB
+</span><span class="c1"></span>            <span class="n">ValuesBucket</span> <span class="n">valuesBucket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ValuesBucket</span><span class="o">();</span>
+            <span class="n">valuesBucket</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">&#34;userName&#34;</span><span class="o">,</span><span class="n">userName</span><span class="o">);</span>
+            <span class="n">valuesBucket</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">&#34;userTel&#34;</span><span class="o">,</span><span class="n">userTel</span><span class="o">);</span>
+            <span class="n">valuesBucket</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">&#34;userAddr&#34;</span><span class="o">,</span><span class="n">userAddr</span><span class="o">);</span>
+            <span class="c1">//插入数据
+</span><span class="c1"></span>            <span class="k">try</span><span class="o">{</span>
+                <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;dataability:///com.example.address_book.DataBaseAbility/users&#34;</span><span class="o">);</span>
+                <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">dataAbilityHelper</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span><span class="n">valuesBucket</span><span class="o">);</span>
+                <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;------------&gt;&gt;&gt;&gt;&gt;&gt;&#34;</span><span class="o">+</span><span class="n">i</span><span class="o">);</span>
+            <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">DataAbilityRemoteException</span> <span class="n">e</span><span class="o">){</span>
+                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><ul>
+<li>
+<p>数据库的相关操作要依靠dataAbilityHelper。</p>
+</li>
+<li>
+<p>从TextField组件中获取输入的信息。</p>
+</li>
+<li>
+<p>设置监听器，将获得的信息插入数据表。</p>
+</li>
+<li>
+<p>插入数据通过ValuesBucket储存，指数据表的一行。</p>
+</li>
+</ul>
+<h2 id="userlistslice">UserListSlice</h2>
+<p>核心代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserListSlice</span> <span class="kd">extends</span> <span class="n">AbilitySlice</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">DataAbilityHelper</span> <span class="n">dataAbilityHelper</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_user_list</span><span class="o">);</span>
+
+        <span class="n">Text</span> <span class="n">text</span> <span class="o">=</span> <span class="o">(</span><span class="n">Text</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_infoText</span><span class="o">);</span>
+        <span class="n">text</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">);</span>
+        <span class="n">dataAbilityHelper</span> <span class="o">=</span> <span class="n">DataAbilityHelper</span><span class="o">.</span><span class="na">creator</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+        <span class="c1">//查询所有联系⼈信息
+</span><span class="c1"></span>        <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;dataability:///com.example.address_book.DataBaseAbility/users&#34;</span><span class="o">);</span>
+        <span class="n">String</span><span class="o">[]</span> <span class="n">colums</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;userId&#34;</span><span class="o">,</span><span class="s">&#34;userName&#34;</span><span class="o">,</span><span class="s">&#34;userTel&#34;</span><span class="o">,</span><span class="s">&#34;userAddr&#34;</span><span class="o">};</span>
+        <span class="n">DataAbilityPredicates</span> <span class="n">dataAbilityPredicates</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataAbilityPredicates</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">dataAbilityHelper</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span><span class="n">colums</span><span class="o">,</span><span class="n">dataAbilityPredicates</span><span class="o">);</span>
+            <span class="c1">//从rs中获取查询结果
+</span><span class="c1"></span>            <span class="kt">int</span> <span class="n">rowCount</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getRowCount</span><span class="o">();</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">rowCount</span><span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+                <span class="n">rs</span><span class="o">.</span><span class="na">goToFirstRow</span><span class="o">();</span>
+                <span class="k">do</span><span class="o">{</span>
+                    <span class="kt">int</span> <span class="n">userId</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getInt</span><span class="o">(</span> <span class="n">0</span><span class="o">);</span>
+                    <span class="n">String</span> <span class="n">userName</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">1</span><span class="o">);</span>
+                    <span class="n">String</span> <span class="n">userTel</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">2</span><span class="o">);</span>
+                    <span class="n">String</span> <span class="n">userAddr</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">3</span><span class="o">);</span>
+                    <span class="n">String</span> <span class="n">info</span> <span class="o">=</span> <span class="s">&#34; [&#34;</span><span class="o">+</span><span class="n">userId</span><span class="o">+</span><span class="s">&#34;,&#34;</span><span class="o">+</span><span class="n">userName</span><span class="o">+</span><span class="s">&#34;,&#34;</span><span class="o">+</span><span class="n">userTel</span><span class="o">+</span><span class="s">&#34;,&#34;</span><span class="o">+</span><span class="n">userAddr</span><span class="o">+</span><span class="s">&#34;]&#34;</span><span class="o">;</span>
+                    <span class="n">text</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span> <span class="n">text</span><span class="o">.</span><span class="na">getText</span><span class="o">()+</span><span class="n">info</span> <span class="o">);</span>
+                <span class="o">}</span><span class="k">while</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">goToNextRow</span><span class="o">());</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DataAbilityRemoteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><ul>
+<li>通过调用查询接口来查询。</li>
+<li>ResultSet为查询结果集，类似于指针，指向结果的第一行。</li>
+</ul>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目源码">项目源码</h3>
+<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/address_book" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/address_book</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/database-relational-overview-0000000000030046" target="_blank" rel="noopener noreffer">HarmonyOS文档——关系型数据库</a></p>
+<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发实践——ServiceAbility</title>
     <link>https://leeshy-tech.github.io/harmonyos_serviceability/</link>
     <pubDate>Sat, 29 Jan 2022 21:38:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_serviceability/</guid>
@@ -472,105 +671,6 @@
     </div>
 <p>原因：在写xml文件时，误把注释写成了//，应该是<code>&lt;!-- --&gt;</code>。这里它不会直接报错，而是说我获得的按键对象为空，说明xml构建出了问题。</p>
 <p></p>
-]]></description>
-</item>
-<item>
-    <title>鸿蒙开发笔记——Ability（上）</title>
-    <link>https://leeshy-tech.github.io/harmonyos_ability_note1/</link>
-    <pubDate>Wed, 26 Jan 2022 20:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability_note1/</guid>
-    <description><![CDATA[<h1 id="ability">Ability</h1>
-<div class="details admonition quote open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力（即可以包含多个Ability），HarmonyOS支持应用以Ability为单位进行部署。</div>
-        </div>
-    </div>
-<p>Ability相当于功能集合，把实现某个具体功能的逻辑归类到一起。分类如下：</p>
-<pre tabindex="0"><code>└─ Ability                     
-    ├─ FA（Feature Ability）   
-        └─ Page Ability：页面，可以与用户交互。     
-    └─ PA（Particle Ability）
-        ├─ Service Ability：后台任务。      
-        └─ Data Ability：统一数据访问抽象。     
-</code></pre><h2 id="注册ability">注册Ability</h2>
-<p>要使用Ability必须要在config.json里进行配置，格式如下:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
-    <span class="nt">&#34;module&#34;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&#34;abilities&#34;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span>
-                <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;page&#34;</span>
-            <span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><p>配置项：<a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/basic-config-file-elements-0000000000034463#ZH-CN_TOPIC_0000001064016070__table593616515457" target="_blank" rel="noopener noreffer">abilities&ndash;应用配置文件</a></p>
-<blockquote>
-<p>并且，要想删除一个Ability，需要将配置信息同步删除，否则编译会失败。</p>
-</blockquote>
-<p>注意：如果通过以下方式新建Ability，则系统会自动注册Ability，不需要手动更改config.json：</p>
-<p></p>
-<p>如果通过新建Java类来新建Ability，则需要手动注册Ability。</p>
-<h2 id="page-ability">Page Ability</h2>
-<blockquote>
-<p>一个Page由一个或多个AbilitySlice构成，AbilitySlice是指应用的单个页面及其控制逻辑的总和。</p>
-</blockquote>
-<p>Page是Slice的集合，Slice = 页面 + 控制逻辑</p>
-<h3 id="ability生存周期">Ability生存周期</h3>
-<p>如图所示：  </p>
-<ul>
-<li>
-<p>onStart()
-当系统首次创建Page实例时触发。开发者必须重写该方法，并在此配置默认显示的Slice。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="nd">@Override</span>
-<span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-    <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-    <span class="kd">super</span><span class="o">.</span><span class="na">setMainRoute</span><span class="o">(</span><span class="n">FooSlice</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
-<span class="o">}</span>
-</code></pre></div></li>
-<li>
-<p>onActive()
-Page进入ACTIVE状态时调用，Page保持在此状态除非：应用进入后台或导航到其他页面，从而进入INACTIVE状态。</p>
-</li>
-<li>
-<p>onInactive()
-Page进入INACTIVE状态时调用。</p>
-</li>
-<li>
-<p>onBackground()
-Page由前台进入后台时调用，其调用之前一定会调用onInactive()。</p>
-</li>
-<li>
-<p>onForeground()
-Page由后台进入前台时调用，其调用之后一定会调用onActive()。</p>
-</li>
-<li>
-<p>onStop()
-系统销毁Page时调用。</p>
-</li>
-</ul>
-<h3 id="abilityslice生命周期">AbilitySlice生命周期</h3>
-<blockquote>
-<p>AbilitySlice和Page具有相同的生命周期状态和同名的回调，当Page生命周期发生变化时，它的AbilitySlice也会发生相同的生命周期变化。此外，AbilitySlice还具有独立于Page的生命周期变化，这发生在同一Page中的AbilitySlice之间导航时，此时Page的生命周期状态不会改变。</p>
-</blockquote>
-<p>开发者必须重写AbilitySlice的onStart()回调，并在此方法中通过setUIContent()方法设置页面，如下所示：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java">    <span class="nd">@Override</span>
-    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-
-        <span class="n">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_main_layout</span><span class="o">);</span>
-    <span class="o">}</span>
-</code></pre></div><blockquote>
-<p>setUIContext( )提供了两个重载：</p>
-<p>setUIContext( int )：通过布局文件的ID，加载layout目录下的xml文件完成页面渲染。</p>
-<p>setUIContext(  ComponentContainer )：加载使用Java创建的组件完成页面渲染。</p>
-</blockquote>
-<h3 id="slice间导航">Slice间导航</h3>
-<p>详见另一篇博客<a href="https://leeshy-tech.github.io/harmonyos_pagetopage/" target="_blank" rel="noopener noreffer">https://leeshy-tech.github.io/harmonyos_pagetopage/</a></p>
-<h2 id="结束语">结束语</h2>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-ability-overview-0000000000029852" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
 ]]></description>
 </item>
 <item>
