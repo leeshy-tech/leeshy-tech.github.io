@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>鸿蒙开发笔记——Ability - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="鸿蒙开发笔记——Ability" />
+<meta property="og:description" content="鸿蒙应用开发笔记，总结一下鸿蒙应用中的Ability框架。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/harmonyos_ability/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-08T21:26:06+08:00" />
+<meta property="article:modified_time" content="2022-02-08T21:26:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="鸿蒙开发笔记——Ability"/>
+<meta name="twitter:description" content="鸿蒙应用开发笔记，总结一下鸿蒙应用中的Ability框架。"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/harmonyos_ability/" /><link rel="prev" href="https://leeshy-tech.github.io/harmonyos_addressbook/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "鸿蒙开发笔记——Ability",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/harmonyos_ability\/"
+        },"genre": "posts","keywords": "HarmonyOS","wordcount":  2191 ,
+        "url": "https:\/\/leeshy-tech.github.io\/harmonyos_ability\/","datePublished": "2022-02-08T21:26:06+08:00","dateModified": "2022-02-08T21:26:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">鸿蒙开发笔记——Ability</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/harmonyos/"><i class="far fa-folder fa-fw"></i>HarmonyOS</a>&nbsp;<a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-08">2022-02-08</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 2191 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 5 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#配置">配置</a></li>
+    <li><a href="#生命周期">生命周期</a></li>
+    <li><a href="#intent">Intent</a></li>
+    <li><a href="#pageability">PageAbility</a>
+      <ul>
+        <li><a href="#abilityslice">AbilitySlice</a></li>
+      </ul>
+    </li>
+    <li><a href="#serviceability">ServiceAbility</a>
+      <ul>
+        <li><a href="#前台service">前台Service</a></li>
+      </ul>
+    </li>
+    <li><a href="#dataability">DataAbility</a>
+      <ul>
+        <li><a href="#uri">URI</a></li>
+        <li><a href="#数据操作">数据操作</a></li>
+      </ul>
+    </li>
+    <li><a href="#实践工程">实践工程</a></li>
+    <li><a href="#结束语">结束语</a>
+      <ul>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="ability">Ability</h1>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力，HarmonyOS支持应用以Ability为单位进行部署。Ability可以分为FA（Feature Ability）和PA（Particle Ability）两种类型，每种类型为开发者提供了不同的模板，以便实现不同的业务功能。</div>
+        </div>
+    </div>
+<p>总的来说，Ability是功能相似的内容的集合，这种划分便于应用的编程组织，FA提供与用户交互的能力，只包含PageAbility，PA没有可视化界面，包括ServiceAbility和DataAbility。</p>
+<h2 id="配置">配置</h2>
+<p>一个应用中所有的Ability必须在config.json中注册。</p>
+<p>如果通过新建Ability来创建Ability，Studio会自动注册，不需要手动更改config.json。</p>
+<p>但如果通过新建Java类来创建，则需要在config.json添加相关的配置信息。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Ability/image-20220208214059300.png"
+        data-srcset="/image/Ability/image-20220208214059300.png, /image/Ability/image-20220208214059300.png 1.5x, /image/Ability/image-20220208214059300.png 2x"
+        data-sizes="auto"
+        alt="/image/Ability/image-20220208214059300.png"
+        title="image-20220208214059300" /></p>
+<p>同样，当删除Ability时，需要删除config.json中对应的配置信息，否则会出现一些问题。</p>
+<h2 id="生命周期">生命周期</h2>
+<p>PageAbility和ServiceAbility具有复杂的生命周期，创建、隐藏到后台、从后台呼出等等都会执行相关的生命周期函数，其中onStart方法最常用，当Ability创建时调用onStart方法，所以UI的绑定、按钮事件响应器等等都需要在onStart方法中实现。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Ability/%e7%94%9f%e5%ad%98%e5%91%a8%e6%9c%9f.png"
+        data-srcset="/image/Ability/%e7%94%9f%e5%ad%98%e5%91%a8%e6%9c%9f.png, /image/Ability/%e7%94%9f%e5%ad%98%e5%91%a8%e6%9c%9f.png 1.5x, /image/Ability/%e7%94%9f%e5%ad%98%e5%91%a8%e6%9c%9f.png 2x"
+        data-sizes="auto"
+        alt="/image/Ability/生存周期.png"
+        title="PageAbility生存周期" /></p>
+<h2 id="intent">Intent</h2>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Intent是对象之间传递信息的载体。例如，当一个Ability需要启动另一个Ability时，或者一个AbilitySlice需要导航到另一个AbilitySlice时，可以通过Intent指定启动的目标同时携带相关数据。</div>
+        </div>
+    </div>
+<p>Intent是页面跳转及传参的关键，他包括Operation与Parameters两个属性，不传参时只需要构造默认intent，例如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+ 	<span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+ 	<span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent</span><span class="o">);</span>
+ <span class="o">});</span>
+</code></pre></div><p>参数通过Parameters来传递：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+     <span class="n">Intent</span> <span class="n">intent1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+     <span class="n">intent1</span><span class="o">.</span><span class="na">setParam</span><span class="o">(</span><span class="s">&#34;productId&#34;</span><span class="o">,</span><span class="s">&#34;101&#34;</span><span class="o">);</span>
+     <span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent1</span><span class="o">);</span>
+ <span class="o">});</span>
+</code></pre></div><p>通过设置Operation可以启动任意<strong>设备</strong>的任意<strong>应用</strong>的任意<strong>Ability</strong>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+<span class="c1">// 通过Intent中的OperationBuilder类构造operation对象，指定设备标识（空串表示当前设备）、应用包名、Ability名称
+</span><span class="c1"></span><span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.demoapp&#34;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.demoapp.FooAbility&#34;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="c1">// 把operation设置到intent中
+</span><span class="c1"></span><span class="n">intent</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
+<span class="n">startAbility</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+</code></pre></div><h2 id="pageability">PageAbility</h2>
+<p>一个PageAbility可以包含任意个AbilitySlice，默认展示的AbilitySlice是通过**setMainRoute()**方法来指定的。</p>
+<h3 id="abilityslice">AbilitySlice</h3>
+<p>AbilitySlice相当于一个页面，其显示的内容是通过组件来声明的，其组件加载⽀持两种⽅式：</p>
+<ul>
+<li>Java代码</li>
+<li>xml布局文件</li>
+</ul>
+<p>在其onStart方法中通过 setUIContext 来加载视图组件，它有两个重载：</p>
+<ul>
+<li>setUIContext(int) : 通过布局⽂件的ID，加载resources/base/layout⽬录下的布局⽂件完成⻚⾯的渲染。</li>
+<li>setUIContext(ComponentContainer) :通过加载⼀个使⽤Java代码创建的组件完成⻚⾯的渲染 。</li>
+</ul>
+<h2 id="serviceability">ServiceAbility</h2>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">基于Service模板的Ability（以下简称“Service”）主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。</div>
+        </div>
+    </div>
+<h3 id="前台service">前台Service</h3>
+<p>一般情况下，Service都是在后台运行的，后台Service的优先级都是比较低的，当资源不足时，系统有可能回收正在运行的后台Service。</p>
+<p>在一些场景下（如播放音乐），用户希望应用能够一直保持运行，此时就需要使用前台Service。前台Service会始终保持正在运行的图标在系统状态栏显示。</p>
+<h2 id="dataability">DataAbility</h2>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>使用Data模板的Ability（以下简称“Data”）有助于应用管理其自身和其他应用存储数据的访问，并提供与其他应用共享数据的方法。Data既可用于同设备不同应用的数据共享，也支持跨设备不同应用的数据共享。</p>
+<p>数据的存放形式多样，可以是数据库，也可以是磁盘上的文件。Data对外提供对数据的增、删、改、查，以及打开文件等接口，这些接口的具体实现由开发者提供</p>
+</div>
+        </div>
+    </div>
+<h3 id="uri">URI</h3>
+<p>URI用来标识一个具体的数据，例如数据库中的某个表或磁盘上的某个文件。格式如下：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Ability/image-20220208221232345.png"
+        data-srcset="/image/Ability/image-20220208221232345.png, /image/Ability/image-20220208221232345.png 1.5x, /image/Ability/image-20220208221232345.png 2x"
+        data-sizes="auto"
+        alt="/image/Ability/image-20220208221232345.png"
+        title="image-20220208221232345" /></p>
+<ul>
+<li>scheme：协议方案名，固定为“dataability”，代表Data Ability所使用的协议类型。</li>
+<li>authority：设备ID。如果为跨设备场景，则为目标设备的ID；如果为本地设备场景，则不需要填写。</li>
+<li>path：资源的路径信息，代表特定资源的位置信息。</li>
+<li>query：查询参数。</li>
+<li>fragment：可以用于指示要访问的子资源。</li>
+</ul>
+<p>URI示例：</p>
+<ul>
+<li>跨设备场景：dataability://<em>device_id</em>/<em>com.domainname.dataability.persondata</em>/<em>person</em>/<em>10</em></li>
+<li>本地设备：dataability:///<em>com.domainname.dataability.persondata</em>/<em>person</em>/<em>10</em></li>
+</ul>
+<h3 id="数据操作">数据操作</h3>
+<p>DataAbility可以对文件或数据库进行数据操纵，不同类型数据管理方式写法都不一样，详见文档的<strong>数据管理</strong>一栏：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Ability/image-20220208221629384.png"
+        data-srcset="/image/Ability/image-20220208221629384.png, /image/Ability/image-20220208221629384.png 1.5x, /image/Ability/image-20220208221629384.png 2x"
+        data-sizes="auto"
+        alt="/image/Ability/image-20220208221629384.png"
+        title="image-20220208221629384" /></p>
+<h2 id="实践工程">实践工程</h2>
+<p><a href="https://leeshy-tech.github.io/harmonyos_pagetopage/" target="_blank" rel="noopener noreffer">页面导航</a></p>
+<p><a href="https://leeshy-tech.github.io/harmonyos_serviceability/" target="_blank" rel="noopener noreffer">ServiceAbility</a></p>
+<p><a href="https://leeshy-tech.github.io/harmonyos_addressbook/" target="_blank" rel="noopener noreffer">电话簿</a></p>
+<h2 id="结束语">结束语</h2>
+<p>本文仅是对官方文档做一个简单的总结+个人理解，详细的内容还需参考官方文档。</p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS——文档</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/harmonyos/">HarmonyOS</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-02-08</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/harmonyos_ability/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/harmonyos_addressbook/" class="prev" rel="prev" title="鸿蒙开发实践——电话簿"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>

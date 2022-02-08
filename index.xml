@@ -4,9 +4,127 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 08 Feb 2022 21:12:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 08 Feb 2022 21:26:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>鸿蒙开发笔记——Ability</title>
+    <link>https://leeshy-tech.github.io/harmonyos_ability/</link>
+    <pubDate>Tue, 08 Feb 2022 21:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability/</guid>
+    <description><![CDATA[<h1 id="ability">Ability</h1>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力，HarmonyOS支持应用以Ability为单位进行部署。Ability可以分为FA（Feature Ability）和PA（Particle Ability）两种类型，每种类型为开发者提供了不同的模板，以便实现不同的业务功能。</div>
+        </div>
+    </div>
+<p>总的来说，Ability是功能相似的内容的集合，这种划分便于应用的编程组织，FA提供与用户交互的能力，只包含PageAbility，PA没有可视化界面，包括ServiceAbility和DataAbility。</p>
+<h2 id="配置">配置</h2>
+<p>一个应用中所有的Ability必须在config.json中注册。</p>
+<p>如果通过新建Ability来创建Ability，Studio会自动注册，不需要手动更改config.json。</p>
+<p>但如果通过新建Java类来创建，则需要在config.json添加相关的配置信息。</p>
+<p></p>
+<p>同样，当删除Ability时，需要删除config.json中对应的配置信息，否则会出现一些问题。</p>
+<h2 id="生命周期">生命周期</h2>
+<p>PageAbility和ServiceAbility具有复杂的生命周期，创建、隐藏到后台、从后台呼出等等都会执行相关的生命周期函数，其中onStart方法最常用，当Ability创建时调用onStart方法，所以UI的绑定、按钮事件响应器等等都需要在onStart方法中实现。</p>
+<p></p>
+<h2 id="intent">Intent</h2>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">Intent是对象之间传递信息的载体。例如，当一个Ability需要启动另一个Ability时，或者一个AbilitySlice需要导航到另一个AbilitySlice时，可以通过Intent指定启动的目标同时携带相关数据。</div>
+        </div>
+    </div>
+<p>Intent是页面跳转及传参的关键，他包括Operation与Parameters两个属性，不传参时只需要构造默认intent，例如下：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+ 	<span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+ 	<span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent</span><span class="o">);</span>
+ <span class="o">});</span>
+</code></pre></div><p>参数通过Parameters来传递：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+     <span class="n">Intent</span> <span class="n">intent1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+     <span class="n">intent1</span><span class="o">.</span><span class="na">setParam</span><span class="o">(</span><span class="s">&#34;productId&#34;</span><span class="o">,</span><span class="s">&#34;101&#34;</span><span class="o">);</span>
+     <span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent1</span><span class="o">);</span>
+ <span class="o">});</span>
+</code></pre></div><p>通过设置Operation可以启动任意<strong>设备</strong>的任意<strong>应用</strong>的任意<strong>Ability</strong>：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
+<span class="c1">// 通过Intent中的OperationBuilder类构造operation对象，指定设备标识（空串表示当前设备）、应用包名、Ability名称
+</span><span class="c1"></span><span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
+        <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.demoapp&#34;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.demoapp.FooAbility&#34;</span><span class="o">)</span>
+        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+<span class="c1">// 把operation设置到intent中
+</span><span class="c1"></span><span class="n">intent</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
+<span class="n">startAbility</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+</code></pre></div><h2 id="pageability">PageAbility</h2>
+<p>一个PageAbility可以包含任意个AbilitySlice，默认展示的AbilitySlice是通过**setMainRoute()**方法来指定的。</p>
+<h3 id="abilityslice">AbilitySlice</h3>
+<p>AbilitySlice相当于一个页面，其显示的内容是通过组件来声明的，其组件加载⽀持两种⽅式：</p>
+<ul>
+<li>Java代码</li>
+<li>xml布局文件</li>
+</ul>
+<p>在其onStart方法中通过 setUIContext 来加载视图组件，它有两个重载：</p>
+<ul>
+<li>setUIContext(int) : 通过布局⽂件的ID，加载resources/base/layout⽬录下的布局⽂件完成⻚⾯的渲染。</li>
+<li>setUIContext(ComponentContainer) :通过加载⼀个使⽤Java代码创建的组件完成⻚⾯的渲染 。</li>
+</ul>
+<h2 id="serviceability">ServiceAbility</h2>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">基于Service模板的Ability（以下简称“Service”）主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。</div>
+        </div>
+    </div>
+<h3 id="前台service">前台Service</h3>
+<p>一般情况下，Service都是在后台运行的，后台Service的优先级都是比较低的，当资源不足时，系统有可能回收正在运行的后台Service。</p>
+<p>在一些场景下（如播放音乐），用户希望应用能够一直保持运行，此时就需要使用前台Service。前台Service会始终保持正在运行的图标在系统状态栏显示。</p>
+<h2 id="dataability">DataAbility</h2>
+<div class="details admonition quote open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content"><p>使用Data模板的Ability（以下简称“Data”）有助于应用管理其自身和其他应用存储数据的访问，并提供与其他应用共享数据的方法。Data既可用于同设备不同应用的数据共享，也支持跨设备不同应用的数据共享。</p>
+<p>数据的存放形式多样，可以是数据库，也可以是磁盘上的文件。Data对外提供对数据的增、删、改、查，以及打开文件等接口，这些接口的具体实现由开发者提供</p>
+</div>
+        </div>
+    </div>
+<h3 id="uri">URI</h3>
+<p>URI用来标识一个具体的数据，例如数据库中的某个表或磁盘上的某个文件。格式如下：</p>
+<p></p>
+<ul>
+<li>scheme：协议方案名，固定为“dataability”，代表Data Ability所使用的协议类型。</li>
+<li>authority：设备ID。如果为跨设备场景，则为目标设备的ID；如果为本地设备场景，则不需要填写。</li>
+<li>path：资源的路径信息，代表特定资源的位置信息。</li>
+<li>query：查询参数。</li>
+<li>fragment：可以用于指示要访问的子资源。</li>
+</ul>
+<p>URI示例：</p>
+<ul>
+<li>跨设备场景：dataability://<em>device_id</em>/<em>com.domainname.dataability.persondata</em>/<em>person</em>/<em>10</em></li>
+<li>本地设备：dataability:///<em>com.domainname.dataability.persondata</em>/<em>person</em>/<em>10</em></li>
+</ul>
+<h3 id="数据操作">数据操作</h3>
+<p>DataAbility可以对文件或数据库进行数据操纵，不同类型数据管理方式写法都不一样，详见文档的<strong>数据管理</strong>一栏：</p>
+<p></p>
+<h2 id="实践工程">实践工程</h2>
+<p><a href="https://leeshy-tech.github.io/harmonyos_pagetopage/" target="_blank" rel="noopener noreffer">页面导航</a></p>
+<p><a href="https://leeshy-tech.github.io/harmonyos_serviceability/" target="_blank" rel="noopener noreffer">ServiceAbility</a></p>
+<p><a href="https://leeshy-tech.github.io/harmonyos_addressbook/" target="_blank" rel="noopener noreffer">电话簿</a></p>
+<h2 id="结束语">结束语</h2>
+<p>本文仅是对官方文档做一个简单的总结+个人理解，详细的内容还需参考官方文档。</p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS——文档</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发实践——电话簿</title>
     <link>https://leeshy-tech.github.io/harmonyos_addressbook/</link>
     <pubDate>Tue, 08 Feb 2022 21:12:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_addressbook/</guid>
@@ -939,164 +1057,6 @@ h2：mac地址mac2 = d6:07:97:03:df:5b，连接到s1的2号端口。</p>
 <h2 id="结束语">结束语</h2>
 <h3 id="参考文献">参考文献</h3>
 <p><a href="https://www.sdnlab.com/1785.html" target="_blank" rel="noopener noreffer">RYU入门教程</a></p>
-]]></description>
-</item>
-<item>
-    <title>ryu源码解读——simple_switch.py</title>
-    <link>https://leeshy-tech.github.io/simple_switch_note/</link>
-    <pubDate>Sat, 08 Jan 2022 21:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_switch_note/</guid>
-    <description><![CDATA[<h2 id="总览">总览</h2>
-<p>文件位置：ryu/ryu/app/simple_switch.py
-simple_switch.py共110行<br>
-1-18：注释<br>
-21-29：引库<br>
-32-110：继承类RyuApp</p>
-<h2 id="32-37">32-37</h2>
-<blockquote>
-<p>继承类RyuApp，并调用构造函数</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="k">class</span> <span class="nc">SimpleSwitch</span><span class="p">(</span><span class="n">app_manager</span><span class="o">.</span><span class="n">RyuApp</span><span class="p">):</span>
-    <span class="n">OFP_VERSIONS</span> <span class="o">=</span> <span class="p">[</span><span class="n">ofproto_v1_0</span><span class="o">.</span><span class="n">OFP_VERSION</span><span class="p">]</span>   <span class="c1"># 声明支持的Open Flow版本</span>
-    <span class="c1"># 继承，调用构造函数并添加一个新属性 mac_to_port</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">SimpleSwitch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span> <span class="o">=</span> <span class="p">{}</span>
-</code></pre></div><ul>
-<li>编写的程序实际上是Ryu控制器的APP，需要继承类RyuApp。</li>
-<li>自学习交换机需要控制器来维护交换机的帧交换表，帧交换便就是mac地址与端口号的对应关系，所以添加一个新属性mac_to_port。</li>
-</ul>
-<h2 id="39-51">39-51</h2>
-<blockquote>
-<p>实现一个添加流表的函数</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="c1"># 函数：添加流表</span>
-<span class="k">def</span> <span class="nf">add_flow</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datapath</span><span class="p">,</span> <span class="n">in_port</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">actions</span><span class="p">):</span>
-    <span class="n">ofproto</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
-
-    <span class="n">match</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPMatch</span><span class="p">(</span>
-        <span class="n">in_port</span><span class="o">=</span><span class="n">in_port</span><span class="p">,</span>
-        <span class="n">dl_dst</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">dst</span><span class="p">),</span> <span class="n">dl_src</span><span class="o">=</span><span class="n">haddr_to_bin</span><span class="p">(</span><span class="n">src</span><span class="p">)</span><span class="c1"># 源和目的mac地址</span>
-        <span class="p">)</span>
-
-    <span class="n">mod</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPFlowMod</span><span class="p">(</span>
-        <span class="n">datapath</span><span class="o">=</span><span class="n">datapath</span><span class="p">,</span> <span class="n">match</span><span class="o">=</span><span class="n">match</span><span class="p">,</span> <span class="n">cookie</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">command</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFC_ADD</span><span class="p">,</span> <span class="c1"># 命令：添加新流表</span>
-        <span class="n">idle_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hard_timeout</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
-        <span class="n">priority</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFP_DEFAULT_PRIORITY</span><span class="p">,</span> <span class="c1"># 优先级：默认</span>
-        <span class="n">flags</span><span class="o">=</span><span class="n">ofproto</span><span class="o">.</span><span class="n">OFPFF_SEND_FLOW_REM</span><span class="p">,</span> 
-        <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">)</span>
-    <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span>      <span class="c1">#控制器下发消息</span>
-</code></pre></div><h3 id="datapath">datapath</h3>
-<p>控制器与交换机之间是一条Open Flow数据通路，所以控制器通过datapath来区分不同的交换机，datapath具有一个ofproto参数指示OpenFlow协议内容。ofproto的ofproto_parser定义了协议相关的数据结构。</p>
-<h3 id="协议细节">协议细节</h3>
-<dl>
-<dt>OFPFlowMod：修改流表消息，控制器发送此消息来修改流表。</dt>
-<dt>OFPMatch：流匹配规则。</dt>
-<dt>flags：以下三个值之一</dt>
-<dd>| OFPFF_SEND_FLOW_REM   当流过期或删除时，发送删除流消息。</dd>
-<dd>| OFPFF_CHECK_OVERLAP   首先检查重叠的条目。</dd>
-<dd>| OFPFF_EMERG           标记为紧急情况。</dd>
-</dl>
-<h2 id="53-94">53-94</h2>
-<blockquote>
-<p>PacketIn消息的处理逻辑：</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="nd">@set_ev_cls</span><span class="p">(</span><span class="n">ofp_event</span><span class="o">.</span><span class="n">EventOFPPacketIn</span><span class="p">,</span> <span class="n">MAIN_DISPATCHER</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">_packet_in_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">):</span>
-    <span class="c1"># 解析数据包</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">msg</span>
-    <span class="n">datapath</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">datapath</span>
-    <span class="n">ofproto</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
-
-    <span class="n">pkt</span> <span class="o">=</span> <span class="n">packet</span><span class="o">.</span><span class="n">Packet</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">eth</span> <span class="o">=</span> <span class="n">pkt</span><span class="o">.</span><span class="n">get_protocol</span><span class="p">(</span><span class="n">ethernet</span><span class="o">.</span><span class="n">ethernet</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="n">eth</span><span class="o">.</span><span class="n">ethertype</span> <span class="o">==</span> <span class="n">ether_types</span><span class="o">.</span><span class="n">ETH_TYPE_LLDP</span><span class="p">:</span>
-        <span class="c1"># 忽略LLDP类型的包</span>
-        <span class="k">return</span>
-    <span class="n">dst</span> <span class="o">=</span> <span class="n">eth</span><span class="o">.</span><span class="n">dst</span>
-    <span class="n">src</span> <span class="o">=</span> <span class="n">eth</span><span class="o">.</span><span class="n">src</span>
-
-    <span class="c1"># 初始化mac_port对应规则</span>
-    <span class="n">dpid</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">id</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">dpid</span><span class="p">,</span> <span class="p">{})</span>  
-
-    <span class="c1"># 打印消息</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;packet in </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">dpid</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">in_port</span><span class="p">)</span> 
-
-    <span class="c1"># 记录此包对应的mac_port对应规则</span>
-    <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span><span class="p">[</span><span class="n">dpid</span><span class="p">][</span><span class="n">src</span><span class="p">]</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">in_port</span>
-
-    <span class="c1"># 如果目的mac的对应端口已经知道，就直接设置为输出端口，否则就洪泛</span>
-    <span class="k">if</span> <span class="n">dst</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span><span class="p">[</span><span class="n">dpid</span><span class="p">]:</span>
-        <span class="n">out_port</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mac_to_port</span><span class="p">[</span><span class="n">dpid</span><span class="p">][</span><span class="n">dst</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">out_port</span> <span class="o">=</span> <span class="n">ofproto</span><span class="o">.</span><span class="n">OFPP_FLOOD</span>
-
-    <span class="c1"># 封装一个OFPActionOutput类型动作：从out_port端口输出</span>
-    <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPActionOutput</span><span class="p">(</span><span class="n">out_port</span><span class="p">)]</span>
-
-    <span class="c1"># 如果已经明确了目的mac的输出端口，那么就下发一条流表</span>
-    <span class="k">if</span> <span class="n">out_port</span> <span class="o">!=</span> <span class="n">ofproto</span><span class="o">.</span><span class="n">OFPP_FLOOD</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">add_flow</span><span class="p">(</span><span class="n">datapath</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">in_port</span><span class="p">,</span> <span class="n">dst</span><span class="p">,</span> <span class="n">src</span><span class="p">,</span> <span class="n">actions</span><span class="p">)</span>
-
-    <span class="c1"># 如果交换机没有缓存该包，那么就把该包还回去</span>
-    <span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">buffer_id</span> <span class="o">==</span> <span class="n">ofproto</span><span class="o">.</span><span class="n">OFP_NO_BUFFER</span><span class="p">:</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">data</span>
-
-    <span class="c1"># 发送PacketOut消息</span>
-    <span class="n">out</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span><span class="o">.</span><span class="n">OFPPacketOut</span><span class="p">(</span>
-        <span class="n">datapath</span><span class="o">=</span><span class="n">datapath</span><span class="p">,</span> <span class="n">buffer_id</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">buffer_id</span><span class="p">,</span> <span class="n">in_port</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">in_port</span><span class="p">,</span>
-        <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
-    <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-</code></pre></div><p>细节分析：</p>
-<h3 id="lldp">LLDP</h3>
-<h3 id="packetin与packetout">PacketIn与PacketOut</h3>
-<p>当交换机收到某个包之后，没有对应的流表，就向控制器发送PacketIn消息，控制器收到之后，进行一些处理，然后发送PacketOut消息给交换机，指示交换机该如何处理这个包。<br>
-所以PacketIn消息应当包含这个包，在控制器处理逻辑里面首先就是解析出这个包。<br>
-PacketOut消息应当包含一个action，当交换机收到PacketOut时执行这个action。</p>
-<h3 id="处理逻辑">处理逻辑</h3>
-<ul>
-<li>解析出数据包，根据数据包的mac和输入端口，绑定这个mac和交换机端口。</li>
-<li>如果目的mac对应的交换机端口已知，那么就把输出端口赋这个值。如果未知，就指示交换机洪泛这个包。</li>
-<li>如果输出不是洪泛，那么就可以下发流表，绑定目的mac和源mac的转发关系。</li>
-<li>封装PacketOut消息，下发。</li>
-</ul>
-<h3 id="buffer_id与data">buffer_id与data</h3>
-<p>交换机具有缓存，不知道如何处理某个包时，它可以选择是否暂存这个包。</p>
-<ul>
-<li>如果没有暂存，那么就应当由控制器通过PacketOut消息把该包传回来，通过OFPPacketOut类的data参数。</li>
-<li>如果暂存了，data参数就是None，PacketOut消息指示这个包暂存的位置，也就是buffer_id。</li>
-</ul>
-<h2 id="96-110">96-110</h2>
-<blockquote>
-<p>如果端口发生了一些变化，比如端口增加或者删除，那就在命令行打印相关的消息。
-这个部分不是自学习交换机必需的。</p>
-</blockquote>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="nd">@set_ev_cls</span><span class="p">(</span><span class="n">ofp_event</span><span class="o">.</span><span class="n">EventOFPPortStatus</span><span class="p">,</span> <span class="n">MAIN_DISPATCHER</span><span class="p">)</span>
-<span class="k">def</span> <span class="nf">_port_status_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">):</span>
-    <span class="c1"># 解析消息</span>
-    <span class="n">msg</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">msg</span>
-    <span class="n">reason</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">reason</span>
-    <span class="n">port_no</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">desc</span><span class="o">.</span><span class="n">port_no</span>
-
-    <span class="c1"># 打印</span>
-    <span class="n">ofproto</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
-    <span class="k">if</span> <span class="n">reason</span> <span class="o">==</span> <span class="n">ofproto</span><span class="o">.</span><span class="n">OFPPR_ADD</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;port added </span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">port_no</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">reason</span> <span class="o">==</span> <span class="n">ofproto</span><span class="o">.</span><span class="n">OFPPR_DELETE</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;port deleted </span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">port_no</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">reason</span> <span class="o">==</span> <span class="n">ofproto</span><span class="o">.</span><span class="n">OFPPR_MODIFY</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;port modified </span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">port_no</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&#34;Illeagal port state </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">port_no</span><span class="p">,</span> <span class="n">reason</span><span class="p">)</span>
-</code></pre></div><h2 id="结束语">结束语</h2>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://www.sdnlab.com/1785.html" target="_blank" rel="noopener noreffer">RYU入门教程</a></p>
-<h3 id="备注">备注</h3>
-<p>ryu官方：<a href="https://github.com/faucetsdn/ryu" target="_blank" rel="noopener noreffer">https://github.com/faucetsdn/ryu</a><br>
-本人注释版：<a href="https://github.com/leeshy-tech/ryu" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/ryu</a></p>
 ]]></description>
 </item>
 </channel>
