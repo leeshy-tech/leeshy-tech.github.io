@@ -4,9 +4,41 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 08 Feb 2022 21:26:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 09 Feb 2022 22:15:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>模拟开关——CD4066、CD4051</title>
+    <link>https://leeshy-tech.github.io/analogue_switch/</link>
+    <pubDate>Wed, 09 Feb 2022 22:15:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/analogue_switch/</guid>
+    <description><![CDATA[<h1 id="模拟开关">模拟开关</h1>
+<p>模拟开关，英文名Analog switches；主要是完成信号链路中的信号切换功能。采用MOS管的开关方式实现了对信号链路关断或者打开；由于其功能类似于开关，而用模拟器件的特性实现，成为模拟开关。</p>
+<h2 id="什么时候用继电器">什么时候用继电器</h2>
+<p>继电器利用了电生磁原理，通电时电磁铁吸附开关使开关断开，常常应用于电子设计中作为电控开关。模拟开关是集成电路芯片，体积小、寿命高，而且能够实现较为复杂的功能，比如单刀双掷、单刀四掷、四开关集成等等。所以常见场景下还是模拟开关最为适合。</p>
+<p>但是，集成电路芯片就决定了它有限制使用条件，信号电压、电流、频率均有一些限制，在大功率、高频场景下，可能模拟开关无法胜任，就需要使用继电器。</p>
+<h2 id="四双向模拟开关cd4066">四双向模拟开关CD4066</h2>
+<p>CD4066 的引脚功能如图所示。每个封装内部有 4 个独立的模拟开关，每个模拟开关 有输入、输出、控制三个端子，其中输入端和输出端可互换。当控制端加高电平时，开关导通；当控制端加低电平时开关截止。模拟开关导通时，导通电阻为几十欧姆；模拟开关截止时，呈现很高的阻抗，可以看成为开路。模拟开关可传输数字信号和模拟信号，可传输的模拟信号的上限频率为 40MHz。各开关间的串扰很小，典型值为－50dB。</p>
+<p></p>
+<p>当模拟开关的电源电压采用双电源时，例如 =﹢5V， =﹣5V(均对地0V而言)，则输入电压对称于0V的正、负信号电压(﹢5V～﹣5V)均能传输。这时要求控制信号C=“1”为+5V，C=“0”为-5V，否则只能传输正极性的信号电压。</p>
+<h2 id="单八路模拟开关cd4051">单八路模拟开关CD4051</h2>
+<p>CD4051 的引脚功能如图所示。CD4051 相当于一个单刀八掷开关，开关接通哪一通道，由输入的 3 位地址码 ABC 来决定。</p>
+<p></p>
+<p>真值表：</p>
+<p></p>
+<h2 id="同系列器件">同系列器件</h2>
+<h3 id="双四路模拟开关cd4052">双四路模拟开关CD4052</h3>
+<p></p>
+<h3 id="三组二路模拟开关-cd4053">三组二路模拟开关 CD4053</h3>
+<p></p>
+<h3 id="十六路模拟开关-cd4067单刀十六掷">十六路模拟开关 CD4067——单刀十六掷</h3>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.chip37.com/scp/CD4066" target="_blank" rel="noopener noreffer">https://www.chip37.com/scp/CD4066</a></p>
+<p><a href="http://www.elecfans.com/dianzichangshi/20171209598886_a.html" target="_blank" rel="noopener noreffer">http://www.elecfans.com/dianzichangshi/20171209598886_a.html</a></p>
+<h3 id="datasheet">datasheet</h3>
+<p><a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发笔记——Ability</title>
     <link>https://leeshy-tech.github.io/harmonyos_ability/</link>
     <pubDate>Tue, 08 Feb 2022 21:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability/</guid>
@@ -1041,42 +1073,6 @@ h2：mac地址mac2 = d6:07:97:03:df:5b，连接到s1的2号端口。</p>
 <h3 id="参考文献">参考文献</h3>
 <p><a href="https://blog.51cto.com/wanicy/335207" target="_blank" rel="noopener noreffer">Ping过程 详解 </a><br>
 <a href="http://localhost:1313/simple_switch_note/" target="_blank" rel="noopener noreffer">ryu源码解读——simple_switch.py</a></p>
-]]></description>
-</item>
-<item>
-    <title>ryu开发——集线器</title>
-    <link>https://leeshy-tech.github.io/simple_hub/</link>
-    <pubDate>Sun, 09 Jan 2022 20:56:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_hub/</guid>
-    <description><![CDATA[<h2 id="什么是集线器">什么是集线器</h2>
-<p>集线器是运作在OSI模型中的物理层，它将某个端口收到的包向所有端口广播（也叫洪泛，flood）。</p>
-<h2 id="实现代码">实现代码</h2>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-py" data-lang="py"><span class="c1"># simple_hub.py</span>
-<span class="kn">from</span> <span class="nn">ryu.base</span> <span class="kn">import</span> <span class="n">app_manager</span>
-<span class="kn">from</span> <span class="nn">ryu.controller</span> <span class="kn">import</span> <span class="n">ofp_event</span>
-<span class="kn">from</span> <span class="nn">ryu.controller.handler</span> <span class="kn">import</span> <span class="n">MAIN_DISPATCHER</span>
-<span class="kn">from</span> <span class="nn">ryu.controller.handler</span> <span class="kn">import</span> <span class="n">set_ev_cls</span>
- 
-<span class="k">class</span> <span class="nc">L2Switch</span><span class="p">(</span><span class="n">app_manager</span><span class="o">.</span><span class="n">RyuApp</span><span class="p">):</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">L2Switch</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
- 
-    <span class="nd">@set_ev_cls</span><span class="p">(</span><span class="n">ofp_event</span><span class="o">.</span><span class="n">EventOFPPacketIn</span><span class="p">,</span> <span class="n">MAIN_DISPATCHER</span><span class="p">)</span>
-    <span class="k">def</span> <span class="nf">packet_in_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ev</span><span class="p">):</span>
-        <span class="n">msg</span> <span class="o">=</span> <span class="n">ev</span><span class="o">.</span><span class="n">msg</span>
-        <span class="n">datapath</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">datapath</span>
-        <span class="n">ofp</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto</span>
-        <span class="n">ofp_parser</span> <span class="o">=</span> <span class="n">datapath</span><span class="o">.</span><span class="n">ofproto_parser</span>
- 
-        <span class="n">actions</span> <span class="o">=</span> <span class="p">[</span><span class="n">ofp_parser</span><span class="o">.</span><span class="n">OFPActionOutput</span><span class="p">(</span><span class="n">ofp</span><span class="o">.</span><span class="n">OFPP_FLOOD</span><span class="p">)]</span>
-        <span class="n">out</span> <span class="o">=</span> <span class="n">ofp_parser</span><span class="o">.</span><span class="n">OFPPacketOut</span><span class="p">(</span>
-            <span class="n">datapath</span><span class="o">=</span><span class="n">datapath</span><span class="p">,</span> <span class="n">buffer_id</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">buffer_id</span><span class="p">,</span> <span class="n">in_port</span><span class="o">=</span><span class="n">msg</span><span class="o">.</span><span class="n">in_port</span><span class="p">,</span>
-            <span class="n">actions</span><span class="o">=</span><span class="n">actions</span><span class="p">)</span>
-        <span class="n">datapath</span><span class="o">.</span><span class="n">send_msg</span><span class="p">(</span><span class="n">out</span><span class="p">)</span>
-</code></pre></div><h2 id="实现逻辑">实现逻辑</h2>
-<p>当控制器收到PacketIn消息，下发PacketOut消息，指示交换机将该包洪泛（FLOOD）。</p>
-<h2 id="结束语">结束语</h2>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://www.sdnlab.com/1785.html" target="_blank" rel="noopener noreffer">RYU入门教程</a></p>
 ]]></description>
 </item>
 </channel>

@@ -2,13 +2,16 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://leeshy-tech.github.io/categories/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/tags/analog-switch/</loc><lastmod>2022-02-09T22:15:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/</loc><lastmod>2022-02-09T22:15:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/electronic-design/</loc><lastmod>2022-02-09T22:15:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/</loc><lastmod>2022-02-09T22:15:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/posts/</loc><lastmod>2022-02-09T22:15:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/tags/</loc><lastmod>2022-02-09T22:15:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/analogue_switch/</loc><lastmod>2022-02-09T22:15:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/harmonyos/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/categories/harmonyos/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/categories/note/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/posts/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/tags/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/harmonyos_ability/</loc><lastmod>2022-02-08T21:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/app/</loc><lastmod>2022-02-08T21:12:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/java/</loc><lastmod>2022-02-08T21:12:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -38,7 +41,6 @@
             <loc>https://leeshy-tech.github.io/ovs_cli/</loc><lastmod>2022-01-07T16:08:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/555-timer/</loc><lastmod>2022-01-04T21:29:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/categories/course/</loc><lastmod>2022-01-04T21:29:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/electronic-design/</loc><lastmod>2022-01-04T21:29:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/mic/</loc><lastmod>2022-01-04T21:29:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/electronic_dog/</loc><lastmod>2022-01-04T21:29:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/555timer/</loc><lastmod>2022-01-02T22:07:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

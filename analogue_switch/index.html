@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>模拟开关——CD4066、CD4051 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="模拟开关——CD4066、CD4051" />
+<meta property="og:description" content="模拟开关CD4066、CD4051系列简介" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/analogue_switch/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-09T22:15:06+08:00" />
+<meta property="article:modified_time" content="2022-02-09T22:15:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="模拟开关——CD4066、CD4051"/>
+<meta name="twitter:description" content="模拟开关CD4066、CD4051系列简介"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/analogue_switch/" /><link rel="prev" href="https://leeshy-tech.github.io/harmonyos_ability/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "模拟开关——CD4066、CD4051",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/analogue_switch\/"
+        },"genre": "posts","keywords": "analog switch","wordcount":  738 ,
+        "url": "https:\/\/leeshy-tech.github.io\/analogue_switch\/","datePublished": "2022-02-09T22:15:06+08:00","dateModified": "2022-02-09T22:15:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">模拟开关——CD4066、CD4051</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/electronic-design/"><i class="far fa-folder fa-fw"></i>Electronic Design</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-09">2022-02-09</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 738 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#什么时候用继电器">什么时候用继电器</a></li>
+    <li><a href="#四双向模拟开关cd4066">四双向模拟开关CD4066</a></li>
+    <li><a href="#单八路模拟开关cd4051">单八路模拟开关CD4051</a></li>
+    <li><a href="#同系列器件">同系列器件</a>
+      <ul>
+        <li><a href="#双四路模拟开关cd4052">双四路模拟开关CD4052</a></li>
+        <li><a href="#三组二路模拟开关-cd4053">三组二路模拟开关 CD4053</a></li>
+        <li><a href="#十六路模拟开关-cd4067单刀十六掷">十六路模拟开关 CD4067——单刀十六掷</a></li>
+      </ul>
+    </li>
+    <li><a href="#结束语">结束语</a>
+      <ul>
+        <li><a href="#参考文献">参考文献</a></li>
+        <li><a href="#datasheet">datasheet</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="模拟开关">模拟开关</h1>
+<p>模拟开关，英文名Analog switches；主要是完成信号链路中的信号切换功能。采用MOS管的开关方式实现了对信号链路关断或者打开；由于其功能类似于开关，而用模拟器件的特性实现，成为模拟开关。</p>
+<h2 id="什么时候用继电器">什么时候用继电器</h2>
+<p>继电器利用了电生磁原理，通电时电磁铁吸附开关使开关断开，常常应用于电子设计中作为电控开关。模拟开关是集成电路芯片，体积小、寿命高，而且能够实现较为复杂的功能，比如单刀双掷、单刀四掷、四开关集成等等。所以常见场景下还是模拟开关最为适合。</p>
+<p>但是，集成电路芯片就决定了它有限制使用条件，信号电压、电流、频率均有一些限制，在大功率、高频场景下，可能模拟开关无法胜任，就需要使用继电器。</p>
+<h2 id="四双向模拟开关cd4066">四双向模拟开关CD4066</h2>
+<p>CD4066 的引脚功能如图所示。每个封装内部有 4 个独立的模拟开关，每个模拟开关 有输入、输出、控制三个端子，其中输入端和输出端可互换。当控制端加高电平时，开关导通；当控制端加低电平时开关截止。模拟开关导通时，导通电阻为几十欧姆；模拟开关截止时，呈现很高的阻抗，可以看成为开路。模拟开关可传输数字信号和模拟信号，可传输的模拟信号的上限频率为 40MHz。各开关间的串扰很小，典型值为－50dB。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/analog_switches/image-20220210204711304.png"
+        data-srcset="/image/analog_switches/image-20220210204711304.png, /image/analog_switches/image-20220210204711304.png 1.5x, /image/analog_switches/image-20220210204711304.png 2x"
+        data-sizes="auto"
+        alt="/image/analog_switches/image-20220210204711304.png"
+        title="image-20220210204711304" /></p>
+<p>当模拟开关的电源电压采用双电源时，例如 =﹢5V， =﹣5V(均对地0V而言)，则输入电压对称于0V的正、负信号电压(﹢5V～﹣5V)均能传输。这时要求控制信号C=“1”为+5V，C=“0”为-5V，否则只能传输正极性的信号电压。</p>
+<h2 id="单八路模拟开关cd4051">单八路模拟开关CD4051</h2>
+<p>CD4051 的引脚功能如图所示。CD4051 相当于一个单刀八掷开关，开关接通哪一通道，由输入的 3 位地址码 ABC 来决定。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/analog_switches/image-20220210204726242.png"
+        data-srcset="/image/analog_switches/image-20220210204726242.png, /image/analog_switches/image-20220210204726242.png 1.5x, /image/analog_switches/image-20220210204726242.png 2x"
+        data-sizes="auto"
+        alt="/image/analog_switches/image-20220210204726242.png"
+        title="image-20220210204726242" /></p>
+<p>真值表：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/analog_switches/image-20220210204738114.png"
+        data-srcset="/image/analog_switches/image-20220210204738114.png, /image/analog_switches/image-20220210204738114.png 1.5x, /image/analog_switches/image-20220210204738114.png 2x"
+        data-sizes="auto"
+        alt="/image/analog_switches/image-20220210204738114.png"
+        title="image-20220210204738114" /></p>
+<h2 id="同系列器件">同系列器件</h2>
+<h3 id="双四路模拟开关cd4052">双四路模拟开关CD4052</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/analog_switches/image-20220210204825020.png"
+        data-srcset="/image/analog_switches/image-20220210204825020.png, /image/analog_switches/image-20220210204825020.png 1.5x, /image/analog_switches/image-20220210204825020.png 2x"
+        data-sizes="auto"
+        alt="/image/analog_switches/image-20220210204825020.png"
+        title="image-20220210204825020" /></p>
+<h3 id="三组二路模拟开关-cd4053">三组二路模拟开关 CD4053</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/analog_switches/image-20220210204858708.png"
+        data-srcset="/image/analog_switches/image-20220210204858708.png, /image/analog_switches/image-20220210204858708.png 1.5x, /image/analog_switches/image-20220210204858708.png 2x"
+        data-sizes="auto"
+        alt="/image/analog_switches/image-20220210204858708.png"
+        title="image-20220210204858708" /></p>
+<h3 id="十六路模拟开关-cd4067单刀十六掷">十六路模拟开关 CD4067——单刀十六掷</h3>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.chip37.com/scp/CD4066" target="_blank" rel="noopener noreffer">https://www.chip37.com/scp/CD4066</a></p>
+<p><a href="http://www.elecfans.com/dianzichangshi/20171209598886_a.html" target="_blank" rel="noopener noreffer">http://www.elecfans.com/dianzichangshi/20171209598886_a.html</a></p>
+<h3 id="datasheet">datasheet</h3>
+<p><a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/analog-switch/">analog switch</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-02-09</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/analogue_switch/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/harmonyos_ability/" class="prev" rel="prev" title="鸿蒙开发笔记——Ability"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
