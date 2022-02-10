@@ -16,5 +16,6 @@
 - 广告位招租
 ## 听首歌
 {{< music url="/music/anhao.flac" name=暗号 artist=周杰伦 cover="/image/music_image/8.png">}}
+{{< music auto="https://music.migu.cn/v3/music/player/audio?from=migu" >}}
 ## 引个流
 {{< bilibili BV1TV411W7vR >}}
