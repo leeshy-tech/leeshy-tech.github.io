@@ -1,0 +1,94 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Maven - 标签 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/tags/maven/</link>
+        <description>Maven - 标签 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 12 Feb 2022 14:21:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/maven/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发笔记——引入外部依赖</title>
+    <link>https://leeshy-tech.github.io/harmonyos_outerdependency/</link>
+    <pubDate>Sat, 12 Feb 2022 14:21:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_outerdependency/</guid>
+    <description><![CDATA[<h2 id="gradle">Gradle</h2>
+<p>简单的说，Gradle是一个构建工具，它是用来帮助我们构建app的，构建包括编译、打包等过程。我们可以为Gradle指定构建规则，然后它就会根据我们的“命令”自动为我们构建app。Studio中默认就使用Gradle来完成应用的构建。在创建工程时，Studio自动帮我们生成了一些通用构建规则，很多时候我们甚至完全不用修改这些规则就能完成我们app的构建。</p>
+<p>有些时候，我们会有一些个性化的构建需求，比如我们引入了第三方库，或者我们想要在通用构建过程中做一些其他的事情，这时我们就要自己在系统默认构建规则上做一些修改。这时候我们就要自己向Gradle”下命令“了，这时候我们就需要用Gradle能听懂的话了，也就是Groovy。Groovy是一种基于JVM的动态语言，关于它的具体介绍，感兴趣的同学可以文末参考”延伸阅读“部分给出的链接。</p>
+<h2 id="依赖坐标">依赖坐标</h2>
+<h3 id="什么是依赖坐标">什么是依赖坐标</h3>
+<p>依赖坐标的概念来源于Maven，俗称 gav：指的是使用下面三个向量子仓库中唯一定位一个 Maven 工程。</p>
+<ol>
+<li>
+<p>groupid:公司或组织域名倒序</p>
+<p><!-- raw HTML omitted -->com.ys.maven<!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>artifactid:模块名，也是实际项目的名称</p>
+<p><!-- raw HTML omitted -->Maven_05<!-- raw HTML omitted --></p>
+</li>
+<li>
+<p>version:当前项目的版本</p>
+<p><!-- raw HTML omitted -->0.0.1-SNAPSHOT<!-- raw HTML omitted --></p>
+</li>
+</ol>
+<h3 id="如何获取依赖坐标">如何获取依赖坐标</h3>
+<ol>
+<li>
+<p><a href="https://mvnrepository.com/" target="_blank" rel="noopener noreffer">https://mvnrepository.com/</a> 在mvnrepository官网查询</p>
+<p></p>
+<p>单击版本号，可以看到它的坐标信息：</p>
+<p></p>
+</li>
+<li>
+<p>各种提示：</p>
+<p>比如我现在要调用百度公司的API，示例代码提示我要引用百度的依赖：</p>
+<p></p>
+<p>那么就获取了坐标信息。</p>
+</li>
+</ol>
+<h2 id="在鸿蒙应用中引用依赖">在鸿蒙应用中引用依赖</h2>
+<div class="details admonition note open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-pencil-alt fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">虽然我们在坐标依赖部分一直在说Maven，但是在DevEco Studio中使用的还是gradle，这点要分清楚。</div>
+        </div>
+    </div>
+<ol>
+<li>
+<p>打开entry &gt; build.gradle：</p>
+<p></p>
+</li>
+<li>
+<p>在dependencies一栏添加如下语句：<code>implementation ('依赖坐标1','依赖坐标2','依赖坐标3')</code></p>
+<p>依赖坐标 = <code>groupid:artifactid:version</code></p>
+<p>例如：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="n">dependencies</span> <span class="o">{</span>
+ <span class="n">implementation</span> <span class="nf">fileTree</span><span class="o">(</span><span class="nl">dir:</span> <span class="s1">&#39;libs&#39;</span><span class="o">,</span> <span class="nl">include:</span> <span class="o">[</span><span class="s1">&#39;*.jar&#39;</span><span class="o">,</span> <span class="s1">&#39;*.har&#39;</span><span class="o">])</span>
+ <span class="n">testImplementation</span> <span class="s1">&#39;junit:junit:4.13.1&#39;</span>
+ <span class="n">ohosTestImplementation</span> <span class="s1">&#39;com.huawei.ohos.testkit:runner:2.0.0.200&#39;</span>
+ <span class="n">implementation</span> <span class="o">(</span><span class="s1">&#39;com.google.code.gson:gson:2.8.8&#39;</span><span class="o">,</span><span class="s1">&#39;com.baidubce:api-explorer-sdk:1.0.3.1&#39;</span><span class="o">)</span>
+<span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>打开gradle页面，刷新。</p>
+<p></p>
+<p></p>
+</li>
+<li>
+<p>左侧工程目录能看到加入的依赖</p>
+<p></p>
+</li>
+<li>
+<p>由此，在工程中能够正常使用外部依赖。</p>
+<p></p>
+</li>
+</ol>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.cnblogs.com/Bonker/p/5619458.html" target="_blank" rel="noopener noreffer">十分钟理解Gradle</a></p>
+<p><a href="https://mvnrepository.com/" target="_blank" rel="noopener noreffer">https://mvnrepository.com/</a></p>
+<p><a href="https://www.cnblogs.com/ysocean/p/7451054.html" target="_blank" rel="noopener noreffer">Maven详解（五）&mdash;&mdash; 坐标的概念以及依赖管理</a></p>
+<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
+]]></description>
+</item>
+</channel>
+</rss>
