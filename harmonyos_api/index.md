@@ -31,7 +31,7 @@
 
 用手机扫码，解码的信息与文字相同。
 
-<img src="/image/HarmonyOS/20220212_201451-16446730835251.gif" alt="20220212_201451" style="zoom:67%;" /><img src="/image/HarmonyOS/Screenshot_2022-02-12-20-15-53.jpg" alt="Screenshot_2022-02-12-20-15-53" style="zoom: 25%;" />
+![20220212_233555](/image/HarmonyOS/20220212_233555.gif)
 
 ## 铺垫
 

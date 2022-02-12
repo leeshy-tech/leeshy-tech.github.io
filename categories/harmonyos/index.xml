@@ -30,7 +30,7 @@
 </code></pre><h3 id="效果">效果</h3>
 <p>单击按钮，将输入框内的文字转换为二维码显示在下方。</p>
 <p>用手机扫码，解码的信息与文字相同。</p>
-<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p></p>
 <h2 id="铺垫">铺垫</h2>
 <h3 id="http">HTTP</h3>
 <div class="details admonition info open">
