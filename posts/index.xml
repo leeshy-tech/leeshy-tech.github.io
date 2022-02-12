@@ -4,7 +4,229 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 12 Feb 2022 14:21:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发实践——调用API</title>
+    <link>https://leeshy-tech.github.io/harmonyos_api/</link>
+    <pubDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_api/</guid>
+    <description><![CDATA[<h2 id="项目简介">项目简介</h2>
+<h3 id="项目结构">项目结构</h3>
+<pre tabindex="0"><code>└─ entry
+	├─src.main
+        ├─ java.com.example.api
+            ├─beans
+                ├─ requestBody				API请求体
+                └─ returnBody				API返回体
+            ├─slice
+                └─ MainAbilitySlice			主页面Slice
+            ├─utils
+                ├─ baiduApi					百度API调用
+                ├─ HttpRequestUtil			一般API调用，本项目没用到，但是很重要
+                └─ LoadImageUtil			网络图片加载到image组件
+            ├─ MainAbility
+            └─ MyApplication
+        └─ resources.base.layout
+            └─ ability_main.xml				主页面布局文件
+ 	└─ build.gradle							添加外部依赖
+</code></pre><h3 id="效果">效果</h3>
+<p>单击按钮，将输入框内的文字转换为二维码显示在下方。</p>
+<p>用手机扫码，解码的信息与文字相同。</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="铺垫">铺垫</h2>
+<h3 id="http">HTTP</h3>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">本项目中调用API使用的是https方式，这部分仅作笔记。</div>
+        </div>
+    </div>
+<p>在鸿蒙应⽤中默认只允许访问https接⼝，如果要访问http接⼝，需要在config.json的deviceConfig项中添加如下配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;deviceConfig&#34;</span><span class="err">:</span> <span class="p">{</span>
+  <span class="nt">&#34;default&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;cleartextTraffic&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="json">JSON</h3>
+<p>API请求体的传入和响应体的解析需要JSON格式的字符串、把JSON字符串转换为对象，虽然也可以用转义符等方式实现，但还是用外部依赖比较方便，常用的依赖有Gson、FastJson、Jackson，本项目使用的是FastJson。</p>
+<p>借助转义符传递JSON be like：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">String</span> <span class="n">jsonBody</span> <span class="o">=</span> <span class="s">&#34;{\n  \&#34;data\&#34; : \&#34;https://apis.baidu.com/\&#34;,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;size\&#34; : 20,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;level\&#34; : \&#34;L\&#34;,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;format\&#34; : \&#34;jpg\&#34;,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;logo\&#34; : \&#34;https://apisown-test.bj.bcebos.com/qr-code-api-store.png\&#34;\n}&#34;</span><span class="o">;</span>
+</code></pre></div><p>我的老天，它实在是太丑陋了。</p>
+<h3 id="引入外部依赖">引入外部依赖</h3>
+<p>添加依赖库fastjson，以及百度的依赖库api-explorer-sdk。</p>
+<p>在entry &gt; build.gradle中添加：<code>implementation ('com.baidubce:api-explorer-sdk:1.0.3.1','com.alibaba:fastjson:1.2.47')</code></p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">添加外部依赖的方法，详见：<a href="https://leeshy-tech.github.io/harmonyos_outerdependency/" target="_blank" rel="noopener noreffer">鸿蒙开发笔记——引入外部依赖</a></div>
+        </div>
+    </div>
+<h2 id="api调用">API调用</h2>
+<p>API的功能是将字符串转化为二维码图片，这里选用的是<a href="https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae" target="_blank" rel="noopener noreffer">百度的API</a>，原因是：有例程。对于我这种啥都没学扎实的人来说，能降低点难度最好。</p>
+<h3 id="api需要注意的点">API需要注意的点</h3>
+<ol>
+<li>调用方式：HTTP or HTTPS? POST？GET？DELETE？</li>
+<li>请求体参数。</li>
+<li>响应体参数：取决于你如何取到你想要的返回值。</li>
+<li>认证密钥。</li>
+</ol>
+<p>从该API的介绍中我们看到：http和https均可，POST方式，有认证密钥，请求体和响应体参数示例如下：</p>
+<p></p>
+<h3 id="核心代码">核心代码</h3>
+<ol>
+<li>
+<p>请求体和响应体各写成一个类：requestBody 、returnBody</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//API的请求体，共五个参数
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">requestBody</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">data</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">level</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">format</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">logo</span><span class="o">;</span>
+
+   <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"> <span class="c1">//API的响应体类，只有一个参数
+</span><span class="c1"></span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">returnBody</span> <span class="o">{</span>
+     <span class="kd">private</span> <span class="n">String</span> <span class="n">imageUrl</span><span class="o">;</span>
+
+     <span class="o">...</span>
+ <span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>调用API的过程封装成类的函数：baiduApi.sendRequest(requestBody request_body)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//百度API的请求代码，由示例代码更改而来：https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sendRequest</span><span class="o">(</span><span class="n">requestBody</span> <span class="n">request_body</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//填入自己的accessKey，secretKey，否则项目无法正常运行。
+</span><span class="c1"></span>    <span class="n">String</span> <span class="n">accessKey</span> <span class="o">=</span> <span class="s">&#34;accessKey&#34;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">secretKey</span> <span class="o">=</span> <span class="s">&#34;secretKey&#34;</span><span class="o">;</span>
+
+    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="s">&#34;http://qrcode.api.bdymkt.com/qrcode/generate&#34;</span><span class="o">;</span>
+    <span class="n">ApiExplorerRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiExplorerRequest</span><span class="o">(</span><span class="n">HttpMethodName</span><span class="o">.</span><span class="na">POST</span><span class="o">,</span> <span class="n">path</span><span class="o">);</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">setCredentials</span><span class="o">(</span><span class="n">accessKey</span><span class="o">,</span> <span class="n">secretKey</span><span class="o">);</span>
+
+    <span class="c1">// 设置header参数
+</span><span class="c1"></span>    <span class="n">request</span><span class="o">.</span><span class="na">addHeaderParameter</span><span class="o">(</span><span class="s">&#34;Content-Type&#34;</span><span class="o">,</span> <span class="s">&#34;application/json;charset=UTF-8&#34;</span><span class="o">);</span>
+
+    <span class="c1">// 设置jsonBody参数
+</span><span class="c1"></span>    <span class="n">String</span> <span class="n">objStr</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">request_body</span><span class="o">);</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">setJsonBody</span><span class="o">(</span><span class="n">objStr</span><span class="o">);</span>
+
+    <span class="n">ApiExplorerClient</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiExplorerClient</span><span class="o">(</span><span class="k">new</span> <span class="n">AppSigner</span><span class="o">());</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">ApiExplorerResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">sendRequest</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+        <span class="c1">// 返回结果格式为Json字符串
+</span><span class="c1"></span>        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></li>
+</ol>
+<h2 id="按键监听">按键监听</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">本部分参考官方文档 &gt; Ability框架 &gt; 线程管理</div>
+        </div>
+    </div>
+<p>这里的按键监听与之前稍有不同，原因是调用API是一个耗时的工作，它不能在主线程中运行，需要在按键监听器中使用新的线程。</p>
+<h3 id="核心代码-1">核心代码</h3>
+<p>MainAbilitySlice的onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//设置按键监听
+</span><span class="c1"></span><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="c1">//开一个新线程
+</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+    <span class="c1">//异步
+</span><span class="c1"></span>    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
+        <span class="c1">//调用API生成二维码图片（网络地址）
+</span><span class="c1"></span>        <span class="c1">//返回字符串格式：{&#34;imageUrl&#34;:&#34;https://bj.bcebos.com/qr-code/22021215e07535dcaa53.jpg&#34;}
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">string</span> <span class="o">=</span> <span class="n">tf1</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+        <span class="n">requestBody</span> <span class="n">request_body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">requestBody</span><span class="o">(</span><span class="n">string</span><span class="o">,</span><span class="n">20</span><span class="o">,</span><span class="s">&#34;L&#34;</span><span class="o">,</span><span class="s">&#34;jpg&#34;</span><span class="o">,</span>
+                <span class="s">&#34;https://apisown-test.bj.bcebos.com/qr-code-api-store.png&#34;</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">request_result</span> <span class="o">=</span> <span class="n">baiduApi</span><span class="o">.</span><span class="na">sendRequest</span><span class="o">(</span><span class="n">request_body</span><span class="o">);</span>
+        <span class="c1">//将JSON字符串转换为类，取出imageUrl
+</span><span class="c1"></span>        <span class="n">returnBody</span> <span class="n">returndata</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">request_result</span><span class="o">,</span> <span class="n">returnBody</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">image_url</span> <span class="o">=</span> <span class="n">returndata</span><span class="o">.</span><span class="na">getImageUrl</span><span class="o">();</span>
+        <span class="c1">//将网络图片显示到image组件
+</span><span class="c1"></span>        <span class="n">LoadImageUtil</span><span class="o">.</span><span class="na">loadImg</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="n">image_url</span><span class="o">,</span><span class="n">image1</span><span class="o">);</span>
+    <span class="o">});</span>
+<span class="o">});</span>
+</code></pre></div><p>在新线程的异步方法里写入监听逻辑：调用API并将返回的网络图片url显示到image组件。</p>
+<h2 id="网络图片显示">网络图片显示</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">本部分参考官方文档 &gt; 媒体 &gt; 图像 &gt; 位图操作开发指导 &amp; 图像解码开发指导。</div>
+        </div>
+    </div>
+<p>当我们API调用成功之后，我们就需要显示这个图片，但是image组件的setImageElement()方法的输入参数类型只能是Element，而Element类型是鸿蒙的本地数据文件管理类型，也就是说通过这个方法只能让image组件显示本地的图片，我们获得的网络图片地址在这里是不能用的。</p>
+<p></p>
+<p>我们需要自己写接口来实现网络图片的显示：LoadImageUtil.loadImg(Context context, String netImgUrl, Image image)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//将网络图片加载到context的image组件里
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">loadImg</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">String</span> <span class="n">netImgUrl</span><span class="o">,</span> <span class="n">Image</span> <span class="n">image</span><span class="o">){</span>
+    <span class="c1">//创建一个新线程
+</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
+        <span class="n">HttpURLConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span><span class="o">{</span>
+            <span class="c1">//建立与网络图片之间的http连接
+</span><span class="c1"></span>            <span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="n">netImgUrl</span><span class="o">);</span>
+            <span class="n">connection</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span><span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+            <span class="n">connection</span><span class="o">.</span><span class="na">connect</span><span class="o">();</span>
+            <span class="c1">//从连接中获取输入流
+</span><span class="c1"></span>            <span class="n">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
+            <span class="c1">//根据数据流将图片数据缓存到ImageSouce对象，创建图片对象
+</span><span class="c1"></span>            <span class="n">ImageSource</span> <span class="n">imageSource</span> <span class="o">=</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">inputStream</span><span class="o">,</span><span class="k">new</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">SourceOptions</span><span class="o">());</span>
+            <span class="c1">//图片数据解码的参数
+</span><span class="c1"></span>            <span class="n">ImageSource</span><span class="o">.</span><span class="na">DecodingOptions</span> <span class="n">decodingOptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">DecodingOptions</span><span class="o">();</span>
+            <span class="n">decodingOptions</span><span class="o">.</span><span class="na">desiredPixelFormat</span> <span class="o">=</span> <span class="n">PixelFormat</span><span class="o">.</span><span class="na">ARGB_8888</span><span class="o">;</span>
+            <span class="c1">//PixelMap对象就表示一个图片
+</span><span class="c1"></span>            <span class="n">PixelMap</span> <span class="n">pixelmap</span> <span class="o">=</span> <span class="n">imageSource</span><span class="o">.</span><span class="na">createPixelmap</span><span class="o">(</span><span class="n">decodingOptions</span><span class="o">);</span>
+            <span class="c1">//将图片载入到组件中：在鸿蒙应用中将图片载入到组件，推荐在一个独立的UI线程中完成
+</span><span class="c1"></span>            <span class="n">context</span><span class="o">.</span><span class="na">getUITaskDispatcher</span><span class="o">().</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
+                <span class="n">image</span><span class="o">.</span><span class="na">setPixelMap</span><span class="o">(</span><span class="n">pixelmap</span><span class="o">);</span>
+                <span class="n">pixelmap</span><span class="o">.</span><span class="na">release</span><span class="o">();</span><span class="c1">//释放图片
+</span><span class="c1"></span>            <span class="o">});</span>
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</code></pre></div><p>主要思路：</p>
+<ul>
+<li>建立网络连接获得图片数据</li>
+<li>图片数据解码</li>
+<li>转换成位图对象pixelmap</li>
+<li>通过image.setPixelMap(pixelmap)方法载入图片</li>
+</ul>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目地址">项目地址</h3>
+<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Api" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Api</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.w3cschool.cn/fastjson/fastjson-demo1.html" target="_blank" rel="noopener noreffer">Fastjson 使用实例</a></p>
+<p><a href="https://www.runoob.com/w3cnote/java-json-instro.html" target="_blank" rel="noopener noreffer">Java 中 JSON 的使用</a></p>
+<p><a href="https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae" target="_blank" rel="noopener noreffer">百度智能云——二维码生成识别</a></p>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
+<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发笔记——引入外部依赖</title>
     <link>https://leeshy-tech.github.io/harmonyos_outerdependency/</link>
     <pubDate>Sat, 12 Feb 2022 14:21:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_outerdependency/</guid>
@@ -863,7 +1085,18 @@ StoreConfig对象：关联数据⽂件配置(数据库)</p>
 <li>注意你会在Marketplace里找到Chinese (Simplified) Language Pack，它是IDEA的插件，适配效果没有内置的好。</li>
 </ul>
 <p></p>
+<h3 id="拼写检查">拼写检查</h3>
+<blockquote>
+<p>拼写检查默认开启，有时会提示一些莫名其妙的单词，非常难受，所以将其关掉。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Editor &gt; Inspections &gt; Spelling</li>
+<li>将右侧的勾取消。</li>
+</ul>
+<p></p>
 <h2 id="项目结构">项目结构</h2>
+<p>坑，待填。</p>
 <h2 id="调试方法">调试方法</h2>
 <p>鸿蒙项目有两种调试方式：previewer和在设备运行</p>
 <h4 id="previewer">Previewer</h4>
@@ -968,132 +1201,6 @@ While we argue that controllers and, in the near future, switches would be able 
 <li>这些问题大多可以得到解决，而不会失去SDN的好处。</li>
 </ul>
 <p>在这个领域，通常被忽视的是SDN对网络增长的其他限制因素的影响，如网络规划和管理复杂性。软件定义的网络增加了一种灵活性，可以大规模地适应网络编程和管理。传统的网络在这一领域历来都失败过。最近在这个方向上的尝试非常有希望，尽管未来仍面临许多挑战。</p>
-]]></description>
-</item>
-<item>
-    <title>论文笔记——A Survey of SDN</title>
-    <link>https://leeshy-tech.github.io/a_survey_of_sdn_note/</link>
-    <pubDate>Tue, 11 Jan 2022 21:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/a_survey_of_sdn_note/</guid>
-    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p><a href="https://ieeexplore.ieee.org/abstract/document/6739370" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/abstract/document/6739370</a> <br>
-IEEE Communications Surveys &amp; Tutorials  <br>
-Volume 16 Issue 3</p>
-<h2 id="摘要">摘要</h2>
-<p>本文综述了可编程网络的最新进展，重点介绍了SDN。我们提供了可编程网络的历史视角，从早期的想法到最近的发展。然后介绍了SDN网络的体系结构和OpenFlow标准，讨论了当前基于SDN的协议和服务的实现和测试的替代方案，考察了当前和未来的SDN应用，并探讨了基于SDN模式的有前景的研究方向。</p>
-<h2 id="1-引言">1 引言</h2>
-<p>传统网络出现的问题：网络管理和性能调优困难，网络僵化。
-可编程网络具有革命性，比如软件定义网络，网络设备成为简单的包转发设备，可以通过开放的接口进行编程。
-第二节：早期可编程网络 <br>
-第三节：SDN及其体系结构，以及OpenFlow协议。  <br>
-第四节：开发和测试SDN的平台和工具。<br>
-第五节：在数据中心和无线网络的应用。 <br>
-第六节：面临的挑战和未来发展的方向。</p>
-<h2 id="2-早期可编程网络">2 早期可编程网络</h2>
-<p>描述了一些SDN和OpenFlow概念的前身，在早期的一些项目中已经有了关于可编程网络和数控平面分离的思想。</p>
-<h2 id="3-sdn体系结构">3 SDN体系结构</h2>
-<p>路由器和交换机通常是封闭的系统，只有很少的提供给供应商的接口。适配新版本的协议（比如Ipv6）非常困难，更不用说部署全新的协议和服务。网络僵化效应主要是由于设备的数据和控制平面紧密耦合，新的app或功能的部署需要直接实现在物理设施中。解决网络僵化的一个手段是使用中间设备，比如CDN（内容交付网络）。<br>
-软件定义网络将转发硬件和控制逻辑分离，可以更容易地部署新协议和应用程序。</p>
-<h3 id="a-当前sdn架构">A 当前SDN架构</h3>
-<p>目前有两种SDN架构：ForCES和OpenFlow      <br>
-</p>
-<ul>
-<li>ForCES将单个设备中的控制元素与转发元素分开，意图实现在单一网络设备中将转发硬件与第三方控制相结合。它定义了两个逻辑实体，转发元素FE和控制元素CE，它们通过ForCES协议通信，FE负责使用底层硬件来提供每个数据包的处理。CE执行控制和信令功能。ForCES还有一个重要功能块LFB（逻辑功能块），它安装在FE上，通过CE进行控制，实现FE的配置和数据包处理。</li>
-<li>OpenFlow完全将控制平面从网络设备上剥离，转发设备基于流表进行转发，流表控制着转发规则。没有匹配流表时按照“table-miss”流表项执行相应的动作，比如丢弃、转发给控制器。控制平面与转发平面通过OpenFlow协议进行通信，远程控制器可以添加、删除或更新交换机的流表项。</li>
-<li>ForCES和OpenFlow的模型不同，但是可以实现相似的功能。</li>
-<li>OpenFlow得到了各界的大力支持，以至于被认为是SDN的官方标准。</li>
-</ul>
-<h3 id="b-转发设备">B 转发设备</h3>
-<p>底层网络中，转发设备有路由器、交换机、无线接入点等。但是在SDN中，控制逻辑和算法都由控制器维护，基本转发硬件均被称为switches——交换机。<br>
-规则空间是OpenFlow可扩展性的瓶颈，在尊重网络策略和约束的同时，优化使用规则空间来服务于一定数量的流条目是一个具有挑战性和重要的课题。</p>
-<h3 id="c-控制器">C 控制器</h3>
-<p>单个控制器能够处理惊人数量的新流请求，并且应该能够管理除最大的网络之外的所有网络。<br>
-交换机控制延迟对网络的整体行为有重大影响，因为每个交换机在从控制器收到插入流表中适当规则的消息之前不能转发数据。这个间隔可能会随着链路延迟而增加，并显著影响网络应用程序的性能。 <br>
-控制建模对网络的可扩展性影响很大。 <br>
-集中式和分布式：软件定义的网络可能具有集中式或分布式的控制平面。OpenFlow允许多个控制器连接到一台交换机上，这将允许备份控制器在出现故障时接管。软件定义的网络还可以具有一定程度的逻辑去中心化，具有多个逻辑控制器。<br>
-粒度控制：传统网络的基本元素是包。在软件定义网络中，网络元素是远程控制的，开销是由数据平面和控制平面之间的通信引起的。控制器对每个包做决策会增加额外的延迟，对流的第一个包所做的决策可以应用于该流的所有后续包，通过将流分组可以进一步减少开销。
-被动控制和主动控制：这部分没看懂 P1624。</p>
-<h3 id="d-南向接口控制器交换机">D 南向接口：控制器——交换机</h3>
-<p>OpenFlow本身就是控制器——交换机交互的一种实现。</p>
-<h3 id="e-北向接口控制器服务">E 北向接口：控制器——服务</h3>
-<p>目前还没有公认的针对北向交互的标准，而且它们更有可能在特定应用程序的特殊基础上实现。</p>
-<h3 id="f-标准化工作">F 标准化工作</h3>
-<h2 id="4-sdn开发工具">4 SDN开发工具</h2>
-<h3 id="a-仿真和仿真工具">A 仿真和仿真工具</h3>
-<p>mininet,NS-3</p>
-<h3 id="b-可用软交换机平台">B 可用软交换机平台</h3>
-<p></p>
-<h3 id="c-实体交换机">C 实体交换机</h3>
-<p>目前在商品网络硬件中实现的SDN主要技术是OpenFlow标准。<br>
-</p>
-<h3 id="d-可用控制器平台">D 可用控制器平台</h3>
-<p><br>
-其中有两个特殊用途的控制器：Flowvisor、RouteFlow <br>
-Flowvisor：充当交换机和多个控制器之间的透明代理，它能够创建网络片，将每个片的控制委托给不同的控制器，促进了片之间的隔离。<br>
-RouteFlow：它由一个OpenFlow控制器应用程序、一个独立的服务器和一个虚拟网络环境组成，它可以复制物理基础设施的连接并运行IP路由引擎。路由引擎根据所配置的路由协议(如OSPF、BGP)，将转发信息库(FIB)生成到LinuxIP表中。</p>
-<h3 id="e-代码验证和调试">E 代码验证和调试</h3>
-<p>NICE：自动化的测试工具，用于通过模型检查和符号执行来帮助发现OpenFlow程序中的bug。<br>
-Anteater：试图检查数据平面中存在的网络不变量，如连通性或一致性。这种方法的主要优点是它与协议无关；它还将捕获由错误的交换机固件或与控制平面通信不一致而导致的错误。<br>
-VeriFlow：进一步提出了一个驻留在控制器和转发元素之间的实时验证工具。能够停止在到达网络之前会导致异常行为的规则。 <br>
-OFRewind：允许以不同的粒度记录网络事件（控制和数据），然后再回放以重现特定的场景，从而提供定位和排除导致网络异常的事件的机会。   <br>
-ndb：为SDN实现了断点和数据包回溯。<br>
-STS：是一个由软件定义的网络故障排除模拟器。它是用python编写的，并且依赖于POX。它模拟了给定网络中的设备，允许进行测试用例，并识别产生给定错误的输入集。</p>
-<h2 id="5-sdn应用">5 SDN应用</h2>
-<h3 id="a-企业网络">A 企业网络</h3>
-<p>校园网也算是特殊的企业网络。适当的管理在企业环境中至关重要，SDN可以通过编程方式执行和调整网络策略，以及帮助监控网络活动和调整网络性能。使用SDN实现的中间设备包括NAT，防火墙，负载平衡器和网络访问控制。对于更复杂的中间设备，直接实现导致性能下降，可以使用SDN提供统一控制和管理。</p>
-<h3 id="b-数据中心">B 数据中心</h3>
-<p>在大规模数据中心中能源消耗有很重要的成本，ElasticTree是一种电源管理器，利用SDN来寻找满足当前流量条件的最小功率网络的子集。B4是谷歌提出的SDN概念应用于数据中心环境中的实际例子，它是一个连接谷歌全球数据中心的广域网。B4被证明是高效的，而且工作经验表明，控制平面到数据平面通信和硬件编程开销造成的瓶颈是今后工作中需要考虑的重要问题。</p>
-<h3 id="c-基于基础设施的无线接入网">C 基于基础设施的无线接入网</h3>
-<p>OpenRoads：设想了一种软件定义蜂窝网络。  <br>
-Odin：在企业无线局域网环境中引入了可编程性，它在控制器上构建一个访问点抽象，将关联状态与物理访问点分离，实现主动移动管理和负载平衡。 <br>
-OpenRadio：专注于部署可编程无线数据平面，在PHY和MAC层而不是第三层，提供灵活性，旨在提供一个模块化接口，能够处理使用不同协议的流量子集，基于决策平面和转发平面分离的思想，操作员可以表示由处理平面模块(如FFT模块、维特比解码等)组装而来的决策平面规则和相应的动作。</p>
-<h3 id="d-光网络">D 光网络</h3>
-<p>将SDN和OpenFlow标准应用于光传输网络的好处包括：提高光传输网络控制和管理灵活性，支持部署第三方管理和控制系统，以及通过利用虚拟化和SDN部署新的服务。   <br>
-文献[88]-[93]</p>
-<h3 id="e-家庭和小型企业">E 家庭和小型企业</h3>
-<p>随着低成本网络设备的广泛可用性，这些环境变得越来越复杂和普遍，对更仔细的网络管理和更严格的安全性的需求也相应地增加了。但是，在每个家庭和办公室都有一个专门的网络管理员是不现实的。   <br>
-Calvert建议将控制器作为“家庭网络数据记录器”，创建可用于故障排除或其他目的日志。  <br>
-Feamster建议外包第三方专家，通过远程控制可编程交换机和分布式网络监控和推理算法，来检测可能的安全问题。   <br>
-文献[94]-[97]</p>
-<h2 id="5-研究所面临的挑战和未来的发展方向">5 研究所面临的挑战和未来的发展方向</h2>
-<h3 id="a-控制器和交换机设计">A 控制器和交换机设计</h3>
-<p>可扩展性、性能、鲁棒性、安全性
-DIFANE：流被主动推到交换机上，试图减少向控制器的请求数量。   <br>
-Devoflow：建议处理交换机中的短寿命流和控制器中的长寿流，以减少流设置延迟和控制器开销。   <br>
-[28]：主张用一系列规则匹配记录来替换ASIC上的计数器，并在CPU中处理它们，以允许高效访问计数器。    <br>
-FLARE：专注于“深度可编程网络”的新型网络节点模型，它为数据平面、控制平面以及它们之间的接口提供了可编程性。    <br>
-为了提高可扩展性，特别是为了可靠性和鲁棒性，人们已经认识到逻辑集中的控制器必须是物理分布的。</p>
-<h3 id="b-软件定义互联网">B 软件定义互联网</h3>
-<p>目前许多关于SDN的工作都是在单个管理域的上下文中检查或提出解决方案。然而，那些管理本质上是分散的环境，比如互联网，需要一个逻辑分布的控制平面。</p>
-<h3 id="c-控制器服务交互">C 控制器——服务交互</h3>
-<p>目前南向接口定义的相当好，但是北向接口却没有统一的标准，一种可能的解释是，北向接口完全是在软件中定义的，而南向接口必须支持硬件实现。     <br>
-如果我们认为控制器是一个“网络操作系统”，那么应该有一个明确定义的接口，应用程序可以访问底层硬件（交换机），与其他应用程序共存和交互，并利用系统服务（例如拓扑发现、转发），而不需要应用程序开发人员知道控制器的实现细节。 <br>
-此外，北向的API应该允许应用程序对同一流应用不同的策略(例如，通过目的地进行转发和通过源IP进行监控)。</p>
-<h3 id="d-虚拟化和云服务">D 虚拟化和云服务</h3>
-<h3 id="e-以信息为中心的网络">E 以信息为中心的网络</h3>
-<p>信息中心网络(ICN)是针对未来互联网架构提出的一种新的范式，它旨在提高内容交付的效率和内容可用性。他们的驱动动机是，当前的互联网是信息驱动的，但网络技术仍然专注于基于位置的寻址和主机对主机的通信的想法。通过提出一种处理命名数据而不是命名主机的体系结构，内容分发可以直接实现到网络结构中，而不是依赖于目前用于将内容映射到单个位置的复杂映射、可用性和安全机制。    <br>
-ICN中信息处理和转发的分离与SDN中数据平面和控制平面的解耦相一致。然后，问题就变成了如何将ICN和SDN结合起来。</p>
-<h3 id="f-异构网络支持">F 异构网络支持</h3>
-<p>未来网络面临的一个主要挑战是资源的有效利用；在无线多跳自组网中尤其如此，因为可用的无线容量本质上是有限的。这是由于许多因素，包括共享物理介质的使用、无线信道损坏和受管理基础设施的缺乏。自组织网络缺乏专用资源，而且连接性的变化使容量共享变得困难。底层网络的异构特性（例如，物理介质、拓扑结构、稳定性）和节点（例如，缓冲区大小、功率限制、移动性）在考虑路由和资源分配时也增加了另一个重要的因素。   <br>
-迄今为止的SDN技术，如OpenFlow，主要针对基于基础设施的网络。它们促进了一种不适合在无基础设施环境中出现的分散、中断和延迟级别的集中控制机制。虽然之前的工作已经研究了SDN在无线环境中的使用，但其范围主要集中在基于基础设施的部署。</p>
-<h2 id="7-结束语">7 结束语</h2>
-<p>在本文中，我们提供了一个可编程网络的概述，并在此背景下，考察了软件定义网络(SDN)的新兴领域。我们来看看可编程网络的历史，从早期的想法到最近的发展。我们特别详细描述了SDN体系结构以及OpenFlow[2]标准。我们介绍了当前的SDN实现和测试平台，并检查了基于SDN范式开发的网络服务和应用程序。最后，我们讨论了SDN所支持的未来发展方向，从支持异构网络到信息中心网络(ICN)。</p>
-<h2 id="语句摘录">语句摘录</h2>
-<blockquote>
-<p>As a result, network management and performance tuning is quite challenging and thus error-prone.<br>
-因此，网络管理和性能调优非常具有挑战性，所以很容易出错。</p>
-</blockquote>
-<blockquote>
-<p>Because of its huge deployment base and the fact it is considered part of our society’s critical infrastructure (just like transportation and power grids), the Internet has become extremely difficult to evolve both in terms of its physical infrastructure as well as its protocols and performance.<br>
-由于其庞大的部署基础，且被视为我们社会关键基础设施(就像交通和电网)的一部分，所以互联网在其物理基础设施、协议和性能方面的发展已经变得极其困难。</p>
-</blockquote>
-<blockquote>
-<p>As SDN becomes more widely adopted and protocols such as OpenFlow are further defined, new solutions are proposed and new challenges arise.<br>
-随着SDN被广泛采用，并且OpenFlow等协议被进一步定义，新的解决方案被提出，新的挑战出现.</p>
-</blockquote>
-<blockquote>
-<p>The Internet has revolutionized the way we, as individuals and as a society, live, work, conduct business, socialize, get entertainment, etc. As a result, the Internet is now considered part of our society’s critical infrastructure much like the power, water, and transportation grids.<br>
-互联网已经彻底改变了我们作为个人和社会、生活、工作、做生意、社交、获得娱乐等方面的方式。因此，互联网现在被认为是我们社会关键基础设施的一部分，就像电力、水和交通电网一样。</p>
-</blockquote>
 ]]></description>
 </item>
 </channel>

@@ -4,7 +4,229 @@
         <link>https://leeshy-tech.github.io/tags/app/</link>
         <description>APP - 标签 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 08 Feb 2022 21:12:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/app/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/app/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发实践——调用API</title>
+    <link>https://leeshy-tech.github.io/harmonyos_api/</link>
+    <pubDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_api/</guid>
+    <description><![CDATA[<h2 id="项目简介">项目简介</h2>
+<h3 id="项目结构">项目结构</h3>
+<pre tabindex="0"><code>└─ entry
+	├─src.main
+        ├─ java.com.example.api
+            ├─beans
+                ├─ requestBody				API请求体
+                └─ returnBody				API返回体
+            ├─slice
+                └─ MainAbilitySlice			主页面Slice
+            ├─utils
+                ├─ baiduApi					百度API调用
+                ├─ HttpRequestUtil			一般API调用，本项目没用到，但是很重要
+                └─ LoadImageUtil			网络图片加载到image组件
+            ├─ MainAbility
+            └─ MyApplication
+        └─ resources.base.layout
+            └─ ability_main.xml				主页面布局文件
+ 	└─ build.gradle							添加外部依赖
+</code></pre><h3 id="效果">效果</h3>
+<p>单击按钮，将输入框内的文字转换为二维码显示在下方。</p>
+<p>用手机扫码，解码的信息与文字相同。</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="铺垫">铺垫</h2>
+<h3 id="http">HTTP</h3>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">本项目中调用API使用的是https方式，这部分仅作笔记。</div>
+        </div>
+    </div>
+<p>在鸿蒙应⽤中默认只允许访问https接⼝，如果要访问http接⼝，需要在config.json的deviceConfig项中添加如下配置：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;deviceConfig&#34;</span><span class="err">:</span> <span class="p">{</span>
+  <span class="nt">&#34;default&#34;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&#34;cleartextTraffic&#34;</span><span class="p">:</span> <span class="kc">true</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div><h3 id="json">JSON</h3>
+<p>API请求体的传入和响应体的解析需要JSON格式的字符串、把JSON字符串转换为对象，虽然也可以用转义符等方式实现，但还是用外部依赖比较方便，常用的依赖有Gson、FastJson、Jackson，本项目使用的是FastJson。</p>
+<p>借助转义符传递JSON be like：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">String</span> <span class="n">jsonBody</span> <span class="o">=</span> <span class="s">&#34;{\n  \&#34;data\&#34; : \&#34;https://apis.baidu.com/\&#34;,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;size\&#34; : 20,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;level\&#34; : \&#34;L\&#34;,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;format\&#34; : \&#34;jpg\&#34;,\n&#34;</span> <span class="o">+</span>
+        <span class="s">&#34;  \&#34;logo\&#34; : \&#34;https://apisown-test.bj.bcebos.com/qr-code-api-store.png\&#34;\n}&#34;</span><span class="o">;</span>
+</code></pre></div><p>我的老天，它实在是太丑陋了。</p>
+<h3 id="引入外部依赖">引入外部依赖</h3>
+<p>添加依赖库fastjson，以及百度的依赖库api-explorer-sdk。</p>
+<p>在entry &gt; build.gradle中添加：<code>implementation ('com.baidubce:api-explorer-sdk:1.0.3.1','com.alibaba:fastjson:1.2.47')</code></p>
+<div class="details admonition tip open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">添加外部依赖的方法，详见：<a href="https://leeshy-tech.github.io/harmonyos_outerdependency/" target="_blank" rel="noopener noreffer">鸿蒙开发笔记——引入外部依赖</a></div>
+        </div>
+    </div>
+<h2 id="api调用">API调用</h2>
+<p>API的功能是将字符串转化为二维码图片，这里选用的是<a href="https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae" target="_blank" rel="noopener noreffer">百度的API</a>，原因是：有例程。对于我这种啥都没学扎实的人来说，能降低点难度最好。</p>
+<h3 id="api需要注意的点">API需要注意的点</h3>
+<ol>
+<li>调用方式：HTTP or HTTPS? POST？GET？DELETE？</li>
+<li>请求体参数。</li>
+<li>响应体参数：取决于你如何取到你想要的返回值。</li>
+<li>认证密钥。</li>
+</ol>
+<p>从该API的介绍中我们看到：http和https均可，POST方式，有认证密钥，请求体和响应体参数示例如下：</p>
+<p></p>
+<h3 id="核心代码">核心代码</h3>
+<ol>
+<li>
+<p>请求体和响应体各写成一个类：requestBody 、returnBody</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//API的请求体，共五个参数
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">requestBody</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">data</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">level</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">format</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">logo</span><span class="o">;</span>
+
+   <span class="o">...</span>
+<span class="o">}</span>
+</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"> <span class="c1">//API的响应体类，只有一个参数
+</span><span class="c1"></span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">returnBody</span> <span class="o">{</span>
+     <span class="kd">private</span> <span class="n">String</span> <span class="n">imageUrl</span><span class="o">;</span>
+
+     <span class="o">...</span>
+ <span class="o">}</span>
+</code></pre></div></li>
+<li>
+<p>调用API的过程封装成类的函数：baiduApi.sendRequest(requestBody request_body)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//百度API的请求代码，由示例代码更改而来：https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sendRequest</span><span class="o">(</span><span class="n">requestBody</span> <span class="n">request_body</span><span class="o">)</span> <span class="o">{</span>
+    <span class="c1">//填入自己的accessKey，secretKey，否则项目无法正常运行。
+</span><span class="c1"></span>    <span class="n">String</span> <span class="n">accessKey</span> <span class="o">=</span> <span class="s">&#34;accessKey&#34;</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">secretKey</span> <span class="o">=</span> <span class="s">&#34;secretKey&#34;</span><span class="o">;</span>
+
+    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="s">&#34;http://qrcode.api.bdymkt.com/qrcode/generate&#34;</span><span class="o">;</span>
+    <span class="n">ApiExplorerRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiExplorerRequest</span><span class="o">(</span><span class="n">HttpMethodName</span><span class="o">.</span><span class="na">POST</span><span class="o">,</span> <span class="n">path</span><span class="o">);</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">setCredentials</span><span class="o">(</span><span class="n">accessKey</span><span class="o">,</span> <span class="n">secretKey</span><span class="o">);</span>
+
+    <span class="c1">// 设置header参数
+</span><span class="c1"></span>    <span class="n">request</span><span class="o">.</span><span class="na">addHeaderParameter</span><span class="o">(</span><span class="s">&#34;Content-Type&#34;</span><span class="o">,</span> <span class="s">&#34;application/json;charset=UTF-8&#34;</span><span class="o">);</span>
+
+    <span class="c1">// 设置jsonBody参数
+</span><span class="c1"></span>    <span class="n">String</span> <span class="n">objStr</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">request_body</span><span class="o">);</span>
+    <span class="n">request</span><span class="o">.</span><span class="na">setJsonBody</span><span class="o">(</span><span class="n">objStr</span><span class="o">);</span>
+
+    <span class="n">ApiExplorerClient</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiExplorerClient</span><span class="o">(</span><span class="k">new</span> <span class="n">AppSigner</span><span class="o">());</span>
+
+    <span class="k">try</span> <span class="o">{</span>
+        <span class="n">ApiExplorerResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">sendRequest</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
+        <span class="c1">// 返回结果格式为Json字符串
+</span><span class="c1"></span>        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
+    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></li>
+</ol>
+<h2 id="按键监听">按键监听</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">本部分参考官方文档 &gt; Ability框架 &gt; 线程管理</div>
+        </div>
+    </div>
+<p>这里的按键监听与之前稍有不同，原因是调用API是一个耗时的工作，它不能在主线程中运行，需要在按键监听器中使用新的线程。</p>
+<h3 id="核心代码-1">核心代码</h3>
+<p>MainAbilitySlice的onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//设置按键监听
+</span><span class="c1"></span><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="c1">//开一个新线程
+</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+    <span class="c1">//异步
+</span><span class="c1"></span>    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
+        <span class="c1">//调用API生成二维码图片（网络地址）
+</span><span class="c1"></span>        <span class="c1">//返回字符串格式：{&#34;imageUrl&#34;:&#34;https://bj.bcebos.com/qr-code/22021215e07535dcaa53.jpg&#34;}
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">string</span> <span class="o">=</span> <span class="n">tf1</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+        <span class="n">requestBody</span> <span class="n">request_body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">requestBody</span><span class="o">(</span><span class="n">string</span><span class="o">,</span><span class="n">20</span><span class="o">,</span><span class="s">&#34;L&#34;</span><span class="o">,</span><span class="s">&#34;jpg&#34;</span><span class="o">,</span>
+                <span class="s">&#34;https://apisown-test.bj.bcebos.com/qr-code-api-store.png&#34;</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">request_result</span> <span class="o">=</span> <span class="n">baiduApi</span><span class="o">.</span><span class="na">sendRequest</span><span class="o">(</span><span class="n">request_body</span><span class="o">);</span>
+        <span class="c1">//将JSON字符串转换为类，取出imageUrl
+</span><span class="c1"></span>        <span class="n">returnBody</span> <span class="n">returndata</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">request_result</span><span class="o">,</span> <span class="n">returnBody</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">String</span> <span class="n">image_url</span> <span class="o">=</span> <span class="n">returndata</span><span class="o">.</span><span class="na">getImageUrl</span><span class="o">();</span>
+        <span class="c1">//将网络图片显示到image组件
+</span><span class="c1"></span>        <span class="n">LoadImageUtil</span><span class="o">.</span><span class="na">loadImg</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="n">image_url</span><span class="o">,</span><span class="n">image1</span><span class="o">);</span>
+    <span class="o">});</span>
+<span class="o">});</span>
+</code></pre></div><p>在新线程的异步方法里写入监听逻辑：调用API并将返回的网络图片url显示到image组件。</p>
+<h2 id="网络图片显示">网络图片显示</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">本部分参考官方文档 &gt; 媒体 &gt; 图像 &gt; 位图操作开发指导 &amp; 图像解码开发指导。</div>
+        </div>
+    </div>
+<p>当我们API调用成功之后，我们就需要显示这个图片，但是image组件的setImageElement()方法的输入参数类型只能是Element，而Element类型是鸿蒙的本地数据文件管理类型，也就是说通过这个方法只能让image组件显示本地的图片，我们获得的网络图片地址在这里是不能用的。</p>
+<p></p>
+<p>我们需要自己写接口来实现网络图片的显示：LoadImageUtil.loadImg(Context context, String netImgUrl, Image image)</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//将网络图片加载到context的image组件里
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">loadImg</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">String</span> <span class="n">netImgUrl</span><span class="o">,</span> <span class="n">Image</span> <span class="n">image</span><span class="o">){</span>
+    <span class="c1">//创建一个新线程
+</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
+        <span class="n">HttpURLConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">try</span><span class="o">{</span>
+            <span class="c1">//建立与网络图片之间的http连接
+</span><span class="c1"></span>            <span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="n">netImgUrl</span><span class="o">);</span>
+            <span class="n">connection</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span><span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
+            <span class="n">connection</span><span class="o">.</span><span class="na">connect</span><span class="o">();</span>
+            <span class="c1">//从连接中获取输入流
+</span><span class="c1"></span>            <span class="n">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
+            <span class="c1">//根据数据流将图片数据缓存到ImageSouce对象，创建图片对象
+</span><span class="c1"></span>            <span class="n">ImageSource</span> <span class="n">imageSource</span> <span class="o">=</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">inputStream</span><span class="o">,</span><span class="k">new</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">SourceOptions</span><span class="o">());</span>
+            <span class="c1">//图片数据解码的参数
+</span><span class="c1"></span>            <span class="n">ImageSource</span><span class="o">.</span><span class="na">DecodingOptions</span> <span class="n">decodingOptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">DecodingOptions</span><span class="o">();</span>
+            <span class="n">decodingOptions</span><span class="o">.</span><span class="na">desiredPixelFormat</span> <span class="o">=</span> <span class="n">PixelFormat</span><span class="o">.</span><span class="na">ARGB_8888</span><span class="o">;</span>
+            <span class="c1">//PixelMap对象就表示一个图片
+</span><span class="c1"></span>            <span class="n">PixelMap</span> <span class="n">pixelmap</span> <span class="o">=</span> <span class="n">imageSource</span><span class="o">.</span><span class="na">createPixelmap</span><span class="o">(</span><span class="n">decodingOptions</span><span class="o">);</span>
+            <span class="c1">//将图片载入到组件中：在鸿蒙应用中将图片载入到组件，推荐在一个独立的UI线程中完成
+</span><span class="c1"></span>            <span class="n">context</span><span class="o">.</span><span class="na">getUITaskDispatcher</span><span class="o">().</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
+                <span class="n">image</span><span class="o">.</span><span class="na">setPixelMap</span><span class="o">(</span><span class="n">pixelmap</span><span class="o">);</span>
+                <span class="n">pixelmap</span><span class="o">.</span><span class="na">release</span><span class="o">();</span><span class="c1">//释放图片
+</span><span class="c1"></span>            <span class="o">});</span>
+        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">){</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</code></pre></div><p>主要思路：</p>
+<ul>
+<li>建立网络连接获得图片数据</li>
+<li>图片数据解码</li>
+<li>转换成位图对象pixelmap</li>
+<li>通过image.setPixelMap(pixelmap)方法载入图片</li>
+</ul>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目地址">项目地址</h3>
+<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Api" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Api</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.w3cschool.cn/fastjson/fastjson-demo1.html" target="_blank" rel="noopener noreffer">Fastjson 使用实例</a></p>
+<p><a href="https://www.runoob.com/w3cnote/java-json-instro.html" target="_blank" rel="noopener noreffer">Java 中 JSON 的使用</a></p>
+<p><a href="https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae" target="_blank" rel="noopener noreffer">百度智能云——二维码生成识别</a></p>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
+<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发实践——电话簿</title>
     <link>https://leeshy-tech.github.io/harmonyos_addressbook/</link>
     <pubDate>Tue, 08 Feb 2022 21:12:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_addressbook/</guid>
