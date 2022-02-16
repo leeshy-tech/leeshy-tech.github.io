@@ -1,0 +1,159 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Python - 分类 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/categories/python/</link>
+        <description>Python - 分类 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 15 Feb 2022 16:30:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/python/" rel="self" type="application/rss+xml" /><item>
+    <title>Python实践——后端接口实现</title>
+    <link>https://leeshy-tech.github.io/pythonapi_simplelogin/</link>
+    <pubDate>Tue, 15 Feb 2022 16:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/pythonapi_simplelogin/</guid>
+    <description><![CDATA[<h1 id="自己动手写一个api">自己动手写一个API</h1>
+<h2 id="相关概念">相关概念</h2>
+<h3 id="端口port">端口Port</h3>
+<p>这里端口指的是网络端口，利用IP+端口号可以唯一的定位一台主机上的某个应用程序，可以认为端口是APP之间交换数据的“门”，要想与某APP进行通信，就需要知道它运行在哪个主机的哪个端口上。</p>
+<p>我们要写一个API，实质上是写了一个完成特定功能的应用程序，它的接口暴露在外，以供其他程序员调用。</p>
+<h3 id="url-uniform-resource-locator">URL (Uniform Resource Locator)</h3>
+<p>统一资源定位符，是互联网上标准资源的地址。而互联网上的每个文件都有唯一的一个的URL，它包含的信息指出文件的位置以及浏览器应该怎么处理它。格式为<code>protocol :// ip[:port] / path / [;parameters][?query]#fragment</code></p>
+<p>一个应用程序可以暴露多个接口，比如用户登陆、用户注册，url可以是/user/userlogin、/user/usersignup。</p>
+<h3 id="httphttpspostget">HTTP、HTTPS、POST、GET</h3>
+<p>超文本传输协议（HTTP）的设计目的是保证客户端与服务器之间的通信。客户端（浏览器）向服务器提交 HTTP 请求；服务器向客户端返回响应。响应包含关于请求的状态信息以及可能被请求的内容。</p>
+<p>HTTPS 经由 HTTP 进行通信，但利用 SSL/TLS 来加密数据包，更加安全。</p>
+<p>POST和GET都是HTTP协议的请求方法，除了它们还有HEAD、PUT等方法。</p>
+<ul>
+<li>
+<p>GET方法将查询字符串放在请求的URL中：</p>
+<p>/test/demo_form.php?name1=value1&amp;name2=value2</p>
+</li>
+<li>
+<p>POST方法将查询字符串放在HTTP消息主体中：</p>
+<pre tabindex="0"><code>POST /test/demo_form.php HTTP/1.1
+Host: runoob.com
+name1=value1&amp;name2=value2
+</code></pre></li>
+</ul>
+<p>总的来说，POST方法更加安全，详细区别可参考结尾文章。</p>
+<h3 id="json">JSON</h3>
+<p>JSON: <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject <strong>N</strong>otation(JavaScript 对象表示法)</p>
+<p>它采用完全独立于编程语言的文本格式来存储和表示数据。JSON 解析器和 JSON 库支持许多不同的编程语言。 目前非常多的动态（PHP，JSP，.NET）编程语言都支持JSON。</p>
+<p>将API看作函数，请求体就是参数，响应体就是返回值，按照JSON格式设计请求体和响应体，前后端程序就能通过JSON解析器互相沟通。</p>
+<h2 id="准备">准备</h2>
+<h3 id="安装库">安装库</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span><span class="p">,</span><span class="n">flask_cors</span><span class="p">,</span><span class="n">gevent</span>
+</code></pre></div><h3 id="功能设计">功能设计</h3>
+<p>设计一个简单的用户登陆功能，前端提供账号密码，服务端返回提示消息。</p>
+<ul>
+<li>账号密码正确，返回success</li>
+<li>密码错误，返回password error</li>
+<li>账号不存在，返回id not exist</li>
+</ul>
+<h3 id="参数">参数</h3>
+<p>协议：HTTP（HTTPS会涉及到一些复杂的设置，下次再说。）</p>
+<p>方法：POST</p>
+<p>请求体示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>    
+    <span class="err">{</span><span class="nt">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210777&#34;</span><span class="p">}</span><span class="err">,</span>
+    <span class="p">{</span><span class="nt">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><p>响应体示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="err">{</span><span class="nt">&#34;msg&#34;</span><span class="p">:</span><span class="s2">&#34;success&#34;</span><span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><h2 id="核心代码">核心代码</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>关于端口<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">程序里的端口号自主选择，不与其他服务冲突即可。如果冲突会报错：地址(&lsquo;0.0.0.0&rsquo;,port)已被使用，被使用的不是IP地址，而是端口号。要么更换端口，要么杀死该端口的服务（Google相关的命令即可）。</div>
+        </div>
+    </div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span><span class="n">request</span><span class="p">,</span><span class="n">jsonify</span>
+<span class="kn">from</span> <span class="nn">flask_cors</span> <span class="kn">import</span> <span class="n">CORS</span>
+<span class="kn">from</span> <span class="nn">gevent</span> <span class="kn">import</span> <span class="n">pywsgi</span>
+
+<span class="n">port</span> <span class="o">=</span> <span class="mi">8899</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">,</span><span class="n">resource</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;/*&#39;</span><span class="p">)</span>
+
+<span class="n">users_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210777&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210778&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210779&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210780&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210781&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="s1">&#39;&#39;&#39;生成一个返回体&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">response_body</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">response_msg</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&#34;msg&#34;</span><span class="p">:</span><span class="n">msg</span><span class="p">}</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">response_msg</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
+        <span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">user_dict</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_password&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_password</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;success&#34;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span> 
+                    <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;password error&#34;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;id not exist&#34;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">pywsgi</span><span class="o">.</span><span class="n">WSGIServer</span><span class="p">((</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span><span class="n">port</span><span class="p">),</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;end&#34;</span><span class="p">)</span>
+</code></pre></div><h2 id="调试">调试</h2>
+<p>使用Postman进行调试，新建一个请求，填入相关参数。</p>
+<p></p>
+<p></p>
+<h2 id="部署">部署</h2>
+<h3 id="为什么要部署">为什么要部署</h3>
+<p>写好这个API之后，我尝试写了一个鸿蒙应用来调用，但是始终连接超时，原因如下：</p>
+<p>鸿蒙模拟器应当是运行在华为的某台服务器上，它与我的电脑不在同一局域网内，我的电脑的局域网IP，它肯定是访问不到的。</p>
+<p>而我用Postman调试，自己访问自己，处于局域网内，所以是没有问题的。</p>
+<p>要是想在局域网外进行访问，还是要部署到有公网IP的服务器上。</p>
+<h3 id="云服务器">云服务器</h3>
+<p>我使用的是阿里云服务器</p>
+<ul>
+<li>
+<p>防火墙设置</p>
+<p>默认情况下，8899端口的进出流量是不能通过阿里云防火墙的，我们新建一条安全组规则。</p>
+<p></p>
+<p></p>
+</li>
+<li>
+<p>运行代码</p>
+<p>远程到服务器，执行以下命令：</p>
+<p>安装git：<code>yum install git</code></p>
+<p>下载代码：<code>git clone https://github.com/leeshy-tech/API_userLogin</code></p>
+<p>进入目录：<code>cd API_userLogin</code></p>
+<p>执行代码：<code>python user_login.py</code></p>
+</li>
+<li>
+<p>调试</p>
+<p>在Postman里，url里的IP改为服务器的公网IP，发送请求，调试成功。</p>
+<p></p>
+<p>服务器也有相应的输出：</p>
+<p></p>
+</li>
+</ul>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目源码">项目源码</h3>
+<p><a href="https://github.com/leeshy-tech/API_userLogin" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/API_userLogin</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.runoob.com/tags/html-httpmethods.html" target="_blank" rel="noopener noreffer">HTTP 方法：GET 对比 POST_菜鸟教程</a></p>
+<p><a href="https://www.runoob.com/json/json-tutorial.html" target="_blank" rel="noopener noreffer">JSON教程_菜鸟教程</a></p>
+<p><a href="https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0</a></p>
+<p><a href="https://www.cnblogs.com/tuspring/p/14340457.html" target="_blank" rel="noopener noreffer">使用nodejs编写api接口并部署到服务器上</a></p>
+]]></description>
+</item>
+</channel>
+</rss>

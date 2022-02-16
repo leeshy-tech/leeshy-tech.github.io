@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python实践——后端接口实现 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="Python实践——后端接口实现" />
+<meta property="og:description" content="动手写一个自己的API" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/pythonapi_simplelogin/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-15T16:30:06+08:00" />
+<meta property="article:modified_time" content="2022-02-15T16:30:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="Python实践——后端接口实现"/>
+<meta name="twitter:description" content="动手写一个自己的API"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/pythonapi_simplelogin/" /><link rel="prev" href="https://leeshy-tech.github.io/harmonyos_api/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python实践——后端接口实现",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/pythonapi_simplelogin\/"
+        },"genre": "posts","keywords": "Python, API","wordcount":  1555 ,
+        "url": "https:\/\/leeshy-tech.github.io\/pythonapi_simplelogin\/","datePublished": "2022-02-15T16:30:06+08:00","dateModified": "2022-02-15T16:30:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Python实践——后端接口实现</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-15">2022-02-15</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1555 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 4 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#相关概念">相关概念</a>
+      <ul>
+        <li><a href="#端口port">端口Port</a></li>
+        <li><a href="#url-uniform-resource-locator">URL (Uniform Resource Locator)</a></li>
+        <li><a href="#httphttpspostget">HTTP、HTTPS、POST、GET</a></li>
+        <li><a href="#json">JSON</a></li>
+      </ul>
+    </li>
+    <li><a href="#准备">准备</a>
+      <ul>
+        <li><a href="#安装库">安装库</a></li>
+        <li><a href="#功能设计">功能设计</a></li>
+        <li><a href="#参数">参数</a></li>
+      </ul>
+    </li>
+    <li><a href="#核心代码">核心代码</a></li>
+    <li><a href="#调试">调试</a></li>
+    <li><a href="#部署">部署</a>
+      <ul>
+        <li><a href="#为什么要部署">为什么要部署</a></li>
+        <li><a href="#云服务器">云服务器</a></li>
+      </ul>
+    </li>
+    <li><a href="#结束语">结束语</a>
+      <ul>
+        <li><a href="#项目源码">项目源码</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="自己动手写一个api">自己动手写一个API</h1>
+<h2 id="相关概念">相关概念</h2>
+<h3 id="端口port">端口Port</h3>
+<p>这里端口指的是网络端口，利用IP+端口号可以唯一的定位一台主机上的某个应用程序，可以认为端口是APP之间交换数据的“门”，要想与某APP进行通信，就需要知道它运行在哪个主机的哪个端口上。</p>
+<p>我们要写一个API，实质上是写了一个完成特定功能的应用程序，它的接口暴露在外，以供其他程序员调用。</p>
+<h3 id="url-uniform-resource-locator">URL (Uniform Resource Locator)</h3>
+<p>统一资源定位符，是互联网上标准资源的地址。而互联网上的每个文件都有唯一的一个的URL，它包含的信息指出文件的位置以及浏览器应该怎么处理它。格式为<code>protocol :// ip[:port] / path / [;parameters][?query]#fragment</code></p>
+<p>一个应用程序可以暴露多个接口，比如用户登陆、用户注册，url可以是/user/userlogin、/user/usersignup。</p>
+<h3 id="httphttpspostget">HTTP、HTTPS、POST、GET</h3>
+<p>超文本传输协议（HTTP）的设计目的是保证客户端与服务器之间的通信。客户端（浏览器）向服务器提交 HTTP 请求；服务器向客户端返回响应。响应包含关于请求的状态信息以及可能被请求的内容。</p>
+<p>HTTPS 经由 HTTP 进行通信，但利用 SSL/TLS 来加密数据包，更加安全。</p>
+<p>POST和GET都是HTTP协议的请求方法，除了它们还有HEAD、PUT等方法。</p>
+<ul>
+<li>
+<p>GET方法将查询字符串放在请求的URL中：</p>
+<p>/test/demo_form.php?name1=value1&amp;name2=value2</p>
+</li>
+<li>
+<p>POST方法将查询字符串放在HTTP消息主体中：</p>
+<pre tabindex="0"><code>POST /test/demo_form.php HTTP/1.1
+Host: runoob.com
+name1=value1&amp;name2=value2
+</code></pre></li>
+</ul>
+<p>总的来说，POST方法更加安全，详细区别可参考结尾文章。</p>
+<h3 id="json">JSON</h3>
+<p>JSON: <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject <strong>N</strong>otation(JavaScript 对象表示法)</p>
+<p>它采用完全独立于编程语言的文本格式来存储和表示数据。JSON 解析器和 JSON 库支持许多不同的编程语言。 目前非常多的动态（PHP，JSP，.NET）编程语言都支持JSON。</p>
+<p>将API看作函数，请求体就是参数，响应体就是返回值，按照JSON格式设计请求体和响应体，前后端程序就能通过JSON解析器互相沟通。</p>
+<h2 id="准备">准备</h2>
+<h3 id="安装库">安装库</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span><span class="p">,</span><span class="n">flask_cors</span><span class="p">,</span><span class="n">gevent</span>
+</code></pre></div><h3 id="功能设计">功能设计</h3>
+<p>设计一个简单的用户登陆功能，前端提供账号密码，服务端返回提示消息。</p>
+<ul>
+<li>账号密码正确，返回success</li>
+<li>密码错误，返回password error</li>
+<li>账号不存在，返回id not exist</li>
+</ul>
+<h3 id="参数">参数</h3>
+<p>协议：HTTP（HTTPS会涉及到一些复杂的设置，下次再说。）</p>
+<p>方法：POST</p>
+<p>请求体示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>    
+    <span class="err">{</span><span class="nt">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210777&#34;</span><span class="p">}</span><span class="err">,</span>
+    <span class="p">{</span><span class="nt">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><p>响应体示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="err">{</span><span class="nt">&#34;msg&#34;</span><span class="p">:</span><span class="s2">&#34;success&#34;</span><span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><h2 id="核心代码">核心代码</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>关于端口<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">程序里的端口号自主选择，不与其他服务冲突即可。如果冲突会报错：地址(&lsquo;0.0.0.0&rsquo;,port)已被使用，被使用的不是IP地址，而是端口号。要么更换端口，要么杀死该端口的服务（Google相关的命令即可）。</div>
+        </div>
+    </div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span><span class="n">request</span><span class="p">,</span><span class="n">jsonify</span>
+<span class="kn">from</span> <span class="nn">flask_cors</span> <span class="kn">import</span> <span class="n">CORS</span>
+<span class="kn">from</span> <span class="nn">gevent</span> <span class="kn">import</span> <span class="n">pywsgi</span>
+
+<span class="n">port</span> <span class="o">=</span> <span class="mi">8899</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">,</span><span class="n">resource</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;/*&#39;</span><span class="p">)</span>
+
+<span class="n">users_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210777&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210778&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210779&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210780&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210781&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="s1">&#39;&#39;&#39;生成一个返回体&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">response_body</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">response_msg</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&#34;msg&#34;</span><span class="p">:</span><span class="n">msg</span><span class="p">}</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">response_msg</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
+        <span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">user_dict</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_password&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_password</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;success&#34;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span> 
+                    <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;password error&#34;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;id not exist&#34;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">pywsgi</span><span class="o">.</span><span class="n">WSGIServer</span><span class="p">((</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span><span class="n">port</span><span class="p">),</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;end&#34;</span><span class="p">)</span>
+</code></pre></div><h2 id="调试">调试</h2>
+<p>使用Postman进行调试，新建一个请求，填入相关参数。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220215212008322.png"
+        data-srcset="/image/Python/image-20220215212008322.png, /image/Python/image-20220215212008322.png 1.5x, /image/Python/image-20220215212008322.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220215212008322.png"
+        title="image-20220215212008322" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220215211622063.png"
+        data-srcset="/image/Python/image-20220215211622063.png, /image/Python/image-20220215211622063.png 1.5x, /image/Python/image-20220215211622063.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220215211622063.png"
+        title="image-20220215211622063" /></p>
+<h2 id="部署">部署</h2>
+<h3 id="为什么要部署">为什么要部署</h3>
+<p>写好这个API之后，我尝试写了一个鸿蒙应用来调用，但是始终连接超时，原因如下：</p>
+<p>鸿蒙模拟器应当是运行在华为的某台服务器上，它与我的电脑不在同一局域网内，我的电脑的局域网IP，它肯定是访问不到的。</p>
+<p>而我用Postman调试，自己访问自己，处于局域网内，所以是没有问题的。</p>
+<p>要是想在局域网外进行访问，还是要部署到有公网IP的服务器上。</p>
+<h3 id="云服务器">云服务器</h3>
+<p>我使用的是阿里云服务器</p>
+<ul>
+<li>
+<p>防火墙设置</p>
+<p>默认情况下，8899端口的进出流量是不能通过阿里云防火墙的，我们新建一条安全组规则。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220216231932421.png"
+        data-srcset="/image/Python/image-20220216231932421.png, /image/Python/image-20220216231932421.png 1.5x, /image/Python/image-20220216231932421.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220216231932421.png"
+        title="image-20220216231932421" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220216232024821.png"
+        data-srcset="/image/Python/image-20220216232024821.png, /image/Python/image-20220216232024821.png 1.5x, /image/Python/image-20220216232024821.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220216232024821.png"
+        title="image-20220216232024821" /></p>
+</li>
+<li>
+<p>运行代码</p>
+<p>远程到服务器，执行以下命令：</p>
+<p>安装git：<code>yum install git</code></p>
+<p>下载代码：<code>git clone https://github.com/leeshy-tech/API_userLogin</code></p>
+<p>进入目录：<code>cd API_userLogin</code></p>
+<p>执行代码：<code>python user_login.py</code></p>
+</li>
+<li>
+<p>调试</p>
+<p>在Postman里，url里的IP改为服务器的公网IP，发送请求，调试成功。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220216233908075.png"
+        data-srcset="/image/Python/image-20220216233908075.png, /image/Python/image-20220216233908075.png 1.5x, /image/Python/image-20220216233908075.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220216233908075.png"
+        title="image-20220216233908075" /></p>
+<p>服务器也有相应的输出：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220216232257335.png"
+        data-srcset="/image/Python/image-20220216232257335.png, /image/Python/image-20220216232257335.png 1.5x, /image/Python/image-20220216232257335.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220216232257335.png"
+        title="image-20220216232257335" /></p>
+</li>
+</ul>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目源码">项目源码</h3>
+<p><a href="https://github.com/leeshy-tech/API_userLogin" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/API_userLogin</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.runoob.com/tags/html-httpmethods.html" target="_blank" rel="noopener noreffer">HTTP 方法：GET 对比 POST_菜鸟教程</a></p>
+<p><a href="https://www.runoob.com/json/json-tutorial.html" target="_blank" rel="noopener noreffer">JSON教程_菜鸟教程</a></p>
+<p><a href="https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0</a></p>
+<p><a href="https://www.cnblogs.com/tuspring/p/14340457.html" target="_blank" rel="noopener noreffer">使用nodejs编写api接口并部署到服务器上</a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/python/">Python</a>
+                </span><span><a href="/tags/api/">API</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-02-15</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/pythonapi_simplelogin/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/harmonyos_api/" class="prev" rel="prev" title="鸿蒙开发实践——调用API"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>

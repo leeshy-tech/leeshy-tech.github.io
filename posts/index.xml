@@ -4,7 +4,158 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 15 Feb 2022 16:30:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>Python实践——后端接口实现</title>
+    <link>https://leeshy-tech.github.io/pythonapi_simplelogin/</link>
+    <pubDate>Tue, 15 Feb 2022 16:30:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/pythonapi_simplelogin/</guid>
+    <description><![CDATA[<h1 id="自己动手写一个api">自己动手写一个API</h1>
+<h2 id="相关概念">相关概念</h2>
+<h3 id="端口port">端口Port</h3>
+<p>这里端口指的是网络端口，利用IP+端口号可以唯一的定位一台主机上的某个应用程序，可以认为端口是APP之间交换数据的“门”，要想与某APP进行通信，就需要知道它运行在哪个主机的哪个端口上。</p>
+<p>我们要写一个API，实质上是写了一个完成特定功能的应用程序，它的接口暴露在外，以供其他程序员调用。</p>
+<h3 id="url-uniform-resource-locator">URL (Uniform Resource Locator)</h3>
+<p>统一资源定位符，是互联网上标准资源的地址。而互联网上的每个文件都有唯一的一个的URL，它包含的信息指出文件的位置以及浏览器应该怎么处理它。格式为<code>protocol :// ip[:port] / path / [;parameters][?query]#fragment</code></p>
+<p>一个应用程序可以暴露多个接口，比如用户登陆、用户注册，url可以是/user/userlogin、/user/usersignup。</p>
+<h3 id="httphttpspostget">HTTP、HTTPS、POST、GET</h3>
+<p>超文本传输协议（HTTP）的设计目的是保证客户端与服务器之间的通信。客户端（浏览器）向服务器提交 HTTP 请求；服务器向客户端返回响应。响应包含关于请求的状态信息以及可能被请求的内容。</p>
+<p>HTTPS 经由 HTTP 进行通信，但利用 SSL/TLS 来加密数据包，更加安全。</p>
+<p>POST和GET都是HTTP协议的请求方法，除了它们还有HEAD、PUT等方法。</p>
+<ul>
+<li>
+<p>GET方法将查询字符串放在请求的URL中：</p>
+<p>/test/demo_form.php?name1=value1&amp;name2=value2</p>
+</li>
+<li>
+<p>POST方法将查询字符串放在HTTP消息主体中：</p>
+<pre tabindex="0"><code>POST /test/demo_form.php HTTP/1.1
+Host: runoob.com
+name1=value1&amp;name2=value2
+</code></pre></li>
+</ul>
+<p>总的来说，POST方法更加安全，详细区别可参考结尾文章。</p>
+<h3 id="json">JSON</h3>
+<p>JSON: <strong>J</strong>ava<strong>S</strong>cript <strong>O</strong>bject <strong>N</strong>otation(JavaScript 对象表示法)</p>
+<p>它采用完全独立于编程语言的文本格式来存储和表示数据。JSON 解析器和 JSON 库支持许多不同的编程语言。 目前非常多的动态（PHP，JSP，.NET）编程语言都支持JSON。</p>
+<p>将API看作函数，请求体就是参数，响应体就是返回值，按照JSON格式设计请求体和响应体，前后端程序就能通过JSON解析器互相沟通。</p>
+<h2 id="准备">准备</h2>
+<h3 id="安装库">安装库</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-powershell" data-lang="powershell"><span class="n">pip</span> <span class="n">install</span> <span class="n">flask</span><span class="p">,</span><span class="n">flask_cors</span><span class="p">,</span><span class="n">gevent</span>
+</code></pre></div><h3 id="功能设计">功能设计</h3>
+<p>设计一个简单的用户登陆功能，前端提供账号密码，服务端返回提示消息。</p>
+<ul>
+<li>账号密码正确，返回success</li>
+<li>密码错误，返回password error</li>
+<li>账号不存在，返回id not exist</li>
+</ul>
+<h3 id="参数">参数</h3>
+<p>协议：HTTP（HTTPS会涉及到一些复杂的设置，下次再说。）</p>
+<p>方法：POST</p>
+<p>请求体示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>    
+    <span class="err">{</span><span class="nt">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210777&#34;</span><span class="p">}</span><span class="err">,</span>
+    <span class="p">{</span><span class="nt">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><p>响应体示例：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="p">{</span>
+    <span class="err">{</span><span class="nt">&#34;msg&#34;</span><span class="p">:</span><span class="s2">&#34;success&#34;</span><span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div><h2 id="核心代码">核心代码</h2>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>关于端口<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">程序里的端口号自主选择，不与其他服务冲突即可。如果冲突会报错：地址(&lsquo;0.0.0.0&rsquo;,port)已被使用，被使用的不是IP地址，而是端口号。要么更换端口，要么杀死该端口的服务（Google相关的命令即可）。</div>
+        </div>
+    </div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span><span class="n">request</span><span class="p">,</span><span class="n">jsonify</span>
+<span class="kn">from</span> <span class="nn">flask_cors</span> <span class="kn">import</span> <span class="n">CORS</span>
+<span class="kn">from</span> <span class="nn">gevent</span> <span class="kn">import</span> <span class="n">pywsgi</span>
+
+<span class="n">port</span> <span class="o">=</span> <span class="mi">8899</span>
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">CORS</span><span class="p">(</span><span class="n">app</span><span class="p">,</span><span class="n">resource</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;/*&#39;</span><span class="p">)</span>
+
+<span class="n">users_list</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210777&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210778&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210779&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210780&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="s2">&#34;2019210781&#34;</span><span class="p">,</span><span class="s2">&#34;user_password&#34;</span><span class="p">:</span><span class="s2">&#34;123456&#34;</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="s1">&#39;&#39;&#39;生成一个返回体&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">response_body</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="n">response_msg</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">{</span><span class="s2">&#34;msg&#34;</span><span class="p">:</span><span class="n">msg</span><span class="p">}</span>
+    <span class="p">]</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">response_msg</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/login&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
+        <span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">user_dict</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_password&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_password</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;success&#34;</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span> 
+                    <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;password error&#34;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response_body</span><span class="p">(</span><span class="s2">&#34;id not exist&#34;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">pywsgi</span><span class="o">.</span><span class="n">WSGIServer</span><span class="p">((</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span><span class="n">port</span><span class="p">),</span><span class="n">app</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;end&#34;</span><span class="p">)</span>
+</code></pre></div><h2 id="调试">调试</h2>
+<p>使用Postman进行调试，新建一个请求，填入相关参数。</p>
+<p></p>
+<p></p>
+<h2 id="部署">部署</h2>
+<h3 id="为什么要部署">为什么要部署</h3>
+<p>写好这个API之后，我尝试写了一个鸿蒙应用来调用，但是始终连接超时，原因如下：</p>
+<p>鸿蒙模拟器应当是运行在华为的某台服务器上，它与我的电脑不在同一局域网内，我的电脑的局域网IP，它肯定是访问不到的。</p>
+<p>而我用Postman调试，自己访问自己，处于局域网内，所以是没有问题的。</p>
+<p>要是想在局域网外进行访问，还是要部署到有公网IP的服务器上。</p>
+<h3 id="云服务器">云服务器</h3>
+<p>我使用的是阿里云服务器</p>
+<ul>
+<li>
+<p>防火墙设置</p>
+<p>默认情况下，8899端口的进出流量是不能通过阿里云防火墙的，我们新建一条安全组规则。</p>
+<p></p>
+<p></p>
+</li>
+<li>
+<p>运行代码</p>
+<p>远程到服务器，执行以下命令：</p>
+<p>安装git：<code>yum install git</code></p>
+<p>下载代码：<code>git clone https://github.com/leeshy-tech/API_userLogin</code></p>
+<p>进入目录：<code>cd API_userLogin</code></p>
+<p>执行代码：<code>python user_login.py</code></p>
+</li>
+<li>
+<p>调试</p>
+<p>在Postman里，url里的IP改为服务器的公网IP，发送请求，调试成功。</p>
+<p></p>
+<p>服务器也有相应的输出：</p>
+<p></p>
+</li>
+</ul>
+<h2 id="结束语">结束语</h2>
+<h3 id="项目源码">项目源码</h3>
+<p><a href="https://github.com/leeshy-tech/API_userLogin" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/API_userLogin</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.runoob.com/tags/html-httpmethods.html" target="_blank" rel="noopener noreffer">HTTP 方法：GET 对比 POST_菜鸟教程</a></p>
+<p><a href="https://www.runoob.com/json/json-tutorial.html" target="_blank" rel="noopener noreffer">JSON教程_菜鸟教程</a></p>
+<p><a href="https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0</a></p>
+<p><a href="https://www.cnblogs.com/tuspring/p/14340457.html" target="_blank" rel="noopener noreffer">使用nodejs编写api接口并部署到服务器上</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发实践——调用API</title>
     <link>https://leeshy-tech.github.io/harmonyos_api/</link>
     <pubDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_api/</guid>
@@ -1138,69 +1289,6 @@ StoreConfig对象：关联数据⽂件配置(数据库)</p>
     </div>
 <p>原因：在写xml文件时，误把注释写成了//，应该是<code>&lt;!-- --&gt;</code>。这里它不会直接报错，而是说我获得的按键对象为空，说明xml构建出了问题。</p>
 <p></p>
-]]></description>
-</item>
-<item>
-    <title>论文笔记——On Scalability of SDN</title>
-    <link>https://leeshy-tech.github.io/on_scalability_of_sdn_note/</link>
-    <pubDate>Tue, 18 Jan 2022 23:09:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/on_scalability_of_sdn_note/</guid>
-    <description><![CDATA[<h2 id="论文概况">论文概况</h2>
-<p><a href="https://ieeexplore.ieee.org/abstract/document/6461198" target="_blank" rel="noopener noreffer">https://ieeexplore.ieee.org/abstract/document/6461198</a><br>
-IEEE Communications Magazine  <br>
-Volume 51 Issue 2</p>
-<h2 id="摘要">摘要</h2>
-<p>在本文中，我们解构了软件定义网络中的可扩展性问题，并认为它们不是SDN所独有的。我们探讨了在不同环境中经常出现的问题，讨论了SDN设计空间中可扩展性的权衡，并介绍了一些关于SDN可扩展性的最新研究。此外，我们还列举了在可扩展性方面的重要机遇和挑战。</p>
-<h2 id="引言">引言</h2>
-<p>普遍认为SDN中的控制是集中的，这导致了对SDN可伸缩性和弹性的关注。毕竟，无论控制器的能力如何，中央控制器都不会随着网络的增长而扩展(增加交换机、流量、带宽等的数量)，并且在提供相同的服务保证的同时也无法处理所有传入的请求。此外，由于大多数早期的SDN提议都是基于流的，额外的流启动延迟成为一个问题。  <br>
-我们认为SDN的可扩展性没有固有的瓶颈;我们认为这些可扩展性限制并不局限于SDN;传统的控制协议设计也面临着同样的挑战。虽然这并没有解决这些问题，但这表明我们在SDN中不需要比在传统网络中更担心可扩展性。</p>
-<h2 id="sdn中可扩展性的根源">SDN中可扩展性的根源</h2>
-<p>SDN与传统数据网络的根本区别在于控制与转发平面的分离。这种解耦导致了一些有趣的特性。  <br>
-然而，这种解耦也有它自己的陷阱。在这两个平面之间定义一个标准的API是绝对重要的。从技术上讲，这个API应该能够处理各种体系结构的需求，并且应该能够促进这两个平面的独立演化。此外，所有或大多数交换机供应商应该采用相同的标准API，以使其有用；否则，网络将与特定的供应商绑定，会阻碍网络的快速变化和创新。将传统的本地控制功能移动到远程控制器可能会导致新的瓶颈。它还可能导致信令开销。  <br>
-在接下来的内容中，我们首先讨论SDN控制器的可扩展性，概述为什么它一直受到关注，以及最近在这个领域的工作。然后，我们回顾一些其他经常提到的SDN可扩展性问题，包括流程设置开销和故障恢复能力。我们认为，尽管这些问题不是SDN特有的，但它们可以通过另一种设计来缓解(其中一些设计现在很常见)。</p>
-<h2 id="控制器可扩展性">控制器可扩展性</h2>
-<p>一种可能的SDN设计是将所有的控制功能推到一个集中式控制器上。控制器有可能成为网络操作中的瓶颈，随着网络规模的增长，更多的事件和请求会被发送到控制器，并且在某个时刻，控制器无法处理所有传入的请求。缓解这种担忧的一种方法是在多核系统中提高并行性，并提高IO性能。第二种方法是减少转发到控制器的请求数量，比如DevoFlow通过底层网络约束，牺牲细粒度流级可见性（ fine-grained flow-level visibility）换来了可扩展性。<br>
-或者，还可以将控制功能的状态和/或计算分配到多个控制器上。提供一个严格一致的集中视图可能会阻碍响应时间和吞吐量。在保持可用性和分区容差的同时实现强一致性并不总是可行的。因此，选择一个合适的一致性水平是SDN中一个重要的设计权衡。 <br>
-有一些解决方案，我们可以物理地分布控制平面元素，同时保持网络范围的视图。例如，Onix就是一个分布式控制平台，它促进了分布式控制平面的实现。它为控制应用程序提供了一组通用api，以方便访问分布在Onix实例上的网络状态(NIB)。另一方面，HyperFlow在多个控制器实例之间同步网络状态，使控制应用程序(在每个控制器实例上运行)产生控制整个网络的错觉。这保持了在中央控制器上开发控制平面的简单性，同时减轻了与中央控制器相关的可伸缩性问题，尽管这是针对满足某些特性的一组更受限制的控制应用程序。<br>
-Kandoo[9]采用了一种不同的方法来分配控制平面。它定义了一个操作范围，使具有不同要求的应用程序能够共存：本地作用域的应用程序（即，可以使用交换机的本地状态进行操作的应用程序）部署在数据路径附近，以处理频繁的请求并保护控制平面的其他部分免受负载。另一方面，根控制器负责需要网络范围状态的应用程序，同时也充当本地控制器之间需要的任何协调的中介。<br>
-一个有趣的观察结果是，SDN中的控制平面可扩展性挑战（例如，收敛性和一致性要求）与传统网络设计中所面临的挑战并没有本质上的不同。SDN本身既不太可能消除控制平面设计的复杂性，也不太可能使其或多或少具有可扩展性。 <br>
-与传统网络不同，在SDN中，我们不需要反复解决基本但具有挑战性的问题，如拓扑发现、状态分布和恢复力。</p>
-<h2 id="其他sdn可扩展性问题">其他SDN可扩展性问题</h2>
-<h3 id="流启动开销">流启动开销</h3>
-<p>让我们回顾一下流设置过程来解释瓶颈，并展示一个好的设计如何可以避免它们：</p>
-<ul>
-<li>包到达但是没有匹配到流规则</li>
-<li>交换机产生一个流请求给控制器</li>
-<li>控制器返回一个新的流转发规则</li>
-<li>交换机更新流表</li>
-</ul>
-<p>前三个步骤和最后一个步骤的性能部分取决于交换机能力和资源(管理CPU、内存等)【？这里为什么要说前三个和最后一个】。以及其软件堆栈的性能。第三步中的延迟是由控制器的资源以及控制程序的性能来决定。最后，交换机的FIB更新时间导致了完成流程设置过程的延迟。 <br>
-目前支持OpenFlow的软交换机性能远好于硬件交换机，原因是交换机上缺乏资源（管理CPU），对交换机芯片组和管理CPU之间的高频通信的支持不足，以及不佳的软件实现。可以预见，FIB更新时间将成为开关侧流设置延迟的主要因素。
-While we argue that controllers and, in the near future, switches would be able to sustain sufficient throughput with negligible latency for reactive flow setup, in the end the control logic determines the scalability of a reactive design. A control program installing an end-to-end path on a per-flow basis does not scale, because the per switch memory is fixed but the number of forwarding entries in the data path grows with the number of active flows in the network. However,  the control program may install aggregate rules matching a large number of micro-flows (thereby facing the same scalability challenges as a proactive design), or proactively install rules in the network core to provide end-to-end connectivity and identify quality of service (QoS) classes, while classifying and reactively labeling flows at the edge.  A viable solution to the scalability challenges of the proactive designs in the former class due to data path memory scarcity is proposed in DIFANE [5]; while the scalability  the latter class follows from the observation that the fanout of an edge switch and thus the number of flows initiated there is bounded (just add edge controllers as the network grows in size).  【没看懂】</p>
-<h3 id="故障恢复">故障恢复</h3>
-<p>早期的系统为单中心控制的设计树立了榜样，因此对故障的恢复能力一直是一个主要问题。一个状态同步的从控制器将足以从控制器故障中恢复，但一个网络分区将留下一半的网络无脑。在多控制器网络中，如果有适当的控制器发现机制，交换机总是可以发现一个存在于其分区中的控制器。因此，在一个可伸缩的发现机制下，控制器故障不会对SDN的可伸缩性构成挑战。 
-响应于链路失效的收敛有五个步骤。交换机检测到变化。然后交换机通知控制器。在收到通知后，控制程序计算修复操作，并将更新推到受影响的数据路径元素，这些元素反过来更新它们的转发表。在传统网络中，链路故障通知会在整个网络中泛滥，而在SDN中，该信息直接发送到控制器。因此，SDN网络中的信息传播时延并不比传统网络差。另外，SDN的一个优点是，计算是在更有能力的控制机器上进行的，而不是在所有交换机的弱管理cpu上进行的，无论它们是否受到故障的影响。 <br>
-请注意，上述参数建立在隐含的假设之上，即故障的交换机或链路不影响交换机-控制器通信信道。如果有一个出现故障的链路或交换机是控制网络本身的一部分，则需要首先修复控制网络本身。因此，在这种角落的情况下，收敛速度可能比传统网络要慢。<br>
-总的来说，SDN中的故障恢复过程并不比传统网络中的更差。因此，存在类似的可伸缩性问题，并且在传统网络中用于最小化停机时间的相同技术也适用于SDN。</p>
-<h2 id="不同的网络设置中的可伸缩性">不同的网络设置中的可伸缩性</h2>
-<p>采用一种不同的方法，解释不同类型网络中的可伸缩性模式和陷阱。</p>
-<h3 id="数据中心">数据中心</h3>
-<p>一个典型的数据中心网络有数万个交换元件，并且可以快速增长。在该规模的任何网络中生成的控制事件的绝对数量足以使任何集中式控制器过载。解决这个问题的一种方法是主动在交换机上安装规则，在它们进入控制平面之前有效地消除大多数控制请求。当然，这里的成本是控制器精度和反应性的损失。</p>
-<p>当应用程序需要精确的流量统计和/或响应性时，可以将应用程序部署在交换机附近。例如，只要最小化对全局状态的访问，就可以将频繁的事件委托给运行在终端主机上的进程。考虑到整个数据中心网络的处理资源可用性，可以使用像Kandoo[9]这样的解决方案达到任意可伸缩性级别。分布式控制器(如HyperFlow或Onix)也可以是数据中心网络的合理解决方案。考虑到这种网络中的低延迟，状态和流设置的同步延迟将是最小的，对于大多数应用程序来说是可以接受的。</p>
-<h3 id="服务提供商网络">服务提供商网络</h3>
-<p>通常，服务提供商网络没有数据中心网络那么多的交换机/路由器；然而，这种网络中的节点通常是在地理上分布的。这些网络的大直径加剧了控制器的可伸缩性问题、流设置和状态收敛延迟以及一致性要求。我们可以利用网络的物理分布将其划分为单独的区域；每个分区都可以由一个独立的控制器控制，这些控制器只能交换所需的状态变化事件，有效地向外部控制器隐藏了大部分事件。考虑到这种网络中固有的延迟，所有的控制应用程序都应该是容忍延迟的，并且有较弱的一致性要求。</p>
-<p>除了高延迟外，服务提供商网络通常比其他网络有更多的流量。因此，这里也关注数据路径资源限制。流的聚合是一个简单的解决方案，它以控制中的粒度为代价。我们注意到，这些问题也存在于传统的网络中，而这并不是SDN所独有的。</p>
-<h2 id="机遇和挑战">机遇和挑战</h2>
-<p>传统上，网络的可伸缩性是基于性能指标来研究的，也就是说，当我们沿着给定的维度扩展网络时，特定的性能指标是如何变化的。在实践中，还有其他正交的方面深刻地影响系统如何适应增长。例如,可管理性(如何方便地管理网络,在大尺度状态下添加,删除,或修改网络元素)和功能可伸缩性(是否方便将新功能添加到网络)与网络可伸缩性、性能一样重要，不应被忽视。关于行为和编程抽象、测试和验证以及SDN可扩展性的初步结果表明，我们认为SDN在这一领域提供了一个重要的机遇。显然，在我们能够充分发挥SDN的潜力之前，我们在这些方面都面临着重大挑战。</p>
-<h3 id="行为和编程抽象">行为和编程抽象</h3>
-<h3 id="测试和验证">测试和验证</h3>
-<h3 id="可延展性">可延展性</h3>
-<h2 id="结论">结论</h2>
-<p>自SDN引入以来，可伸缩性一直是一个主要问题。目前关于SDN可伸缩性的研究表明：</p>
-<ul>
-<li>这些担忧既不是由SDN引起的，也不是由SDN所独有的。</li>
-<li>这些问题大多可以得到解决，而不会失去SDN的好处。</li>
-</ul>
-<p>在这个领域，通常被忽视的是SDN对网络增长的其他限制因素的影响，如网络规划和管理复杂性。软件定义的网络增加了一种灵活性，可以大规模地适应网络编程和管理。传统的网络在这一领域历来都失败过。最近在这个方向上的尝试非常有希望，尽管未来仍面临许多挑战。</p>
 ]]></description>
 </item>
 </channel>
