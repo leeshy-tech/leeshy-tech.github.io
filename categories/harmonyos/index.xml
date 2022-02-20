@@ -4,7 +4,215 @@
         <link>https://leeshy-tech.github.io/categories/harmonyos/</link>
         <description>HarmonyOS - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/harmonyos/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 20 Feb 2022 21:57:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/harmonyos/" rel="self" type="application/rss+xml" /><item>
+    <title>鸿蒙开发实践——用户登陆及个人主页</title>
+    <link>https://leeshy-tech.github.io/harmonyos_userlogin/</link>
+    <pubDate>Sun, 20 Feb 2022 21:57:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_userlogin/</guid>
+    <description><![CDATA[<h1 id="用户登录">用户登录</h1>
+<h2 id="项目简介">项目简介</h2>
+<h3 id="项目结构">项目结构</h3>
+<pre tabindex="0"><code>└─ entry
+	├─src.main
+        ├─ java.com.example.users
+            ├─beans
+                ├─ Account				API请求体
+                └─ LoginMsg				API返回体
+            ├─slice
+                ├─ UserInfoAbilitySlice		个人主页Slice
+                └─ MainAbilitySlice			主页面Slice
+            ├─utils
+                ├─ DataBaseUtil				数据库操作类
+                ├─ HttpRequestUtil			API调用类
+                └─ LoadImageUtil			网络图片加载到image组件
+            ├─ LocalDBAbility			本地数据库的DataAbility
+            ├─ MainAbility
+            └─ MyApplication
+        └─ resources.base.layout
+        	├─ ability_userinfo.xml			个人页面布局文件
+            └─ ability_main.xml				主页面布局文件
+ 	└─ build.gradle							添加外部依赖
+</code></pre><h3 id="效果">效果</h3>
+<p></p>
+<h2 id="项目逻辑">项目逻辑</h2>
+<p>此项目的重点是token，它存储在本地数据库，扮演类似浏览器中cookie的角色。</p>
+<h3 id="登陆页">登陆页</h3>
+<ul>
+<li>首页获取用户的账号和密码，点击按钮向后端发送http请求。</li>
+<li>登陆成功，则将后端返回的token存入本地数据库，并导航到个人页面。</li>
+<li>登陆不成功，则使用ToastDialog组件显示提示信息，账号错误或密码错误。</li>
+</ul>
+<h3 id="个人页">个人页</h3>
+<p>个人页面高度精简，只显示用户头像。</p>
+<ul>
+<li>导航到此页，说明用户一定已经登陆。</li>
+<li>查询本地数据库，获得token。</li>
+<li>向后端发送请求，获取用户头像的url。</li>
+<li>将url加载到image组件。</li>
+</ul>
+<p>当用户退出APP，清理后台后，仍然能记住登陆状态，导航回个人主页，不用重新登陆。</p>
+<h2 id="后端接口">后端接口</h2>
+<p>代码：<a href="https://github.com/leeshy-tech/API_userLogin/blob/main/user_login_token.py" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/API_userLogin/blob/main/user_login_token.py</a></p>
+<p>博客：<a href="https://leeshy-tech.github.io/pythonapi_simplelogin2/" target="_blank" rel="noopener noreffer">Python实践——后端接口实现(2)</a></p>
+<h2 id="准备">准备</h2>
+<p>这些都是之前的博客详细说过的部分，不再赘述。</p>
+<h3 id="添加依赖">添加依赖</h3>
+<p><code>implementation ('com.alibaba:fastjson:1.2.47')</code></p>
+<h3 id="本地数据库的dataabilitylocaldbability">本地数据库的DataAbility——LocalDBAbility</h3>
+<p>把之前写过的照抄过来，改一下数据库名、表名、建表sql语句即可。</p>
+<h3 id="请求体和返回体类accountloginmsg">请求体和返回体类——Account，LoginMsg</h3>
+<p>根据后端接口的格式建立的类。</p>
+<h3 id="网络图片加载loadimageutil">网络图片加载——LoadImageUtil</h3>
+<p>将网络图片加载到image组件，copy之前的项目。</p>
+<h3 id="api调用类httprequestutil">API调用类——HttpRequestUtil</h3>
+<p>发送HTTP请求的封装类，这个之前没讲过，照抄会用即可。</p>
+<h2 id="databaseutil">DataBaseUtil</h2>
+<p>为了尽可能的简化主体代码，把从数据库里查询token，和插入token的操作封装成这个类。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//数据库查询、插入 帮助类
+</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataBaseUtil</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;dataability:///com.example.users.LocalDBAbility/user_info&#34;</span><span class="o">);</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getToken</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">){</span>
+        <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+
+        <span class="n">DataAbilityHelper</span> <span class="n">dataAbilityHelper</span> <span class="o">=</span> <span class="n">DataAbilityHelper</span><span class="o">.</span><span class="na">creator</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+        <span class="n">String</span><span class="o">[]</span> <span class="n">colums</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;token&#34;</span><span class="o">};</span>
+        <span class="n">DataAbilityPredicates</span> <span class="n">predicates</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataAbilityPredicates</span><span class="o">();</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">dataAbilityHelper</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="n">colums</span><span class="o">,</span> <span class="n">predicates</span><span class="o">);</span>
+            <span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getRowCount</span><span class="o">()</span> <span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
+                <span class="n">rs</span><span class="o">.</span><span class="na">goToFirstRow</span><span class="o">();</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DataAbilityRemoteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">setToken</span><span class="o">(</span><span class="n">String</span> <span class="n">token</span><span class="o">,</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
+        <span class="n">ValuesBucket</span> <span class="n">valuesBucket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ValuesBucket</span><span class="o">();</span>
+        <span class="n">valuesBucket</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">&#34;token&#34;</span><span class="o">,</span><span class="n">token</span><span class="o">);</span>
+        <span class="n">DataAbilityHelper</span> <span class="n">dataAbilityHelper</span> <span class="o">=</span> <span class="n">DataAbilityHelper</span><span class="o">.</span><span class="na">creator</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
+        <span class="k">try</span> <span class="o">{</span>
+            <span class="n">i</span> <span class="o">=</span> <span class="n">dataAbilityHelper</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="n">valuesBucket</span><span class="o">);</span>
+        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DataAbilityRemoteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div><h2 id="mainabilityslice">MainAbilitySlice</h2>
+<p>onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+<span class="kd">super</span><span class="o">.</span><span class="na">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_ability_main</span><span class="o">);</span>
+
+<span class="n">String</span> <span class="n">token_s</span> <span class="o">=</span>  <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">getToken</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+<span class="c1">//如果本地数据库没有token，说明用户还没有登陆
+</span><span class="c1"></span><span class="k">if</span> <span class="o">(</span><span class="n">token_s</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Button</span> <span class="n">btn_login</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_login_btn</span><span class="o">);</span>
+    <span class="n">TextField</span> <span class="n">tf_userid</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_login_id_textfield</span><span class="o">);</span>
+    <span class="n">TextField</span> <span class="n">tf_userPwd</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_login_pwd_textfield</span><span class="o">);</span>
+
+    <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&#34;http://8.136.83.196:8899/users/login&#34;</span><span class="o">;</span>
+    <span class="n">btn_login</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
+        <span class="c1">//开新线程
+</span><span class="c1"></span>        <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+        <span class="c1">//异步
+</span><span class="c1"></span>        <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">String</span> <span class="n">user_id</span> <span class="o">=</span> <span class="n">tf_userid</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">user_pwd</span> <span class="o">=</span> <span class="n">tf_userPwd</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
+            <span class="c1">//发送http请求，并获得数据
+</span><span class="c1"></span>            <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Account</span><span class="o">(</span><span class="n">user_id</span><span class="o">,</span> <span class="n">user_pwd</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">account_json</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">account</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">login_msg</span> <span class="o">=</span> <span class="n">HttpRequestUtil</span><span class="o">.</span><span class="na">sendPostRequest</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">account_json</span><span class="o">);</span>
+            <span class="n">LoginMsg</span> <span class="n">login_msg_obj</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">login_msg</span><span class="o">,</span> <span class="n">LoginMsg</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+            <span class="n">String</span> <span class="n">token</span> <span class="o">=</span> <span class="n">login_msg_obj</span><span class="o">.</span><span class="na">getToken</span><span class="o">();</span>
+            <span class="n">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">login_msg_obj</span><span class="o">.</span><span class="na">getMsg</span><span class="o">();</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">token</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+                <span class="c1">//将token存入本地数据库，并跳到个人页
+</span><span class="c1"></span>                <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">setToken</span><span class="o">(</span><span class="n">token</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
+                <span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserInfoAbilitySlice</span><span class="o">(),</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">());</span>
+            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                <span class="c1">//返回主线程进行UI重绘，原因是show方法不能在子线程中运行
+</span><span class="c1"></span>                <span class="n">getUITaskDispatcher</span><span class="o">().</span><span class="na">asyncDispatch</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+                    <span class="nd">@Override</span>
+                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+                        <span class="k">new</span> <span class="n">ToastDialog</span><span class="o">(</span><span class="n">getContext</span><span class="o">()).</span><span class="na">setText</span><span class="o">(</span><span class="n">msg</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+                    <span class="o">}</span>
+                <span class="o">});</span>
+            <span class="o">}</span>
+        <span class="o">});</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+<span class="c1">//如果本地数据库有token，说明已经登陆，就跳到个人页
+</span><span class="c1"></span><span class="k">else</span><span class="o">{</span>
+    <span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserInfoAbilitySlice</span><span class="o">(),</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div><ul>
+<li>进来先进行一个判断，若本地数据库里有token，则直接跳转到个人页，为了应对APP被杀死后重启的情况。</li>
+<li>按钮监听，获取输入框的信息，向后端发送请求，获得token和msg。</li>
+<li>若token不为空，则存到本地数据库，并跳转到个人页。</li>
+<li>若token为空，则建立一个ToastDialog组件，显示msg。ToastDialog组件专门用于显示提示信息，它存在几秒后自动消失。</li>
+</ul>
+<div class="details admonition info open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">建立Toast Dialog组件这里，重绘UI的操作只能在主线程里运行，在这里指show方法，如果直接写<code>new ToastDialog(getContext()).setText(msg).show();</code>是不行的，因为此时我们正在新建的线程里，这个任务要扔回到主线程，所以才有了以下的代码块。</div>
+        </div>
+    </div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">getUITaskDispatcher</span><span class="o">().</span><span class="na">asyncDispatch</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">new</span> <span class="n">ToastDialog</span><span class="o">(</span><span class="n">getContext</span><span class="o">()).</span><span class="na">setText</span><span class="o">(</span><span class="n">msg</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div><p>onActive方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">super</span><span class="o">.</span><span class="na">onActive</span><span class="o">();</span>
+<span class="c1">//程序重新返回前台调用
+</span><span class="c1">//若已经登陆，则导航到个人页
+</span><span class="c1"></span><span class="n">String</span> <span class="n">token_s</span> <span class="o">=</span>  <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">getToken</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">token_s</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+    <span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserInfoAbilitySlice</span><span class="o">(),</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">());</span>
+<span class="o">}</span>
+</code></pre></div><p>当页面从后台返回前台时，调用的是onActive方法，比如用户在导航到个人页之后，点了一下退出键，就会返回默认页，我们不想让他再发一次http请求，检查token，若存在，直接将其导航回个人页。</p>
+<h2 id="userinfoabilityslice">UserInfoAbilitySlice</h2>
+<p>onStart方法：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+<span class="kd">super</span><span class="o">.</span><span class="na">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_ability_userinfo</span><span class="o">);</span>
+<span class="c1">//能导航到此页说明用户已经登陆，向服务器请求用户的头像
+</span><span class="c1"></span><span class="n">String</span> <span class="n">token</span> <span class="o">=</span> <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">getToken</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+<span class="n">Image</span> <span class="n">image</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_image</span><span class="o">);</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">token</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+    <span class="c1">//建新线程
+</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
+    <span class="c1">//异步
+</span><span class="c1"></span>    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
+        <span class="c1">//发送请求，更新image组件
+</span><span class="c1"></span>        <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&#34;http://8.136.83.196:8899/users/info&#34;</span><span class="o">;</span>
+        <span class="n">String</span> <span class="n">img_url</span> <span class="o">=</span> <span class="n">HttpRequestUtil</span><span class="o">.</span><span class="na">sendPostRequestWithToken</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="n">url</span><span class="o">,</span><span class="n">token</span><span class="o">);</span>
+        <span class="n">LoadImageUtil</span><span class="o">.</span><span class="na">loadImg</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="n">img_url</span><span class="o">,</span><span class="n">image</span><span class="o">);</span>
+    <span class="o">});</span>
+<span class="o">}</span>
+</code></pre></div><ul>
+<li>导航到此页时，从本地数据库中取出token，向后端发送。</li>
+<li>后端返回头像的url。</li>
+<li>将url显示到image组件。</li>
+</ul>
+<h2 id="一些瑕疵">一些瑕疵</h2>
+<ol>
+<li>没有退出登陆键，这个很容易实现，点击按钮，把token删掉即可，我懒得写了。</li>
+<li>个人页太简单，懒就一个字。</li>
+</ol>
+<h2 id="结束语">结束语</h2>
+<h3 id="源码">源码</h3>
+<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Users" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Users</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
+<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
+]]></description>
+</item>
+<item>
     <title>鸿蒙开发实践——调用API</title>
     <link>https://leeshy-tech.github.io/harmonyos_api/</link>
     <pubDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_api/</guid>
