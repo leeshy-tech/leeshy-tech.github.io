@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>Python实践——后端接口实现(2) - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="Python实践——后端接口实现(2)" />
+<meta property="og:description" content="给API增加token验证" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/pythonapi_simplelogin2/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-02-20T20:11:06+08:00" />
+<meta property="article:modified_time" content="2022-02-20T20:11:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="Python实践——后端接口实现(2)"/>
+<meta name="twitter:description" content="给API增加token验证"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/pythonapi_simplelogin2/" /><link rel="prev" href="https://leeshy-tech.github.io/pythonapi_simplelogin/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "Python实践——后端接口实现(2)",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/pythonapi_simplelogin2\/"
+        },"genre": "posts","keywords": "Python, API, token, pyjwt","wordcount":  942 ,
+        "url": "https:\/\/leeshy-tech.github.io\/pythonapi_simplelogin2\/","datePublished": "2022-02-20T20:11:06+08:00","dateModified": "2022-02-20T20:11:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Python实践——后端接口实现(2)</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/python/"><i class="far fa-folder fa-fw"></i>Python</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-02-20">2022-02-20</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 942 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#token是什么">token是什么</a></li>
+    <li><a href="#token生成及解析">token生成及解析</a>
+      <ul>
+        <li><a href="#核心代码">核心代码：</a></li>
+      </ul>
+    </li>
+    <li><a href="#用户登陆">用户登陆</a></li>
+    <li><a href="#请求用户信息">请求用户信息</a></li>
+    <li><a href="#请求体格式">请求体格式</a>
+      <ul>
+        <li><a href="#applicationx-www-form-urlencoded">application/x-www-form-urlencoded</a></li>
+        <li><a href="#applicationjson">application/json</a></li>
+      </ul>
+    </li>
+    <li><a href="#调试">调试</a></li>
+    <li><a href="#结束语">结束语</a>
+      <ul>
+        <li><a href="#源码">源码</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="增加token验证">增加token验证</h1>
+<p>书接上文</p>
+<h2 id="token是什么">token是什么</h2>
+<p>简单来说，token可以认为是身份令牌，当用户登陆成功之后，获得这个令牌，当需要向服务器请求一些私密资源时，便可以提交这个令牌，以证明自己是合法用户。</p>
+<h2 id="token生成及解析">token生成及解析</h2>
+<p>使用pyjwt这个库：<code>pip install pyjwt</code></p>
+<h3 id="核心代码">核心代码：</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">jwt</span>
+<span class="c1"># 加密算法</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&#34;alg&#34;</span><span class="p">:</span><span class="s2">&#34;HS256&#34;</span><span class="p">,</span>
+    <span class="s2">&#34;typ&#34;</span><span class="p">:</span><span class="s2">&#34;JWT&#34;</span>
+<span class="p">}</span>
+<span class="c1"># 密钥</span>
+<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">&#34;leeshy&#34;</span>
+<span class="s1">&#39;&#39;&#39;生成一个token&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">token_encode</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">user_id</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="n">user_id</span>
+        <span class="p">}</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">SECRET_KEY</span><span class="p">,</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;HS256&#39;</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">token</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<span class="s1">&#39;&#39;&#39;解码token&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">token_decode</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">jwt</span><span class="o">=</span><span class="n">token</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="n">SECRET_KEY</span><span class="p">,</span><span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">algorithms</span><span class="o">=</span><span class="s1">&#39;HS256&#39;</span><span class="p">)</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">info</span>
+</code></pre></div><ul>
+<li>headers声明加密算法</li>
+<li>SECRET_KEY密钥是编码解码的关键</li>
+<li>payload项中，有一些官方声明项，除官方声明项外还可以存一些自定义信息。<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220220202957706.png"
+        data-srcset="/image/Python/image-20220220202957706.png, /image/Python/image-20220220202957706.png 1.5x, /image/Python/image-20220220202957706.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220220202957706.png"
+        title="image-20220220202957706" /></li>
+</ul>
+<h2 id="用户登陆">用户登陆</h2>
+<p>如果登陆成功，就返回信息和token，如果不成功，就只返回提示信息。</p>
+<p>较上一个版本只有一点改变，核心代码：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="s1">&#39;&#39;&#39;生成一个返回体&#39;&#39;&#39;</span>
+<span class="k">def</span> <span class="nf">response_body_login</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span><span class="n">user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">response_msg</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&#34;msg&#34;</span><span class="p">:</span><span class="n">msg</span><span class="p">,</span>
+        <span class="s2">&#34;token&#34;</span><span class="p">:</span><span class="n">token_encode</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">response_msg</span><span class="p">)</span>
+
+<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/users/login&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">users_login</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">:</span>
+        <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
+        <span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">user_dict</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_password&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_password</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">response_body_login</span><span class="p">(</span><span class="s2">&#34;success&#34;</span><span class="p">,</span><span class="n">user_id</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span> 
+                    <span class="k">return</span> <span class="n">response_body_login</span><span class="p">(</span><span class="s2">&#34;password error&#34;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">response_body_login</span><span class="p">(</span><span class="s2">&#34;id not exist&#34;</span><span class="p">)</span>
+</code></pre></div><ul>
+<li>规定的请求体格式是application/json</li>
+</ul>
+<h2 id="请求用户信息">请求用户信息</h2>
+<p>用户向服务端提供token，验证成功则返回用户头像的url。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/users/info&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">users_info</span><span class="p">():</span>
+    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">:</span>
+        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&#34;token&#34;</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">user_id</span> <span class="o">=</span> <span class="n">token_decode</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&#34;token error&#34;</span>
+
+        <span class="k">for</span> <span class="n">user_dict</span> <span class="ow">in</span> <span class="n">users_headphotos</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_headphoto&#34;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="s2">&#34;no headphoto&#34;</span>
+</code></pre></div><ul>
+<li>token要放在请求头里，所以通过request.headers取得。</li>
+</ul>
+<h2 id="请求体格式">请求体格式</h2>
+<p>在前端向后端发送请求时，必须在请求头部分声明请求体格式。</p>
+<p>例如：<code>connection.setRequestProperty(&quot;Content-Type&quot;,&quot;application/json;charset=utf-8&quot;);</code></p>
+<p>这个格式是由后端决定的，否则后端无法取到对应的信息。</p>
+<h3 id="applicationx-www-form-urlencoded">application/x-www-form-urlencoded</h3>
+<p>这是最常见的 POST 提交数据的方式，提交时按照键值对<code>key1=val1&amp;key2=val2</code>的方式进行编码。</p>
+<p>版本1时，就使用了这种方法调试，所以后端代码对应的是：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
+<span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
+</code></pre></div><h3 id="applicationjson">application/json</h3>
+<p>指示服务端消息主体是序列化的JSON字符串。</p>
+<p>本次使用的调试方式是json，所以后端代码对应：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
+<span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
+</code></pre></div><h2 id="调试">调试</h2>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220220210625365.png"
+        data-srcset="/image/Python/image-20220220210625365.png, /image/Python/image-20220220210625365.png 1.5x, /image/Python/image-20220220210625365.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220220210625365.png"
+        title="image-20220220210625365" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Python/image-20220220210720789.png"
+        data-srcset="/image/Python/image-20220220210720789.png, /image/Python/image-20220220210720789.png 1.5x, /image/Python/image-20220220210720789.png 2x"
+        data-sizes="auto"
+        alt="/image/Python/image-20220220210720789.png"
+        title="image-20220220210720789" /></p>
+<h2 id="结束语">结束语</h2>
+<h3 id="源码">源码</h3>
+<p><a href="https://github.com/leeshy-tech/API_userLogin" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/API_userLogin</a></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.cnblogs.com/wbl001/p/12050751.html" target="_blank" rel="noopener noreffer">【记录】form-data与x-www-form-urlencoded的区别 </a></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/python/">Python</a>
+                </span><span><a href="/tags/api/">API</a>
+                </span><span><a href="/tags/token/">token</a>
+                </span><span><a href="/tags/pyjwt/">pyjwt</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-02-20</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/pythonapi_simplelogin2/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/pythonapi_simplelogin/" class="prev" rel="prev" title="Python实践——后端接口实现"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>

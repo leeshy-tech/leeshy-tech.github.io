@@ -309,6 +309,16 @@
 <li>将右侧的勾取消。</li>
 </ul>
 <p></p>
+<h3 id="同时打开多项目">同时打开多项目</h3>
+<blockquote>
+<p>默认情况下只能打开一个项目窗口，新的项目会覆盖之前打开的项目，如果要参考其他项目的代码就比较困难。</p>
+</blockquote>
+<ul>
+<li>打开设置：file&gt;settings</li>
+<li>Appearance &amp; Behavior &gt; System Settings</li>
+<li>选择Open project in new window</li>
+</ul>
+<p></p>
 <h2 id="项目结构">项目结构</h2>
 <p>坑，待填。</p>
 <h2 id="调试方法">调试方法</h2>

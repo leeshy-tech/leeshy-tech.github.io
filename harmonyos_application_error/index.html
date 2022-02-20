@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/leeshy-tech.github.io\/harmonyos_application_error\/"
-        },"genre": "posts","keywords": "HarmonyOS, Java","wordcount":  207 ,
+        },"genre": "posts","keywords": "HarmonyOS, Java","wordcount":  330 ,
         "url": "https:\/\/leeshy-tech.github.io\/harmonyos_application_error\/","datePublished": "2022-01-27T22:27:06+08:00","dateModified": "2022-01-27T22:27:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
@@ -117,7 +117,7 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">程序报错总结——HarmonyOS</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/code-error/"><i class="far fa-folder fa-fw"></i>Code error</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-27">2022-01-27</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 207 字</span>&nbsp;
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-01-27">2022-01-27</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 330 字</span>&nbsp;
                     <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟</span>&nbsp;</div>
             </div>
             
@@ -132,6 +132,7 @@
       <ul>
         <li><a href="#1">1</a></li>
         <li><a href="#2">2</a></li>
+        <li><a href="#3">3</a></li>
       </ul>
     </li>
   </ul>
@@ -172,6 +173,33 @@
         data-sizes="auto"
         alt="/image/ApplicationError/image-20220130212423710.png"
         title="image-20220130212423710" /></p>
+<h3 id="3">3</h3>
+<div class="details admonition bug open">
+        <div class="details-summary admonition-title">
+            <i class="icon fas fa-bug fa-fw"></i>Bug<i class="details-icon fas fa-angle-right fa-fw"></i>
+        </div>
+        <div class="details-content">
+            <div class="admonition-content">ohos.agp.window.wmc.AGPWindowManager$O000000: Can&rsquo;t show toast, Looper.don&rsquo;t prepare</div>
+        </div>
+    </div>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/ApplicationError/image-20220220171756254.png"
+        data-srcset="/image/ApplicationError/image-20220220171756254.png, /image/ApplicationError/image-20220220171756254.png 1.5x, /image/ApplicationError/image-20220220171756254.png 2x"
+        data-sizes="auto"
+        alt="/image/ApplicationError/image-20220220171756254.png"
+        title="image-20220220171756254" /></p>
+<p>原因：一般是因为在子线程中直接操作UI导致的，这个主要是指导致UI重绘的操作，指上图中的.show()，.setText()是可以在子线程中正常使用的。</p>
+<p>解决办法：<img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/ApplicationError/image-20220220172446640.png"
+        data-srcset="/image/ApplicationError/image-20220220172446640.png, /image/ApplicationError/image-20220220172446640.png 1.5x, /image/ApplicationError/image-20220220172446640.png 2x"
+        data-sizes="auto"
+        alt="/image/ApplicationError/image-20220220172446640.png"
+        title="image-20220220172446640" /></p>
+<p>利用getUITaskDispatcher把UI操作返回到主线程中。</p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/harmonyos/">HarmonyOS</a>
                 </span><span><a href="/tags/java/">Java</a>
