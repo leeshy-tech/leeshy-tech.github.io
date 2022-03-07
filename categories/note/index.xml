@@ -4,7 +4,84 @@
         <link>https://leeshy-tech.github.io/categories/note/</link>
         <description>Note - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 07 Mar 2022 21:41:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
+    <title>Ryu——安装</title>
+    <link>https://leeshy-tech.github.io/ryu_install/</link>
+    <pubDate>Mon, 07 Mar 2022 21:41:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/ryu_install/</guid>
+    <description><![CDATA[<h1 id="ryu安装">Ryu安装</h1>
+<h2 id="安装git">安装git</h2>
+<p><code>sudo apt install git</code></p>
+<h2 id="安装python3">安装python3</h2>
+<blockquote>
+<p>时代变了，不装不行。</p>
+</blockquote>
+<ul>
+<li>
+<p>下载</p>
+<p><code>sudo apt install python3</code></p>
+</li>
+<li>
+<p>查看python3的位置和版本号，用于第四步</p>
+<p><code>whereis python3</code></p>
+</li>
+<li>
+<p>删除原来python2的软连接</p>
+<p><code>sudo rm /usr/bin/python</code></p>
+</li>
+<li>
+<p>建立新的软连接</p>
+<p><code>sudo ln -s /usr/bin/python3.9 /usr/bin/python</code></p>
+</li>
+<li>
+<p>查看版本</p>
+<p><code>python --version</code></p>
+</li>
+</ul>
+<h2 id="安装ryu">安装Ryu</h2>
+<ul>
+<li>
+<p>更新pip</p>
+<p><code>sudo pip install --upgrade pip</code></p>
+</li>
+<li>
+<p>克隆源代码</p>
+<p><code>git clone git://github.com/faucetsdn/ryu.git</code></p>
+</li>
+<li>
+<p>进入ryu目录</p>
+<p><code>cd ryu</code></p>
+</li>
+<li>
+<p>安装依赖</p>
+<p><code>sudo pip install -r tools/pip-requires</code></p>
+</li>
+<li>
+<p>安装ryu</p>
+<p><code>sudo python setup.py install</code></p>
+</li>
+</ul>
+<h2 id="测试">测试</h2>
+<ul>
+<li>
+<p>进入ryu/ryu/app目录</p>
+<p><code>cd ryu/ryu/app</code></p>
+</li>
+<li>
+<p>运行simple_switch.py</p>
+<p><code>ryu-manager app/simple_switch.py</code></p>
+<p>出现以下输出为正常：</p>
+<pre tabindex="0"><code>loading app app/simple_switch.py
+loading app ryu.controller.ofp_handler
+instantiating app app/simple_switch.py of SimpleSwitch
+instantiating app ryu.controller.ofp_handler of OFPHandler
+</code></pre></li>
+</ul>
+<h2 id="参考文献">参考文献</h2>
+<p><a href="https://blog.csdn.net/sexyluna/article/details/105740519" target="_blank" rel="noopener noreffer">Ubuntu将默认python版本改为python3</a></p>
+<p><a href="https://github.com/leeshy-tech/ryu" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/ryu</a></p>
+]]></description>
+</item>
+<item>
     <title>mininet-wifi——安装</title>
     <link>https://leeshy-tech.github.io/mininet-wifi_install/</link>
     <pubDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/mininet-wifi_install/</guid>
