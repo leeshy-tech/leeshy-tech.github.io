@@ -4,9 +4,92 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Thu, 03 Mar 2022 14:18:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>mininet-wifi——安装</title>
+    <link>https://leeshy-tech.github.io/mininet-wifi_install/</link>
+    <pubDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/mininet-wifi_install/</guid>
+    <description><![CDATA[<h1 id="安装mininet-wifi">安装mininet-wifi</h1>
+<p>mininet学了快半年了，还是安装七八次才能装上，人麻了，怒写一篇博客。平台：Ubuntu20.04。</p>
+<h2 id="安装git">安装git</h2>
+<p><code>sudo apt install git</code></p>
+<h2 id="安装python3">安装python3</h2>
+<p>mininet在python2和python3环境下都是能正常运行的，但是，apt中一些python2的包已经升级到3了，比如python-matplotlib，你不升级python3，mininet-wifi就会安装它，但是apt里又没有，只会一直报错。你再怎么更新源，也找不到这个玩意，因为它已经变成python3-matplotlib了。所以还是要安装python3。</p>
+<ul>
+<li>
+<p>下载</p>
+<p><code>sudo apt install python3</code></p>
+</li>
+<li>
+<p>查看python3的位置和版本号，用于第四步</p>
+<p><code>whereis python3</code></p>
+</li>
+<li>
+<p>删除原来python2的软连接</p>
+<p><code>sudo rm /usr/bin/python</code></p>
+</li>
+<li>
+<p>建立新的软连接</p>
+<p><code>sudo ln -s /usr/bin/python3.9 /usr/bin/python</code></p>
+</li>
+<li>
+<p>查看版本</p>
+<p><code>python --version</code></p>
+</li>
+</ul>
+<h2 id="安装mininet-wifi-1">安装mininet-wifi</h2>
+<h3 id="有梯子或者有git代理">有梯子，或者有git代理</h3>
+<ul>
+<li>
+<p>克隆源代码</p>
+<p><code>git clone https://github.com/intrig-unicamp/mininet-wifi</code></p>
+</li>
+<li>
+<p>查看安装可选项</p>
+<p><code>sudo mininet-wifi/util/install.sh -h</code></p>
+</li>
+<li>
+<p>选择一些项安装（默认就按这个）</p>
+<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
+</li>
+</ul>
+<h3 id="无代理">无代理</h3>
+<p>这里主要是指以https无法正常访问github的情况，需要把所有的git网址改为git://开头，因为install.sh里会有下载其他库的git命令，所以直接运行install.sh会报git超时，需要提前把相关库下好。</p>
+<ul>
+<li>
+<p>克隆</p>
+<p><code>git clone git://github.com/intrig-unicamp/mininet-wifi</code></p>
+<p><code>git clone git://github.com/ramonfontes/mac80211_hwsim_mgmt</code></p>
+<p><code>git clone git://github.com/mininet/mininet</code></p>
+<p><code>git clone git://github.com/vchakour/wmediumd</code></p>
+</li>
+<li>
+<p>选择一些项安装（默认就按这个）</p>
+<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
+</li>
+</ul>
+<h2 id="运行">运行</h2>
+<ul>
+<li>
+<p>运行，这句正常运行就说明下载成功。</p>
+<p><code>sudo mn --wifi</code></p>
+</li>
+<li>
+<p>退出</p>
+<p><code>exit</code></p>
+</li>
+<li>
+<p>清理</p>
+<p><code>sudo mn -c</code></p>
+</li>
+</ul>
+<h2 id="参考文献">参考文献</h2>
+<p><a href="https://github.com/intrig-unicamp/mininet-wifi" target="_blank" rel="noopener noreffer">https://github.com/intrig-unicamp/mininet-wifi</a></p>
+<p><a href="https://blog.csdn.net/sexyluna/article/details/105740519" target="_blank" rel="noopener noreffer">Ubuntu将默认python版本改为python3</a></p>
+]]></description>
+</item>
+<item>
     <title>论文笔记——Wireless SDN Mobile Ad Hoc Network:from Theory to Practice.</title>
     <link>https://leeshy-tech.github.io/paper_wireless_sdn_mobile/</link>
     <pubDate>Thu, 03 Mar 2022 14:18:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/paper_wireless_sdn_mobile/</guid>
@@ -1230,258 +1313,6 @@ StoreConfig对象：关联数据⽂件配置(数据库)</p>
 <h3 id="参考文献">参考文献</h3>
 <p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/database-relational-overview-0000000000030046" target="_blank" rel="noopener noreffer">HarmonyOS文档——关系型数据库</a></p>
 <p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
-]]></description>
-</item>
-<item>
-    <title>鸿蒙开发实践——ServiceAbility</title>
-    <link>https://leeshy-tech.github.io/harmonyos_serviceability/</link>
-    <pubDate>Sat, 29 Jan 2022 21:38:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_serviceability/</guid>
-    <description><![CDATA[<h1 id="serviceability实践">ServiceAbility实践</h1>
-<h2 id="项目简介">项目简介</h2>
-<h3 id="项目结构">项目结构</h3>
-<pre tabindex="0"><code>├─ entry.src.main
-	├─ com.example.serviceability
-        ├─slice
-            └─ MainAbilitySlice
-        ├─ MainAbility	
-        ├─ MyService
-        └─ MyApplication
-	├─ resources.base.layout
-        └─ ability_main.xml
-    └─ config.json
-</code></pre><h3 id="效果">效果</h3>
-<p>按钮1开启MyService。</p>
-<p>按钮2连接到MyService。</p>
-<p>按钮3断开与MyService的连接。</p>
-<p>按钮4关闭MyService。</p>
-<p>服务运行时会在状态栏显示。</p>
-<p>不同的点击顺序，命令行输出的提示信息不同。</p>
-<h2 id="铺垫">铺垫</h2>
-<p>在MyService里的每个生命周期函数里都加一句sout来显示各个方法执行的顺序。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyService</span> <span class="kd">extends</span> <span class="n">Ability</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">HiLogLabel</span> <span class="n">LABEL_LOG</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HiLogLabel</span><span class="o">(</span><span class="n">3</span><span class="o">,</span> <span class="n">0xD001100</span><span class="o">,</span> <span class="s">&#34;Demo&#34;</span><span class="o">);</span>
-
-    <span class="c1">//在每个生命周期函数内加一句sout调试
-</span><span class="c1"></span>    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStart</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-        <span class="n">HiLog</span><span class="o">.</span><span class="na">error</span><span class="o">(</span><span class="n">LABEL_LOG</span><span class="o">,</span> <span class="s">&#34;MyService::onStart&#34;</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onStart&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onBackground</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">.</span><span class="na">onBackground</span><span class="o">();</span>
-        <span class="n">HiLog</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="n">LABEL_LOG</span><span class="o">,</span> <span class="s">&#34;MyService::onBackground&#34;</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onBackground&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onStop</span><span class="o">()</span> <span class="o">{</span>
-        <span class="kd">super</span><span class="o">.</span><span class="na">onStop</span><span class="o">();</span>
-        <span class="n">HiLog</span><span class="o">.</span><span class="na">info</span><span class="o">(</span><span class="n">LABEL_LOG</span><span class="o">,</span> <span class="s">&#34;MyService::onStop&#34;</span><span class="o">);</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onStop&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onCommand</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">,</span> <span class="kt">boolean</span> <span class="n">restart</span><span class="o">,</span> <span class="kt">int</span> <span class="n">startId</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onCommand&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="n">IRemoteObject</span> <span class="nf">onConnect</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onConnect&#34;</span><span class="o">);</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="n">LocalRemoteObject</span><span class="o">()</span> <span class="o">{};</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onDisconnect</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onDisconnect&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div><h2 id="开启和关闭serviceability">开启和关闭ServiceAbility</h2>
-<blockquote>
-<p>此部分和”页面导航“里开启Ability的操作如出一辙，也就是说，我们只是在开启和关闭Ability，至于它是什么类型，无所谓。</p>
-</blockquote>
-<p>核心代码：</p>
-<p>​	MainAbilitySlice的onStart方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//按钮1开启MyService
-</span><span class="c1"></span><span class="n">Button</span> <span class="n">btn1</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn1</span><span class="o">);</span>
-<span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
-    <span class="n">Intent</span> <span class="n">intent1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
-    <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
-            <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.example.serviceability&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.example.serviceability.MyService&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-    <span class="n">intent1</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">startAbility</span><span class="o">(</span><span class="n">intent1</span><span class="o">);</span>
-<span class="o">});</span>
-</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//按钮4关闭MyService
-</span><span class="c1"></span><span class="n">Button</span> <span class="n">btn4</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn4</span><span class="o">);</span>
-<span class="n">btn4</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
-    <span class="n">Intent</span> <span class="n">intent3</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
-    <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
-            <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.example.serviceability&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.example.serviceability.MyService&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-    <span class="n">intent3</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">stopAbility</span><span class="o">(</span><span class="n">intent3</span><span class="o">);</span>
-<span class="o">});</span>
-</code></pre></div><ul>
-<li>通过id获取Button对象，设置事件监听器。</li>
-<li>调用<strong>startAbility</strong>和<strong>stopAbility</strong>方法，在intent对象的Operation属性里指定开启哪台<strong>设备</strong>的哪个<strong>应用</strong>的哪个<strong>Ability</strong>。</li>
-</ul>
-<h2 id="建立连接">建立连接</h2>
-<p>核心代码：</p>
-<p>​	MainAbilitySlice的onStart方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//按钮2连接到MyService
-</span><span class="c1"></span><span class="n">Button</span> <span class="n">btn2</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn2</span><span class="o">);</span>
-
-<span class="n">IAbilityConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="k">new</span> <span class="n">IAbilityConnection</span><span class="o">()</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAbilityConnectDone</span><span class="o">(</span><span class="n">ElementName</span> <span class="n">elementName</span><span class="o">,</span> <span class="n">IRemoteObject</span> <span class="n">iRemoteObject</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;----------------------连接MyService成功&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAbilityDisconnectDone</span><span class="o">(</span><span class="n">ElementName</span> <span class="n">elementName</span><span class="o">,</span> <span class="kt">int</span> <span class="n">i</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;----------------------连接MyService失败&#34;</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">};</span>
-
-<span class="n">btn2</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
-    <span class="n">Intent</span> <span class="n">intent2</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
-    <span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
-            <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.example.serviceability&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.example.serviceability.MyService&#34;</span><span class="o">)</span>
-            <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-    <span class="n">intent2</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
-    <span class="k">this</span><span class="o">.</span><span class="na">connectAbility</span><span class="o">(</span><span class="n">intent2</span><span class="o">,</span><span class="n">connection</span><span class="o">);</span>
-<span class="o">});</span>
-</code></pre></div><ul>
-<li>
-<p>通过id获取Button对象，设置事件监听器。</p>
-</li>
-<li>
-<p>新建连接对象，重写onAbilityConnectDone和onAbilityDisconnectDone方法，每个方法里都写一句sout用于调试。</p>
-<ul>
-<li>onAbilityConnectDone：连接成功建立后执行。</li>
-<li>onAbilityDisconnectDone：连接建立失败后执行。</li>
-</ul>
-</li>
-<li>
-<p>调用connectAbility方法，传递intent和connect对象。</p>
-</li>
-</ul>
-<p>​	MyService：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="nd">@Override</span>
-<span class="kd">public</span> <span class="n">IRemoteObject</span> <span class="nf">onConnect</span><span class="o">(</span><span class="n">Intent</span> <span class="n">intent</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">&#34;--------------------onConnect&#34;</span><span class="o">);</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="n">LocalRemoteObject</span><span class="o">()</span> <span class="o">{};</span>
-<span class="o">}</span>
-</code></pre></div><ul>
-<li>注意返回语句，返回一个LocalRemoteObject对象。</li>
-</ul>
-<p>试图与Service建立连接时，触发onConnect方法，它返回一个LocalRemoteObject对象，在这个实例中它返回的是MyService这个Ability，触发回调函数onAbilityConnectDone或者onAbilityDisconnectDone。</p>
-<h2 id="关闭连接">关闭连接</h2>
-<p>核心代码：</p>
-<p>MainAbilitySlice的onStart方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//按钮3断开与MyService的连接
-</span><span class="c1"></span><span class="n">Button</span> <span class="n">btn3</span> <span class="o">=</span> <span class="o">(</span><span class="n">Button</span><span class="o">)</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_btn3</span><span class="o">);</span>
-<span class="n">btn3</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
-    <span class="k">if</span><span class="o">(</span><span class="n">connection</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">disconnectAbility</span><span class="o">(</span><span class="n">connection</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">});</span>
-</code></pre></div><ul>
-<li>若connection对象存在，就调用<strong>disconnectAbility</strong>方法即可。</li>
-</ul>
-<h2 id="前台service">前台Service</h2>
-<p>前台Service会始终保持正在运行的图标在系统状态栏显示。</p>
-<p>核心代码：</p>
-<p>MyService的onStart方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">// 创建通知，其中1005为notificationId
-</span><span class="c1"></span><span class="n">NotificationRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NotificationRequest</span><span class="o">(</span><span class="n">1005</span><span class="o">);</span>
-<span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationNormalContent</span> <span class="n">content</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationNormalContent</span><span class="o">();</span>
-<span class="n">content</span><span class="o">.</span><span class="na">setTitle</span><span class="o">(</span><span class="s">&#34;title&#34;</span><span class="o">).</span><span class="na">setText</span><span class="o">(</span><span class="s">&#34;text&#34;</span><span class="o">);</span>
-<span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationContent</span> <span class="n">notificationContent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">NotificationRequest</span><span class="o">.</span><span class="na">NotificationContent</span><span class="o">(</span><span class="n">content</span><span class="o">);</span>
-<span class="n">request</span><span class="o">.</span><span class="na">setContent</span><span class="o">(</span><span class="n">notificationContent</span><span class="o">);</span>
-
-<span class="c1">// 绑定通知，1005为创建通知时传入的notificationId
-</span><span class="c1"></span><span class="n">keepBackgroundRunning</span><span class="o">(</span><span class="n">1005</span><span class="o">,</span> <span class="n">request</span><span class="o">);</span>
-</code></pre></div><p>这段进行一个简单的Ctrl+C、V就行，注意以下几个点：</p>
-<ul>
-<li>
-<p>1005这个notificationId不能与其他的服务重复</p>
-</li>
-<li>
-<p>title和text在图中对应：</p>
-<p></p>
-</li>
-</ul>
-<p>config.json中还要申请常驻后台权限：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;reqPermissions&#34;</span><span class="err">:</span> <span class="p">[</span>
-  <span class="p">{</span><span class="nt">&#34;name&#34;</span><span class="p">:</span> <span class="s2">&#34;ohos.permission.KEEP_BACKGROUND_RUNNING&#34;</span><span class="p">}</span>
-<span class="p">]</span>
-</code></pre></div><p>位置如图所示：</p>
-<p></p>
-<h2 id="生命周期分析">生命周期分析</h2>
-<p>整个执行过程如图所示：</p>
-<p></p>
-<ul>
-<li>
-<p>启动：</p>
-<ul>
-<li>
-<p>若MyService已建立，执行onCommand。</p>
-<p></p>
-</li>
-<li>
-<p>若未建立，执行onStart和onCommand。</p>
-<p></p>
-</li>
-</ul>
-</li>
-<li>
-<p>连接：</p>
-<ul>
-<li>
-<p>若MyService已建立，则执行onConnect。</p>
-<p></p>
-</li>
-<li>
-<p>若未建立，则执行onStart和onConnect（红字忽略）。</p>
-<p></p>
-</li>
-</ul>
-</li>
-<li>
-<p>断开连接：当连接存在，且</p>
-<ul>
-<li>
-<p>MyService是手动创建的，不是由连接唤起的，只执行onDisconnect</p>
-<p></p>
-</li>
-<li>
-<p>MyService是由该连接唤起的，执行onDisconnect、onBackground、onStop。</p>
-<p></p>
-</li>
-</ul>
-</li>
-<li>
-<p>关闭：当MyService没有被连接时，才能关闭，执行onBackground和onStop。</p>
-<p></p>
-</li>
-</ul>
-<h2 id="结束语">结束语</h2>
-<h3 id="项目源码">项目源码</h3>
-<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/ServiceAbility" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/ServiceAbility</a></p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-service-concept-0000000000044457" target="_blank" rel="noopener noreffer">HarmonyOS文档——ServiceAbility</a></p>
 ]]></description>
 </item>
 </channel>

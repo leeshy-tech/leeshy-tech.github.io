@@ -4,7 +4,90 @@
         <link>https://leeshy-tech.github.io/categories/note/</link>
         <description>Note - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Thu, 03 Mar 2022 14:18:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
+    <title>mininet-wifi——安装</title>
+    <link>https://leeshy-tech.github.io/mininet-wifi_install/</link>
+    <pubDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/mininet-wifi_install/</guid>
+    <description><![CDATA[<h1 id="安装mininet-wifi">安装mininet-wifi</h1>
+<p>mininet学了快半年了，还是安装七八次才能装上，人麻了，怒写一篇博客。平台：Ubuntu20.04。</p>
+<h2 id="安装git">安装git</h2>
+<p><code>sudo apt install git</code></p>
+<h2 id="安装python3">安装python3</h2>
+<p>mininet在python2和python3环境下都是能正常运行的，但是，apt中一些python2的包已经升级到3了，比如python-matplotlib，你不升级python3，mininet-wifi就会安装它，但是apt里又没有，只会一直报错。你再怎么更新源，也找不到这个玩意，因为它已经变成python3-matplotlib了。所以还是要安装python3。</p>
+<ul>
+<li>
+<p>下载</p>
+<p><code>sudo apt install python3</code></p>
+</li>
+<li>
+<p>查看python3的位置和版本号，用于第四步</p>
+<p><code>whereis python3</code></p>
+</li>
+<li>
+<p>删除原来python2的软连接</p>
+<p><code>sudo rm /usr/bin/python</code></p>
+</li>
+<li>
+<p>建立新的软连接</p>
+<p><code>sudo ln -s /usr/bin/python3.9 /usr/bin/python</code></p>
+</li>
+<li>
+<p>查看版本</p>
+<p><code>python --version</code></p>
+</li>
+</ul>
+<h2 id="安装mininet-wifi-1">安装mininet-wifi</h2>
+<h3 id="有梯子或者有git代理">有梯子，或者有git代理</h3>
+<ul>
+<li>
+<p>克隆源代码</p>
+<p><code>git clone https://github.com/intrig-unicamp/mininet-wifi</code></p>
+</li>
+<li>
+<p>查看安装可选项</p>
+<p><code>sudo mininet-wifi/util/install.sh -h</code></p>
+</li>
+<li>
+<p>选择一些项安装（默认就按这个）</p>
+<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
+</li>
+</ul>
+<h3 id="无代理">无代理</h3>
+<p>这里主要是指以https无法正常访问github的情况，需要把所有的git网址改为git://开头，因为install.sh里会有下载其他库的git命令，所以直接运行install.sh会报git超时，需要提前把相关库下好。</p>
+<ul>
+<li>
+<p>克隆</p>
+<p><code>git clone git://github.com/intrig-unicamp/mininet-wifi</code></p>
+<p><code>git clone git://github.com/ramonfontes/mac80211_hwsim_mgmt</code></p>
+<p><code>git clone git://github.com/mininet/mininet</code></p>
+<p><code>git clone git://github.com/vchakour/wmediumd</code></p>
+</li>
+<li>
+<p>选择一些项安装（默认就按这个）</p>
+<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
+</li>
+</ul>
+<h2 id="运行">运行</h2>
+<ul>
+<li>
+<p>运行，这句正常运行就说明下载成功。</p>
+<p><code>sudo mn --wifi</code></p>
+</li>
+<li>
+<p>退出</p>
+<p><code>exit</code></p>
+</li>
+<li>
+<p>清理</p>
+<p><code>sudo mn -c</code></p>
+</li>
+</ul>
+<h2 id="参考文献">参考文献</h2>
+<p><a href="https://github.com/intrig-unicamp/mininet-wifi" target="_blank" rel="noopener noreffer">https://github.com/intrig-unicamp/mininet-wifi</a></p>
+<p><a href="https://blog.csdn.net/sexyluna/article/details/105740519" target="_blank" rel="noopener noreffer">Ubuntu将默认python版本改为python3</a></p>
+]]></description>
+</item>
+<item>
     <title>论文笔记——Wireless SDN Mobile Ad Hoc Network:from Theory to Practice.</title>
     <link>https://leeshy-tech.github.io/paper_wireless_sdn_mobile/</link>
     <pubDate>Thu, 03 Mar 2022 14:18:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/paper_wireless_sdn_mobile/</guid>
