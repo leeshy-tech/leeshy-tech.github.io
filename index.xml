@@ -4,9 +4,118 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 07 Mar 2022 21:41:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Thu, 17 Mar 2022 20:45:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Linux——图片url生成</title>
+    <link>https://leeshy-tech.github.io/linux_image_url/</link>
+    <pubDate>Thu, 17 Mar 2022 20:45:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/linux_image_url/</guid>
+    <description><![CDATA[<h1 id="图片url生成">图片url生成</h1>
+<h2 id="准备">准备</h2>
+<h3 id="安装jdkjre">安装JDK，JRE</h3>
+<ul>
+<li>
+<p>下载linux的jdk，jre压缩包：</p>
+<ul>
+<li><a href="https://www.oracle.com/java/technologies/downloads/#java8" target="_blank" rel="noopener noreffer">https://www.oracle.com/java/technologies/downloads/#java8</a></li>
+<li>用xftp传到服务器上。</li>
+<li>解压<code>tar -zxvf jdk-17_linux-x64_bin.tar.gz jre-8u321-linux-x64.tar.gz</code>，记住此时所在的路径（pwd命令可查）。</li>
+</ul>
+</li>
+<li>
+<p>配置环境变量：</p>
+<ul>
+<li>
+<p><code>cd /etc</code></p>
+</li>
+<li>
+<p><code>vim profile</code></p>
+</li>
+<li>
+<p>i进入编辑模式</p>
+</li>
+<li>
+<p>文件末尾加上如下代码，JAVA_HOME,JRE_HOME分别为解压的文件夹的路径：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/home/ubuntu/jdk-17.0.2
+<span class="nb">export</span> <span class="nv">JRE_HOME</span><span class="o">=</span>/home/ubuntu/jre1.8.0_321
+<span class="nb">export</span> <span class="nv">CLASSPATH</span><span class="o">=</span>.:<span class="nv">$JAVA_HOME</span>/lib:<span class="nv">$JRE_HOME</span>/lib
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$PATH</span>
+</code></pre></div></li>
+<li>
+<p><code>Esc</code>退出，输入<code>:wq</code>保存退出。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>使能配置：<code>source /etc/profile</code></p>
+</li>
+<li>
+<p>检验：<code>java -version</code>，输出版本信息，安装成功。</p>
+</li>
+</ul>
+<h3 id="安装tomcat">安装tomcat</h3>
+<ul>
+<li>
+<p>下载安装包：</p>
+<ul>
+<li>
+<p><a href="https://tomcat.apache.org/download-10.cgi" target="_blank" rel="noopener noreffer">https://tomcat.apache.org/download-10.cgi</a></p>
+<p></p>
+</li>
+<li>
+<p>用xftp传到服务器上，解压<code>tar -zxvf apache-tomcat-10.0.18.tar.gz</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>进入bin目录，启动tomcat</p>
+<ul>
+<li>
+<p><code>cd apache-tomcat-10.0.18/bin</code></p>
+</li>
+<li>
+<p><code>./startup.sh</code></p>
+<p></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="防火墙设置">防火墙设置</h3>
+<p>到服务器控制台，开启8080端口：</p>
+<p></p>
+<p>浏览器访问<code>服务器IP:8080</code>地址，看到tomcat默认页说明tomcat安装运行成功。</p>
+<p></p>
+<h2 id="生成图片url">生成图片url</h2>
+<ul>
+<li>
+<p>假设图片存放在服务器路径：<code>/home/ubuntu/image</code></p>
+</li>
+<li>
+<p>进入tomcat文件夹的conf路径，编辑server.xml：</p>
+<ul>
+<li>
+<p><code>cd conf</code></p>
+</li>
+<li>
+<p><code>vim server.xml</code></p>
+</li>
+<li>
+<p>结尾处插入此代码<code>&lt;Context docBase=&quot;/home/ubuntu/image&quot; path=&quot;/pictures&quot; debug=&quot;0&quot; reloadable=&quot;true&quot;/&gt;</code></p>
+<p></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>则可以通过<code>url=http://ip:8080/path/图片名+后缀</code>访问该图片。</p>
+<p></p>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.bilibili.com/video/BV1uh411a7Jg?p=268" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1uh411a7Jg?p=268</a></p>
+<p><a href="https://blog.csdn.net/dyt443733328/article/details/102587168" target="_blank" rel="noopener noreffer">tomcat启动“成功”，但是浏览器无法访问</a></p>
+<p><a href="https://blog.csdn.net/Wyx_wx/article/details/89117746" target="_blank" rel="noopener noreffer">访问 Linux 服务器上的文件（以图片为例</a></p>
+]]></description>
+</item>
+<item>
     <title>Ryu——安装</title>
     <link>https://leeshy-tech.github.io/ryu_install/</link>
     <pubDate>Mon, 07 Mar 2022 21:41:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/ryu_install/</guid>
@@ -1073,124 +1182,6 @@ name1=value1&amp;name2=value2
 <p><a href="http://www.elecfans.com/dianzichangshi/20171209598886_a.html" target="_blank" rel="noopener noreffer">http://www.elecfans.com/dianzichangshi/20171209598886_a.html</a></p>
 <h3 id="datasheet">datasheet</h3>
 <p><a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches</a></p>
-]]></description>
-</item>
-<item>
-    <title>鸿蒙开发笔记——Ability</title>
-    <link>https://leeshy-tech.github.io/harmonyos_ability/</link>
-    <pubDate>Tue, 08 Feb 2022 21:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_ability/</guid>
-    <description><![CDATA[<h1 id="ability">Ability</h1>
-<div class="details admonition quote open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">Ability是应用所具备能力的抽象，也是应用程序的重要组成部分。一个应用可以具备多种能力，HarmonyOS支持应用以Ability为单位进行部署。Ability可以分为FA（Feature Ability）和PA（Particle Ability）两种类型，每种类型为开发者提供了不同的模板，以便实现不同的业务功能。</div>
-        </div>
-    </div>
-<p>总的来说，Ability是功能相似的内容的集合，这种划分便于应用的编程组织，FA提供与用户交互的能力，只包含PageAbility，PA没有可视化界面，包括ServiceAbility和DataAbility。</p>
-<h2 id="配置">配置</h2>
-<p>一个应用中所有的Ability必须在config.json中注册。</p>
-<p>如果通过新建Ability来创建Ability，Studio会自动注册，不需要手动更改config.json。</p>
-<p>但如果通过新建Java类来创建，则需要在config.json添加相关的配置信息。</p>
-<p></p>
-<p>同样，当删除Ability时，需要删除config.json中对应的配置信息，否则会出现一些问题。</p>
-<h2 id="生命周期">生命周期</h2>
-<p>PageAbility和ServiceAbility具有复杂的生命周期，创建、隐藏到后台、从后台呼出等等都会执行相关的生命周期函数，其中onStart方法最常用，当Ability创建时调用onStart方法，所以UI的绑定、按钮事件响应器等等都需要在onStart方法中实现。</p>
-<p></p>
-<h2 id="intent">Intent</h2>
-<div class="details admonition quote open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">Intent是对象之间传递信息的载体。例如，当一个Ability需要启动另一个Ability时，或者一个AbilitySlice需要导航到另一个AbilitySlice时，可以通过Intent指定启动的目标同时携带相关数据。</div>
-        </div>
-    </div>
-<p>Intent是页面跳转及传参的关键，他包括Operation与Parameters两个属性，不传参时只需要构造默认intent，例如下：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
- 	<span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
- 	<span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent</span><span class="o">);</span>
- <span class="o">});</span>
-</code></pre></div><p>参数通过Parameters来传递：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
-     <span class="n">Intent</span> <span class="n">intent1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
-     <span class="n">intent1</span><span class="o">.</span><span class="na">setParam</span><span class="o">(</span><span class="s">&#34;productId&#34;</span><span class="o">,</span><span class="s">&#34;101&#34;</span><span class="o">);</span>
-     <span class="k">this</span><span class="o">.</span><span class="na">present</span><span class="o">(</span><span class="k">new</span> <span class="n">SecondAbilitySlice</span><span class="o">(),</span><span class="n">intent1</span><span class="o">);</span>
- <span class="o">});</span>
-</code></pre></div><p>通过设置Operation可以启动任意<strong>设备</strong>的任意<strong>应用</strong>的任意<strong>Ability</strong>：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">();</span>
-<span class="c1">// 通过Intent中的OperationBuilder类构造operation对象，指定设备标识（空串表示当前设备）、应用包名、Ability名称
-</span><span class="c1"></span><span class="n">Operation</span> <span class="n">operation</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">.</span><span class="na">OperationBuilder</span><span class="o">()</span>
-        <span class="o">.</span><span class="na">withDeviceId</span><span class="o">(</span><span class="s">&#34;&#34;</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">withBundleName</span><span class="o">(</span><span class="s">&#34;com.demoapp&#34;</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">withAbilityName</span><span class="o">(</span><span class="s">&#34;com.demoapp.FooAbility&#34;</span><span class="o">)</span>
-        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
-<span class="c1">// 把operation设置到intent中
-</span><span class="c1"></span><span class="n">intent</span><span class="o">.</span><span class="na">setOperation</span><span class="o">(</span><span class="n">operation</span><span class="o">);</span>
-<span class="n">startAbility</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-</code></pre></div><h2 id="pageability">PageAbility</h2>
-<p>一个PageAbility可以包含任意个AbilitySlice，默认展示的AbilitySlice是通过**setMainRoute()**方法来指定的。</p>
-<h3 id="abilityslice">AbilitySlice</h3>
-<p>AbilitySlice相当于一个页面，其显示的内容是通过组件来声明的，其组件加载⽀持两种⽅式：</p>
-<ul>
-<li>Java代码</li>
-<li>xml布局文件</li>
-</ul>
-<p>在其onStart方法中通过 setUIContext 来加载视图组件，它有两个重载：</p>
-<ul>
-<li>setUIContext(int) : 通过布局⽂件的ID，加载resources/base/layout⽬录下的布局⽂件完成⻚⾯的渲染。</li>
-<li>setUIContext(ComponentContainer) :通过加载⼀个使⽤Java代码创建的组件完成⻚⾯的渲染 。</li>
-</ul>
-<h2 id="serviceability">ServiceAbility</h2>
-<div class="details admonition quote open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">基于Service模板的Ability（以下简称“Service”）主要用于后台运行任务（如执行音乐播放、文件下载等），但不提供用户交互界面。Service可由其他应用或Ability启动，即使用户切换到其他应用，Service仍将在后台继续运行。</div>
-        </div>
-    </div>
-<h3 id="前台service">前台Service</h3>
-<p>一般情况下，Service都是在后台运行的，后台Service的优先级都是比较低的，当资源不足时，系统有可能回收正在运行的后台Service。</p>
-<p>在一些场景下（如播放音乐），用户希望应用能够一直保持运行，此时就需要使用前台Service。前台Service会始终保持正在运行的图标在系统状态栏显示。</p>
-<h2 id="dataability">DataAbility</h2>
-<div class="details admonition quote open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-quote-right fa-fw"></i>HarmonyOS文档<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content"><p>使用Data模板的Ability（以下简称“Data”）有助于应用管理其自身和其他应用存储数据的访问，并提供与其他应用共享数据的方法。Data既可用于同设备不同应用的数据共享，也支持跨设备不同应用的数据共享。</p>
-<p>数据的存放形式多样，可以是数据库，也可以是磁盘上的文件。Data对外提供对数据的增、删、改、查，以及打开文件等接口，这些接口的具体实现由开发者提供</p>
-</div>
-        </div>
-    </div>
-<h3 id="uri">URI</h3>
-<p>URI用来标识一个具体的数据，例如数据库中的某个表或磁盘上的某个文件。格式如下：</p>
-<p></p>
-<ul>
-<li>scheme：协议方案名，固定为“dataability”，代表Data Ability所使用的协议类型。</li>
-<li>authority：设备ID。如果为跨设备场景，则为目标设备的ID；如果为本地设备场景，则不需要填写。</li>
-<li>path：资源的路径信息，代表特定资源的位置信息。</li>
-<li>query：查询参数。</li>
-<li>fragment：可以用于指示要访问的子资源。</li>
-</ul>
-<p>URI示例：</p>
-<ul>
-<li>跨设备场景：dataability://<em>device_id</em>/<em>com.domainname.dataability.persondata</em>/<em>person</em>/<em>10</em></li>
-<li>本地设备：dataability:///<em>com.domainname.dataability.persondata</em>/<em>person</em>/<em>10</em></li>
-</ul>
-<h3 id="数据操作">数据操作</h3>
-<p>DataAbility可以对文件或数据库进行数据操纵，不同类型数据管理方式写法都不一样，详见文档的<strong>数据管理</strong>一栏：</p>
-<p></p>
-<h2 id="实践工程">实践工程</h2>
-<p><a href="https://leeshy-tech.github.io/harmonyos_pagetopage/" target="_blank" rel="noopener noreffer">页面导航</a></p>
-<p><a href="https://leeshy-tech.github.io/harmonyos_serviceability/" target="_blank" rel="noopener noreffer">ServiceAbility</a></p>
-<p><a href="https://leeshy-tech.github.io/harmonyos_addressbook/" target="_blank" rel="noopener noreffer">电话簿</a></p>
-<h2 id="结束语">结束语</h2>
-<p>本文仅是对官方文档做一个简单的总结+个人理解，详细的内容还需参考官方文档。</p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS——文档</a></p>
 ]]></description>
 </item>
 </channel>

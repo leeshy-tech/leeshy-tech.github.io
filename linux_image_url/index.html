@@ -4,32 +4,32 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>Ryu——安装 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="Ryu——安装" />
-<meta property="og:description" content="安装Ryu控制器过程。" />
+        <title>Linux——图片url生成 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="Linux——图片url生成" />
+<meta property="og:description" content="服务器实践，利用url访问服务器上的图片资源。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://leeshy-tech.github.io/ryu_install/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2022-03-07T21:41:06+08:00" />
-<meta property="article:modified_time" content="2022-03-07T21:41:06+08:00" />
+<meta property="og:url" content="https://leeshy-tech.github.io/linux_image_url/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-17T20:45:06+08:00" />
+<meta property="article:modified_time" content="2022-03-17T20:45:06+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
 
-<meta name="twitter:title" content="Ryu——安装"/>
-<meta name="twitter:description" content="安装Ryu控制器过程。"/>
+<meta name="twitter:title" content="Linux——图片url生成"/>
+<meta name="twitter:description" content="服务器实践，利用url访问服务器上的图片资源。"/>
 <meta name="application-name" content="Leeshy&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/ryu_install/" /><link rel="prev" href="https://leeshy-tech.github.io/mininet-wifi_install/" /><link rel="next" href="https://leeshy-tech.github.io/linux_image_url/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/linux_image_url/" /><link rel="prev" href="https://leeshy-tech.github.io/ryu_install/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "Ryu——安装",
+        "headline": "Linux——图片url生成",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/leeshy-tech.github.io\/ryu_install\/"
-        },"genre": "posts","keywords": "Ryu","wordcount":  245 ,
-        "url": "https:\/\/leeshy-tech.github.io\/ryu_install\/","datePublished": "2022-03-07T21:41:06+08:00","dateModified": "2022-03-07T21:41:06+08:00","publisher": {
+            "@id": "https:\/\/leeshy-tech.github.io\/linux_image_url\/"
+        },"genre": "posts","keywords": "Linux, tomcat","wordcount":  530 ,
+        "url": "https:\/\/leeshy-tech.github.io\/linux_image_url\/","datePublished": "2022-03-17T20:45:06+08:00","dateModified": "2022-03-17T20:45:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
                 "@type": "Person",
@@ -115,10 +115,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Ryu——安装</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-07">2022-03-07</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 245 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟</span>&nbsp;</div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">Linux——图片url生成</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/linux/"><i class="far fa-folder fa-fw"></i>Linux</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-17">2022-03-17</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 530 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -128,93 +128,175 @@
                     </div>
                     <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#安装git">安装git</a></li>
-    <li><a href="#安装python3">安装python3</a></li>
-    <li><a href="#安装ryu">安装Ryu</a></li>
-    <li><a href="#测试">测试</a></li>
-    <li><a href="#参考文献">参考文献</a></li>
+    <li><a href="#准备">准备</a>
+      <ul>
+        <li><a href="#安装jdkjre">安装JDK，JRE</a></li>
+        <li><a href="#安装tomcat">安装tomcat</a></li>
+        <li><a href="#防火墙设置">防火墙设置</a></li>
+      </ul>
+    </li>
+    <li><a href="#生成图片url">生成图片url</a></li>
+    <li><a href="#结束语">结束语</a>
+      <ul>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h1 id="ryu安装">Ryu安装</h1>
-<h2 id="安装git">安装git</h2>
-<p><code>sudo apt install git</code></p>
-<h2 id="安装python3">安装python3</h2>
-<blockquote>
-<p>时代变了，不装不行。</p>
-</blockquote>
+                </div><div class="content" id="content"><h1 id="图片url生成">图片url生成</h1>
+<h2 id="准备">准备</h2>
+<h3 id="安装jdkjre">安装JDK，JRE</h3>
 <ul>
 <li>
-<p>下载</p>
-<p><code>sudo apt install python3</code></p>
-</li>
-<li>
-<p>查看python3的位置和版本号，用于第四步</p>
-<p><code>whereis python3</code></p>
-</li>
-<li>
-<p>删除原来python2的软连接</p>
-<p><code>sudo rm /usr/bin/python</code></p>
-</li>
-<li>
-<p>建立新的软连接</p>
-<p><code>sudo ln -s /usr/bin/python3.9 /usr/bin/python</code></p>
-</li>
-<li>
-<p>查看版本</p>
-<p><code>python --version</code></p>
-</li>
+<p>下载linux的jdk，jre压缩包：</p>
+<ul>
+<li><a href="https://www.oracle.com/java/technologies/downloads/#java8" target="_blank" rel="noopener noreffer">https://www.oracle.com/java/technologies/downloads/#java8</a></li>
+<li>用xftp传到服务器上。</li>
+<li>解压<code>tar -zxvf jdk-17_linux-x64_bin.tar.gz jre-8u321-linux-x64.tar.gz</code>，记住此时所在的路径（pwd命令可查）。</li>
 </ul>
-<h2 id="安装ryu">安装Ryu</h2>
+</li>
+<li>
+<p>配置环境变量：</p>
 <ul>
 <li>
-<p>更新pip</p>
-<p><code>sudo pip install --upgrade pip</code></p>
+<p><code>cd /etc</code></p>
 </li>
 <li>
-<p>克隆源代码</p>
-<p><code>git clone git://github.com/faucetsdn/ryu.git</code></p>
+<p><code>vim profile</code></p>
 </li>
 <li>
-<p>进入ryu目录</p>
-<p><code>cd ryu</code></p>
+<p>i进入编辑模式</p>
 </li>
 <li>
-<p>安装依赖</p>
-<p><code>sudo pip install -r tools/pip-requires</code></p>
-</li>
+<p>文件末尾加上如下代码，JAVA_HOME,JRE_HOME分别为解压的文件夹的路径：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/home/ubuntu/jdk-17.0.2
+<span class="nb">export</span> <span class="nv">JRE_HOME</span><span class="o">=</span>/home/ubuntu/jre1.8.0_321
+<span class="nb">export</span> <span class="nv">CLASSPATH</span><span class="o">=</span>.:<span class="nv">$JAVA_HOME</span>/lib:<span class="nv">$JRE_HOME</span>/lib
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$PATH</span>
+</code></pre></div></li>
 <li>
-<p>安装ryu</p>
-<p><code>sudo python setup.py install</code></p>
+<p><code>Esc</code>退出，输入<code>:wq</code>保存退出。</p>
 </li>
 </ul>
-<h2 id="测试">测试</h2>
+</li>
+<li>
+<p>使能配置：<code>source /etc/profile</code></p>
+</li>
+<li>
+<p>检验：<code>java -version</code>，输出版本信息，安装成功。</p>
+</li>
+</ul>
+<h3 id="安装tomcat">安装tomcat</h3>
 <ul>
 <li>
-<p>进入ryu/ryu/app目录</p>
-<p><code>cd ryu/ryu/app</code></p>
+<p>下载安装包：</p>
+<ul>
+<li>
+<p><a href="https://tomcat.apache.org/download-10.cgi" target="_blank" rel="noopener noreffer">https://tomcat.apache.org/download-10.cgi</a></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220317165458557.png"
+        data-srcset="/image/Linux/image-20220317165458557.png, /image/Linux/image-20220317165458557.png 1.5x, /image/Linux/image-20220317165458557.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220317165458557.png"
+        title="image-20220317165458557" /></p>
 </li>
 <li>
-<p>运行simple_switch.py</p>
-<p><code>ryu-manager app/simple_switch.py</code></p>
-<p>出现以下输出为正常：</p>
-<pre tabindex="0"><code>loading app app/simple_switch.py
-loading app ryu.controller.ofp_handler
-instantiating app app/simple_switch.py of SimpleSwitch
-instantiating app ryu.controller.ofp_handler of OFPHandler
-</code></pre></li>
+<p>用xftp传到服务器上，解压<code>tar -zxvf apache-tomcat-10.0.18.tar.gz</code></p>
+</li>
 </ul>
-<h2 id="参考文献">参考文献</h2>
-<p><a href="https://blog.csdn.net/sexyluna/article/details/105740519" target="_blank" rel="noopener noreffer">Ubuntu将默认python版本改为python3</a></p>
-<p><a href="https://github.com/leeshy-tech/ryu" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/ryu</a></p>
+</li>
+<li>
+<p>进入bin目录，启动tomcat</p>
+<ul>
+<li>
+<p><code>cd apache-tomcat-10.0.18/bin</code></p>
+</li>
+<li>
+<p><code>./startup.sh</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220317170011765.png"
+        data-srcset="/image/Linux/image-20220317170011765.png, /image/Linux/image-20220317170011765.png 1.5x, /image/Linux/image-20220317170011765.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220317170011765.png"
+        title="image-20220317170011765" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="防火墙设置">防火墙设置</h3>
+<p>到服务器控制台，开启8080端口：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220317170703321.png"
+        data-srcset="/image/Linux/image-20220317170703321.png, /image/Linux/image-20220317170703321.png 1.5x, /image/Linux/image-20220317170703321.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220317170703321.png"
+        title="image-20220317170703321" /></p>
+<p>浏览器访问<code>服务器IP:8080</code>地址，看到tomcat默认页说明tomcat安装运行成功。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220317200700408.png"
+        data-srcset="/image/Linux/image-20220317200700408.png, /image/Linux/image-20220317200700408.png 1.5x, /image/Linux/image-20220317200700408.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220317200700408.png"
+        title="image-20220317200700408" /></p>
+<h2 id="生成图片url">生成图片url</h2>
+<ul>
+<li>
+<p>假设图片存放在服务器路径：<code>/home/ubuntu/image</code></p>
+</li>
+<li>
+<p>进入tomcat文件夹的conf路径，编辑server.xml：</p>
+<ul>
+<li>
+<p><code>cd conf</code></p>
+</li>
+<li>
+<p><code>vim server.xml</code></p>
+</li>
+<li>
+<p>结尾处插入此代码<code>&lt;Context docBase=&quot;/home/ubuntu/image&quot; path=&quot;/pictures&quot; debug=&quot;0&quot; reloadable=&quot;true&quot;/&gt;</code></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220317201524598.png"
+        data-srcset="/image/Linux/image-20220317201524598.png, /image/Linux/image-20220317201524598.png 1.5x, /image/Linux/image-20220317201524598.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220317201524598.png"
+        title="image-20220317201524598" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>则可以通过<code>url=http://ip:8080/path/图片名+后缀</code>访问该图片。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220317204437349.png"
+        data-srcset="/image/Linux/image-20220317204437349.png, /image/Linux/image-20220317204437349.png 1.5x, /image/Linux/image-20220317204437349.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220317204437349.png"
+        title="image-20220317204437349" /></p>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.bilibili.com/video/BV1uh411a7Jg?p=268" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1uh411a7Jg?p=268</a></p>
+<p><a href="https://blog.csdn.net/dyt443733328/article/details/102587168" target="_blank" rel="noopener noreffer">tomcat启动“成功”，但是浏览器无法访问</a></p>
+<p><a href="https://blog.csdn.net/Wyx_wx/article/details/89117746" target="_blank" rel="noopener noreffer">访问 Linux 服务器上的文件（以图片为例</a></p>
 </div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/ryu/">Ryu</a>
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/linux/">Linux</a>
+                </span><span><a href="/tags/tomcat/">tomcat</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2022-03-07</span>
+                <span>更新于 2022-03-17</span>
             </div><div class="post-info-mod"><span>
-                            <a class="link-to-markdown" href="/ryu_install/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/linux_image_url/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-        </div></div><div class="post-nav"><a href="/mininet-wifi_install/" class="prev" rel="prev" title="mininet-wifi——安装"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/linux_image_url/" class="next" rel="next" title="Linux——图片url生成">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+        </div></div><div class="post-nav"><a href="/ryu_install/" class="prev" rel="prev" title="Ryu——安装"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
 </div></article></div>
             </main>
             <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
