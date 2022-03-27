@@ -2,7 +2,7 @@
 
 ## 导入
 在SDN领域的学习，几乎所有的入门实践都是以mininet平台为基础，搭配开源控制器进行实验，但这种实验本质上也只是在一台linux设备上进行SDN网络的仿真罢了，实际应用还是要构建一个实际的物理网络。本文以OVS、ryu控制器和树莓派构建一个SDWN物理网络，SDWN是将SDN对于无线场景的应用，实际区别在于底层网络。    
-OVS：OpenvSwitch的简称，他是一种支持OpenFlow协议的软交换机。    
+OVS：OpenvSwitch的简称，它是一种支持OpenFlow协议的软交换机。    
 ryu：基于Python开发的SDN开源控制器。
 ## 准备工作
 - 树莓派搭载linux操作系统，有无线网卡，利用`ifconfig`命令查得无线网卡名称。 
@@ -20,7 +20,7 @@ ryu-manager simple_switch.py
 OVS的相关操作需要进入管理员模式：
 ```
 sudo su
-```  
+```
 开启OVS
 ```
 export PATH=$PATH:/usr/local/share/openvswitch/scripts
@@ -49,7 +49,7 @@ ovs-vsctl set-controller s1 tcp:10.0.0.1:6653
 OVS的相关操作需要进入管理员模式：
 ```
 sudo su
-```  
+```
 开启OVS
 ```
 export PATH=$PATH:/usr/local/share/openvswitch/scripts
@@ -85,7 +85,7 @@ ovs-vsctl set-controller s1 tcp:10.0.0.1:6653
 开启网卡s1：`ifconfig s1 up`    
 ## 测试
 > 如何证明我们成功搭载了SDN网络，而不是之前的adhoc网络呢？       
- 
+
 注意我们开启的控制器是simple_switch.py，这个文件是一个实现自学习功能的控制器应用。      
 查询两个交换机的流表信息：      
 `ovs-ofctl dump-flows s1`       

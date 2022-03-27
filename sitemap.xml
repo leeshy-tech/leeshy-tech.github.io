@@ -6,7 +6,7 @@
             <loc>https://leeshy-tech.github.io/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/mininet-wifi/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/network/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/note/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/network/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/olsr/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/posts/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/</loc><lastmod>2022-03-27T22:26:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
@@ -20,8 +20,8 @@
             <loc>https://leeshy-tech.github.io/ryu_install/</loc><lastmod>2022-03-07T21:41:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://leeshy-tech.github.io/mininet-wifi_install/</loc><lastmod>2022-03-07T20:53:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/paper/</loc><lastmod>2022-03-03T14:18:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/paper/</loc><lastmod>2022-03-03T14:18:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/sdn/</loc><lastmod>2022-03-03T14:18:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/sdn/</loc><lastmod>2022-03-03T14:18:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://leeshy-tech.github.io/paper_wireless_sdn_mobile/</loc><lastmod>2022-03-03T14:18:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/app/</loc><lastmod>2022-02-20T21:57:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/harmonyos/</loc><lastmod>2022-02-20T21:57:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
@@ -53,13 +53,13 @@
             <loc>https://leeshy-tech.github.io/on_scalability_of_sdn_note/</loc><lastmod>2022-01-18T23:09:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/a_survey_of_sdn_note/</loc><lastmod>2022-01-11T21:46:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/ovs/</loc><lastmod>2022-01-10T17:56:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/sdn/</loc><lastmod>2022-01-10T17:56:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/simple_switch_analyse/</loc><lastmod>2022-01-10T17:56:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/ryu/</loc><lastmod>2022-01-09T20:56:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/simple_hub/</loc><lastmod>2022-01-09T20:56:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/simple_switch_note/</loc><lastmod>2022-01-08T21:46:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/ovs/</loc><lastmod>2022-01-08T16:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/sdn_on_raspberrypi/</loc><lastmod>2022-01-08T16:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/</loc><lastmod>2022-01-08T16:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/note/</loc><lastmod>2022-01-07T16:08:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/ovs_cli/</loc><lastmod>2022-01-07T16:08:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/555-timer/</loc><lastmod>2022-01-04T21:29:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/categories/course/</loc><lastmod>2022-01-04T21:29:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>

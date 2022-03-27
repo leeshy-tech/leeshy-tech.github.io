@@ -10,7 +10,7 @@
     <pubDate>Sat, 08 Jan 2022 16:31:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/sdn_on_raspberrypi/</guid>
     <description><![CDATA[<h2 id="导入">导入</h2>
 <p>在SDN领域的学习，几乎所有的入门实践都是以mininet平台为基础，搭配开源控制器进行实验，但这种实验本质上也只是在一台linux设备上进行SDN网络的仿真罢了，实际应用还是要构建一个实际的物理网络。本文以OVS、ryu控制器和树莓派构建一个SDWN物理网络，SDWN是将SDN对于无线场景的应用，实际区别在于底层网络。 <br>
-OVS：OpenvSwitch的简称，他是一种支持OpenFlow协议的软交换机。 <br>
+OVS：OpenvSwitch的简称，它是一种支持OpenFlow协议的软交换机。 <br>
 ryu：基于Python开发的SDN开源控制器。</p>
 <h2 id="准备工作">准备工作</h2>
 <ul>
