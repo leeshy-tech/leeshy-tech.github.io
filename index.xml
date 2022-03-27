@@ -4,9 +4,173 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Thu, 17 Mar 2022 20:45:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>网络实验——在linux平台安装OLSR协议</title>
+    <link>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</link>
+    <pubDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</guid>
+    <description><![CDATA[<h1 id="在linux平台安装olsr协议">在linux平台安装OLSR协议</h1>
+<h2 id="前言">前言</h2>
+<p>因为要做一个OLSR和SDN自定义控制面的对比实验，所以要利用mininet-wifi平台自定义拓扑跑一下OLSR协议。</p>
+<p>平台：ubuntu20.04</p>
+<h2 id="安装">安装</h2>
+<ul>
+<li>
+<p>官网：<a href="www.olsr.org/" rel="">www.olsr.org/</a></p>
+</li>
+<li>
+<p>github：<a href="https://github.com/OLSR/olsrd" target="_blank" rel="noopener noreffer">https://github.com/OLSR/olsrd</a></p>
+</li>
+</ul>
+<h3 id="通过mininet-wifi安装">通过mininet-wifi安装</h3>
+<ul>
+<li>进入mininet-wifi目录<code>sudo ./install.sh -o</code></li>
+</ul>
+<h3 id="从git安装没有亲自试来自网络">从git安装(没有亲自试，来自网络)</h3>
+<ul>
+<li>
+<p>安装语法分析器：<code>sudo apt install bison flex</code></p>
+</li>
+<li>
+<p>下载源码：<code>git clone https://github.com/OLSR/olsrd</code></p>
+</li>
+<li>
+<p>编译：<code>cd olsrd;make</code></p>
+</li>
+<li>
+<p>安装：<code>sudo make install</code></p>
+</li>
+</ul>
+<h2 id="mininet-wifi拓扑构建">mininet-wifi拓扑构建</h2>
+<blockquote>
+<p>构造一个网络拓扑来测试OLSR协议。</p>
+</blockquote>
+<p>拓扑文件（参考example/adhoc.py）：</p>
+<p><a href="https://github.com/leeshy-tech/mininet-wifi/blob/master/examples/OLSR/olsr_test.py" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/mininet-wifi/blob/master/examples/OLSR/olsr_test.py</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/python</span>
+
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">This example use four motionless station to test the OLSR protocol in adhoc network.
+</span><span class="s2">It&#39;s almost the same as example/adhoc.py.
+</span><span class="s2">use &#34;sudo python olsr_test.py olsrd&#34; in terminal to run it.
+</span><span class="s2">&#34;&#34;&#34;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">mininet.log</span> <span class="kn">import</span> <span class="n">setLogLevel</span><span class="p">,</span> <span class="n">info</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.link</span> <span class="kn">import</span> <span class="n">wmediumd</span><span class="p">,</span> <span class="n">adhoc</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.manetRoutingProtocols</span> <span class="kn">import</span> <span class="n">olsrd</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.cli</span> <span class="kn">import</span> <span class="n">CLI</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.net</span> <span class="kn">import</span> <span class="n">Mininet_wifi</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.wmediumdConnector</span> <span class="kn">import</span> <span class="n">interference</span>
+
+
+<span class="k">def</span> <span class="nf">topology</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="s2">&#34;Create a network.&#34;</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">Mininet_wifi</span><span class="p">(</span><span class="n">link</span><span class="o">=</span><span class="n">wmediumd</span><span class="p">,</span> <span class="n">wmediumd_mode</span><span class="o">=</span><span class="n">interference</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Creating nodes</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;-a&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="n">sta1</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta1&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::1&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;25,50,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">sta2</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta2&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::2&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;75,10,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">sta3</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta3&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::3&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;75,90,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">sta4</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta4&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::4&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;125,50,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">net</span><span class="o">.</span><span class="n">setPropagationModel</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&#34;logDistance&#34;</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Configuring wifi nodes</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">configureWifiNodes</span><span class="p">()</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Creating links</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="c1"># MANET routing protocols supported by proto:</span>
+    <span class="c1"># babel, batman_adv, batmand and olsr</span>
+    <span class="c1"># WARNING: we may need to stop Network Manager if you want</span>
+    <span class="c1"># to work with babel</span>
+    <span class="n">protocols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;babel&#39;</span><span class="p">,</span> <span class="s1">&#39;batman_adv&#39;</span><span class="p">,</span> <span class="s1">&#39;batmand&#39;</span><span class="p">,</span> <span class="s1">&#39;olsrd&#39;</span><span class="p">,</span> <span class="s1">&#39;olsrd2&#39;</span><span class="p">]</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">protocols</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;proto&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proto</span>
+
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta1</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta1-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta2</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta2-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta3</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta3-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta4</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta4-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">net</span><span class="o">.</span><span class="n">plotGraph</span><span class="p">(</span><span class="n">max_x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_y</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Starting network</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">*** Addressing...</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;proto&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">sta1</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::1/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta1-wlan0&#34;</span><span class="p">)</span>
+        <span class="n">sta2</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::2/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta2-wlan0&#34;</span><span class="p">)</span>
+        <span class="n">sta3</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::3/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta3-wlan0&#34;</span><span class="p">)</span>
+        <span class="n">sta4</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::4/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta4-wlan0&#34;</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Running CLI</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">CLI</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Stopping network</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">setLogLevel</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">)</span>
+    <span class="n">topology</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</code></pre></div><p>可视化：</p>
+<p></p>
+<p>解读：</p>
+<p>从图中可以看出，sta1只能与sta2和sta3进行单跳通信，如果要与sta4通信，就需要sta2或者sta3进行中继。如果没有OLSR协议，节点在收到目的IP不是本节点的包之后就会丢掉，无法完成中继。OLSR协议会在网络中的节点维护整个网络拓扑，就能完成中继。</p>
+<h2 id="实验测试">实验测试</h2>
+<h3 id="关闭networkmanager">关闭NetworkManager</h3>
+<p><code>sudo systemctl stop NetworkManager</code></p>
+<p>NetworkManager是linux的自动网络配置工具，我们希望自己配置网络，所以要把它关掉。</p>
+<p>查看节点的网络状态<code>ip addr</code>，没有图中的<code>NO-CARRIER</code>说明NetworkManager已经被关闭。（这个命令可以在本机运行，也可以在mininet虚拟主机运行。）</p>
+<p></p>
+<h3 id="配置olsr">配置OLSR</h3>
+<p>编辑配置文件：<code>vim /etc/olsrd/olsrd.conf</code></p>
+<p>添加所有节点的网卡：</p>
+<p></p>
+<p>退出、保存</p>
+<h3 id="运行拓扑文件">运行拓扑文件</h3>
+<p><code>sudo python olsr_test.py olsrd</code></p>
+<p></p>
+<h3 id="网络测试">网络测试</h3>
+<p><code>sta1 ping sta4</code></p>
+<p></p>
+<p>能ping通，说明OLSR协议运行正常。</p>
+<p>查看路由：<code>sta3 route</code></p>
+<p></p>
+<p>多了三条路由，这是OLSR协议运行的结果。</p>
+<h2 id="结束">结束</h2>
+<h3 id="恢复系统">恢复系统</h3>
+<p>开启NetworkManager：<code>sudo systemctl start NetworkManager</code></p>
+<p>退出mininet-wifi：<code>exit</code></p>
+<p>清理系统：<code>sudo mn -c</code></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://blog.csdn.net/whatday/article/details/106096127" target="_blank" rel="noopener noreffer">centos7 开启 关闭 NetworkManager</a></p>
+<p><a href="https://blog.csdn.net/qq_35109869/article/details/79839357" target="_blank" rel="noopener noreffer">Linux虚拟机下OLSR协议的安装</a></p>
+<p><a href="https://github.com/intrig-unicamp/mininet-wifi/issues/342" target="_blank" rel="noopener noreffer">Unable to create IPv6 multi hop mesh network in ad hoc mode #342</a>这个issue救了大命了</p>
+<p><a href="https://blog.csdn.net/weixin_29279047/article/details/116832580" target="_blank" rel="noopener noreffer">Linux卸载olsrd,olsrd路由协议移植到嵌入式linux中使用</a></p>
+<p><a href="www.olsr.org/" rel="">www.olsr.org/</a>官网写的说明太少了，根本看不懂，麻了。</p>
+<p><a href="https://github.com/OLSR/olsrd" target="_blank" rel="noopener noreffer">https://github.com/OLSR/olsrd</a></p>
+]]></description>
+</item>
+<item>
     <title>Linux——图片url生成</title>
     <link>https://leeshy-tech.github.io/linux_image_url/</link>
     <pubDate>Thu, 17 Mar 2022 20:45:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/linux_image_url/</guid>
@@ -1150,38 +1314,6 @@ name1=value1&amp;name2=value2
 <p><a href="https://mvnrepository.com/" target="_blank" rel="noopener noreffer">https://mvnrepository.com/</a></p>
 <p><a href="https://www.cnblogs.com/ysocean/p/7451054.html" target="_blank" rel="noopener noreffer">Maven详解（五）&mdash;&mdash; 坐标的概念以及依赖管理</a></p>
 <p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
-]]></description>
-</item>
-<item>
-    <title>模拟开关——CD4066、CD4051</title>
-    <link>https://leeshy-tech.github.io/analogue_switch/</link>
-    <pubDate>Wed, 09 Feb 2022 22:15:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/analogue_switch/</guid>
-    <description><![CDATA[<h1 id="模拟开关">模拟开关</h1>
-<p>模拟开关，英文名Analog switches；主要是完成信号链路中的信号切换功能。采用MOS管的开关方式实现了对信号链路关断或者打开；由于其功能类似于开关，而用模拟器件的特性实现，成为模拟开关。</p>
-<h2 id="什么时候用继电器">什么时候用继电器</h2>
-<p>继电器利用了电生磁原理，通电时电磁铁吸附开关使开关断开，常常应用于电子设计中作为电控开关。模拟开关是集成电路芯片，体积小、寿命高，而且能够实现较为复杂的功能，比如单刀双掷、单刀四掷、四开关集成等等。所以常见场景下还是模拟开关最为适合。</p>
-<p>但是，集成电路芯片就决定了它有限制使用条件，信号电压、电流、频率均有一些限制，在大功率、高频场景下，可能模拟开关无法胜任，就需要使用继电器。</p>
-<h2 id="四双向模拟开关cd4066">四双向模拟开关CD4066</h2>
-<p>CD4066 的引脚功能如图所示。每个封装内部有 4 个独立的模拟开关，每个模拟开关 有输入、输出、控制三个端子，其中输入端和输出端可互换。当控制端加高电平时，开关导通；当控制端加低电平时开关截止。模拟开关导通时，导通电阻为几十欧姆；模拟开关截止时，呈现很高的阻抗，可以看成为开路。模拟开关可传输数字信号和模拟信号，可传输的模拟信号的上限频率为 40MHz。各开关间的串扰很小，典型值为－50dB。</p>
-<p></p>
-<p>当模拟开关的电源电压采用双电源时，例如 =﹢5V， =﹣5V(均对地0V而言)，则输入电压对称于0V的正、负信号电压(﹢5V～﹣5V)均能传输。这时要求控制信号C=“1”为+5V，C=“0”为-5V，否则只能传输正极性的信号电压。</p>
-<h2 id="单八路模拟开关cd4051">单八路模拟开关CD4051</h2>
-<p>CD4051 的引脚功能如图所示。CD4051 相当于一个单刀八掷开关，开关接通哪一通道，由输入的 3 位地址码 ABC 来决定。</p>
-<p></p>
-<p>真值表：</p>
-<p></p>
-<h2 id="同系列器件">同系列器件</h2>
-<h3 id="双四路模拟开关cd4052">双四路模拟开关CD4052</h3>
-<p></p>
-<h3 id="三组二路模拟开关-cd4053">三组二路模拟开关 CD4053</h3>
-<p></p>
-<h3 id="十六路模拟开关-cd4067单刀十六掷">十六路模拟开关 CD4067——单刀十六掷</h3>
-<h2 id="结束语">结束语</h2>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://www.chip37.com/scp/CD4066" target="_blank" rel="noopener noreffer">https://www.chip37.com/scp/CD4066</a></p>
-<p><a href="http://www.elecfans.com/dianzichangshi/20171209598886_a.html" target="_blank" rel="noopener noreffer">http://www.elecfans.com/dianzichangshi/20171209598886_a.html</a></p>
-<h3 id="datasheet">datasheet</h3>
-<p><a href="https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/Electronic-Design/tree/main/analog_switches</a></p>
 ]]></description>
 </item>
 </channel>

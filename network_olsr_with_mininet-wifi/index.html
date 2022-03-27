@@ -1,14 +1,158 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>mininet-wifi - 标签 - Leeshy&#39;s Blog | To be humble</title>
-        <link>https://leeshy-tech.github.io/tags/mininet-wifi/</link>
-        <description>mininet-wifi - 标签 - Leeshy&#39;s Blog | To be humble</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/mininet-wifi/" rel="self" type="application/rss+xml" /><item>
-    <title>网络实验——在linux平台安装OLSR协议</title>
-    <link>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</link>
-    <pubDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</guid>
-    <description><![CDATA[<h1 id="在linux平台安装olsr协议">在linux平台安装OLSR协议</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>网络实验——在linux平台安装OLSR协议 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="网络实验——在linux平台安装OLSR协议" />
+<meta property="og:description" content="安装OLSR协议并利用mininet-wifi构建简单的拓扑进行测试。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-03-27T22:26:06+08:00" />
+<meta property="article:modified_time" content="2022-03-27T22:26:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="网络实验——在linux平台安装OLSR协议"/>
+<meta name="twitter:description" content="安装OLSR协议并利用mininet-wifi构建简单的拓扑进行测试。"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/" /><link rel="prev" href="https://leeshy-tech.github.io/linux_image_url/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "网络实验——在linux平台安装OLSR协议",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/network_olsr_with_mininet-wifi\/"
+        },"genre": "posts","keywords": "Network, OLSR, mininet-wifi","wordcount":  1115 ,
+        "url": "https:\/\/leeshy-tech.github.io\/network_olsr_with_mininet-wifi\/","datePublished": "2022-03-27T22:26:06+08:00","dateModified": "2022-03-27T22:26:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">网络实验——在linux平台安装OLSR协议</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-03-27">2022-03-27</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1115 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#安装">安装</a>
+      <ul>
+        <li><a href="#通过mininet-wifi安装">通过mininet-wifi安装</a></li>
+        <li><a href="#从git安装没有亲自试来自网络">从git安装(没有亲自试，来自网络)</a></li>
+      </ul>
+    </li>
+    <li><a href="#mininet-wifi拓扑构建">mininet-wifi拓扑构建</a></li>
+    <li><a href="#实验测试">实验测试</a>
+      <ul>
+        <li><a href="#关闭networkmanager">关闭NetworkManager</a></li>
+        <li><a href="#配置olsr">配置OLSR</a></li>
+        <li><a href="#运行拓扑文件">运行拓扑文件</a></li>
+        <li><a href="#网络测试">网络测试</a></li>
+      </ul>
+    </li>
+    <li><a href="#结束">结束</a>
+      <ul>
+        <li><a href="#恢复系统">恢复系统</a></li>
+        <li><a href="#参考文献">参考文献</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="在linux平台安装olsr协议">在linux平台安装OLSR协议</h1>
 <h2 id="前言">前言</h2>
 <p>因为要做一个OLSR和SDN自定义控制面的对比实验，所以要利用mininet-wifi平台自定义拓扑跑一下OLSR协议。</p>
 <p>平台：ubuntu20.04</p>
@@ -130,7 +274,14 @@
     <span class="n">setLogLevel</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">)</span>
     <span class="n">topology</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
 </code></pre></div><p>可视化：</p>
-<p></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220327224226493.png"
+        data-srcset="/image/Linux/image-20220327224226493.png, /image/Linux/image-20220327224226493.png 1.5x, /image/Linux/image-20220327224226493.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220327224226493.png"
+        title="image-20220327224226493" /></p>
 <p>解读：</p>
 <p>从图中可以看出，sta1只能与sta2和sta3进行单跳通信，如果要与sta4通信，就需要sta2或者sta3进行中继。如果没有OLSR协议，节点在收到目的IP不是本节点的包之后就会丢掉，无法完成中继。OLSR协议会在网络中的节点维护整个网络拓扑，就能完成中继。</p>
 <h2 id="实验测试">实验测试</h2>
@@ -138,21 +289,56 @@
 <p><code>sudo systemctl stop NetworkManager</code></p>
 <p>NetworkManager是linux的自动网络配置工具，我们希望自己配置网络，所以要把它关掉。</p>
 <p>查看节点的网络状态<code>ip addr</code>，没有图中的<code>NO-CARRIER</code>说明NetworkManager已经被关闭。（这个命令可以在本机运行，也可以在mininet虚拟主机运行。）</p>
-<p></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220327230005057.png"
+        data-srcset="/image/Linux/image-20220327230005057.png, /image/Linux/image-20220327230005057.png 1.5x, /image/Linux/image-20220327230005057.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220327230005057.png"
+        title="/image/Linux/image-20220327230005057.png" /></p>
 <h3 id="配置olsr">配置OLSR</h3>
 <p>编辑配置文件：<code>vim /etc/olsrd/olsrd.conf</code></p>
 <p>添加所有节点的网卡：</p>
-<p></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220327225209922.png"
+        data-srcset="/image/Linux/image-20220327225209922.png, /image/Linux/image-20220327225209922.png 1.5x, /image/Linux/image-20220327225209922.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220327225209922.png"
+        title="image-20220327225209922" /></p>
 <p>退出、保存</p>
 <h3 id="运行拓扑文件">运行拓扑文件</h3>
 <p><code>sudo python olsr_test.py olsrd</code></p>
-<p></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220327225449859.png"
+        data-srcset="/image/Linux/image-20220327225449859.png, /image/Linux/image-20220327225449859.png 1.5x, /image/Linux/image-20220327225449859.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220327225449859.png"
+        title="image-20220327225449859" /></p>
 <h3 id="网络测试">网络测试</h3>
 <p><code>sta1 ping sta4</code></p>
-<p></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220327225429915.png"
+        data-srcset="/image/Linux/image-20220327225429915.png, /image/Linux/image-20220327225429915.png 1.5x, /image/Linux/image-20220327225429915.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220327225429915.png"
+        title="image-20220327225429915" /></p>
 <p>能ping通，说明OLSR协议运行正常。</p>
 <p>查看路由：<code>sta3 route</code></p>
-<p></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Linux/image-20220327225742818.png"
+        data-srcset="/image/Linux/image-20220327225742818.png, /image/Linux/image-20220327225742818.png 1.5x, /image/Linux/image-20220327225742818.png 2x"
+        data-sizes="auto"
+        alt="/image/Linux/image-20220327225742818.png"
+        title="image-20220327225742818" /></p>
 <p>多了三条路由，这是OLSR协议运行的结果。</p>
 <h2 id="结束">结束</h2>
 <h3 id="恢复系统">恢复系统</h3>
@@ -166,90 +352,39 @@
 <p><a href="https://blog.csdn.net/weixin_29279047/article/details/116832580" target="_blank" rel="noopener noreffer">Linux卸载olsrd,olsrd路由协议移植到嵌入式linux中使用</a></p>
 <p><a href="www.olsr.org/" rel="">www.olsr.org/</a>官网写的说明太少了，根本看不懂，麻了。</p>
 <p><a href="https://github.com/OLSR/olsrd" target="_blank" rel="noopener noreffer">https://github.com/OLSR/olsrd</a></p>
-]]></description>
-</item>
-<item>
-    <title>mininet-wifi——安装</title>
-    <link>https://leeshy-tech.github.io/mininet-wifi_install/</link>
-    <pubDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/mininet-wifi_install/</guid>
-    <description><![CDATA[<h1 id="安装mininet-wifi">安装mininet-wifi</h1>
-<p>mininet学了快半年了，还是安装七八次才能装上，人麻了，怒写一篇博客。平台：Ubuntu20.04。</p>
-<h2 id="安装git">安装git</h2>
-<p><code>sudo apt install git</code></p>
-<h2 id="安装python3">安装python3</h2>
-<p>mininet在python2和python3环境下都是能正常运行的，但是，apt中一些python2的包已经升级到3了，比如python-matplotlib，你不升级python3，mininet-wifi就会安装它，但是apt里又没有，只会一直报错。你再怎么更新源，也找不到这个玩意，因为它已经变成python3-matplotlib了。所以还是要安装python3。</p>
-<ul>
-<li>
-<p>下载</p>
-<p><code>sudo apt install python3</code></p>
-</li>
-<li>
-<p>查看python3的位置和版本号，用于第四步</p>
-<p><code>whereis python3</code></p>
-</li>
-<li>
-<p>删除原来python2的软连接</p>
-<p><code>sudo rm /usr/bin/python</code></p>
-</li>
-<li>
-<p>建立新的软连接</p>
-<p><code>sudo ln -s /usr/bin/python3.9 /usr/bin/python</code></p>
-</li>
-<li>
-<p>查看版本</p>
-<p><code>python --version</code></p>
-</li>
-</ul>
-<h2 id="安装mininet-wifi-1">安装mininet-wifi</h2>
-<h3 id="有梯子或者有git代理">有梯子，或者有git代理</h3>
-<ul>
-<li>
-<p>克隆源代码</p>
-<p><code>git clone https://github.com/intrig-unicamp/mininet-wifi</code></p>
-</li>
-<li>
-<p>查看安装可选项</p>
-<p><code>sudo mininet-wifi/util/install.sh -h</code></p>
-</li>
-<li>
-<p>选择一些项安装（默认就按这个）</p>
-<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
-</li>
-</ul>
-<h3 id="无代理">无代理</h3>
-<p>这里主要是指以https无法正常访问github的情况，需要把所有的git网址改为git://开头，因为install.sh里会有下载其他库的git命令，所以直接运行install.sh会报git超时，需要提前把相关库下好。</p>
-<ul>
-<li>
-<p>克隆</p>
-<p><code>git clone git://github.com/intrig-unicamp/mininet-wifi</code></p>
-<p><code>git clone git://github.com/ramonfontes/mac80211_hwsim_mgmt</code></p>
-<p><code>git clone git://github.com/mininet/mininet</code></p>
-<p><code>git clone git://github.com/vchakour/wmediumd</code></p>
-</li>
-<li>
-<p>选择一些项安装（默认就按这个）</p>
-<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
-</li>
-</ul>
-<h2 id="运行">运行</h2>
-<ul>
-<li>
-<p>运行，这句正常运行就说明下载成功。</p>
-<p><code>sudo mn --wifi</code></p>
-</li>
-<li>
-<p>退出</p>
-<p><code>exit</code></p>
-</li>
-<li>
-<p>清理</p>
-<p><code>sudo mn -c</code></p>
-</li>
-</ul>
-<h2 id="参考文献">参考文献</h2>
-<p><a href="https://github.com/intrig-unicamp/mininet-wifi" target="_blank" rel="noopener noreffer">https://github.com/intrig-unicamp/mininet-wifi</a></p>
-<p><a href="https://blog.csdn.net/sexyluna/article/details/105740519" target="_blank" rel="noopener noreffer">Ubuntu将默认python版本改为python3</a></p>
-]]></description>
-</item>
-</channel>
-</rss>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/network/">Network</a>
+                </span><span><a href="/tags/olsr/">OLSR</a>
+                </span><span><a href="/tags/mininet-wifi/">mininet-wifi</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-03-27</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/network_olsr_with_mininet-wifi/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/linux_image_url/" class="prev" rel="prev" title="Linux——图片url生成"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>

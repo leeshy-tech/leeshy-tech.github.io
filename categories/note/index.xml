@@ -4,164 +4,168 @@
         <link>https://leeshy-tech.github.io/categories/note/</link>
         <description>Note - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 07 Mar 2022 21:41:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
-    <title>Ryu——安装</title>
-    <link>https://leeshy-tech.github.io/ryu_install/</link>
-    <pubDate>Mon, 07 Mar 2022 21:41:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/ryu_install/</guid>
-    <description><![CDATA[<h1 id="ryu安装">Ryu安装</h1>
-<h2 id="安装git">安装git</h2>
-<p><code>sudo apt install git</code></p>
-<h2 id="安装python3">安装python3</h2>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
+    <title>网络实验——在linux平台安装OLSR协议</title>
+    <link>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</link>
+    <pubDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</guid>
+    <description><![CDATA[<h1 id="在linux平台安装olsr协议">在linux平台安装OLSR协议</h1>
+<h2 id="前言">前言</h2>
+<p>因为要做一个OLSR和SDN自定义控制面的对比实验，所以要利用mininet-wifi平台自定义拓扑跑一下OLSR协议。</p>
+<p>平台：ubuntu20.04</p>
+<h2 id="安装">安装</h2>
+<ul>
+<li>
+<p>官网：<a href="www.olsr.org/" rel="">www.olsr.org/</a></p>
+</li>
+<li>
+<p>github：<a href="https://github.com/OLSR/olsrd" target="_blank" rel="noopener noreffer">https://github.com/OLSR/olsrd</a></p>
+</li>
+</ul>
+<h3 id="通过mininet-wifi安装">通过mininet-wifi安装</h3>
+<ul>
+<li>进入mininet-wifi目录<code>sudo ./install.sh -o</code></li>
+</ul>
+<h3 id="从git安装没有亲自试来自网络">从git安装(没有亲自试，来自网络)</h3>
+<ul>
+<li>
+<p>安装语法分析器：<code>sudo apt install bison flex</code></p>
+</li>
+<li>
+<p>下载源码：<code>git clone https://github.com/OLSR/olsrd</code></p>
+</li>
+<li>
+<p>编译：<code>cd olsrd;make</code></p>
+</li>
+<li>
+<p>安装：<code>sudo make install</code></p>
+</li>
+</ul>
+<h2 id="mininet-wifi拓扑构建">mininet-wifi拓扑构建</h2>
 <blockquote>
-<p>时代变了，不装不行。</p>
+<p>构造一个网络拓扑来测试OLSR协议。</p>
 </blockquote>
-<ul>
-<li>
-<p>下载</p>
-<p><code>sudo apt install python3</code></p>
-</li>
-<li>
-<p>查看python3的位置和版本号，用于第四步</p>
-<p><code>whereis python3</code></p>
-</li>
-<li>
-<p>删除原来python2的软连接</p>
-<p><code>sudo rm /usr/bin/python</code></p>
-</li>
-<li>
-<p>建立新的软连接</p>
-<p><code>sudo ln -s /usr/bin/python3.9 /usr/bin/python</code></p>
-</li>
-<li>
-<p>查看版本</p>
-<p><code>python --version</code></p>
-</li>
-</ul>
-<h2 id="安装ryu">安装Ryu</h2>
-<ul>
-<li>
-<p>更新pip</p>
-<p><code>sudo pip install --upgrade pip</code></p>
-</li>
-<li>
-<p>克隆源代码</p>
-<p><code>git clone git://github.com/faucetsdn/ryu.git</code></p>
-</li>
-<li>
-<p>进入ryu目录</p>
-<p><code>cd ryu</code></p>
-</li>
-<li>
-<p>安装依赖</p>
-<p><code>sudo pip install -r tools/pip-requires</code></p>
-</li>
-<li>
-<p>安装ryu</p>
-<p><code>sudo python setup.py install</code></p>
-</li>
-</ul>
-<h2 id="测试">测试</h2>
-<ul>
-<li>
-<p>进入ryu/ryu/app目录</p>
-<p><code>cd ryu/ryu/app</code></p>
-</li>
-<li>
-<p>运行simple_switch.py</p>
-<p><code>ryu-manager app/simple_switch.py</code></p>
-<p>出现以下输出为正常：</p>
-<pre tabindex="0"><code>loading app app/simple_switch.py
-loading app ryu.controller.ofp_handler
-instantiating app app/simple_switch.py of SimpleSwitch
-instantiating app ryu.controller.ofp_handler of OFPHandler
-</code></pre></li>
-</ul>
-<h2 id="参考文献">参考文献</h2>
-<p><a href="https://blog.csdn.net/sexyluna/article/details/105740519" target="_blank" rel="noopener noreffer">Ubuntu将默认python版本改为python3</a></p>
-<p><a href="https://github.com/leeshy-tech/ryu" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/ryu</a></p>
-]]></description>
-</item>
-<item>
-    <title>mininet-wifi——安装</title>
-    <link>https://leeshy-tech.github.io/mininet-wifi_install/</link>
-    <pubDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/mininet-wifi_install/</guid>
-    <description><![CDATA[<h1 id="安装mininet-wifi">安装mininet-wifi</h1>
-<p>mininet学了快半年了，还是安装七八次才能装上，人麻了，怒写一篇博客。平台：Ubuntu20.04。</p>
-<h2 id="安装git">安装git</h2>
-<p><code>sudo apt install git</code></p>
-<h2 id="安装python3">安装python3</h2>
-<p>mininet在python2和python3环境下都是能正常运行的，但是，apt中一些python2的包已经升级到3了，比如python-matplotlib，你不升级python3，mininet-wifi就会安装它，但是apt里又没有，只会一直报错。你再怎么更新源，也找不到这个玩意，因为它已经变成python3-matplotlib了。所以还是要安装python3。</p>
-<ul>
-<li>
-<p>下载</p>
-<p><code>sudo apt install python3</code></p>
-</li>
-<li>
-<p>查看python3的位置和版本号，用于第四步</p>
-<p><code>whereis python3</code></p>
-</li>
-<li>
-<p>删除原来python2的软连接</p>
-<p><code>sudo rm /usr/bin/python</code></p>
-</li>
-<li>
-<p>建立新的软连接</p>
-<p><code>sudo ln -s /usr/bin/python3.9 /usr/bin/python</code></p>
-</li>
-<li>
-<p>查看版本</p>
-<p><code>python --version</code></p>
-</li>
-</ul>
-<h2 id="安装mininet-wifi-1">安装mininet-wifi</h2>
-<h3 id="有梯子或者有git代理">有梯子，或者有git代理</h3>
-<ul>
-<li>
-<p>克隆源代码</p>
-<p><code>git clone https://github.com/intrig-unicamp/mininet-wifi</code></p>
-</li>
-<li>
-<p>查看安装可选项</p>
-<p><code>sudo mininet-wifi/util/install.sh -h</code></p>
-</li>
-<li>
-<p>选择一些项安装（默认就按这个）</p>
-<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
-</li>
-</ul>
-<h3 id="无代理">无代理</h3>
-<p>这里主要是指以https无法正常访问github的情况，需要把所有的git网址改为git://开头，因为install.sh里会有下载其他库的git命令，所以直接运行install.sh会报git超时，需要提前把相关库下好。</p>
-<ul>
-<li>
-<p>克隆</p>
-<p><code>git clone git://github.com/intrig-unicamp/mininet-wifi</code></p>
-<p><code>git clone git://github.com/ramonfontes/mac80211_hwsim_mgmt</code></p>
-<p><code>git clone git://github.com/mininet/mininet</code></p>
-<p><code>git clone git://github.com/vchakour/wmediumd</code></p>
-</li>
-<li>
-<p>选择一些项安装（默认就按这个）</p>
-<p><code>sudo mininet-wifi/util/install.sh -Wlnfv</code></p>
-</li>
-</ul>
-<h2 id="运行">运行</h2>
-<ul>
-<li>
-<p>运行，这句正常运行就说明下载成功。</p>
-<p><code>sudo mn --wifi</code></p>
-</li>
-<li>
-<p>退出</p>
-<p><code>exit</code></p>
-</li>
-<li>
-<p>清理</p>
-<p><code>sudo mn -c</code></p>
-</li>
-</ul>
-<h2 id="参考文献">参考文献</h2>
-<p><a href="https://github.com/intrig-unicamp/mininet-wifi" target="_blank" rel="noopener noreffer">https://github.com/intrig-unicamp/mininet-wifi</a></p>
-<p><a href="https://blog.csdn.net/sexyluna/article/details/105740519" target="_blank" rel="noopener noreffer">Ubuntu将默认python版本改为python3</a></p>
+<p>拓扑文件（参考example/adhoc.py）：</p>
+<p><a href="https://github.com/leeshy-tech/mininet-wifi/blob/master/examples/OLSR/olsr_test.py" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/mininet-wifi/blob/master/examples/OLSR/olsr_test.py</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/python</span>
+
+<span class="s2">&#34;&#34;&#34;
+</span><span class="s2">This example use four motionless station to test the OLSR protocol in adhoc network.
+</span><span class="s2">It&#39;s almost the same as example/adhoc.py.
+</span><span class="s2">use &#34;sudo python olsr_test.py olsrd&#34; in terminal to run it.
+</span><span class="s2">&#34;&#34;&#34;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="kn">from</span> <span class="nn">mininet.log</span> <span class="kn">import</span> <span class="n">setLogLevel</span><span class="p">,</span> <span class="n">info</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.link</span> <span class="kn">import</span> <span class="n">wmediumd</span><span class="p">,</span> <span class="n">adhoc</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.manetRoutingProtocols</span> <span class="kn">import</span> <span class="n">olsrd</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.cli</span> <span class="kn">import</span> <span class="n">CLI</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.net</span> <span class="kn">import</span> <span class="n">Mininet_wifi</span>
+<span class="kn">from</span> <span class="nn">mn_wifi.wmediumdConnector</span> <span class="kn">import</span> <span class="n">interference</span>
+
+
+<span class="k">def</span> <span class="nf">topology</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+    <span class="s2">&#34;Create a network.&#34;</span>
+    <span class="n">net</span> <span class="o">=</span> <span class="n">Mininet_wifi</span><span class="p">(</span><span class="n">link</span><span class="o">=</span><span class="n">wmediumd</span><span class="p">,</span> <span class="n">wmediumd_mode</span><span class="o">=</span><span class="n">interference</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Creating nodes</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">if</span> <span class="s1">&#39;-a&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="n">sta1</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta1&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::1&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;25,50,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">sta2</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta2&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::2&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;75,10,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">sta3</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta3&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::3&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;75,90,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">sta4</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta4&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::4&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;125,50,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">net</span><span class="o">.</span><span class="n">setPropagationModel</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&#34;logDistance&#34;</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Configuring wifi nodes</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">configureWifiNodes</span><span class="p">()</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Creating links</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="c1"># MANET routing protocols supported by proto:</span>
+    <span class="c1"># babel, batman_adv, batmand and olsr</span>
+    <span class="c1"># WARNING: we may need to stop Network Manager if you want</span>
+    <span class="c1"># to work with babel</span>
+    <span class="n">protocols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;babel&#39;</span><span class="p">,</span> <span class="s1">&#39;batman_adv&#39;</span><span class="p">,</span> <span class="s1">&#39;batmand&#39;</span><span class="p">,</span> <span class="s1">&#39;olsrd&#39;</span><span class="p">,</span> <span class="s1">&#39;olsrd2&#39;</span><span class="p">]</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">protocols</span><span class="p">:</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;proto&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proto</span>
+
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta1</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta1-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta2</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta2-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta3</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta3-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta4</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta4-wlan0&#39;</span><span class="p">,</span>
+                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="n">net</span><span class="o">.</span><span class="n">plotGraph</span><span class="p">(</span><span class="n">max_x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_y</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Starting network</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">*** Addressing...</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;proto&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">sta1</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::1/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta1-wlan0&#34;</span><span class="p">)</span>
+        <span class="n">sta2</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::2/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta2-wlan0&#34;</span><span class="p">)</span>
+        <span class="n">sta3</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::3/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta3-wlan0&#34;</span><span class="p">)</span>
+        <span class="n">sta4</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::4/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta4-wlan0&#34;</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Running CLI</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">CLI</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
+
+    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Stopping network</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
+    <span class="n">net</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">setLogLevel</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">)</span>
+    <span class="n">topology</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+</code></pre></div><p>可视化：</p>
+<p></p>
+<p>解读：</p>
+<p>从图中可以看出，sta1只能与sta2和sta3进行单跳通信，如果要与sta4通信，就需要sta2或者sta3进行中继。如果没有OLSR协议，节点在收到目的IP不是本节点的包之后就会丢掉，无法完成中继。OLSR协议会在网络中的节点维护整个网络拓扑，就能完成中继。</p>
+<h2 id="实验测试">实验测试</h2>
+<h3 id="关闭networkmanager">关闭NetworkManager</h3>
+<p><code>sudo systemctl stop NetworkManager</code></p>
+<p>NetworkManager是linux的自动网络配置工具，我们希望自己配置网络，所以要把它关掉。</p>
+<p>查看节点的网络状态<code>ip addr</code>，没有图中的<code>NO-CARRIER</code>说明NetworkManager已经被关闭。（这个命令可以在本机运行，也可以在mininet虚拟主机运行。）</p>
+<p></p>
+<h3 id="配置olsr">配置OLSR</h3>
+<p>编辑配置文件：<code>vim /etc/olsrd/olsrd.conf</code></p>
+<p>添加所有节点的网卡：</p>
+<p></p>
+<p>退出、保存</p>
+<h3 id="运行拓扑文件">运行拓扑文件</h3>
+<p><code>sudo python olsr_test.py olsrd</code></p>
+<p></p>
+<h3 id="网络测试">网络测试</h3>
+<p><code>sta1 ping sta4</code></p>
+<p></p>
+<p>能ping通，说明OLSR协议运行正常。</p>
+<p>查看路由：<code>sta3 route</code></p>
+<p></p>
+<p>多了三条路由，这是OLSR协议运行的结果。</p>
+<h2 id="结束">结束</h2>
+<h3 id="恢复系统">恢复系统</h3>
+<p>开启NetworkManager：<code>sudo systemctl start NetworkManager</code></p>
+<p>退出mininet-wifi：<code>exit</code></p>
+<p>清理系统：<code>sudo mn -c</code></p>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://blog.csdn.net/whatday/article/details/106096127" target="_blank" rel="noopener noreffer">centos7 开启 关闭 NetworkManager</a></p>
+<p><a href="https://blog.csdn.net/qq_35109869/article/details/79839357" target="_blank" rel="noopener noreffer">Linux虚拟机下OLSR协议的安装</a></p>
+<p><a href="https://github.com/intrig-unicamp/mininet-wifi/issues/342" target="_blank" rel="noopener noreffer">Unable to create IPv6 multi hop mesh network in ad hoc mode #342</a>这个issue救了大命了</p>
+<p><a href="https://blog.csdn.net/weixin_29279047/article/details/116832580" target="_blank" rel="noopener noreffer">Linux卸载olsrd,olsrd路由协议移植到嵌入式linux中使用</a></p>
+<p><a href="www.olsr.org/" rel="">www.olsr.org/</a>官网写的说明太少了，根本看不懂，麻了。</p>
+<p><a href="https://github.com/OLSR/olsrd" target="_blank" rel="noopener noreffer">https://github.com/OLSR/olsrd</a></p>
 ]]></description>
 </item>
 <item>
