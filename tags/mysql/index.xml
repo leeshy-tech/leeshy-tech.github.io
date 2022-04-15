@@ -1,0 +1,26 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>mysql - 标签 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/tags/mysql/</link>
+        <description>mysql - 标签 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/mysql/" rel="self" type="application/rss+xml" /><item>
+    <title>install mysql on linux</title>
+    <link>https://leeshy-tech.github.io/mysql_install/</link>
+    <pubDate>Mon, 07 Mar 2022 20:53:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/mysql_install/</guid>
+    <description><![CDATA[<h1 id="install-mysql-on-linux">install mysql on linux</h1>
+<h2 id="安装">安装：</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo apt update
+sudo apt install mysql-server
+</code></pre></div><h2 id="配置root密码为123456">配置root密码为123456：</h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell">sudo mysql
+use mysql<span class="p">;</span>
+update user <span class="nb">set</span> <span class="nv">authentication_string</span><span class="o">=</span><span class="s1">&#39;&#39;</span> where <span class="nv">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+alter user <span class="s1">&#39;root&#39;</span>@<span class="s1">&#39;localhost&#39;</span> identified with mysql_native_password by <span class="s1">&#39;123456&#39;</span><span class="p">;</span>
+</code></pre></div><h2 id="参考文献">参考文献：</h2>
+<p><a href="https://blog.csdn.net/qq_26164609/article/details/106881079" target="_blank" rel="noopener noreffer">Ubunto20.04安装MySQL并修改root用户密码</a></p>
+<p><a href="https://developer.aliyun.com/article/758177" target="_blank" rel="noopener noreffer">如何在 Ubuntu 20.04 上安装 MySQL</a></p>
+]]></description>
+</item>
+</channel>
+</rss>
