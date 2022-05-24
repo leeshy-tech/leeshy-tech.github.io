@@ -4,9 +4,157 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 23 May 2022 15:03:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>论文笔记——Personalized News Recommendation with Knowledge-aware Interactive Matching</title>
+    <link>https://leeshy-tech.github.io/personalized_news_recommendation/</link>
+    <pubDate>Mon, 23 May 2022 15:03:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/personalized_news_recommendation/</guid>
+    <description><![CDATA[<h1 id="personalized-news-recommendation-with-knowledge-aware-interactive-matching">Personalized News Recommendation with Knowledge-aware Interactive Matching</h1>
+<p>基于知识感知交互匹配的个性化新闻推荐</p>
+<h2 id="论文概况">论文概况</h2>
+<p><a href="https://dl.acm.org/doi/abs/10.1145/3404835.3462861" target="_blank" rel="noopener noreffer">https://dl.acm.org/doi/abs/10.1145/3404835.3462861</a></p>
+<p>SIGIR &lsquo;21: Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval</p>
+<p>July 2021 Pages 61–70</p>
+<p><a href="https://doi.org/10.1145/3404835.3462861" target="_blank" rel="noopener noreffer">https://doi.org/10.1145/3404835.3462861</a></p>
+<p>自翻：<a href="https://github.com/leeshy-tech/PaperTranslate/blob/main/Personalized_news_recommendation_with_%20Knowledge-aware_Interactive_Matching.md" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/PaperTranslate/blob/main/Personalized_news_recommendation.md</a></p>
+<h2 id="摘要">摘要</h2>
+<p>​	在本文中，我们提出了一种用于新闻推荐的知识感知交互式匹配方法。我们的方法以交互方式对候选新闻和用户兴趣进行建模，以促进它们的准确匹配。我们设计了一个知识感知新闻协同编码器，在知识图谱的帮助下捕获它们在语义和实体中的相关性，交互式地学习点击新闻和候选新闻的表示。我们还设计了一个用户新闻协同编码器来学习候选新闻感知用户兴趣表示和用户感知候选新闻表示，以实现更好的兴趣匹配。在两个真实世界数据集上的实验验证了，我们的方法可以有效地提高新闻推荐的性能。</p>
+<h2 id="1-引言">1 引言</h2>
+<p>​	现有方法通常根据其文本信息对候选新闻进行建模，并以独立的方式从用户的点击历史中推断出用户兴趣[21, 37]。 候选新闻文章可能包含多个方面和实体 [18、33]，并且用户可能有多个兴趣 [32]。 因此，候选新闻和用户兴趣的独立建模可能不如兴趣匹配[31]。</p>
+<p>​	在本文中，我们探索更好地模拟候选新闻和用户兴趣之间的相关性，以实现准确的兴趣匹配。 我们的论文受到以下观察的启发。</p>
+<p></p>
+<ol>
+<li>
+<p>候选新闻可能涵盖不同的方面和实体，并且用户可能有多种兴趣。</p>
+<p>例如，图中 候选新闻2 与篮球明星和政治家有关，含有多个实体（库里和特朗普）。示例用户对车、音乐、体育等领域感兴趣，第二个候选新闻只能匹配特定的用户兴趣即“体育”，但是用户可能只对实体“库里”感兴趣。所以如果独立建模，用候选新闻匹配用户兴趣的效果是较差的。</p>
+</li>
+<li>
+<p>候选新闻和点击新闻的语义匹配有助于更准确地进行兴趣匹配。</p>
+<p>例如，第二条点击新闻也与第一条候选新闻有语义相关性，因为它们提到了相同的事件。基于这些语义相关性，我们可以推断用户可能对第一个候选新闻感兴趣。</p>
+</li>
+<li>
+<p>借助知识图谱，点击新闻和候选新闻中实体之间的知识匹配也有助于了解用户对候选新闻的兴趣。</p>
+<p>例如，第 4 条点击新闻中的实体“史蒂夫·科尔”与第 2 条候选新闻中的实体“斯蒂芬·库里”具有内在关联，因为前者和后者分别是“NBA”勇士队的球员和教练。根据知识匹配，我们可以推断出用户可能对第二个候选新闻感兴趣。因此，在语义和知识层面利用点击新闻和候选新闻之间的相关性有利于兴趣匹配。</p>
+</li>
+</ol>
+<p>​	在本文中，我们提出了一种用于个性化新闻推荐的知识感知交互式匹配框架（命名为KIM）。我们的方法可以交互地对候选新闻和用户兴趣进行建模，以学习候选新闻感知的用户兴趣表示和用户感知的候选新闻表示，从而更准确地匹配用户兴趣和候选新闻。在该框架中，我们提出了一种知识协同编码器，借助知识图谱从点击新闻中的实体与候选新闻中的实体之间的相关性来建模用户对候选新闻的兴趣。</p>
+<p>​	更具体地说，我们</p>
+<ol>
+<li>
+<p>首先提出了一个<strong>图协同注意网络（ graph co-attention network）</strong>：</p>
+<p>它通过选择和聚合对兴趣匹配有用的邻居，从知识图谱中学习实体的表示。</p>
+</li>
+<li>
+<p>进一步提出了使用<strong>实体协同注意力网络（ entity co-attention network）</strong>：</p>
+<p>它通过捕获实体之间的相关性来交互式地学习点击新闻和候选新闻的基于知识的表示。</p>
+</li>
+<li>
+<p>提出了一种<strong>语义协同编码器（ semantic coencoder）</strong>：</p>
+<p>通过对文本之间的语义相关性进行建模，交互式地学习用户点击新闻和候选新闻的基于语义的表示。新闻的统一表示被表述为基于知识和语义的表示的聚合。</p>
+</li>
+<li>
+<p>进一步提出了一种<strong>用户新闻联合编码器（ user-news co-encoder）</strong>：</p>
+<p>用于从点击新闻和候选新闻的表示中构建候选<em>新闻感知的用户兴趣表示</em>和<em>用户感知的候选新闻表示</em>，以更好地模拟用户对候选新闻的兴趣。最后，根据候选新闻的表示与用户兴趣之间的相关性对候选新闻进行排名。</p>
+</li>
+</ol>
+<p>我们对两个真实的数据集进行了广泛的实验，并表明我们的方法可以有效地提高新闻推荐的性能并优于其他基准方法。</p>
+<h2 id="2-相关的工作">2 相关的工作</h2>
+<p>​	现有方法通常通过内容对候选新闻进行建模，并根据点击新闻独立建模用户兴趣，然后根据候选新闻和用户兴趣的相关性进行匹配。 只有一部分候选新方面和用户兴趣对匹配用户兴趣和候选新闻有用。然而，这些方法独立地对候选新闻和用户兴趣进行建模，这对于进一步的兴趣匹配可能较差。与这些方法不同的是，在 KIM 方法中，我们提出了一个知识感知的交互式匹配框架，在考虑相关性的情况下对候选新闻和用户兴趣进行交互建模，可以更好地将用户兴趣与候选新闻进行匹配。</p>
+<p>​	一些方法以候选感知的方式模拟用户兴趣。事实上，候选新闻可能包含多个方面和实体，其中只有一部分可能与用户兴趣相匹配。然而，这些方法在没有考虑目标用户的情况下对候选新闻进行建模，这对于进一步将用户兴趣与候选新闻进行匹配可能较差。与这些方法不同，我们的 KIM 方法在考虑目标用户的情况下对候选新闻进行建模。此外，这些方法在没有考虑相关性的情况下对点击新闻和候选新闻进行建模，这对于进一步衡量候选新闻和从点击新闻推断出的用户兴趣之间的相关性也可能不是最优的。与这些方法不同，KIM 可以交互地学习点击新闻和候选新闻的表示，以实现更好的兴趣匹配。</p>
+<h2 id="3-方法论">3 方法论</h2>
+<h3 id="问题表述">问题表述</h3>
+<p>​	给定一个用户𝑢和一个候选新闻$n^c$，我们需要计算相关性分数𝑧来衡量用户𝑢对候选新闻内容$n^c$的兴趣。 然后根据相关性得分对不同的候选新闻进行排名并推荐给用户𝑢。 用户𝑢与他/她点击的新闻集相关联。 每个新闻 𝑛 都与其文本 𝑇 和文本中的实体 𝐸 相关联。 此外，还有一个知识图 G 用于提供实体之间的相关性。 它包含实体和实体之间的关系。 G 中的每个实体 𝑒 与其嵌入相关联，e 基于知识图进行预训练。</p>
+<p></p>
+<h3 id="kim-knowledge-aware-interactive-matching的框架">KIM（ Knowledge-aware Interactive Matching）的框架</h3>
+<p>​	KIM 包含两个主要模块。：</p>
+<ol>
+<li>
+<p>第一个是知识感知新闻协同编码器（knowledge-aware news co-encoder），它通过捕获语义和知识层面的相关性，交互式地学习用户<strong>点击新闻</strong>和<strong>候选新闻</strong>的<strong>知识感知表示</strong>（ knowledge-aware representations）。</p>
+</li>
+<li>
+<p>第二个是用户新闻协同编码器（user-news co-encoder），它从上个模块生成的用户<strong>点击新闻的表征</strong>和<strong>候选新闻表征</strong>中交互学习候选新闻感知的用户兴趣表征（ candidate news-aware user interest representation）u和用户感知的候选新闻表征（ user-aware candidate news representation）。</p>
+</li>
+</ol>
+<h3 id="知识感知新闻协同编码器knowledge-aware-news-co-encoder">知识感知新闻协同编码器（knowledge-aware news co-encoder）</h3>
+<p>​	它从文本和文本中的实体中交互式地学习用户点击的新闻$n_u$和候选新闻$n_c$的表示，它包含三个子模块。</p>
+<p></p>
+<ol>
+<li>
+<p>第一个是知识协同编码器（Knowledge co-encoder）</p>
+<p>对于点击新闻$n_u$和候选新闻$n_c$，它基于知识图谱从<strong>实体</strong>之间的相关性中交互式地学习基于知识的表示${k}^{u}$$和 $${k}^{c}$。</p>
+<p>它包含三个组件：</p>
+<ul>
+<li>图注意网络（ graph attention network）</li>
+<li>图协同注意网络（ graph co-attention network）</li>
+<li>实体协同注意网络（ entity co-attention network）</li>
+</ul>
+<p></p>
+</li>
+<li>
+<p>第二个是语义协同编码器（semantic co-encoder）</p>
+<p>对于点击新闻$n_u$和候选新闻$n_c$，它交互式地学习基于语义的表示${t}^{u}$和${t}^{c}$，以根据<strong>文本</strong>之间的语义相关性来模拟用户对候选新闻的兴趣。</p>
+<p></p>
+</li>
+<li>
+<p>最后，对于点击新闻$n_u$或候选新闻$n_c$，我们投影其基于<strong>知识</strong>和<strong>语义</strong>的表示来学习统一的新闻表示${n}^{u}$或${n}^{c}$。</p>
+</li>
+</ol>
+<h3 id="用户-新闻-协同编码器">用户-新闻 协同编码器</h3>
+<p>​	它从用户点击的新闻和候选新闻的表示中学习候选新闻感知的用户兴趣表示和用户感知的候选新闻表示。</p>
+<p>​	通常，用户的兴趣是多样的，只有一部分可以与候选新闻匹配[20]。因此，学习候选<strong>新闻感知的</strong>用户兴趣表示可以更好地建模用户兴趣以匹配候选新闻。</p>
+<p>​	类似地，候选新闻可能涵盖多个方面，用户可能只对其中的一部分感兴趣 [33, 34]。因此，学习<strong>用户感知的</strong>候选新闻表示也有利于兴趣匹配。</p>
+<p>​	因此，我们应用新闻协同注意网络来学习候选新闻感知用户表示和用户感知候选新闻表示。</p>
+<h2 id="实验">实验</h2>
+<h3 id="数据集">数据集</h3>
+<ul>
+<li>MIND2</li>
+<li>Feeds</li>
+</ul>
+<p>此外，我们在实验中使用了 WikiData 作为知识图谱。</p>
+<h3 id="性能评估">性能评估</h3>
+<p>​	我们将 KIM 与几种最先进的个性化新闻推荐方法进行比较，如下所示：</p>
+<ul>
+<li>EBNR [21]：通过 GRU 网络从用户的点击历史中表示用户兴趣。</li>
+<li>DKN [32]：将多通道 CNN 网络 [15] 应用于新闻标题中对齐的单词和实体的嵌入，以学习新闻表示。</li>
+<li>DAN [47]：通过 CNN 网络从新闻标题的单词和实体中学习新闻表示，并通过细心的 LSTM 网络 [8] 学习用户兴趣表示。</li>
+<li>NAML [33]：通过多个注意力集中的 CNN 网络从新闻标题、正文、类别和子类别中学习新闻表示。</li>
+<li>NPA [34]：使用具有个性化注意查询的注意网络来学习新闻和用户表示。</li>
+<li>LSTUR [1]：通过 GRU 网络从用户最近点击的新闻中建模短期用户兴趣，并通过用户 ID 嵌入建模长期用户兴趣。</li>
+<li>NRMS [37]：通过多头自注意力网络对新闻内容和用户点击行为进行建模。</li>
+<li>FIM [31]：通过CNN网络从用户点击新闻和候选新闻的文本中匹配用户和新闻。</li>
+<li>KRED [18]：通过图注意力网络从新闻中的实体及其在知识图中的邻居中学习新闻的表示。</li>
+</ul>
+<p></p>
+<p>​	我们重复了五次不同的实验，并在表 2 中列出了不同方法的平均性能和相应的标准差。</p>
+<ul>
+<li>
+<p>KIM 明显优于其他基准方法。</p>
+<p>LSTUR、NRMS和KRED这些方法独立地对候选新闻和用户兴趣进行建模，而不考虑它们的相关性。这是因为用户可能对多个领域感兴趣，并且候选新闻也可能包含多个方面和实体。因此，这些方法很难准确匹配用户兴趣和候选新闻，因为它们是在这些方法中独立建模的。</p>
+</li>
+<li>
+<p>KIM 还优于通过考虑候选新闻来建模用户兴趣的基线方法。</p>
+<p>例如 DKN、DAN。这是因为候选新闻可能涵盖多个方面，而用户可能只对其中的一部分感兴趣[33、34]。然而，这些方法在没有考虑目标用户的情况下对候选新闻进行建模，这对于进一步将候选新闻与用户兴趣匹配可能较差。</p>
+</li>
+</ul>
+<h3 id="消融实验">消融实验</h3>
+<p>​	进行了两项消融研究来评估 KIM 的有效性。首先评估不同信息（即文本和知识）对新闻内容建模的有效性。</p>
+<p></p>
+<ul>
+<li>首先，删除语义信息（即新闻文本）会严重损害 KIM 的性能。这是因为文本通常包含有关新闻内容的丰富信息，对于新闻内容的理解至关重要 [45]。去除语义信息会使新闻表示失去很多重要信息，并且不能准确地对新闻内容进行建模。</li>
+<li>其次，在新闻内容建模中去除知识图谱（即知识知识图谱中的实体及其邻居）也会使 KIM 的性能显著下降。这是因为文本信息通常不足以理解新闻内容 [18, 32]。幸运的是，知识图谱包含不同实体之间的丰富关联。此外，用户点击新闻中的实体与候选新闻之间的相关性可以提供语义信息之外的丰富信息，以了解用户对候选新闻的兴趣。因此，将实体信息纳入个性化新闻推荐有可能提高推荐的准确性。</li>
+</ul>
+<p>​	接下来，我们通过分别用注意力网络替换它们来评估 KIM 中几个重要的注意力网络的有效性。</p>
+<ul>
+<li>首先，在用户新闻协同编码器中去除<strong>新闻关注网络</strong>后，KIM 的性能变得更差。这是因为用户兴趣可能是多样的，并且只有一部分用户点击的新闻对于建模用户兴趣和候选新闻之间的相关性是有用的[32]。此外，候选新闻内容可能包含多个方面，用户可能只对其中的一部分感兴趣。因此，通过新闻共同关注网络学习候选新闻感知用户兴趣和用户感知候选新闻表示可以更好地捕捉用户对候选新闻的兴趣。</li>
+<li>其次，去除<strong>语义协同注意网络</strong>也会损害 KIM 的性能。这是因为点击新闻和候选新闻之间的语义相关性可以帮助理解用户对候选新闻的兴趣。此外，一条候选新闻或一条点击新闻通常包含多个方面，其中只有一部分对兴趣匹配有用。如果它们的语义信息是独立建模的，则很难在语义级别有效地捕捉点击新闻和候选新闻的相关性。因此，通过语义共同注意网络交互式学习点击新闻和候选新闻的基于语义的表示可以更好地捕捉它们之间的相关性，以便将用户兴趣与候选新闻匹配。</li>
+<li>同时去除<strong>图协同注意力网络</strong>和<strong>实体协同注意力网络</strong>会导致 KIM 的性能下降。这是因为实体级别的点击新闻和候选新闻之间的相关性对于兴趣匹配也非常有用。此外，如果该方法独立地表示来自其实体的点击新闻和候选新闻，则对于兴趣匹配也是次优的。在KIM方法中，图协同注意力网络和实体协同注意力网络都用于以交互方式捕捉点击新闻和候选新闻实体之间的相关性，可以将丰富的信息融入KIM模型进行兴趣匹配。</li>
+</ul>
+<h2 id="结论">结论</h2>
+<p>​	在本文中，我们提出了一种用于个性化新闻推荐的知识感知交互式匹配框架（命名为 KIM）。该框架旨在对候选新闻和用户兴趣进行交互建模，以实现更准确的兴趣匹配。更具体地说，我们首先提出了一个图协同注意网络，通过选择和聚合它们的邻居的信息来基于知识图对实体进行建模，这些信息为兴趣匹配提供了丰富的信息。我们还提出使用实体协同注意网络从实体之间的相关性中交互式地对点击新闻和候选新闻进行建模。此外，我们建议使用语义共同注意网络从文本之间的语义相关性中交互式地对点击新闻和候选新闻进行建模。此外，我们提出了一种用户新闻协同编码器来学习候选新闻感知用户表示和用户感知候选新闻表示，以更好地捕捉用户兴趣和候选新闻之间的相关性。我们对两个真实世界的数据集进行了广泛的实验。实验结果表明，我们的 KIM 方法显著优于其他基准方法。</p>
+]]></description>
+</item>
+<item>
     <title>网络实验——在linux平台安装OLSR协议</title>
     <link>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</link>
     <pubDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</guid>
@@ -1024,228 +1172,6 @@ name1=value1&amp;name2=value2
 <p><a href="https://www.runoob.com/json/json-tutorial.html" target="_blank" rel="noopener noreffer">JSON教程_菜鸟教程</a></p>
 <p><a href="https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1TJ411G7po?spm_id_from=333.999.0.0</a></p>
 <p><a href="https://www.cnblogs.com/tuspring/p/14340457.html" target="_blank" rel="noopener noreffer">使用nodejs编写api接口并部署到服务器上</a></p>
-]]></description>
-</item>
-<item>
-    <title>鸿蒙开发实践——调用API</title>
-    <link>https://leeshy-tech.github.io/harmonyos_api/</link>
-    <pubDate>Sat, 12 Feb 2022 16:46:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_api/</guid>
-    <description><![CDATA[<h2 id="项目简介">项目简介</h2>
-<h3 id="项目结构">项目结构</h3>
-<pre tabindex="0"><code>└─ entry
-	├─src.main
-        ├─ java.com.example.api
-            ├─beans
-                ├─ requestBody				API请求体
-                └─ returnBody				API返回体
-            ├─slice
-                └─ MainAbilitySlice			主页面Slice
-            ├─utils
-                ├─ baiduApi					百度API调用
-                ├─ HttpRequestUtil			一般API调用，本项目没用到，但是很重要
-                └─ LoadImageUtil			网络图片加载到image组件
-            ├─ MainAbility
-            └─ MyApplication
-        └─ resources.base.layout
-            └─ ability_main.xml				主页面布局文件
- 	└─ build.gradle							添加外部依赖
-</code></pre><h3 id="效果">效果</h3>
-<p>单击按钮，将输入框内的文字转换为二维码显示在下方。</p>
-<p>用手机扫码，解码的信息与文字相同。</p>
-<p></p>
-<h2 id="铺垫">铺垫</h2>
-<h3 id="http">HTTP</h3>
-<div class="details admonition info open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">本项目中调用API使用的是https方式，这部分仅作笔记。</div>
-        </div>
-    </div>
-<p>在鸿蒙应⽤中默认只允许访问https接⼝，如果要访问http接⼝，需要在config.json的deviceConfig项中添加如下配置：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="s2">&#34;deviceConfig&#34;</span><span class="err">:</span> <span class="p">{</span>
-  <span class="nt">&#34;default&#34;</span><span class="p">:</span> <span class="p">{</span>
-    <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="p">{</span>
-      <span class="nt">&#34;cleartextTraffic&#34;</span><span class="p">:</span> <span class="kc">true</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div><h3 id="json">JSON</h3>
-<p>API请求体的传入和响应体的解析需要JSON格式的字符串、把JSON字符串转换为对象，虽然也可以用转义符等方式实现，但还是用外部依赖比较方便，常用的依赖有Gson、FastJson、Jackson，本项目使用的是FastJson。</p>
-<p>借助转义符传递JSON be like：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="n">String</span> <span class="n">jsonBody</span> <span class="o">=</span> <span class="s">&#34;{\n  \&#34;data\&#34; : \&#34;https://apis.baidu.com/\&#34;,\n&#34;</span> <span class="o">+</span>
-        <span class="s">&#34;  \&#34;size\&#34; : 20,\n&#34;</span> <span class="o">+</span>
-        <span class="s">&#34;  \&#34;level\&#34; : \&#34;L\&#34;,\n&#34;</span> <span class="o">+</span>
-        <span class="s">&#34;  \&#34;format\&#34; : \&#34;jpg\&#34;,\n&#34;</span> <span class="o">+</span>
-        <span class="s">&#34;  \&#34;logo\&#34; : \&#34;https://apisown-test.bj.bcebos.com/qr-code-api-store.png\&#34;\n}&#34;</span><span class="o">;</span>
-</code></pre></div><p>我的老天，它实在是太丑陋了。</p>
-<h3 id="引入外部依赖">引入外部依赖</h3>
-<p>添加依赖库fastjson，以及百度的依赖库api-explorer-sdk。</p>
-<p>在entry &gt; build.gradle中添加：<code>implementation ('com.baidubce:api-explorer-sdk:1.0.3.1','com.alibaba:fastjson:1.2.47')</code></p>
-<div class="details admonition tip open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-lightbulb fa-fw"></i>技巧<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">添加外部依赖的方法，详见：<a href="https://leeshy-tech.github.io/harmonyos_outerdependency/" target="_blank" rel="noopener noreffer">鸿蒙开发笔记——引入外部依赖</a></div>
-        </div>
-    </div>
-<h2 id="api调用">API调用</h2>
-<p>API的功能是将字符串转化为二维码图片，这里选用的是<a href="https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae" target="_blank" rel="noopener noreffer">百度的API</a>，原因是：有例程。对于我这种啥都没学扎实的人来说，能降低点难度最好。</p>
-<h3 id="api需要注意的点">API需要注意的点</h3>
-<ol>
-<li>调用方式：HTTP or HTTPS? POST？GET？DELETE？</li>
-<li>请求体参数。</li>
-<li>响应体参数：取决于你如何取到你想要的返回值。</li>
-<li>认证密钥。</li>
-</ol>
-<p>从该API的介绍中我们看到：http和https均可，POST方式，有认证密钥，请求体和响应体参数示例如下：</p>
-<p></p>
-<h3 id="核心代码">核心代码</h3>
-<ol>
-<li>
-<p>请求体和响应体各写成一个类：requestBody 、returnBody</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//API的请求体，共五个参数
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">requestBody</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">data</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="kt">int</span> <span class="n">size</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">level</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">format</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="n">String</span> <span class="n">logo</span><span class="o">;</span>
-
-   <span class="o">...</span>
-<span class="o">}</span>
-</code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"> <span class="c1">//API的响应体类，只有一个参数
-</span><span class="c1"></span> <span class="kd">public</span> <span class="kd">class</span> <span class="nc">returnBody</span> <span class="o">{</span>
-     <span class="kd">private</span> <span class="n">String</span> <span class="n">imageUrl</span><span class="o">;</span>
-
-     <span class="o">...</span>
- <span class="o">}</span>
-</code></pre></div></li>
-<li>
-<p>调用API的过程封装成类的函数：baiduApi.sendRequest(requestBody request_body)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//百度API的请求代码，由示例代码更改而来：https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">sendRequest</span><span class="o">(</span><span class="n">requestBody</span> <span class="n">request_body</span><span class="o">)</span> <span class="o">{</span>
-    <span class="c1">//填入自己的accessKey，secretKey，否则项目无法正常运行。
-</span><span class="c1"></span>    <span class="n">String</span> <span class="n">accessKey</span> <span class="o">=</span> <span class="s">&#34;accessKey&#34;</span><span class="o">;</span>
-    <span class="n">String</span> <span class="n">secretKey</span> <span class="o">=</span> <span class="s">&#34;secretKey&#34;</span><span class="o">;</span>
-
-    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-    <span class="n">String</span> <span class="n">path</span> <span class="o">=</span> <span class="s">&#34;http://qrcode.api.bdymkt.com/qrcode/generate&#34;</span><span class="o">;</span>
-    <span class="n">ApiExplorerRequest</span> <span class="n">request</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiExplorerRequest</span><span class="o">(</span><span class="n">HttpMethodName</span><span class="o">.</span><span class="na">POST</span><span class="o">,</span> <span class="n">path</span><span class="o">);</span>
-    <span class="n">request</span><span class="o">.</span><span class="na">setCredentials</span><span class="o">(</span><span class="n">accessKey</span><span class="o">,</span> <span class="n">secretKey</span><span class="o">);</span>
-
-    <span class="c1">// 设置header参数
-</span><span class="c1"></span>    <span class="n">request</span><span class="o">.</span><span class="na">addHeaderParameter</span><span class="o">(</span><span class="s">&#34;Content-Type&#34;</span><span class="o">,</span> <span class="s">&#34;application/json;charset=UTF-8&#34;</span><span class="o">);</span>
-
-    <span class="c1">// 设置jsonBody参数
-</span><span class="c1"></span>    <span class="n">String</span> <span class="n">objStr</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">request_body</span><span class="o">);</span>
-    <span class="n">request</span><span class="o">.</span><span class="na">setJsonBody</span><span class="o">(</span><span class="n">objStr</span><span class="o">);</span>
-
-    <span class="n">ApiExplorerClient</span> <span class="n">client</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ApiExplorerClient</span><span class="o">(</span><span class="k">new</span> <span class="n">AppSigner</span><span class="o">());</span>
-
-    <span class="k">try</span> <span class="o">{</span>
-        <span class="n">ApiExplorerResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="na">sendRequest</span><span class="o">(</span><span class="n">request</span><span class="o">);</span>
-        <span class="c1">// 返回结果格式为Json字符串
-</span><span class="c1"></span>        <span class="n">result</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="na">getResult</span><span class="o">();</span>
-    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-    <span class="o">}</span>
-    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-<span class="o">}</span>
-</code></pre></div></li>
-</ol>
-<h2 id="按键监听">按键监听</h2>
-<div class="details admonition info open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">本部分参考官方文档 &gt; Ability框架 &gt; 线程管理</div>
-        </div>
-    </div>
-<p>这里的按键监听与之前稍有不同，原因是调用API是一个耗时的工作，它不能在主线程中运行，需要在按键监听器中使用新的线程。</p>
-<h3 id="核心代码-1">核心代码</h3>
-<p>MainAbilitySlice的onStart方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//设置按键监听
-</span><span class="c1"></span><span class="n">btn1</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
-    <span class="c1">//开一个新线程
-</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
-    <span class="c1">//异步
-</span><span class="c1"></span>    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
-        <span class="c1">//调用API生成二维码图片（网络地址）
-</span><span class="c1"></span>        <span class="c1">//返回字符串格式：{&#34;imageUrl&#34;:&#34;https://bj.bcebos.com/qr-code/22021215e07535dcaa53.jpg&#34;}
-</span><span class="c1"></span>        <span class="n">String</span> <span class="n">string</span> <span class="o">=</span> <span class="n">tf1</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
-        <span class="n">requestBody</span> <span class="n">request_body</span> <span class="o">=</span> <span class="k">new</span> <span class="n">requestBody</span><span class="o">(</span><span class="n">string</span><span class="o">,</span><span class="n">20</span><span class="o">,</span><span class="s">&#34;L&#34;</span><span class="o">,</span><span class="s">&#34;jpg&#34;</span><span class="o">,</span>
-                <span class="s">&#34;https://apisown-test.bj.bcebos.com/qr-code-api-store.png&#34;</span><span class="o">);</span>
-        <span class="n">String</span> <span class="n">request_result</span> <span class="o">=</span> <span class="n">baiduApi</span><span class="o">.</span><span class="na">sendRequest</span><span class="o">(</span><span class="n">request_body</span><span class="o">);</span>
-        <span class="c1">//将JSON字符串转换为类，取出imageUrl
-</span><span class="c1"></span>        <span class="n">returnBody</span> <span class="n">returndata</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">request_result</span><span class="o">,</span> <span class="n">returnBody</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-        <span class="n">String</span> <span class="n">image_url</span> <span class="o">=</span> <span class="n">returndata</span><span class="o">.</span><span class="na">getImageUrl</span><span class="o">();</span>
-        <span class="c1">//将网络图片显示到image组件
-</span><span class="c1"></span>        <span class="n">LoadImageUtil</span><span class="o">.</span><span class="na">loadImg</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="n">image_url</span><span class="o">,</span><span class="n">image1</span><span class="o">);</span>
-    <span class="o">});</span>
-<span class="o">});</span>
-</code></pre></div><p>在新线程的异步方法里写入监听逻辑：调用API并将返回的网络图片url显示到image组件。</p>
-<h2 id="网络图片显示">网络图片显示</h2>
-<div class="details admonition info open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">本部分参考官方文档 &gt; 媒体 &gt; 图像 &gt; 位图操作开发指导 &amp; 图像解码开发指导。</div>
-        </div>
-    </div>
-<p>当我们API调用成功之后，我们就需要显示这个图片，但是image组件的setImageElement()方法的输入参数类型只能是Element，而Element类型是鸿蒙的本地数据文件管理类型，也就是说通过这个方法只能让image组件显示本地的图片，我们获得的网络图片地址在这里是不能用的。</p>
-<p></p>
-<p>我们需要自己写接口来实现网络图片的显示：LoadImageUtil.loadImg(Context context, String netImgUrl, Image image)</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="c1">//将网络图片加载到context的image组件里
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">loadImg</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">,</span> <span class="n">String</span> <span class="n">netImgUrl</span><span class="o">,</span> <span class="n">Image</span> <span class="n">image</span><span class="o">){</span>
-    <span class="c1">//创建一个新线程
-</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
-    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
-        <span class="n">HttpURLConnection</span> <span class="n">connection</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-        <span class="k">try</span><span class="o">{</span>
-            <span class="c1">//建立与网络图片之间的http连接
-</span><span class="c1"></span>            <span class="n">URL</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="n">URL</span><span class="o">(</span><span class="n">netImgUrl</span><span class="o">);</span>
-            <span class="n">connection</span> <span class="o">=</span> <span class="o">(</span><span class="n">HttpURLConnection</span><span class="o">)</span> <span class="n">url</span><span class="o">.</span><span class="na">openConnection</span><span class="o">();</span>
-            <span class="n">connection</span><span class="o">.</span><span class="na">connect</span><span class="o">();</span>
-            <span class="c1">//从连接中获取输入流
-</span><span class="c1"></span>            <span class="n">InputStream</span> <span class="n">inputStream</span> <span class="o">=</span> <span class="n">connection</span><span class="o">.</span><span class="na">getInputStream</span><span class="o">();</span>
-            <span class="c1">//根据数据流将图片数据缓存到ImageSouce对象，创建图片对象
-</span><span class="c1"></span>            <span class="n">ImageSource</span> <span class="n">imageSource</span> <span class="o">=</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">inputStream</span><span class="o">,</span><span class="k">new</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">SourceOptions</span><span class="o">());</span>
-            <span class="c1">//图片数据解码的参数
-</span><span class="c1"></span>            <span class="n">ImageSource</span><span class="o">.</span><span class="na">DecodingOptions</span> <span class="n">decodingOptions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ImageSource</span><span class="o">.</span><span class="na">DecodingOptions</span><span class="o">();</span>
-            <span class="n">decodingOptions</span><span class="o">.</span><span class="na">desiredPixelFormat</span> <span class="o">=</span> <span class="n">PixelFormat</span><span class="o">.</span><span class="na">ARGB_8888</span><span class="o">;</span>
-            <span class="c1">//PixelMap对象就表示一个图片
-</span><span class="c1"></span>            <span class="n">PixelMap</span> <span class="n">pixelmap</span> <span class="o">=</span> <span class="n">imageSource</span><span class="o">.</span><span class="na">createPixelmap</span><span class="o">(</span><span class="n">decodingOptions</span><span class="o">);</span>
-            <span class="c1">//将图片载入到组件中：在鸿蒙应用中将图片载入到组件，推荐在一个独立的UI线程中完成
-</span><span class="c1"></span>            <span class="n">context</span><span class="o">.</span><span class="na">getUITaskDispatcher</span><span class="o">().</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
-                <span class="n">image</span><span class="o">.</span><span class="na">setPixelMap</span><span class="o">(</span><span class="n">pixelmap</span><span class="o">);</span>
-                <span class="n">pixelmap</span><span class="o">.</span><span class="na">release</span><span class="o">();</span><span class="c1">//释放图片
-</span><span class="c1"></span>            <span class="o">});</span>
-        <span class="o">}</span><span class="k">catch</span> <span class="o">(</span><span class="n">IOException</span> <span class="n">e</span><span class="o">){</span>
-            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span>
-    <span class="o">});</span>
-<span class="o">}</span>
-</code></pre></div><p>主要思路：</p>
-<ul>
-<li>建立网络连接获得图片数据</li>
-<li>图片数据解码</li>
-<li>转换成位图对象pixelmap</li>
-<li>通过image.setPixelMap(pixelmap)方法载入图片</li>
-</ul>
-<h2 id="结束语">结束语</h2>
-<h3 id="项目地址">项目地址</h3>
-<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Api" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Api</a></p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://www.w3cschool.cn/fastjson/fastjson-demo1.html" target="_blank" rel="noopener noreffer">Fastjson 使用实例</a></p>
-<p><a href="https://www.runoob.com/w3cnote/java-json-instro.html" target="_blank" rel="noopener noreffer">Java 中 JSON 的使用</a></p>
-<p><a href="https://apis.baidu.com/store/detail/581576df-bc52-4e4a-8a3a-2abd6035e7ae" target="_blank" rel="noopener noreffer">百度智能云——二维码生成识别</a></p>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
-<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
 ]]></description>
 </item>
 </channel>
