@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>论文笔记——AMM: Attentive Multi-field Matching for News Recommendation Matching - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="论文笔记——AMM: Attentive Multi-field Matching for News Recommendation Matching" />
+<meta property="og:description" content="AMM: Attentive Multi-field Matching for News Recommendation.AMM：面向新闻推荐的注意力多字段匹配" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/ammattentive_multi-field_matching/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-05-24T17:41:06+08:00" />
+<meta property="article:modified_time" content="2022-05-24T17:41:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="论文笔记——AMM: Attentive Multi-field Matching for News Recommendation Matching"/>
+<meta name="twitter:description" content="AMM: Attentive Multi-field Matching for News Recommendation.AMM：面向新闻推荐的注意力多字段匹配"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/ammattentive_multi-field_matching/" /><link rel="prev" href="https://leeshy-tech.github.io/personalized_news_recommendation/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "论文笔记——AMM: Attentive Multi-field Matching for News Recommendation Matching",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/ammattentive_multi-field_matching\/"
+        },"genre": "posts","keywords": "News Recommendation, Paper","wordcount":  3561 ,
+        "url": "https:\/\/leeshy-tech.github.io\/ammattentive_multi-field_matching\/","datePublished": "2022-05-24T17:41:06+08:00","dateModified": "2022-05-24T17:41:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">论文笔记——AMM: Attentive Multi-field Matching for News Recommendation Matching</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="far fa-folder fa-fw"></i>Paper</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-05-24">2022-05-24</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 3561 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 8 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#论文概况">论文概况</a></li>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#我们的方法">我们的方法</a>
+      <ul>
+        <li><a href="#21-多头部匹配">2.1 多头部匹配</a></li>
+        <li><a href="#22-匹配编码器">2.2 匹配编码器</a></li>
+        <li><a href="#23-匹配聚合器">2.3 匹配聚合器</a></li>
+        <li><a href="#24-点击预测">2.4 点击预测</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-实验">3 实验</a>
+      <ul>
+        <li><a href="#31-实验设置">3.1 实验设置</a></li>
+        <li><a href="#32-性能评估">3.2 性能评估</a></li>
+        <li><a href="#33-消融实验">3.3 消融实验</a></li>
+      </ul>
+    </li>
+    <li><a href="#结论">结论</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="amm-attentive-multi-field-matching-for-news-recommendation">AMM: Attentive Multi-field Matching for News Recommendation</h1>
+<h2 id="论文概况">论文概况</h2>
+<p><a href="https://dl.acm.org/doi/abs/10.1145/3404835.3463232" target="_blank" rel="noopener noreffer">https://dl.acm.org/doi/abs/10.1145/3404835.3463232</a></p>
+<p>SIGIR &lsquo;21: Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval</p>
+<p>July 2021 Pages 1588–1592</p>
+<p><a href="https://doi.org/10.1145/3404835.3463232" target="_blank" rel="noopener noreffer">https://doi.org/10.1145/3404835.3463232</a></p>
+<p>自翻：<a href="https://github.com/leeshy-tech/PaperTranslate/blob/main/AMMAttentive_Multi-field_Matching.md" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/PaperTranslate/blob/main/AMMAttentive_Multi-field_Matching.md</a></p>
+<h2 id="引言">引言</h2>
+<p>​		用户兴趣与候选新闻的准确匹配是准确的个性化新闻推荐的前提。现有的方法主要是通过顺序或注意力模型聚合用户之前浏览过的新闻来学习用户的兴趣向量，然后将其与候选新闻向量进行匹配，取得了相当大的进展。例如，NPA [12] 根据候选新闻和之前点击的新闻之间的相似性来学习用户表示。 LSTUR [1] 使用 GRU 网络从点击的新闻中模拟短期和长期的用户兴趣。 NAML [11] 和 NRMS [13] 应用注意力网络从点击的新闻中学习用户表示。 FIM [9] 为每个新闻提取多级表示，并通过卷积执行细粒度匹配。然而，这些方法中的大多数将每个用户和新闻表示为单个向量，这可能会丢失文本匹配信号（例如，词级关系）。因此，我们的方法不是简单地将用户浏览的新闻建模为一个整体，而是关注每个浏览的候选新闻对之间的关系，以捕获细粒度的语义匹配表示。此外，这种对设计是在线服务友好的，匹配的表示可以离线存储，以避免重复计算。在这里，我们首先使用 BERT 来学习每个浏览候选新闻对在不同语义级别的匹配表示，然后将它们聚合到最终的用户新闻匹配信号。</p>
+<p>​	此外，上述方法基于单视图新闻信息[1,9,13]或多视图信息[11]学习新闻之间的语义相关性，它们仅利用字段内语义相关性（例如，标题-标题，正文-正文）。 但有时，跨领域信息（例如标题-摘要、标题-正文）可能有利于新闻匹配。 比如新闻𝑎的标题信息丰富，而新闻𝑏的标题很吸引人，新闻𝑎的标题和新闻𝑏的正文匹配可能更好。 因此，与每条新闻相关的多个字段可能包含互补信息，这些信息促使我们学习多字段（字段内和跨字段）匹配表示。</p>
+<p>​	在本文中，我们提出了一种注意力多字段匹配（AMM）框架，该框架捕获每个浏览候选新闻对的多字段语义匹配表示，然后将这些表示聚合为最终的用户新闻匹配信号，用于新闻推荐。 这项工作的主要贡献总结如下：</p>
+<ul>
+<li>我们提出了一种新的方法，专注于分离的浏览候选新闻对的匹配，以捕获文本语义匹配信号，这对在线服务很友好。</li>
+<li>我们设计了 AMM 框架，以在领域内和跨领域的方式中提取多领域匹配表示，以深入探索用户的兴趣。</li>
+<li>我们对两个公共基准数据集进行了实验，以证明我们方法的有效性。</li>
+</ul>
+<h2 id="我们的方法">我们的方法</h2>
+<p>图 1 显示了 AMM 的整体架构。 首先，我们为每个浏览的候选新闻构建多字段对输入。 然后，匹配编码器用于提取每对输入的匹配表示。 最后，我们将所有对的匹配表示聚合到用户新闻信号以估计点击概率。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Paper/image-20220525160038840.png"
+        data-srcset="/image/Paper/image-20220525160038840.png, /image/Paper/image-20220525160038840.png 1.5x, /image/Paper/image-20220525160038840.png 2x"
+        data-sizes="auto"
+        alt="/image/Paper/image-20220525160038840.png"
+        title="image-20220525160038840" /></p>
+<h3 id="21-多头部匹配">2.1 多头部匹配</h3>
+<p>​	不同的新闻字段通常可以相互补充。 为了更好地编码浏览-候选匹配，我们利用字段内和跨字段匹配作为多字段信息来增强匹配表示。</p>
+<p>​	给定用户浏览的新闻$\left[N_{1}, N_{2}, \ldots, N_{i}\right]$和候选新闻$N_x$，对于每个浏览-候选对$\left(N_{i}, N_{c}\right)$，我们建立多头部对输入$\left[N_{i}^{m}, N_{c}^{n}\right]$，其中$m \in{t, a, b},n \in{t, a, b}$，t、a、b分别是新闻的标题、摘要、主体。我们将新闻标题$N^t$表示为词向量$\left[w_{1}^{t}, w_{2}^{t}, \ldots, w_{\left|N^{t}\right|}^{t}\right]$，新闻摘要$N^a$表示为$\left[w_{1}^{a}, w_{2}^{a}, \ldots, w_{|N a|}^{a}\right]$，新闻主体$N^b$表示为$\left[w_{1}^{b}, w_{2}^{b}, \ldots, w_{\left|N^{\prime}\right|}^{b}\right]$，其中$\left|N^{t}\right|\left|N^{a}\right|$和$\left|N^{b}\right|$分别表示标题、摘要、主体的长度。</p>
+<p>​	在这项研究中，如图 1 所示，不仅像$\left[N_{i}^{t}, N_{c}^{t}\right]$（标题和标题）这样的字段内对输入，而且像$\left[N_{i}^{t}, N_{c}^{b}\right]$（标题和正文）这样的跨字段对输入都被获得 ，这些输入对中的每一个都被馈送到匹配编码器以获得其匹配表示。 我们最终将这些表示串接为浏览候选新闻对的多字段匹配表示。</p>
+<h3 id="22-匹配编码器">2.2 匹配编码器</h3>
+<p>该模块用于学习每个浏览过的新闻和候选新闻之间的语义匹配。 我们将来自多字段匹配的浏览-候选多字段对作为输入，然后将其输入到来自 Transformers (BERT) [4] 的双向编码器表示中，以进行匹配表示学习。</p>
+<ul>
+<li>
+<p>多头部自注意层</p>
+<p>该子层旨在捕获句子的上下文感知语义匹配。 使用多头，来自不同位置的不同语义子空间的信息是可联合学习的，这对于捕获不同标记之间的匹配信号非常有帮助。</p>
+</li>
+<li>
+<p>位置智慧型前馈网络</p>
+<p>这个子层的目的是赋予模型非线性和不同维度之间的相互作用，这是一个完全连接的前馈网络(FFN)，它由两个线性变换组成，中间有一个ReLU激活。</p>
+</li>
+</ul>
+<p>另外，对每个子层进行残差连接和层归一化处理。最后，我们可以通过该匹配编码器得到每个浏览-候选新闻的多字段对的匹配表示。</p>
+<h3 id="23-匹配聚合器">2.3 匹配聚合器</h3>
+<p>​	匹配聚合器用于聚合每个浏览新闻和候选新闻的匹配表示，以获得最终的用户新闻匹配信号。我们使用以下三种类型的聚合器获得最终的用户新闻匹配表示$\tilde{M}$：</p>
+<ul>
+<li>
+<p>最大/平均聚合器：对的匹配嵌入直接取最大或平均作为用户-新闻匹配嵌入。
+$$
+\tilde{M}=\text { Aggregate }(M)=\max / \operatorname{mean}(M)\tag 5
+$$</p>
+</li>
+<li>
+<p>注意力聚合器：使用门限注意网络 [2] 来学习 𝑀 的组合权重，它应用具有$W_h$和$b_h$的全连接神经网络，使用 tanh 作为第一层激活函数，然后使用$W_o$和$b_o$构造第二个全连接神经网络来学习在等式（6）中定义的组合权重 𝑟 ，最后在等式（7）中计算词向量的线性组合。
+$$
+\tilde{M}=\text { Aggregate }(M)=\mathbf{r}^{\top} M\tag 6
+$$</p>
+<p>$$
+r=\operatorname{softmax}\left(\tanh \left(\tilde{E} W_{h}+b_{h}\right) W_{o}+b_{o}\right)\tag 7
+$$</p>
+</li>
+</ul>
+<h3 id="24-点击预测">2.4 点击预测</h3>
+<p>最后，我们介绍点击预测模块。 将<strong>用户-新闻匹配表示</strong>表示为$\tilde{M}$，点击概率 𝑦 通过应用全连接层计算：
+$$
+y=\operatorname{softmax}\left(\tilde{M} W^{o}+b^{o}\right)\tag 8
+$$
+其中$W^{o} \in \mathbb{R}^{d^{\prime} \times 1}$和$b^{o} \in \mathbb{R}^{1}$是可学习参数。</p>
+<h2 id="3-实验">3 实验</h2>
+<h3 id="31-实验设置">3.1 实验设置</h3>
+<h4 id="数据集">数据集</h4>
+<ul>
+<li>MIND</li>
+<li>Adressa</li>
+</ul>
+<h4 id="评价指标">评价指标</h4>
+<p>​	我们使用 AUC、MRR、nDCG@𝐾，其中𝐾 = 5, 10 用于 MIND，𝐾 = 1, 3 用于 Adressa，作为我们的评估指标。 性能是所有展示日志中这些指标的平均值。</p>
+<h3 id="32-性能评估">3.2 性能评估</h3>
+<p>​	我们通过将 AMM 与几种基准方法进行比较来评估 AMM 的性能，</p>
+<ul>
+<li>LibFM [8]，分解机（FM）；</li>
+<li>DeepFM[6]：一种结合了FM和神经网络的深度分解机；</li>
+<li>DKN[10]，一种基于知识感知CNN的深度新闻推荐方法；</li>
+<li>NPA[12]，引入注意力机制来选择重要的词和新闻；</li>
+<li>NAML [11]，一种具有注意力多视图学习的神经新闻推荐方法；</li>
+<li>LSTUR [1]，它使用 GRU 从点击历史中对短期和长期兴趣进行建模；</li>
+<li>NRMS [13]，它使用多头自注意力来学习用户和新闻表示；</li>
+<li>FIM[9]，一种用于神经新闻推荐的细粒度兴趣匹配方法；</li>
+<li>AMM，我们的方法。</li>
+</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Paper/image-20220525172352394.png"
+        data-srcset="/image/Paper/image-20220525172352394.png, /image/Paper/image-20220525172352394.png 1.5x, /image/Paper/image-20220525172352394.png 2x"
+        data-sizes="auto"
+        alt="/image/Paper/image-20220525172352394.png"
+        title="image-20220525172352394" /></p>
+<ul>
+<li>使用深度神经网络提取新闻语义表示的方法（3-8）比基于特征的方法（1-2）表现更好。这种性能改进应归功于更好的新闻表示方法。</li>
+<li>在方法（3-8）中，NAML 在 MIND 中表现最好，NRMS 在 Adressa 中表现最好，这是因为 NAML 使用了不同种类的新闻信息，而 NRMS 应用了多头自注意力来进一步捕捉单词和点击新闻互动。 FIM 在所有基线中的 Adressa 中表现最好，因为它可以捕获更细粒度的兴趣匹配信号。</li>
+<li>我们提出的 AMM 通过考虑分离的浏览候选新闻对和跨字段匹配来捕获多字段的更好的文本语义匹配，在所有指标方面在两个数据集上实现了最佳性能。</li>
+</ul>
+<h3 id="33-消融实验">3.3 消融实验</h3>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/Paper/image-20220525172707936.png"
+        data-srcset="/image/Paper/image-20220525172707936.png, /image/Paper/image-20220525172707936.png 1.5x, /image/Paper/image-20220525172707936.png 2x"
+        data-sizes="auto"
+        alt="/image/Paper/image-20220525172707936.png"
+        title="image-20220525172707936" /></p>
+<ul>
+<li>比较了AMM与三个单一字段(标题、摘要、正文)在MIND上的性能。
+<ul>
+<li>带有标题和正文的AMM的表现优于带有摘要的AMM，这表明标题和正文比摘要更有利于新闻表征。</li>
+<li>此外，单个标题或正文的AMM的性能优于最佳基准，表明了分离策略引入文本语义匹配的必要性。</li>
+</ul>
+</li>
+<li>通过实验验证了多领域匹配的有效性。
+<ul>
+<li>AMM多字段比AMM内字段性能更好，这可能是因为通过跨字段匹配可以融合更多的互补信息，字段内和多字段信息的集成可以提高用户新闻匹配，捕捉细粒度用户的兴趣。</li>
+</ul>
+</li>
+<li>探讨了不同匹配聚合器的有效性。
+<ul>
+<li>我们可以看到带有注意力聚合器的 AMM 的性能略好于带有最大+平均池化的 AMM。 而且，最大+平均池化的表现也比 最佳基准方法好很多，验证了多字段语义匹配的有效性，这些简单的操作让在线服务更有可能。</li>
+</ul>
+</li>
+</ul>
+<h2 id="结论">结论</h2>
+<p>​	在本文中，我们提出了一种新颖的注意力多领域匹配（AMM）新闻推荐框架。 我们建议以新闻分离的方式学习用户-新闻匹配表示，捕获每对浏览候选新闻的匹配表示，然后将这些表示聚合为最终匹配信号，从而获得细粒度的语义匹配信息以及它是在线服务友好的。 此外，我们的方法同时考虑了字段内和跨字段作为多字段匹配，利用了字段间的互补信息，提高了新闻对的匹配表示。 两个公共基准数据集的实验结果证明了 AMM 的最新性能。</p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/news-recommendation/">News Recommendation</a>
+                </span><span><a href="/tags/paper/">Paper</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-05-24</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/ammattentive_multi-field_matching/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/personalized_news_recommendation/" class="prev" rel="prev" title="论文笔记——Personalized News Recommendation with Knowledge-aware Interactive Matching"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
