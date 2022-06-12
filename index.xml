@@ -4,9 +4,61 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 24 May 2022 17:41:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 12 Jun 2022 14:13:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>论文笔记——Oracle-MNIST：a Realistic Image Dataset for Benchmarking Machine Learning Algorithms</title>
+    <link>https://leeshy-tech.github.io/oracle-mnist/</link>
+    <pubDate>Sun, 12 Jun 2022 14:13:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/oracle-mnist/</guid>
+    <description><![CDATA[<h2 id="摘要">摘要</h2>
+<p>​	我们引入了Oracle-MNIST数据集，包括10个类别的30222个古代字符的28×28灰度图像，用于基准模式分类，特别是图像噪声和失真方面的挑战。训练集共有27222张图像，测试集每个类有300张图像。Oracle-MNIST与原始MNIST数据集共享相同的数据格式，允许与所有现有的分类器和系统直接兼容，但它构成了比MNIST更具挑战性的分类任务。由于三千年的埋藏和老化，古文字的形象受到了极其严重和独特的噪音影响，以及古文字的书写风格的巨大变化，这些都使其具有机器学习研究的现实感。该数据集可以在https://github.com/wm-bupt/oracle-mnist上免费获得。</p>
+<h2 id="1-引言">1 引言</h2>
+<p>​	在过去的几年里，由于专门的数据集作为实验测试平台和当前进展的公共基准的发布，机器学习(ML)取得了快速的进展，从而集中了研究社区的努力。计算机视觉中最广为人知的数据集是MNIST数据集，该数据集于1998年由LeCun等人(1998)首次引入。MNIST是一个10类数字分类数据集，由60,000张用于训练的灰度图像和10,000张用于测试的灰度图像组成。整个数据集相对较小，可以自由访问和使用，并以完全直接的方式进行编码和存储，这几乎肯定有助于它的广泛使用。</p>
+<p>​	然而，随着改进学习算法的发现，MNIST的性能已经饱和。例如，卷积神经网络(CNNs) (Krizhevsky等人，2012;He et al.， 2016)可以轻松达到99%以上的准确率。这部分归因于基准测试没有捕获许多真实场景的需求。为了避免饱和性能并为改进的ML算法提供挑战，构建了一些改进的MNIST数据集，例如EMNIST (Cohen等人，2017)和fashionn -MNIST (Xiao等人，2017)。EMNIST通过引入大写和小写字符扩展了类的数量，但额外的类需要改变MNIST使用的深度神经网络的框架。fashion - mnist包含10级时尚产品的7万张灰度图像。这些产品图片来源于Zalando的网站e1，由专业摄影师拍摄，清晰规范。然而，它未能在现实世界中尽可能广泛地捕捉各种变化。</p>
+<p>​	本文的目的是提供一个真实且具有挑战性的数据集Oracle-MNIST，以方便ML算法对真实的古代字符图像进行简单快速的评估。oracle - mnist包含属于10个类别的oracle字符的30222个图像。</p>
+<p></p>
+<ol>
+<li>
+<p>真实世界的挑战。</p>
+<p>与手写数字不同，甲骨文字符是从真实的甲骨文表面扫描而来。因此，Oracle-MNIST由于数千年的埋藏和老化而产生了极其严重和独特的噪音，并且在每个类别中都包含着各种各样的写作风格，这都使得ML研究更加现实和困难。</p>
+</li>
+<li>
+<p>易用性。</p>
+<p>与原来的MNIST相同，图像在Oracle-MNIST有28×28灰度像素。它可以立即兼容任何能够与MNIST数据集工作的ML包，因为它共享相同的数据格式。事实上，使用这个数据集需要做的唯一更改就是更改获取MNIST数据集的URL。</p>
+</li>
+</ol>
+<h2 id="2-oracle-mnist-数据集">2 Oracle-MNIST 数据集</h2>
+<h3 id="21甲骨文字符发现">2.1甲骨文字符发现</h3>
+<p>​	古代史依赖于对古文字的研究。甲骨文是中国最古老的象形文字(Flad et al.， 2008;Keightley, 1997)，近三千年的历史，为现代文明做出了巨大的贡献，使中华文化得以代代相传，成为唯一延续至今的文明。如图1所示，甲骨文被镌刻在龟甲和兽骨上，记录了商朝(公元前1600-1046年)的生活和历史，包括占卜、征战、狩猎、医疗和生育等。1899年，清朝(1644-1911)，一位名叫王希荣的商人首次发现了它们。20世纪初，中国的研究人员在商朝都城河南安阳的小屯村发掘了大量的甲骨文。此后，甲骨文文字的研究备受关注。它对于中国的词源学和书法，以及学习中国古代乃至世界的文化和历史都具有重要的意义。</p>
+<p></p>
+<p></p>
+<p></p>
+<p>​	甲骨文字符大多采用扫描图像存储，扫描图像是将一张纸盖在主体上，然后用卷墨拓印，再现甲骨文表面，如图2(a)所示。识别这些甲骨文字符对专家和机器来说都很困难。到目前为止，已经发现了近4500个不同的甲骨文字符，但只有大约2200个字符被成功破译。原因如下。(1)磨损和噪声。几个世纪以来，许多甲骨铭文遭到破坏，它们的文字现在已经残缺不全。铭文的老化过程也使其不易辨认，因此扫描的文字破损，并含有严重的噪音。(2)大方差。不同的写作风格导致了类内的高度差异。如图2(b)所示，属于同一类别的字符在笔画甚至拓扑结构上都存在较大差异。不同类别的一些字符彼此相似，这给识别带来了很大的困难。例如，图2(c)和图2(d)所示的“木”和“牛”两个类别的字符仅在一些小细节上有所不同。</p>
+<h3 id="22-数据集的细节">2.2 数据集的细节</h3>
+<p>​	Oracle-MNIST是基于<em>殷奇文苑网站</em>的集合。这些甲骨文字是从真实的甲骨文表面扫描而来的，因此会出现破碎和噪音严重的现象。每个扫描图像的中心都有一个字符。大多数原始图像都有灰色或黑色背景，分辨率也各不相同。</p>
+<p>​	我们选择了10个类的30222个常用字符构建Oracle-MNIST。然后将原始图像送入下面的转换管道，如图3所示。我们还试图通过一些图像增强技术，如灰度拉伸和直方图均衡化来处理图像。虽然成功地提高了图像的视觉质量，但识别性能略有下降。因此，Oracle-MNIST并没有采用图像增强技术。我们还提供原始图像，并将数据处理工作留给算法开发人员。</p>
+<ol>
+<li>将图像转换为8位灰度像素。</li>
+<li>如果前景比背景暗，则取消图像的强度。</li>
+<li>使用双三次插值算法将图像的最长边缘调整为28。</li>
+<li>将最短的边延长到28，并将图像放到画布的中心。</li>
+</ol>
+<p>​	我们利用字符的含义作为它们的类标签。这些标签是由考古学或古生物学专家手工标注的。表2给出了Oracle-MNIST中所有类标签的总结，并给出了每个类的示例。</p>
+<p>​	最后，我们将数据集分为训练集和测试集，并确保它们是不相交的。训练集由随机选取的27222张图像组成，测试集每类包含300张图像。图像和标签以与MNIST数据集相同的文件格式存储，MNIST数据集是为存储向量和多维矩阵而设计的。表1列出了结果文件。</p>
+<p></p>
+<h2 id="3-实验">3 实验</h2>
+<p>​	我们在Oracle-MNIST上评估了一些不同参数的算法，结果如表3所示。对于每种算法，通过三次重复实验报告了平均分类精度。MNIST和Fashion-MNIST数据集上的基准也包括在并排比较中。</p>
+<p>​	从结果中，我们有以下观察结果。首先，经典(浅层)ML算法在MNIST数据集上可以轻松实现97%，这证明了MNIST算法太容易评估。我们的Oracle-MNIST数据集提供了10类古代字符的图像，并进一步捕捉了现实世界中尽可能广泛的变化，这比MNIST数字数据和Fashion-MNIST数据提出了更具有挑战性的分类任务。我们可以看到，所有经典的(浅)ML算法在MNIST上表现最好，其次是fashionmnist，在oracle MNIST上表现最差。例如，随机森林分类器的准确率分别为97.1%、87.1%和64.9%。这是因为上文2.1节所述的类内方差和类间相似度较高，会给分类带来很大的困难。此外，由于模糊、噪声和遮挡等原因，扫描到的甲骨文图像会严重退化，甚至完全失去识别字形信息。</p>
+<p>​	其次，CNN优于Oracle-MNIST上所有的经典(浅)ML算法。得益于局部接收场和空间或时间子采样，CNN可以强制提取局部特征，降低输出对位移和失真的敏感性(LeCun et al.， 1995)。因此，现实世界的挑战，如不同的写作风格，噪音和闭塞，可以在一定程度上解决。然而，Oracle-MNIST上的性能还没有饱和。本文使用的CNN在Oracle-MNIST上的错误率为6.2%，还有改进的空间。尽管CNN具有强大的表示能力，但是识别这些古文字的问题还有待完全解决。</p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<h2 id="4-结论">4 结论</h2>
+<p>​	在本文中，我们提出了一个现实的和具有挑战性的基准数据集，即Oracle-MNIST。它包含10类30222个古文字的28×28灰度图像，用于对计算机视觉中的图像噪声和失真的鲁棒性进行基准测试。Oracle-MNIST被转换成一种与构建来处理MNIST数据集的分类器直接兼容的格式。由于数千年的埋藏和老化，这些古老的文字噪音大，书写风格各异，给识别带来了很大的困难。基准测试结果表明，古文字分类任务确实更具挑战性。</p>
+]]></description>
+</item>
+<item>
     <title>论文笔记——AMM: Attentive Multi-field Matching for News Recommendation Matching</title>
     <link>https://leeshy-tech.github.io/ammattentive_multi-field_matching/</link>
     <pubDate>Tue, 24 May 2022 17:41:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/ammattentive_multi-field_matching/</guid>
@@ -269,6 +321,40 @@ $$
 </ul>
 <h2 id="结论">结论</h2>
 <p>​	在本文中，我们提出了一种用于个性化新闻推荐的知识感知交互式匹配框架（命名为 KIM）。该框架旨在对候选新闻和用户兴趣进行交互建模，以实现更准确的兴趣匹配。更具体地说，我们首先提出了一个图协同注意网络，通过选择和聚合它们的邻居的信息来基于知识图对实体进行建模，这些信息为兴趣匹配提供了丰富的信息。我们还提出使用实体协同注意网络从实体之间的相关性中交互式地对点击新闻和候选新闻进行建模。此外，我们建议使用语义共同注意网络从文本之间的语义相关性中交互式地对点击新闻和候选新闻进行建模。此外，我们提出了一种用户新闻协同编码器来学习候选新闻感知用户表示和用户感知候选新闻表示，以更好地捕捉用户兴趣和候选新闻之间的相关性。我们对两个真实世界的数据集进行了广泛的实验。实验结果表明，我们的 KIM 方法显著优于其他基准方法。</p>
+]]></description>
+</item>
+<item>
+    <title>论文笔记——RMBERT: News Recommendation via Recurrent Reasoning Memory Network over BERT</title>
+    <link>https://leeshy-tech.github.io/rmbert/</link>
+    <pubDate>Mon, 23 May 2022 15:03:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/rmbert/</guid>
+    <description><![CDATA[<h1 id="rmbert-news-recommendation-via-recurrent-reasoning-memory-network-over-bert">RMBERT: News Recommendation via Recurrent Reasoning Memory Network over BERT</h1>
+<h2 id="论文概况">论文概况</h2>
+<p><a href="https://dl.acm.org/doi/abs/10.1145/3404835.3463234" target="_blank" rel="noopener noreffer">https://dl.acm.org/doi/abs/10.1145/3404835.3463234</a></p>
+<p>SIGIR &lsquo;21: Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval</p>
+<p>July 2021 Pages 1773–1777</p>
+<p><a href="https://doi.org/10.1145/3404835.3463234" target="_blank" rel="noopener noreffer">https://doi.org/10.1145/3404835.3463234</a></p>
+<h2 id="摘要">摘要</h2>
+<p>​	现有的方法大多是根据新闻内容将每个用户和新闻分别编码为向量，然后对两个向量进行匹配。但是，用户对每个新闻或新闻的每个主题的兴趣可能是不同的。动态地学习用户和新闻向量，并对他们的互动进行建模是必要的。</p>
+<p>​	在本研究中，我们提出了基于BERT的循环推理记忆网络(RMBERT)用于新闻推荐。与其他方法相比，我们的方法可以利用BERT的内容建模能力。此外，循环推理记忆网络执行一系列基于注意力的推理步骤，可以动态学习用户和新闻向量，并对每一步的交互进行建模。因此，我们的方法可以更好地模拟用户的兴趣。我们在真实世界的新闻推荐数据集上进行了广泛的实验，结果表明，我们的方法显著优于现有的最先进的方法。</p>
+<h2 id="1-引言">1 引言</h2>
+<p>​	最近，一些方法探索使用神经网络以端到端方式学习新闻和用户表示，并在训练过程中优化这些表示。DKN [13]， NPA [15]， LSTUR[1]提出使用CNN学习新闻表示，然后将候选新闻与用户点击的新闻进行匹配。DKN将知识图表示引入新闻推荐。NPA通过嵌入用户ID来关注重要词汇和新闻，增强了新闻和用户表示。LSTUR结合了长期和短期用户表示，以更精确地对用户进行建模。NRMS[16]引入多头自我注意学习新闻表示。FIM[12]通过叠加扩张卷积提取每个新闻的多层表示。</p>
+<p>​	在新闻推荐场景中有两个常见的观察结果。首先，不同的用户可能对候选人新闻的不同部分感兴趣。第二，用户的兴趣通常是多样化的，用户历史中不同的新闻代表了该用户的不同兴趣。以前的工作 [9, 13, 16] 使用一个固定的嵌入向量来表示用户和新闻，这可能会限制模型的表达能力。作为一个解决方案，我们需要动态地确定关于候选新闻的用户向量。记忆网络能够捕获两个对象之间的高阶复杂关系，在问题回答[4,7]、情感分析[11]、机器理解[10]等领域都取得了很大的进展。受其成功的激励，我们设计了一个循环结构的迭代推理过程，多个推理记忆单元(RMC)级联执行结构化推理操作，一步一步确定匹配分数。</p>
+<p>​	我们的方法的体系结构如图1所示。</p>
+<ul>
+<li>新闻编码器模块通过处理每个新闻的标题并生成新闻嵌入来提取候选新闻和一些用户点击的新闻。</li>
+<li>在此之后，循环推理记忆网络中包含一些以新闻嵌入为输入的rmc，它们协同工作，逐级执行推理过程。在每一步中，RMC通过查询单元和存储单元进行推理操作。查询单元使用注意机制来选择用户可能感兴趣的候选新闻嵌入的某些方面来更新查询状态。所述存储单元根据查询状态，从用户点击的新闻嵌入中动态检索用户的兴趣。经过几个推理步骤后，RMBERT可以从多个方面捕获用户对候选新闻的偏好。</li>
+<li>最后，我们根据最后的存储状态来推荐新闻，该状态包含了用户和候选新闻之间的交互信息。</li>
+</ul>
+<p></p>
+<p>​	这项工作的主要贡献总结如下。</p>
+<ol>
+<li>我们使用BERT对候选新闻和用户点击新闻进行独立编码。我们的方法可以利用BERT的表达能力，同时获得离线预计算新闻嵌入的能力。</li>
+<li>我们提出了一种循环结构来逐步执行基于注意力的推理操作。 在每个步骤中，RMC 可以推断候选新闻的某些部分与用户兴趣之间的匹配分数。 RMC可以在每一步动态确定新闻和用户向量，并在多方面探索它们的匹配。</li>
+<li>从MSN新闻收集的真实数据集上进行的大量实验证实，我们的方法比现有的最先进的方法具有更好的性能。</li>
+</ol>
+<h2 id="2-提出的方法">2 提出的方法</h2>
+<h3 id="21-新闻编码器">2.1 新闻编码器</h3>
+<h3 id="22-推理存储单元">2.2 推理存储单元</h3>
 ]]></description>
 </item>
 <item>
@@ -819,325 +905,6 @@ $$
 <p>在这项工作中，我们提出了一个 SDN MANET 的实际实现，它提供了 D2D 数据传输的所有优点，同时具有集中网络管理的灵活性。</p>
 <p>为了展示 SDN MANET 的优势以及所提供的所有软件的有效性，我们将我们的 SDN MANET 与以分布式方式管理的 ad hoc 网络进行了比较。 我们用几个简单的例子强调了我们方法的显着优势，特别是对于快速变化的网络拓扑。</p>
 <p>在未来的工作中，我们计划处理大规模的 SDN MANET，解决可能出现的可扩展性问题。</p>
-]]></description>
-</item>
-<item>
-    <title>鸿蒙开发实践——用户登陆及个人主页</title>
-    <link>https://leeshy-tech.github.io/harmonyos_userlogin/</link>
-    <pubDate>Sun, 20 Feb 2022 21:57:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_userlogin/</guid>
-    <description><![CDATA[<h1 id="用户登录">用户登录</h1>
-<h2 id="项目简介">项目简介</h2>
-<h3 id="项目结构">项目结构</h3>
-<pre tabindex="0"><code>└─ entry
-	├─src.main
-        ├─ java.com.example.users
-            ├─beans
-                ├─ Account				API请求体
-                └─ LoginMsg				API返回体
-            ├─slice
-                ├─ UserInfoAbilitySlice		个人主页Slice
-                └─ MainAbilitySlice			主页面Slice
-            ├─utils
-                ├─ DataBaseUtil				数据库操作类
-                ├─ HttpRequestUtil			API调用类
-                └─ LoadImageUtil			网络图片加载到image组件
-            ├─ LocalDBAbility			本地数据库的DataAbility
-            ├─ MainAbility
-            └─ MyApplication
-        └─ resources.base.layout
-        	├─ ability_userinfo.xml			个人页面布局文件
-            └─ ability_main.xml				主页面布局文件
- 	└─ build.gradle							添加外部依赖
-</code></pre><h3 id="效果">效果</h3>
-<p></p>
-<h2 id="项目逻辑">项目逻辑</h2>
-<p>此项目的重点是token，它存储在本地数据库，扮演类似浏览器中cookie的角色。</p>
-<h3 id="登陆页">登陆页</h3>
-<ul>
-<li>首页获取用户的账号和密码，点击按钮向后端发送http请求。</li>
-<li>登陆成功，则将后端返回的token存入本地数据库，并导航到个人页面。</li>
-<li>登陆不成功，则使用ToastDialog组件显示提示信息，账号错误或密码错误。</li>
-</ul>
-<h3 id="个人页">个人页</h3>
-<p>个人页面高度精简，只显示用户头像。</p>
-<ul>
-<li>导航到此页，说明用户一定已经登陆。</li>
-<li>查询本地数据库，获得token。</li>
-<li>向后端发送请求，获取用户头像的url。</li>
-<li>将url加载到image组件。</li>
-</ul>
-<p>当用户退出APP，清理后台后，仍然能记住登陆状态，导航回个人主页，不用重新登陆。</p>
-<h2 id="后端接口">后端接口</h2>
-<p>代码：<a href="https://github.com/leeshy-tech/API_userLogin/blob/main/user_login_token.py" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/API_userLogin/blob/main/user_login_token.py</a></p>
-<p>博客：<a href="https://leeshy-tech.github.io/pythonapi_simplelogin2/" target="_blank" rel="noopener noreffer">Python实践——后端接口实现(2)</a></p>
-<h2 id="准备">准备</h2>
-<p>这些都是之前的博客详细说过的部分，不再赘述。</p>
-<h3 id="添加依赖">添加依赖</h3>
-<p><code>implementation ('com.alibaba:fastjson:1.2.47')</code></p>
-<h3 id="本地数据库的dataabilitylocaldbability">本地数据库的DataAbility——LocalDBAbility</h3>
-<p>把之前写过的照抄过来，改一下数据库名、表名、建表sql语句即可。</p>
-<h3 id="请求体和返回体类accountloginmsg">请求体和返回体类——Account，LoginMsg</h3>
-<p>根据后端接口的格式建立的类。</p>
-<h3 id="网络图片加载loadimageutil">网络图片加载——LoadImageUtil</h3>
-<p>将网络图片加载到image组件，copy之前的项目。</p>
-<h3 id="api调用类httprequestutil">API调用类——HttpRequestUtil</h3>
-<p>发送HTTP请求的封装类，这个之前没讲过，照抄会用即可。</p>
-<h2 id="databaseutil">DataBaseUtil</h2>
-<p>为了尽可能的简化主体代码，把从数据库里查询token，和插入token的操作封装成这个类。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="c1">//数据库查询、插入 帮助类
-</span><span class="c1"></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DataBaseUtil</span> <span class="o">{</span>
-    <span class="kd">private</span> <span class="kd">static</span> <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="s">&#34;dataability:///com.example.users.LocalDBAbility/user_info&#34;</span><span class="o">);</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">getToken</span><span class="o">(</span><span class="n">Context</span> <span class="n">context</span><span class="o">){</span>
-        <span class="n">String</span> <span class="n">value</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-
-        <span class="n">DataAbilityHelper</span> <span class="n">dataAbilityHelper</span> <span class="o">=</span> <span class="n">DataAbilityHelper</span><span class="o">.</span><span class="na">creator</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
-        <span class="n">String</span><span class="o">[]</span> <span class="n">colums</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;token&#34;</span><span class="o">};</span>
-        <span class="n">DataAbilityPredicates</span> <span class="n">predicates</span> <span class="o">=</span> <span class="k">new</span> <span class="n">DataAbilityPredicates</span><span class="o">();</span>
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">ResultSet</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">dataAbilityHelper</span><span class="o">.</span><span class="na">query</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="n">colums</span><span class="o">,</span> <span class="n">predicates</span><span class="o">);</span>
-            <span class="k">if</span><span class="o">(</span><span class="n">rs</span><span class="o">.</span><span class="na">getRowCount</span><span class="o">()</span> <span class="o">&gt;</span><span class="n">0</span><span class="o">){</span>
-                <span class="n">rs</span><span class="o">.</span><span class="na">goToFirstRow</span><span class="o">();</span>
-                <span class="n">value</span> <span class="o">=</span> <span class="n">rs</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">0</span><span class="o">);</span>
-            <span class="o">}</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DataAbilityRemoteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">value</span><span class="o">;</span>
-    <span class="o">}</span>
-    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">setToken</span><span class="o">(</span><span class="n">String</span> <span class="n">token</span><span class="o">,</span><span class="n">Context</span> <span class="n">context</span><span class="o">)</span> <span class="o">{</span>
-        <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">0</span><span class="o">;</span>
-        <span class="n">ValuesBucket</span> <span class="n">valuesBucket</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ValuesBucket</span><span class="o">();</span>
-        <span class="n">valuesBucket</span><span class="o">.</span><span class="na">putString</span><span class="o">(</span><span class="s">&#34;token&#34;</span><span class="o">,</span><span class="n">token</span><span class="o">);</span>
-        <span class="n">DataAbilityHelper</span> <span class="n">dataAbilityHelper</span> <span class="o">=</span> <span class="n">DataAbilityHelper</span><span class="o">.</span><span class="na">creator</span><span class="o">(</span><span class="n">context</span><span class="o">);</span>
-        <span class="k">try</span> <span class="o">{</span>
-            <span class="n">i</span> <span class="o">=</span> <span class="n">dataAbilityHelper</span><span class="o">.</span><span class="na">insert</span><span class="o">(</span><span class="n">uri</span><span class="o">,</span> <span class="n">valuesBucket</span><span class="o">);</span>
-        <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">DataAbilityRemoteException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
-        <span class="o">}</span>
-        <span class="k">return</span> <span class="n">i</span><span class="o">;</span>
-    <span class="o">}</span>
-<span class="o">}</span>
-</code></pre></div><h2 id="mainabilityslice">MainAbilitySlice</h2>
-<p>onStart方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-<span class="kd">super</span><span class="o">.</span><span class="na">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_ability_main</span><span class="o">);</span>
-
-<span class="n">String</span> <span class="n">token_s</span> <span class="o">=</span>  <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">getToken</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-<span class="c1">//如果本地数据库没有token，说明用户还没有登陆
-</span><span class="c1"></span><span class="k">if</span> <span class="o">(</span><span class="n">token_s</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-    <span class="n">Button</span> <span class="n">btn_login</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_login_btn</span><span class="o">);</span>
-    <span class="n">TextField</span> <span class="n">tf_userid</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_login_id_textfield</span><span class="o">);</span>
-    <span class="n">TextField</span> <span class="n">tf_userPwd</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_login_pwd_textfield</span><span class="o">);</span>
-
-    <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&#34;http://8.136.83.196:8899/users/login&#34;</span><span class="o">;</span>
-    <span class="n">btn_login</span><span class="o">.</span><span class="na">setClickedListener</span><span class="o">(</span><span class="n">component</span> <span class="o">-&gt;</span> <span class="o">{</span>
-        <span class="c1">//开新线程
-</span><span class="c1"></span>        <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
-        <span class="c1">//异步
-</span><span class="c1"></span>        <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
-            <span class="n">String</span> <span class="n">user_id</span> <span class="o">=</span> <span class="n">tf_userid</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
-            <span class="n">String</span> <span class="n">user_pwd</span> <span class="o">=</span> <span class="n">tf_userPwd</span><span class="o">.</span><span class="na">getText</span><span class="o">();</span>
-            <span class="c1">//发送http请求，并获得数据
-</span><span class="c1"></span>            <span class="n">Account</span> <span class="n">account</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Account</span><span class="o">(</span><span class="n">user_id</span><span class="o">,</span> <span class="n">user_pwd</span><span class="o">);</span>
-            <span class="n">String</span> <span class="n">account_json</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">toJSONString</span><span class="o">(</span><span class="n">account</span><span class="o">);</span>
-            <span class="n">String</span> <span class="n">login_msg</span> <span class="o">=</span> <span class="n">HttpRequestUtil</span><span class="o">.</span><span class="na">sendPostRequest</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">url</span><span class="o">,</span> <span class="n">account_json</span><span class="o">);</span>
-            <span class="n">LoginMsg</span> <span class="n">login_msg_obj</span> <span class="o">=</span> <span class="n">JSON</span><span class="o">.</span><span class="na">parseObject</span><span class="o">(</span><span class="n">login_msg</span><span class="o">,</span> <span class="n">LoginMsg</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
-            <span class="n">String</span> <span class="n">token</span> <span class="o">=</span> <span class="n">login_msg_obj</span><span class="o">.</span><span class="na">getToken</span><span class="o">();</span>
-            <span class="n">String</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">login_msg_obj</span><span class="o">.</span><span class="na">getMsg</span><span class="o">();</span>
-            <span class="k">if</span> <span class="o">(</span><span class="n">token</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
-                <span class="c1">//将token存入本地数据库，并跳到个人页
-</span><span class="c1"></span>                <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">setToken</span><span class="o">(</span><span class="n">token</span><span class="o">,</span> <span class="k">this</span><span class="o">);</span>
-                <span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserInfoAbilitySlice</span><span class="o">(),</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">());</span>
-            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-                <span class="c1">//返回主线程进行UI重绘，原因是show方法不能在子线程中运行
-</span><span class="c1"></span>                <span class="n">getUITaskDispatcher</span><span class="o">().</span><span class="na">asyncDispatch</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
-                    <span class="nd">@Override</span>
-                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-                        <span class="k">new</span> <span class="n">ToastDialog</span><span class="o">(</span><span class="n">getContext</span><span class="o">()).</span><span class="na">setText</span><span class="o">(</span><span class="n">msg</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
-                    <span class="o">}</span>
-                <span class="o">});</span>
-            <span class="o">}</span>
-        <span class="o">});</span>
-    <span class="o">});</span>
-<span class="o">}</span>
-<span class="c1">//如果本地数据库有token，说明已经登陆，就跳到个人页
-</span><span class="c1"></span><span class="k">else</span><span class="o">{</span>
-    <span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserInfoAbilitySlice</span><span class="o">(),</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">());</span>
-<span class="o">}</span>
-</code></pre></div><ul>
-<li>进来先进行一个判断，若本地数据库里有token，则直接跳转到个人页，为了应对APP被杀死后重启的情况。</li>
-<li>按钮监听，获取输入框的信息，向后端发送请求，获得token和msg。</li>
-<li>若token不为空，则存到本地数据库，并跳转到个人页。</li>
-<li>若token为空，则建立一个ToastDialog组件，显示msg。ToastDialog组件专门用于显示提示信息，它存在几秒后自动消失。</li>
-</ul>
-<div class="details admonition info open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-info-circle fa-fw"></i>注意<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">建立Toast Dialog组件这里，重绘UI的操作只能在主线程里运行，在这里指show方法，如果直接写<code>new ToastDialog(getContext()).setText(msg).show();</code>是不行的，因为此时我们正在新建的线程里，这个任务要扔回到主线程，所以才有了以下的代码块。</div>
-        </div>
-    </div>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="n">getUITaskDispatcher</span><span class="o">().</span><span class="na">asyncDispatch</span><span class="o">(</span><span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
-    <span class="nd">@Override</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
-        <span class="k">new</span> <span class="n">ToastDialog</span><span class="o">(</span><span class="n">getContext</span><span class="o">()).</span><span class="na">setText</span><span class="o">(</span><span class="n">msg</span><span class="o">).</span><span class="na">show</span><span class="o">();</span>
-    <span class="o">}</span>
-<span class="o">});</span>
-</code></pre></div><p>onActive方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="kd">super</span><span class="o">.</span><span class="na">onActive</span><span class="o">();</span>
-<span class="c1">//程序重新返回前台调用
-</span><span class="c1">//若已经登陆，则导航到个人页
-</span><span class="c1"></span><span class="n">String</span> <span class="n">token_s</span> <span class="o">=</span>  <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">getToken</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-<span class="k">if</span> <span class="o">(</span><span class="n">token_s</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
-    <span class="n">present</span><span class="o">(</span><span class="k">new</span> <span class="n">UserInfoAbilitySlice</span><span class="o">(),</span> <span class="k">new</span> <span class="n">Intent</span><span class="o">());</span>
-<span class="o">}</span>
-</code></pre></div><p>当页面从后台返回前台时，调用的是onActive方法，比如用户在导航到个人页之后，点了一下退出键，就会返回默认页，我们不想让他再发一次http请求，检查token，若存在，直接将其导航回个人页。</p>
-<h2 id="userinfoabilityslice">UserInfoAbilitySlice</h2>
-<p>onStart方法：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-Java" data-lang="Java"><span class="kd">super</span><span class="o">.</span><span class="na">onStart</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
-<span class="kd">super</span><span class="o">.</span><span class="na">setUIContent</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Layout_ability_userinfo</span><span class="o">);</span>
-<span class="c1">//能导航到此页说明用户已经登陆，向服务器请求用户的头像
-</span><span class="c1"></span><span class="n">String</span> <span class="n">token</span> <span class="o">=</span> <span class="n">DataBaseUtil</span><span class="o">.</span><span class="na">getToken</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
-<span class="n">Image</span> <span class="n">image</span> <span class="o">=</span> <span class="n">findComponentById</span><span class="o">(</span><span class="n">ResourceTable</span><span class="o">.</span><span class="na">Id_image</span><span class="o">);</span>
-<span class="k">if</span> <span class="o">(</span><span class="n">token</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
-    <span class="c1">//建新线程
-</span><span class="c1"></span>    <span class="n">TaskDispatcher</span> <span class="n">globalTaskDispatcher</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">getGlobalTaskDispatcher</span><span class="o">(</span><span class="n">TaskPriority</span><span class="o">.</span><span class="na">DEFAULT</span><span class="o">);</span>
-    <span class="c1">//异步
-</span><span class="c1"></span>    <span class="n">globalTaskDispatcher</span><span class="o">.</span><span class="na">asyncDispatch</span><span class="o">(()-&gt;{</span>
-        <span class="c1">//发送请求，更新image组件
-</span><span class="c1"></span>        <span class="n">String</span> <span class="n">url</span> <span class="o">=</span> <span class="s">&#34;http://8.136.83.196:8899/users/info&#34;</span><span class="o">;</span>
-        <span class="n">String</span> <span class="n">img_url</span> <span class="o">=</span> <span class="n">HttpRequestUtil</span><span class="o">.</span><span class="na">sendPostRequestWithToken</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="n">url</span><span class="o">,</span><span class="n">token</span><span class="o">);</span>
-        <span class="n">LoadImageUtil</span><span class="o">.</span><span class="na">loadImg</span><span class="o">(</span><span class="k">this</span><span class="o">,</span><span class="n">img_url</span><span class="o">,</span><span class="n">image</span><span class="o">);</span>
-    <span class="o">});</span>
-<span class="o">}</span>
-</code></pre></div><ul>
-<li>导航到此页时，从本地数据库中取出token，向后端发送。</li>
-<li>后端返回头像的url。</li>
-<li>将url显示到image组件。</li>
-</ul>
-<h2 id="一些瑕疵">一些瑕疵</h2>
-<ol>
-<li>没有退出登陆键，这个很容易实现，点击按钮，把token删掉即可，我懒得写了。</li>
-<li>个人页太简单，懒就一个字。</li>
-</ol>
-<h2 id="结束语">结束语</h2>
-<h3 id="源码">源码</h3>
-<p><a href="https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Users" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/HarmonyOS_example/tree/main/Users</a></p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://www.bilibili.com/video/BV1DM4y1G7MN" target="_blank" rel="noopener noreffer">HarmonyOS 2.0应用开发实战教程丨锋迷商城项目</a></p>
-<p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/document-outline-0000001064589184" target="_blank" rel="noopener noreffer">HarmonyOS文档</a></p>
-]]></description>
-</item>
-<item>
-    <title>Python实践——后端接口实现(2)</title>
-    <link>https://leeshy-tech.github.io/pythonapi_simplelogin2/</link>
-    <pubDate>Sun, 20 Feb 2022 20:11:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/pythonapi_simplelogin2/</guid>
-    <description><![CDATA[<h1 id="增加token验证">增加token验证</h1>
-<p>书接上文</p>
-<h2 id="token是什么">token是什么</h2>
-<p>简单来说，token可以认为是身份令牌，当用户登陆成功之后，获得这个令牌，当需要向服务器请求一些私密资源时，便可以提交这个令牌，以证明自己是合法用户。</p>
-<h2 id="token生成及解析">token生成及解析</h2>
-<p>使用pyjwt这个库：<code>pip install pyjwt</code></p>
-<h3 id="核心代码">核心代码：</h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="kn">import</span> <span class="nn">jwt</span>
-<span class="c1"># 加密算法</span>
-<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&#34;alg&#34;</span><span class="p">:</span><span class="s2">&#34;HS256&#34;</span><span class="p">,</span>
-    <span class="s2">&#34;typ&#34;</span><span class="p">:</span><span class="s2">&#34;JWT&#34;</span>
-<span class="p">}</span>
-<span class="c1"># 密钥</span>
-<span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s2">&#34;leeshy&#34;</span>
-<span class="s1">&#39;&#39;&#39;生成一个token&#39;&#39;&#39;</span>
-<span class="k">def</span> <span class="nf">token_encode</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">user_id</span><span class="p">:</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-            <span class="s2">&#34;user_id&#34;</span><span class="p">:</span><span class="n">user_id</span>
-        <span class="p">}</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">payload</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">SECRET_KEY</span><span class="p">,</span><span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;HS256&#39;</span><span class="p">,</span><span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">token</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-
-<span class="s1">&#39;&#39;&#39;解码token&#39;&#39;&#39;</span>
-<span class="k">def</span> <span class="nf">token_decode</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">jwt</span><span class="o">=</span><span class="n">token</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="n">SECRET_KEY</span><span class="p">,</span><span class="n">verify</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">algorithms</span><span class="o">=</span><span class="s1">&#39;HS256&#39;</span><span class="p">)</span>
-    <span class="n">info</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">info</span>
-</code></pre></div><ul>
-<li>headers声明加密算法</li>
-<li>SECRET_KEY密钥是编码解码的关键</li>
-<li>payload项中，有一些官方声明项，除官方声明项外还可以存一些自定义信息。</li>
-</ul>
-<h2 id="用户登陆">用户登陆</h2>
-<p>如果登陆成功，就返回信息和token，如果不成功，就只返回提示信息。</p>
-<p>较上一个版本只有一点改变，核心代码：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="s1">&#39;&#39;&#39;生成一个返回体&#39;&#39;&#39;</span>
-<span class="k">def</span> <span class="nf">response_body_login</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span><span class="n">user_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">response_msg</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">&#34;msg&#34;</span><span class="p">:</span><span class="n">msg</span><span class="p">,</span>
-        <span class="s2">&#34;token&#34;</span><span class="p">:</span><span class="n">token_encode</span><span class="p">(</span><span class="n">user_id</span><span class="p">)</span>
-    <span class="p">}</span>
-    <span class="k">return</span> <span class="n">jsonify</span><span class="p">(</span><span class="n">response_msg</span><span class="p">)</span>
-
-<span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/users/login&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">users_login</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">:</span>
-        <span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
-        <span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
-
-        <span class="k">for</span> <span class="n">user_dict</span> <span class="ow">in</span> <span class="n">users_list</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
-                <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_password&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_password</span><span class="p">:</span>
-                    <span class="k">return</span> <span class="n">response_body_login</span><span class="p">(</span><span class="s2">&#34;success&#34;</span><span class="p">,</span><span class="n">user_id</span><span class="p">)</span>
-                <span class="k">else</span><span class="p">:</span> 
-                    <span class="k">return</span> <span class="n">response_body_login</span><span class="p">(</span><span class="s2">&#34;password error&#34;</span><span class="p">)</span>
-
-        <span class="k">return</span> <span class="n">response_body_login</span><span class="p">(</span><span class="s2">&#34;id not exist&#34;</span><span class="p">)</span>
-</code></pre></div><ul>
-<li>规定的请求体格式是application/json</li>
-</ul>
-<h2 id="请求用户信息">请求用户信息</h2>
-<p>用户向服务端提供token，验证成功则返回用户头像的url。</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/users/info&#39;</span><span class="p">,</span><span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
-<span class="k">def</span> <span class="nf">users_info</span><span class="p">():</span>
-    <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&#34;POST&#34;</span><span class="p">:</span>
-        <span class="n">token</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s2">&#34;token&#34;</span><span class="p">]</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">user_id</span> <span class="o">=</span> <span class="n">token_decode</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
-        <span class="k">except</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&#34;token error&#34;</span>
-
-        <span class="k">for</span> <span class="n">user_dict</span> <span class="ow">in</span> <span class="n">users_headphotos</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_id&#34;</span><span class="p">]</span> <span class="o">==</span> <span class="n">user_id</span><span class="p">:</span>
-                <span class="k">return</span> <span class="n">user_dict</span><span class="p">[</span><span class="s2">&#34;user_headphoto&#34;</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="s2">&#34;no headphoto&#34;</span>
-</code></pre></div><ul>
-<li>token要放在请求头里，所以通过request.headers取得。</li>
-</ul>
-<h2 id="请求体格式">请求体格式</h2>
-<p>在前端向后端发送请求时，必须在请求头部分声明请求体格式。</p>
-<p>例如：<code>connection.setRequestProperty(&quot;Content-Type&quot;,&quot;application/json;charset=utf-8&quot;);</code></p>
-<p>这个格式是由后端决定的，否则后端无法取到对应的信息。</p>
-<h3 id="applicationx-www-form-urlencoded">application/x-www-form-urlencoded</h3>
-<p>这是最常见的 POST 提交数据的方式，提交时按照键值对<code>key1=val1&amp;key2=val2</code>的方式进行编码。</p>
-<p>版本1时，就使用了这种方法调试，所以后端代码对应的是：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
-<span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">form</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
-</code></pre></div><h3 id="applicationjson">application/json</h3>
-<p>指示服务端消息主体是序列化的JSON字符串。</p>
-<p>本次使用的调试方式是json，所以后端代码对应：</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="n">user_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_id&#34;</span><span class="p">)</span>
-<span class="n">user_password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&#34;user_password&#34;</span><span class="p">)</span>
-</code></pre></div><h2 id="调试">调试</h2>
-<p></p>
-<p></p>
-<h2 id="结束语">结束语</h2>
-<h3 id="源码">源码</h3>
-<p><a href="https://github.com/leeshy-tech/API_userLogin" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/API_userLogin</a></p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://www.cnblogs.com/wbl001/p/12050751.html" target="_blank" rel="noopener noreffer">【记录】form-data与x-www-form-urlencoded的区别 </a></p>
 ]]></description>
 </item>
 </channel>
