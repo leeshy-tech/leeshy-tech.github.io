@@ -4,7 +4,67 @@
         <link>https://leeshy-tech.github.io/categories/note/</link>
         <description>Note - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 07 Jan 2022 16:08:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 14 Jun 2022 14:58:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/note/" rel="self" type="application/rss+xml" /><item>
+    <title>git使用笔记——commit格式</title>
+    <link>https://leeshy-tech.github.io/git_commit_format/</link>
+    <pubDate>Tue, 14 Jun 2022 14:58:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/git_commit_format/</guid>
+    <description><![CDATA[<blockquote>
+<p>起因是看到了三位大佬的工程https://github.com/Direktor799/rusted_os/commits/main，非常的赏心悦目，才知道commit也有固定的格式</p>
+</blockquote>
+<p>Commit Message格式，目前规范使用较多的是 <a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines" target="_blank" rel="noopener noreffer">Angular 团队的规范</a>, 继而衍生了 <a href="https://www.conventionalcommits.org/en/v1.0.0/" target="_blank" rel="noopener noreffer">Conventional Commits specification</a>. 很多工具也是基于此规范, 它的 message 格式如下:</p>
+<p>Commit格式包含三个部分，Header、Body、Footer</p>
+<pre tabindex="0"><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+&lt;BLANK LINE&gt;
+&lt;body&gt;
+&lt;BLANK LINE&gt;
+&lt;footer&gt;
+</code></pre><ul>
+<li>首行header：必填，描述修改类型和内容
+<ul>
+<li>scope：commit影响的范围</li>
+<li>subject：commit的概述</li>
+</ul>
+</li>
+<li>body：commit具体修改的内容</li>
+<li>footer：备注，通常是 BREAKING CHANGE 或修复的 bug 的链接.</li>
+</ul>
+<h3 id="header">Header</h3>
+<p>Header只有一行，包括三个字段<code>type</code>（必填）<code>scope</code>（可选）<code>subject</code>（必填）</p>
+<h4 id="type">type</h4>
+<p>说明commit的类别</p>
+<ul>
+<li>feat：新增功能</li>
+<li>fix：bug 修复</li>
+<li>docs：文档更新</li>
+<li>style：不影响程序逻辑的代码修改(修改空白字符，格式缩进，补全缺失的分号等，没有改变代码逻辑)</li>
+<li>refactor：重构代码(既没有新增功能，也没有修复 bug)</li>
+<li>perf：性能, 体验优化</li>
+<li>test：新增测试用例或是更新现有测试</li>
+<li>build：主要目的是修改项目构建系统(例如 glup，webpack，rollup 的配置等)的提交</li>
+<li>ci：主要目的是修改项目继续集成流程(例如 Travis，Jenkins，GitLab CI，Circle等)的提交</li>
+<li>chore：不属于以上类型的其他类，比如构建流程, 依赖管理</li>
+<li>revert：回滚某个更早之前的提交</li>
+</ul>
+<h4 id="scope">scope</h4>
+<p>说明commit影响的范围，比如文件或者逻辑层。</p>
+<h4 id="subject">subject</h4>
+<p>commit简述</p>
+<ul>
+<li>以动词开头，使用第一人称现在时，比如<code>change</code>，而不是<code>changed</code>或<code>changes</code></li>
+<li>第一个字母小写</li>
+<li>结尾不加句号（<code>.</code>）</li>
+</ul>
+<h3 id="body">Body</h3>
+<p>commit详细描述</p>
+<h3 id="footer">Footer</h3>
+<p>只用于两种情况</p>
+<ol>
+<li>不兼容变动</li>
+<li>关闭Issue</li>
+</ol>
+]]></description>
+</item>
+<item>
     <title>OVS命令笔记</title>
     <link>https://leeshy-tech.github.io/ovs_cli/</link>
     <pubDate>Fri, 07 Jan 2022 16:08:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/ovs_cli/</guid>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>git使用笔记——commit格式 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="git使用笔记——commit格式" />
+<meta property="og:description" content="git使用笔记——commit格式" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/git_commit_format/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-14T14:58:06+08:00" />
+<meta property="article:modified_time" content="2022-06-14T14:58:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="git使用笔记——commit格式"/>
+<meta name="twitter:description" content="git使用笔记——commit格式"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/git_commit_format/" /><link rel="prev" href="https://leeshy-tech.github.io/oracle-mnist/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "git使用笔记——commit格式",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/git_commit_format\/"
+        },"genre": "posts","keywords": "Git","wordcount":  754 ,
+        "url": "https:\/\/leeshy-tech.github.io\/git_commit_format\/","datePublished": "2022-06-14T14:58:06+08:00","dateModified": "2022-06-14T14:58:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">git使用笔记——commit格式</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/note/"><i class="far fa-folder fa-fw"></i>Note</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-14">2022-06-14</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 754 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#header">Header</a></li>
+        <li><a href="#body">Body</a></li>
+        <li><a href="#footer">Footer</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><blockquote>
+<p>起因是看到了三位大佬的工程https://github.com/Direktor799/rusted_os/commits/main，非常的赏心悦目，才知道commit也有固定的格式</p>
+</blockquote>
+<p>Commit Message格式，目前规范使用较多的是 <a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines" target="_blank" rel="noopener noreffer">Angular 团队的规范</a>, 继而衍生了 <a href="https://www.conventionalcommits.org/en/v1.0.0/" target="_blank" rel="noopener noreffer">Conventional Commits specification</a>. 很多工具也是基于此规范, 它的 message 格式如下:</p>
+<p>Commit格式包含三个部分，Header、Body、Footer</p>
+<pre tabindex="0"><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
+&lt;BLANK LINE&gt;
+&lt;body&gt;
+&lt;BLANK LINE&gt;
+&lt;footer&gt;
+</code></pre><ul>
+<li>首行header：必填，描述修改类型和内容
+<ul>
+<li>scope：commit影响的范围</li>
+<li>subject：commit的概述</li>
+</ul>
+</li>
+<li>body：commit具体修改的内容</li>
+<li>footer：备注，通常是 BREAKING CHANGE 或修复的 bug 的链接.</li>
+</ul>
+<h3 id="header">Header</h3>
+<p>Header只有一行，包括三个字段<code>type</code>（必填）<code>scope</code>（可选）<code>subject</code>（必填）</p>
+<h4 id="type">type</h4>
+<p>说明commit的类别</p>
+<ul>
+<li>feat：新增功能</li>
+<li>fix：bug 修复</li>
+<li>docs：文档更新</li>
+<li>style：不影响程序逻辑的代码修改(修改空白字符，格式缩进，补全缺失的分号等，没有改变代码逻辑)</li>
+<li>refactor：重构代码(既没有新增功能，也没有修复 bug)</li>
+<li>perf：性能, 体验优化</li>
+<li>test：新增测试用例或是更新现有测试</li>
+<li>build：主要目的是修改项目构建系统(例如 glup，webpack，rollup 的配置等)的提交</li>
+<li>ci：主要目的是修改项目继续集成流程(例如 Travis，Jenkins，GitLab CI，Circle等)的提交</li>
+<li>chore：不属于以上类型的其他类，比如构建流程, 依赖管理</li>
+<li>revert：回滚某个更早之前的提交</li>
+</ul>
+<h4 id="scope">scope</h4>
+<p>说明commit影响的范围，比如文件或者逻辑层。</p>
+<h4 id="subject">subject</h4>
+<p>commit简述</p>
+<ul>
+<li>以动词开头，使用第一人称现在时，比如<code>change</code>，而不是<code>changed</code>或<code>changes</code></li>
+<li>第一个字母小写</li>
+<li>结尾不加句号（<code>.</code>）</li>
+</ul>
+<h3 id="body">Body</h3>
+<p>commit详细描述</p>
+<h3 id="footer">Footer</h3>
+<p>只用于两种情况</p>
+<ol>
+<li>不兼容变动</li>
+<li>关闭Issue</li>
+</ol>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/git/">Git</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-06-14</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/git_commit_format/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/oracle-mnist/" class="prev" rel="prev" title="论文笔记——Oracle-MNIST：a Realistic Image Dataset for Benchmarking Machine Learning Algorithms"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
