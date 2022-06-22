@@ -195,7 +195,7 @@
 删除网桥上已经挂接的网卡：<code>ovs-vsctl del-port br0 eth0</code></p>
 <h2 id="流表操作">流表操作</h2>
 <p>添加流表：<code>ovs-ofctl add-flow br0 &lt;match&gt;,&lt;action&gt;</code>   <br>
-删除流表：<code>ovs-ofctl add-flow br0 &lt;match&gt;</code></p>
+删除流表：<code>ovs-ofctl del-flows br0 &lt;match&gt;</code></p>
 <h3 id="流表动作-action">流表动作 action</h3>
 <p>从端口转发：<code>actions=output:&lt;number&gt;</code>  <br>
 丢弃数据包：<code>actions=drop</code><br>

@@ -35,7 +35,7 @@
 删除网桥上已经挂接的网卡：`ovs-vsctl del-port br0 eth0` 
 ## 流表操作
 添加流表：`ovs-ofctl add-flow br0 <match>,<action>`      
-删除流表：`ovs-ofctl add-flow br0 <match>`
+删除流表：`ovs-ofctl del-flows br0 <match>`
 ### 流表动作 action
 从端口转发：`actions=output:<number>`     
 丢弃数据包：`actions=drop`  
