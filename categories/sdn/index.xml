@@ -4,7 +4,55 @@
         <link>https://leeshy-tech.github.io/categories/sdn/</link>
         <description>SDN - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 10 Jan 2022 17:56:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/sdn/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Mon, 27 Jun 2022 17:31:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/sdn/" rel="self" type="application/rss+xml" /><item>
+    <title>SDN十篇推荐论文</title>
+    <link>https://leeshy-tech.github.io/sdn_paper_recom/</link>
+    <pubDate>Mon, 27 Jun 2022 17:31:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/sdn_paper_recom/</guid>
+    <description><![CDATA[<h1 id="sdn十篇推荐论文">SDN十篇推荐论文</h1>
+<blockquote>
+<p>推荐论文来自BUPT课程“软件定义网络”</p>
+</blockquote>
+<h2 id="1988the-design-philosophy-of-the-darpa-internet-protocols">(1988)The Design Philosophy of the DARPA Internet Protocols</h2>
+<p>DARPA互联网协议的设计哲学</p>
+<p>​	Internet 协议套件 TCP/IP 于 15 年前首次提出。 它由国防高级研究计划局 (DARPA) 开发，并已广泛用于军事和商业系统。 虽然有描述协议如何工作的论文和规范，但有时很难从中推断出协议为何如此。 例如，Internet 协议基于无连接或数据报服务模式。 这样做的动机被大大误解了。 本文试图捕捉形成 Internet 协议的一些早期推理。</p>
+<h2 id="2005overcoming-the-internet-impasse-through-virtualization">(2005)Overcoming the Internet Impasse through Virtualization</h2>
+<p>通过虚拟化克服互联网僵化</p>
+<p>当前的互联网陷入僵局，因为新架构无法部署，甚至无法进行充分评估。 本文敦促社区正视这一僵局，并提出一种可以使用虚拟化来克服它的方法。 在这个过程中，我们讨论了建筑的本质以及纯粹主义者和多元主义者之间的争论。</p>
+<p>提出使用网络虚拟化技术改变互联网技术革新模式。</p>
+<h2 id="2005a-clean-slate-4d-approach-to-network-control-and-management">(2005)A Clean Slate 4D Approach to Network Control and Management</h2>
+<p>网络控制和管理的全新 4D 方法</p>
+<p>​	当今的数据网络异常脆弱且难以管理。我们认为，这些问题的根源在于控制和管理平面的复杂性——协调网络元素的软件和协议——尤其是决策逻辑和分布式系统问题不可避免地交织在一起的方式。我们提倡对功能进行完全重构，并提出三个关键原则——网络级目标、网络范围的视图和直接控制——我们认为这些原则应该是新架构的基础。遵循这些原则，我们在架构的四个平面（决策、传播、发现和数据）之后确定了一个我们称之为“4D”的极端设计点。 4D 架构将 AS 的决策逻辑与管理网络元素之间交互的协议完全分开。 AS 级目标在决策平面中指定，并通过直接配置驱动数据平面如何转发数据包的状态来强制执行。在 4D 架构中，路由器和交换机只是按照决策平面的要求转发数据包，并收集测量数据以帮助决策平面控制网络。尽管 4D 会对当今的控制和管理平面进行重大更改，但数据包的格式不需要更改；这简化了 4D 架构的部署路径，同时仍然实现了网络控制和管理方面的重大创新。我们希望探索一个极端的设计点将有助于将研究和工业界的注意力集中在这个至关重要且具有智力挑战性的领域上。</p>
+<ul>
+<li>
+<p>解决现有互联网问题的最大困难是分布式系统问题和决策逻辑缠绕在一起。</p>
+</li>
+<li>
+<p>4D技术路线的要义就是分离<strong>分布式计算问题(Distributed Computing Issue)</strong></p>
+<p>和<strong>组网逻辑问题(Networking Issue)。</strong></p>
+</li>
+</ul>
+<h2 id="2007ethane-taking-control-of-the-enterprise">(2007)Ethane: Taking Control of the Enterprise</h2>
+<p>早期SDN原型</p>
+<p>本文介绍了 Ethane，一种适用于企业的新网络架构。 Ethane 允许管理人员定义一个单一的网络范围的细粒度策略，然后直接执行它。 Ethane 将极其简单的基于流的以太网交换机与管理流的准入和路由的集中控制器相结合。 虽然激进，但这种设计向后兼容现有的主机和交换机。 我们已经在硬件和软件中实现了 Ethane，支持有线和无线主机。 在过去的四个月里，我们运营的 Ethane 网络在斯坦福大学的网络中支持了 300 多台主机，这种部署经验对 Ethane 的设计产生了重大影响。</p>
+<h2 id="2008openflow-enabling-innovation-in-campus-networks">(2008)OpenFlow: Enabling Innovation in Campus Networks</h2>
+<p>​	本白皮书提出了 OpenFlow：一种供研究人员在他们每天使用的网络中运行实验协议的方法。 OpenFlow 基于以太网交换机，具有内部流表和用于添加和删除流条目的标准化接口。我们的目标是鼓励网络供应商将 OpenFlow 添加到他们的交换机产品中，以部署在大学校园骨干网和配线间中。我们认为 OpenFlow 是一种务实的折衷方案：一方面，它允许研究人员以统一的方式以线速和高端口密度在异构交换机上运行实验；另一方面，供应商不需要公开其交换机的内部工作原理。除了允许研究人员在现实世界的流量设置中评估他们的想法外，OpenFlow 还可以作为一个有用的校园组件，用于提议的大规模测试平台（如 GENI）。斯坦福大学的两座建筑物将很快使用商用以太网交换机和路由器运行 OpenFlow 网络。我们将努力鼓励在其他学校部署；我们鼓励您也考虑在您的大学网络中部署 OpenFlow。</p>
+<h2 id="2013on-scalability-of-software-defined-networking">(2013)On Scalability of Software-Defined Networking</h2>
+<p>论软件定义网络的可扩展性</p>
+<p>在本文中，我们解构了软件定义网络中的可扩展性问题，并认为它们不是 SDN 独有的。 我们探讨了不同环境中经常出现的问题，讨论了 SDN 设计空间中的可扩展性权衡，并介绍了一些关于 SDN 可扩展性的最新研究。 此外，我们列举了超出常用性能指标的可扩展性方面被忽视但重要的机遇和挑战。</p>
+<h2 id="2013improving-network-management-with-software-defined-networking">(2013)Improving Network Management with Software Defined Networking</h2>
+<p>使用软件定义网络改进网络管理</p>
+<p>​	网络管理具有挑战性。为了操作、维护和保护通信网络，网络运营商必须处理低级别的供应商特定配置，以实施复杂的高级网络策略。尽管之前提出了许多使网络更易于管理的建议，但由于难以改变底层基础设施，许多网络管理问题的解决方案都只是权宜之计。底层基础设施的僵化几乎没有创新或改进的可能性，因为网络设备通常是封闭的、专有的和垂直集成的。一种新的网络范式，软件定义网络（SDN），主张将数据平面和控制平面分离，使数据平面中的网络交换机成为简单的数据包转发设备，并留下一个逻辑集中的软件程序来控制整个网络的行为。 SDN 为网络管理和配置方法引入了新的可能性。在本文中，我们确定了当前最先进的网络配置和管理机制存在的问题，并介绍了改进网络管理各个方面的机制。我们关注网络管理中的三个问题：实现网络条件和状态的频繁更改，以高级语言提供网络配置支持，以及为执行网络诊断和故障排除的任务提供更好的可见性和控制。我们描述的技术使网络运营商能够以高级策略语言实施广泛的网络策略，并轻松确定性能问题的根源。除了系统本身，我们还描述了校园和家庭网络中的各种原型部署，展示了 SDN 如何改进常见的网络管理任务。</p>
+<h2 id="2014a-survey-of-software-defined-networking-past-present-and-future-of-programmable-networks">(2014)A Survey of Software-Defined Networking: Past, Present, and Future of Programmable Networks</h2>
+<p>软件定义网络调查：可编程网络的过去、现在和未来</p>
+<p>综述了可编程网络的最新进展，重点介绍了SDN。提供了可编程网络的历史视角，从早期的想法到最近的发展。然后介绍了SDN网络的体系结构和OpenFlow标准，讨论了当前基于SDN的协议和服务的实现和测试的替代方案，考察了当前和未来的SDN应用，并探讨了基于SDN模式的有前景的研究方向。</p>
+<h2 id="2014software-defined-networking-a-comprehensive-survey">(2014)Software-Defined Networking: A Comprehensive Survey</h2>
+<p>在本文中，我们对 SDN 进行了全面调查。我们首先介绍 SDN 的动机，解释它的主要概念以及它与传统网络的区别、它的根源以及关于这种新颖范式的标准化活动。接下来，我们使用自下而上的分层方法展示 SDN 基础设施的关键构建块。我们对硬件基础设施、南向和北向 API、网络虚拟化层、网络操作系统（SDN 控制器）、网络编程语言和网络应用程序进行了深入分析。我们还研究了调试和故障排除等跨层问题。为了预测这种新范式的未来发展，我们讨论了 SDN 的主要正在进行的研究工作和挑战。特别是，我们解决了交换机和控制平台的设计——重点关注弹性、可扩展性、性能、安全性和可靠性等方面——以及运营商传输网络和云提供商的新机遇。最后但同样重要的是，我们分析了 SDN 作为软件定义环境的关键推动者的地位。</p>
+<h2 id="2014p4-programming-protocol-independent-packet-processors">(2014)P4: Programming Protocol-Independent Packet Processors</h2>
+<p>P4：编写协议无关的包处理器</p>
+<p>​	P4 是一种用于编程独立于协议的包处理器的高级语言。 P4 与 OpenFlow 等 SDN 控制协议结合使用。 在目前的形式中，OpenFlow 明确指定了它所操作的协议头。 这组在几年内从 12 个字段增长到 41 个字段，增加了规范的复杂性，同时仍然不能提供添加新标头的灵活性。 在本文中，我们提出 P4 作为 OpenFlow 未来应该如何发展的草案建议。 我们有三个目标： (1) 现场可重构性：一旦部署，程序员应该能够改变交换机处理数据包的方式。 (2) 协议独立性：交换机不应与任何特定的网络协议绑定。 (3) 目标独立性：程序员应该能够独立于底层硬件的细节来描述数据包处理功能。 作为示例，我们描述了如何使用 P4 来配置交换机以添加新的分层标签。</p>
+]]></description>
+</item>
+<item>
     <title>SDN自学习交换机工作原理分析</title>
     <link>https://leeshy-tech.github.io/simple_switch_analyse/</link>
     <pubDate>Mon, 10 Jan 2022 17:56:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/simple_switch_analyse/</guid>
