@@ -1,14 +1,149 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>Network - 标签 - Leeshy&#39;s Blog | To be humble</title>
-        <link>https://leeshy-tech.github.io/tags/network/</link>
-        <description>Network - 标签 - Leeshy&#39;s Blog | To be humble</description>
-        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 28 Jun 2022 13:31:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/network/" rel="self" type="application/rss+xml" /><item>
-    <title>论文笔记——The Design Philosophy of the DARPA Internet Protocols</title>
-    <link>https://leeshy-tech.github.io/design_philosophy_of_darpa/</link>
-    <pubDate>Tue, 28 Jun 2022 13:31:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/design_philosophy_of_darpa/</guid>
-    <description><![CDATA[<h1 id="the-design-philosophy-of-the-darpa-internet-protocols">The Design Philosophy of the DARPA Internet Protocols</h1>
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>论文笔记——The Design Philosophy of the DARPA Internet Protocols - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="论文笔记——The Design Philosophy of the DARPA Internet Protocols" />
+<meta property="og:description" content="The Design Philosophy of the DARPA Internet Protocols.DARPA网络协议的设计哲学" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/design_philosophy_of_darpa/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2022-06-28T13:31:06+08:00" />
+<meta property="article:modified_time" content="2022-06-28T13:31:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="论文笔记——The Design Philosophy of the DARPA Internet Protocols"/>
+<meta name="twitter:description" content="The Design Philosophy of the DARPA Internet Protocols.DARPA网络协议的设计哲学"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/design_philosophy_of_darpa/" /><link rel="prev" href="https://leeshy-tech.github.io/sdn_paper_recom/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "论文笔记——The Design Philosophy of the DARPA Internet Protocols",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/design_philosophy_of_darpa\/"
+        },"genre": "posts","keywords": "Network, Paper","wordcount":  6661 ,
+        "url": "https:\/\/leeshy-tech.github.io\/design_philosophy_of_darpa\/","datePublished": "2022-06-28T13:31:06+08:00","dateModified": "2022-06-28T13:31:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">论文笔记——The Design Philosophy of the DARPA Internet Protocols</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/paper/"><i class="far fa-folder fa-fw"></i>Paper</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2022-06-28">2022-06-28</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 6661 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 14 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#论文概况">论文概况</a></li>
+    <li><a href="#摘要">摘要</a></li>
+    <li><a href="#1-引言">1 引言</a></li>
+    <li><a href="#2-基本目标">2 基本目标</a></li>
+    <li><a href="#3-二层目标">3 二层目标</a></li>
+    <li><a href="#4-面对失败时的生存能力">4 面对失败时的生存能力</a></li>
+    <li><a href="#5-服务类型">5 服务类型</a></li>
+    <li><a href="#6-各种网络">6 各种网络</a></li>
+    <li><a href="#7-其他目标">7 其他目标</a></li>
+    <li><a href="#8-架构和实现">8 架构和实现</a></li>
+    <li><a href="#9-数据包">9 数据包</a></li>
+    <li><a href="#10-tcp">10 TCP</a></li>
+    <li><a href="#11-结论">11 结论</a></li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h1 id="the-design-philosophy-of-the-darpa-internet-protocols">The Design Philosophy of the DARPA Internet Protocols</h1>
 <p>DARPA网络协议的设计哲学</p>
 <h2 id="论文概况">论文概况</h2>
 <p><a href="https://dl.acm.org/doi/proceedings/10.1145/52324" target="_blank" rel="noopener noreffer">SIGCOMM &lsquo;88: Symposium proceedings on Communications architectures and protocols</a></p>
@@ -80,171 +215,38 @@
 <p>就其优先事项而言，互联网架构非常成功。 这些协议广泛用于商业和军事环境，并催生了许多类似的架构。 同时，它的成功表明，在某些情况下，设计师的优先级与实际用户的需求不匹配。 需要更加关注分管地区的会计、资源管理和运营等事项。</p>
 <p>虽然数据报在解决 Internet 最重要的目标方面发挥了很好的作用，但当我们试图解决一些在优先级列表中更靠后的目标时，它就没有那么好用了。 例如，资源管理和问责制的目标已被证明在数据报的背景下难以实现。 正如上一节所讨论的，大多数数据报是从源到目的地的某些数据包序列的一部分，而不是应用程序级别的孤立单元。 但是，网关不能直接看到这个序列的存在，因为它被迫孤立地处理每个数据包。 因此，必须对每个数据包分别进行资源管理决策或计费。 将数据报模型强加于 Internet 层已经剥夺了该层可用于实现这些目标的重要信息来源。</p>
 <p>这表明下一代架构可能有比数据报更好的构建块。这个构建块的一般特征是它可以识别从源到目的地的一系列数据包，而无需假设该服务具有任何特定类型的服务。我用“流”这个词来描述这个构建块。网关必须具有流状态以记住通过它们的流的性质，但状态信息对于维护与流相关联的所需服务类型并不重要。相反，该类型的服务将由端点强制执行，端点将定期发送消息以确保正确类型的服务与流相关联。这样，与流相关的状态信息可能会在崩溃中丢失，而不会永久中断正在使用的服务功能。我将这个概念称为“软状态”，它很可能使我们能够实现生存性和灵活性的主要目标，同时更好地处理资源管理和问责制问题。探索替代构建块构成了 DARPA 互联网计划的当前研究方向之一。</p>
-]]></description>
-</item>
-<item>
-    <title>网络实验——在linux平台安装OLSR协议</title>
-    <link>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</link>
-    <pubDate>Sun, 27 Mar 2022 22:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/network_olsr_with_mininet-wifi/</guid>
-    <description><![CDATA[<h1 id="在linux平台安装olsr协议">在linux平台安装OLSR协议</h1>
-<h2 id="前言">前言</h2>
-<p>因为要做一个OLSR和SDN自定义控制面的对比实验，所以要利用mininet-wifi平台自定义拓扑跑一下OLSR协议。</p>
-<p>平台：ubuntu20.04</p>
-<h2 id="安装">安装</h2>
-<ul>
-<li>
-<p>官网：<a href="www.olsr.org/" rel="">www.olsr.org/</a></p>
-</li>
-<li>
-<p>github：<a href="https://github.com/OLSR/olsrd" target="_blank" rel="noopener noreffer">https://github.com/OLSR/olsrd</a></p>
-</li>
-</ul>
-<h3 id="通过mininet-wifi安装">通过mininet-wifi安装</h3>
-<ul>
-<li>进入mininet-wifi目录<code>sudo ./install.sh -o</code></li>
-</ul>
-<h3 id="从git安装没有亲自试来自网络">从git安装(没有亲自试，来自网络)</h3>
-<ul>
-<li>
-<p>安装语法分析器：<code>sudo apt install bison flex</code></p>
-</li>
-<li>
-<p>下载源码：<code>git clone https://github.com/OLSR/olsrd</code></p>
-</li>
-<li>
-<p>编译：<code>cd olsrd;make</code></p>
-</li>
-<li>
-<p>安装：<code>sudo make install</code></p>
-</li>
-</ul>
-<h2 id="mininet-wifi拓扑构建">mininet-wifi拓扑构建</h2>
-<blockquote>
-<p>构造一个网络拓扑来测试OLSR协议。</p>
-</blockquote>
-<p>拓扑文件（参考example/adhoc.py）：</p>
-<p><a href="https://github.com/leeshy-tech/mininet-wifi/blob/master/examples/OLSR/olsr_test.py" target="_blank" rel="noopener noreffer">https://github.com/leeshy-tech/mininet-wifi/blob/master/examples/OLSR/olsr_test.py</a></p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/python</span>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/network/">Network</a>
+                </span><span><a href="/tags/paper/">Paper</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2022-06-28</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/design_philosophy_of_darpa/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/sdn_paper_recom/" class="prev" rel="prev" title="SDN十篇推荐论文"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2022</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
 
-<span class="s2">&#34;&#34;&#34;
-</span><span class="s2">This example use four motionless station to test the OLSR protocol in adhoc network.
-</span><span class="s2">It&#39;s almost the same as example/adhoc.py.
-</span><span class="s2">use &#34;sudo python olsr_test.py olsrd&#34; in terminal to run it.
-</span><span class="s2">&#34;&#34;&#34;</span>
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
 
-<span class="kn">import</span> <span class="nn">sys</span>
-
-<span class="kn">from</span> <span class="nn">mininet.log</span> <span class="kn">import</span> <span class="n">setLogLevel</span><span class="p">,</span> <span class="n">info</span>
-<span class="kn">from</span> <span class="nn">mn_wifi.link</span> <span class="kn">import</span> <span class="n">wmediumd</span><span class="p">,</span> <span class="n">adhoc</span>
-<span class="kn">from</span> <span class="nn">mn_wifi.manetRoutingProtocols</span> <span class="kn">import</span> <span class="n">olsrd</span>
-<span class="kn">from</span> <span class="nn">mn_wifi.cli</span> <span class="kn">import</span> <span class="n">CLI</span>
-<span class="kn">from</span> <span class="nn">mn_wifi.net</span> <span class="kn">import</span> <span class="n">Mininet_wifi</span>
-<span class="kn">from</span> <span class="nn">mn_wifi.wmediumdConnector</span> <span class="kn">import</span> <span class="n">interference</span>
-
-
-<span class="k">def</span> <span class="nf">topology</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
-    <span class="s2">&#34;Create a network.&#34;</span>
-    <span class="n">net</span> <span class="o">=</span> <span class="n">Mininet_wifi</span><span class="p">(</span><span class="n">link</span><span class="o">=</span><span class="n">wmediumd</span><span class="p">,</span> <span class="n">wmediumd_mode</span><span class="o">=</span><span class="n">interference</span><span class="p">)</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Creating nodes</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">if</span> <span class="s1">&#39;-a&#39;</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span>
-
-    <span class="n">sta1</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta1&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::1&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;25,50,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">sta2</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta2&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::2&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;75,10,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">sta3</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta3&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::3&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;75,90,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">sta4</span> <span class="o">=</span> <span class="n">net</span><span class="o">.</span><span class="n">addStation</span><span class="p">(</span><span class="s1">&#39;sta4&#39;</span><span class="p">,</span> <span class="n">ip6</span><span class="o">=</span><span class="s1">&#39;fe80::4&#39;</span><span class="p">,</span><span class="n">position</span><span class="o">=</span><span class="s1">&#39;125,50,0&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="n">net</span><span class="o">.</span><span class="n">setPropagationModel</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&#34;logDistance&#34;</span><span class="p">,</span> <span class="n">exp</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Configuring wifi nodes</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">configureWifiNodes</span><span class="p">()</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Creating links</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-    <span class="c1"># MANET routing protocols supported by proto:</span>
-    <span class="c1"># babel, batman_adv, batmand and olsr</span>
-    <span class="c1"># WARNING: we may need to stop Network Manager if you want</span>
-    <span class="c1"># to work with babel</span>
-    <span class="n">protocols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;babel&#39;</span><span class="p">,</span> <span class="s1">&#39;batman_adv&#39;</span><span class="p">,</span> <span class="s1">&#39;batmand&#39;</span><span class="p">,</span> <span class="s1">&#39;olsrd&#39;</span><span class="p">,</span> <span class="s1">&#39;olsrd2&#39;</span><span class="p">]</span>
-    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">args</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">proto</span> <span class="ow">in</span> <span class="n">protocols</span><span class="p">:</span>
-            <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;proto&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">proto</span>
-
-    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta1</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta1-wlan0&#39;</span><span class="p">,</span>
-                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span>  <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta2</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta2-wlan0&#39;</span><span class="p">,</span>
-                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta3</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta3-wlan0&#39;</span><span class="p">,</span>
-                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">addLink</span><span class="p">(</span><span class="n">sta4</span><span class="p">,</span> <span class="bp">cls</span><span class="o">=</span><span class="n">adhoc</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s1">&#39;sta4-wlan0&#39;</span><span class="p">,</span>
-                <span class="n">ssid</span><span class="o">=</span><span class="s1">&#39;adhocNet&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
-                <span class="n">ht_cap</span><span class="o">=</span><span class="s1">&#39;HT40+&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="n">net</span><span class="o">.</span><span class="n">plotGraph</span><span class="p">(</span><span class="n">max_x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">max_y</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Starting network</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;</span><span class="se">\n</span><span class="s2">*** Addressing...</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-    <span class="k">if</span> <span class="s1">&#39;proto&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
-        <span class="n">sta1</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::1/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta1-wlan0&#34;</span><span class="p">)</span>
-        <span class="n">sta2</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::2/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta2-wlan0&#34;</span><span class="p">)</span>
-        <span class="n">sta3</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::3/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta3-wlan0&#34;</span><span class="p">)</span>
-        <span class="n">sta4</span><span class="o">.</span><span class="n">setIP6</span><span class="p">(</span><span class="s1">&#39;2001::4/64&#39;</span><span class="p">,</span> <span class="n">intf</span><span class="o">=</span><span class="s2">&#34;sta4-wlan0&#34;</span><span class="p">)</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Running CLI</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-    <span class="n">CLI</span><span class="p">(</span><span class="n">net</span><span class="p">)</span>
-
-    <span class="n">info</span><span class="p">(</span><span class="s2">&#34;*** Stopping network</span><span class="se">\n</span><span class="s2">&#34;</span><span class="p">)</span>
-    <span class="n">net</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
-
-
-<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
-    <span class="n">setLogLevel</span><span class="p">(</span><span class="s1">&#39;info&#39;</span><span class="p">)</span>
-    <span class="n">topology</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
-</code></pre></div><p>可视化：</p>
-<p></p>
-<p>解读：</p>
-<p>从图中可以看出，sta1只能与sta2和sta3进行单跳通信，如果要与sta4通信，就需要sta2或者sta3进行中继。如果没有OLSR协议，节点在收到目的IP不是本节点的包之后就会丢掉，无法完成中继。OLSR协议会在网络中的节点维护整个网络拓扑，就能完成中继。</p>
-<h2 id="实验测试">实验测试</h2>
-<h3 id="关闭networkmanager">关闭NetworkManager</h3>
-<p><code>sudo systemctl stop NetworkManager</code></p>
-<p>NetworkManager是linux的自动网络配置工具，我们希望自己配置网络，所以要把它关掉。</p>
-<p>查看节点的网络状态<code>ip addr</code>，没有图中的<code>NO-CARRIER</code>说明NetworkManager已经被关闭。（这个命令可以在本机运行，也可以在mininet虚拟主机运行。）</p>
-<p></p>
-<h3 id="配置olsr">配置OLSR</h3>
-<p>编辑配置文件：<code>vim /etc/olsrd/olsrd.conf</code></p>
-<p>添加所有节点的网卡：</p>
-<p></p>
-<p>退出、保存</p>
-<h3 id="运行拓扑文件">运行拓扑文件</h3>
-<p><code>sudo python olsr_test.py olsrd</code></p>
-<p></p>
-<h3 id="网络测试">网络测试</h3>
-<p><code>sta1 ping sta4</code></p>
-<p></p>
-<p>能ping通，说明OLSR协议运行正常。</p>
-<p>查看路由：<code>sta3 route</code></p>
-<p></p>
-<p>多了三条路由，这是OLSR协议运行的结果。</p>
-<h2 id="结束">结束</h2>
-<h3 id="恢复系统">恢复系统</h3>
-<p>开启NetworkManager：<code>sudo systemctl start NetworkManager</code></p>
-<p>退出mininet-wifi：<code>exit</code></p>
-<p>清理系统：<code>sudo mn -c</code></p>
-<h3 id="参考文献">参考文献</h3>
-<p><a href="https://blog.csdn.net/whatday/article/details/106096127" target="_blank" rel="noopener noreffer">centos7 开启 关闭 NetworkManager</a></p>
-<p><a href="https://blog.csdn.net/qq_35109869/article/details/79839357" target="_blank" rel="noopener noreffer">Linux虚拟机下OLSR协议的安装</a></p>
-<p><a href="https://github.com/intrig-unicamp/mininet-wifi/issues/342" target="_blank" rel="noopener noreffer">Unable to create IPv6 multi hop mesh network in ad hoc mode #342</a>这个issue救了大命了</p>
-<p><a href="https://blog.csdn.net/weixin_29279047/article/details/116832580" target="_blank" rel="noopener noreffer">Linux卸载olsrd,olsrd路由协议移植到嵌入式linux中使用</a></p>
-<p><a href="www.olsr.org/" rel="">www.olsr.org/</a>官网写的说明太少了，根本看不懂，麻了。</p>
-<p><a href="https://github.com/OLSR/olsrd" target="_blank" rel="noopener noreffer">https://github.com/OLSR/olsrd</a></p>
-]]></description>
-</item>
-</channel>
-</rss>
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
