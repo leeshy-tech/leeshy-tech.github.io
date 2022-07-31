@@ -1,0 +1,33 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>Talk - 分类 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/categories/talk/</link>
+        <description>Talk - 分类 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sun, 31 Jul 2022 21:49:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/talk/" rel="self" type="application/rss+xml" /><item>
+    <title>考研</title>
+    <link>https://leeshy-tech.github.io/goodbye/</link>
+    <pubDate>Sun, 31 Jul 2022 21:49:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/goodbye/</guid>
+    <description><![CDATA[<h1 id="考研">考研</h1>
+<p>从2022/07/02正式开始准备考研了，到考研结束之前应该不会再对博客进行更新了。</p>
+<p>此贴记录一些flag，考研结束之后挨个做。</p>
+<p>也许这些东西对复试也会有点帮助？</p>
+<h2 id="新博客">新博客</h2>
+<p>这个博客主题是照着lgt的搭的，其实当时也不是很想照搬别人的博客，但是主题看来看去都看不入眼，很喜欢这种简洁风格。但是没想到cl大师和maxlinn同学也是feellt主题，有丝分裂了属于是，等考研结束就换一个。</p>
+<h2 id="课程记录">课程记录</h2>
+<p>本科的一些课程还是下了很多功夫的，之后简单写个贴记录一下。</p>
+<h3 id="数字系统设计实验">数字系统设计实验</h3>
+<p>虽然数电学的很垃圾（主要是打那个破物理比赛去了），但是数电实验当时确实下了很多功夫，当时不仅完成了所有要求，还做了个lcd屏的显示（参考<a href="https://www.cnblogs.com/Clouds42/p/11938079.html" target="_blank" rel="noopener noreffer">https://www.cnblogs.com/Clouds42/p/11938079.html</a>），美中不足的是代码没组织好，模块分的不够清楚。</p>
+<h3 id="信息网络建模与仿真">信息网络建模与仿真</h3>
+<p>这部分代码已经传到github上好久了，一直偷懒没写东西，这门课的随机数和随机过程生成的相关知识挺有用的。</p>
+<h3 id="模式识别及应用">模式识别及应用</h3>
+<p>这门课基于老师的数据集Oracle-MNIST做了一些模型的实践，主要是《动手学深度学习》这本书的例子改的，也写一些东西吧。</p>
+<h3 id="信息系统设计">信息系统设计</h3>
+<p>这门课做了后端、鸿蒙软件和硬件的开发，写一些东西把自己做的东西理一理。</p>
+<h2 id="考研总结">考研总结</h2>
+<p>要是成功了就是经验贴，要是没成功就是教训贴。</p>
+<p>可能会写个日记，定期push到github上。</p>
+]]></description>
+</item>
+</channel>
+</rss>
