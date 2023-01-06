@@ -2,21 +2,21 @@
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     ><url>
-            <loc>https://leeshy-tech.github.io/categories/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/posts/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/tags/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/talk/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/tags/%E8%80%83%E7%A0%94/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/goodbye/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>1</priority></url><url>
-            <loc>https://leeshy-tech.github.io/tags/paper/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/paper/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://leeshy-tech.github.io/tags/sdn/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://leeshy-tech.github.io/openflow/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://leeshy-tech.github.io/tags/network/</loc><lastmod>2022-06-28T13:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://leeshy-tech.github.io/design_philosophy_of_darpa/</loc><lastmod>2022-06-28T13:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://leeshy-tech.github.io/categories/sdn/</loc><lastmod>2022-06-27T17:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
-            <loc>https://leeshy-tech.github.io/sdn_paper_recom/</loc><lastmod>2022-06-27T17:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/posts/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/tags/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/talk/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/tags/%E8%80%83%E7%A0%94/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/goodbye/</loc><lastmod>2022-07-31T21:49:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/tags/paper/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/paper/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/tags/sdn/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/openflow/</loc><lastmod>2022-06-28T17:30:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/tags/network/</loc><lastmod>2022-06-28T13:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/design_philosophy_of_darpa/</loc><lastmod>2022-06-28T13:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/categories/sdn/</loc><lastmod>2022-06-27T17:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
+            <loc>https://leeshy-tech.github.io/sdn_paper_recom/</loc><lastmod>2022-06-27T17:31:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/tags/git/</loc><lastmod>2022-06-14T14:58:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/git_commit_format/</loc><lastmod>2022-06-14T14:58:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
             <loc>https://leeshy-tech.github.io/categories/note/</loc><lastmod>2022-06-14T14:58:06&#43;08:00</lastmod><changefreq>weekly</changefreq><priority>0.5</priority></url><url>
