@@ -1,0 +1,111 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>可编程网络 - 标签 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/tags/%E5%8F%AF%E7%BC%96%E7%A8%8B%E7%BD%91%E7%BB%9C/</link>
+        <description>可编程网络 - 标签 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 06 Jan 2023 17:32:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/%E5%8F%AF%E7%BC%96%E7%A8%8B%E7%BD%91%E7%BB%9C/" rel="self" type="application/rss+xml" /><item>
+    <title>可编程网络前世今生</title>
+    <link>https://leeshy-tech.github.io/overview_of_programmable_networks/</link>
+    <pubDate>Fri, 06 Jan 2023 17:32:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/overview_of_programmable_networks/</guid>
+    <description><![CDATA[<h1 id="可编程网络技术及发展趋势综述">可编程网络技术及发展趋势综述</h1>
+<blockquote>
+<p>本文为BUPT课程“个人发展规划与创新创业”课程论文，仅在此记录，并不是一篇学术论文。</p>
+</blockquote>
+<h2 id="1-引言">1 引言</h2>
+<p>互联网极大地影响着人们的生活和工作方式，经过 40 多年的发展，已经成为人类社会的重要基础设施和各国的重要战略资源。在互联网过去几十年的发展过程中，涌现出一系列优秀的技术和标准，如 TCP（transmission control protocol）/IP（Internetprotocol）、OSPF（open shortest path first）、BGP （ border gateway protocol ） MPLS（ multi-protocol label switching ） 、 IPv6（ Internet protocol version 6 ） 、 BBR（bottleneck bandwidth and RTT）等，以及移动通信网络领域的 3G/4G/5G 网络相关技术等，这些技术为互联网的发展演进提供了重要支撑，做出了历史性贡献。然而，随着新时代的到来，新型网络应用不断涌现，现有的网络结构已难以满足需要，其弊端暴露的越来越明显。</p>
+<p>在技术挑战的角度上，未来互联网在可扩展性、移动性、安全性、服务质量保障、高效服务分发、绿色节能等方面、仍面临巨大挑战[1]。关于未来网络技术的发展，学术界涌现了很多新的思想和尝试，比如内容中心网络（content centric network，CCN）、软件定义网络（software-defined network，SDN）、云网络（Nebula）、命名数据网络（named data network，NDN）、可表述网络（expressive internet architecture，XIA）、可选网络（ChoiceNet）等。</p>
+<p>对于新型网络技术，主要有两种研究思路，第一种是对于传统网络的分层设计协议，设计更多的协议补丁（如组播、MPLS）；或者设计全新的未来网络协议（如 CCN、NDN）。第二种则是可编程思想，它认为再好的新协议也不能跟上应用和需求的不断变化。因此，从系统设计的角度，利用灵活定制的思想定制未来的网络。</p>
+<h2 id="2-现有网络的问题和挑战">2 现有网络的问题和挑战</h2>
+<h3 id="21-部署管理困难">2.1 部署管理困难</h3>
+<p>网络中有多种设备，从路由器和交换机到防火墙、网络地址转换器、服务器负载平衡器和入侵检测系统等中间设备。这些专用设备通常是&quot;封闭&quot;系统。具有有限的并且特定于供应商的配置接口。一旦部署并投入生产，当前的网络基础设施很难演进。部署协议的新版本（例如 IPv6）非常困难，更不用说部署全新的协议和服务，几乎是不可完成的任务。</p>
+<h3 id="22-分布式架构瓶颈">2.2 分布式架构瓶颈</h3>
+<p>传统网络在设计之初就采用分布式的结构，无中心节点，设备之间采用口口相传的方式传递信息，每台设备都有自己的 CPU、独立决定转发逻辑，造成无法从全局的角度进行资源分配和流量调度[2]。同时，为了协调各个设备的相互沟通，诞生了无数的网络协议，带来了新旧兼容、更新缓慢的问题。</p>
+<h3 id="23-可扩展性问题">2.3 可扩展性问题</h3>
+<p>当前网络规模不断扩大，互联网流量爆炸，网络流量超线性增长，然而芯片处理性能的增长受摩尔定律的限制，硬件处理性能越来越跟不上流量的提升速度，域间路由收敛变慢，网络稳定性下降。根据 APNIC 提供的数据：BGP（边界网关协议）更新频率平均达到 6 次/s，一天累计 50 万次以上，峰值高达 1000 次/s。所以网络可持续发展面临严峻挑战。</p>
+<h3 id="24-不可控qos难以保证">2.4 不可控、QoS难以保证</h3>
+<p>从需求驱动角度来看，新的业务将对未来网络提出更多的要求。例如，在消费型业务领域，AR（augmented reality）/VR（virtualreality）/3D 通话、全息传送、交互式游戏等沉浸式业务将对网络低时延、大带宽性能提出更高要求；在工业互联网领域，精仪制造、远程工控、数字孪生等生产性业务则要求网络具备更好的低时延、低抖动能力；在车联网领域，自动驾驶、车路协同、无人车、无人机、无人船等新兴业务则会对网络提出低时延、高可靠的双重需求。</p>
+<p>而传统 TCP/IP 网络遵循&quot;尽力而为&quot;的转发，网络侧重公平性原则，缺少提供差异性服务的能力，对于新时代对于网络容量、实时性、可靠性的差异化需要，传统网络结构是无能为力的。</p>
+<h2 id="3-早期可编程网络">3 早期可编程网络</h2>
+<p>软件定义网络以数控分离、可编程等主要特点受到广泛认可，特别是 OpenFlow 被吹捧为&quot;网络中的激进新思想&quot;。然而，科学研究不是一蹴而就的，SDN 也是受早期可编程网络工作的影响，它们是当前 SDN 范式的前身，为当前的许多思想奠定了基础。</p>
+<h3 id="31-open-signaling">3.1 Open Signaling</h3>
+<p>开放信令 (OPENSIG) 工作组于 1995年开始举办一系列研讨会，致力于&quot;使 ATM、互联网和移动网络更加开放、可扩展和可编程&quot;。 他们认为通信硬件和控制软件之间的分离是必要的，但实现起来具有挑战性；这主要是由于垂直集成的交换机和路由器，其封闭性使得快速部署新的网络服务和环境变得不可能。他们提议的核心是通过开放、可编程的网络接口提供对网络硬件的访问；这将允许通过分布式编程环境部署新服务。</p>
+<p>在这些想法的推动下，IETF 工作组应运 而 生 ， 随后导致了通用交换管理协议(GSMP)的诞生，这是一种控制标签交换的通用协议。GSMP 允许控制器在交换机上建立和释放连接、添加和删除多播连接上的叶子、管理交换机端口、请求配置信息、请求和删除交换机资源的预留以及请求统计信息。</p>
+<h3 id="32-active-networking">3.2 Active Networking</h3>
+<p>同 样 在 1990 年 代 中 期 ， ActiveNetworking 倡议提出了一种网络基础设施的想法，该网络基础设施可以为定制服务进行编程。有两种主要方法正在考虑中，即：(1)用户可编程交换机，具有带内数据传输和带外管理通道；(2)胶囊，可以在用户消息中携带的程序片段；然后程序片段将由路由器解释和执行。尽管它激发了相当多的活动，但 Active Networking 并获得广泛使用和行业部署，主要是由于实际的安全和性能问题。</p>
+<h3 id="33-dcan">3.3 DCAN</h3>
+<p>1990 年代中期发生的另一项举措是 ATM 网络下放控制 (DCAN)。 该项目的目的是为 ATM 网络的可扩展控制和管理设计和开发必要的基础设施。前提是许多设备的控制和管理功能（ 在 DCAN 的情况下是 ATM 交换机）应该与设备本身分离，并委托给专用的外部实体，这基本上是 SDN 背后的概念。</p>
+<h3 id="34-4d-project">3.4 4D Project</h3>
+<p>从 2004 年开始，4D 项目提倡一种全新的设计，强调路由决策逻辑和管理网络元素之间交互的协议之间的分离。它建议为&quot;决策&quot;平面提供网络的全局视图，由&quot;传播&quot;和&quot;发现&quot;平面提供服务，以控制用于转发流量的&quot;数据&quot;平面。这些想法为后来的工作提供了直接的灵感 ， 例如 NOX ， 它在支持 OpenFlow 的网络的背景下提出了&quot;网络操作系统&quot;。</p>
+<h3 id="35-netconf">3.5 NETCONF</h3>
+<p>2006年，IETF网络配置工作组提出 NETCONF作为修改网络设备配置的管理协议。该协议允许网络设备公开一个API，通过该API可以发送和检索可扩展的配置数据。</p>
+<p>尽管NETCONF协议实现了简化设备（重新）配置的目标并充当管理的构建块，但数据平面和控制平面之间没有分离。具有NETCONF的网络不应被视为完全可编程，因为任何新功能都必须在网络设备和管理器上实现，以便可以提供任何新功能。</p>
+<h3 id="36-ethane">3.6 Ethane</h3>
+<p>OpenFlow的直接前身是SANE / Ethane 项目，该项目在 2006 年为企业网络定义了一种新架构。Ethane的重点是使用集中式控制器来管理网络中的策略和安全性。一个值得注意的例子是提供基于身份的访问控制。与SDN类似，Ethane使用两个组件：一个控制器来决定是否应该转发数据包，以及一个由流表和到控制器的安全通道组成的Ethane交换机。</p>
+<h2 id="4-软件定义网络">4 软件定义网络</h2>
+<p>软件定义网络在可编程网络中无疑是里程碑式的发展。它旨在促进创新并实现对网络数据路径的简单编程控制。如图1所示，转发硬件与控制逻辑的分离允许更轻松地部署新协议和应用程序、直接的网络可视化和管理，以及将各种中间盒整合到软件控制中。网络不是在分散设备的集合上执行策略和运行协议，而是简化为“单一”的转发硬件和决策网络控制器。</p>
+<p></p>
+<h3 id="41-openflow">4.1 OpenFlow</h3>
+<p>OpenFlow[3]项目第一次完整阐述并实践了软件定义网络的思想，它的影响之大以至于许多人几乎将OpenFlow等同于狭义上的SDN。</p>
+<p>在OpenFlow架构中，传统转发设备中的控制功能被彻底抽象出来，交换机成为功能单一的转发设备，只按照流表项匹配转发，控制器与交换机通过OpenFlow协议进行安全通信。</p>
+<p>交换机中的流表决定了对于一条流的处理动作，当到达交换机的包不能匹配已存在的流表时，交换机将包转发到控制器，由控制器决定转发逻辑并下发流表。并且，控制器开放了北向接口，可以通过编程的方式控制转发逻辑。由此便实现了对网络的灵活控制。</p>
+<p></p>
+<p>开放网络基金会(ONF)及其SDN提案 OpenFlow 获得了来自工业、研究和学术界的大力支持。来自这些不同部门的支持最终以研究论文、参考软件实现甚至硬件的形式产生了大量可交付成果。以至于有些人认为OpenFlow架构是SDN的事实标准。</p>
+<h3 id="42-forces">4.2 ForCES</h3>
+<p>IETF ForCES（Forwarding and Control Element Separation，转发和控制元素分离）工作组提出的方法重新定义了控制元素与转发元素分离的网络设备的内部架构。然而，网络设备仍被表示为单个实体。工作组提供的例子在单个网络设备中将新的转发硬件与第三方控制相结合。因此，控制平面和数据平面在物理上非常接近（例如，相同的盒子或房间）。</p>
+<p>ForCES定义了两个逻辑实体，分别称为转发元素(FE)和控制元素(CE)，它们都实现了 ForCES 协议进行通信。FE负责使用底层硬件来提供每个数据包的处理。CE执行控制和信令功能，并使用 ForCES 协议来指示 FE 如何处理数据包。该协议基于主从模型工作，其中FE是从站CE是主站。</p>
+<p>ForCES架构的一个重要组成部分是 LFB（Logical Function Block，逻辑功能块）。LFB是驻留在FE上的定义明确的功能块，由CE通过 ForCES 协议控制。LFB使CE能够控制FE的配置以及FE如何处理数据包。</p>
+<h2 id="5-数据平面可编程">5 数据平面可编程</h2>
+<h3 id="51-数据平面功能">5.1 数据平面功能</h3>
+<p>设备的数据平面通过执行一系列操作来处理网络数据包，包括解析数据包，确定需要应用的处理操作的顺序，并根据这些操作的结果进行转发。数据包处理需要以下基本功能步骤：解析、分类、修改、解析和转发。除了基本功能之外，大多数数据包处理系统还可以提供附加服务，例如调度、过滤、计量或流量整形[4]。</p>
+<p>随着SDN范式的出现和采用，设备功能变得更加灵活和动态。但是，在传统的网络设备中，数据平面功能深深植根于设备硬件和软件中，因此通常在设备的生命周期内无法更改[5]。对于基于软件的数据包处理系统，需要主要供应商软件更新来更改数据平面功能。此固定功能几乎影响所有数据平面操作。可以加载到匹配动作表中的条目的格式和语义是固定的；设备只能理解一组有限的协议头和字段。例如，以太网交换机不处理第3层字段，过时的路由器将不支持IPv6。可以应用的处理操作的类型以及执行这些操作的顺序由设备供应商设置。</p>
+<h3 id="52-p4">5.2 P4</h3>
+<p>P4（Programming Protocol-independent Packet Processors）[6]即“独立于协议的可编程数据包处理器”。P4的设计目标如下：</p>
+<ol>
+<li>可重配置。交换机的数据包处理方式能被重新配置，可以通过编程的方式灵活定义数据平面的报文处理流程，在不更换交换机硬件的前提下，适应快速更迭的网络协议。</li>
+<li>协议无关性。交换机支持的数据包处理行为不受协议类型局限，并且管理员可以定制交换机本身支持的协议。</li>
+<li>平台无关性。网络管理员能够独立于特定的底层平台来描述报文处理功能，类似于C或者C++程序，管理员编程时不用关注底层架构。</li>
+</ol>
+<p></p>
+<p>P4交换机将流水线处理数据的过程进行抽象和重定义，数据处理单元对数据的处理抽象成匹配和执行匹配-动作表的过程，包头的解析抽象成P4中的解析器，数据处理流程抽象成流控制。</p>
+<h3 id="53-其他数据平面编程语言">5.3 其他数据平面编程语言</h3>
+<p>P4作为数据平面的领域特定语言（Domain Specific Language，DSL），虽然能够显著提升数据平面的可编程能力，实现一些以前未曾实现过的数据平面功能，为网络数据包处理带来很大的便利，但是由于其表达能力有限以及数据平面本身的局限性，P4并不能成为网络问题的万能解决方案。</p>
+<p>除了P4语言，其他数据平面DSL也可以描述数据平面的报文处理逻辑，比如POF，P4和POF的目标都是使底层设备可编程性更强，但是POF的语法更贴近于原来的 OpenFlow 协议规范，并使用类似汇编语言的语法对网络设备进行编程，对不同设备的编程目前采用基于解释翻译而并非编译的方式实现[7]。</p>
+<h3 id="p4-相关研究的最新进展">P4 相关研究的最新进展</h3>
+<p>自定义数据平面报文处理逻辑，增强数据平面可编程能力，使网络设备灵活支持各种新协议和新功能是学术界和工业界的美好愿景与努力的方向[8]，P4语言与可编程数据平面正是朝该目标迈进的一大步．但是，对于如何使硬件平台或者软件平台支持现有的P4语言、如何设计并优化编译器、如何对P4程序进行调试与性能测试等问题，P4语言联盟和P4语言规范并没有给出相应的解决方案，学术界和工业界也纷纷对可编程数据平面的落地和优化做出了一系列相关研究。</p>
+<p>在硬件平台和后端编译器上，文献[9]针对P4语言首次为PMT、Intel、Flexpipe以及Cavium XPliant等可编程交换机提出了编译器设计方法，该工作主要解决了可编程交换机芯片中的匹配动作表配置问题。针对FPGA使用低级语言编程、难移植、调试复杂的问题，文献[10]设计了报文解析器生成模型以及相应的转换算法，可以将P4的解析表述图转化为适合在FPGA上部署的合成VHDL代码。</p>
+<p>在软件平台与数据平面虚拟化上，文献[]基于如今最流行的软件交换机Open vSwitch（OVS）提出了可编程的，协议无关的软件交换机架构PISCES，使得软件交换机的数据包转发行为可以使用P4语言进行描述。文献[12]利用了预取和批处理两种方式对基于P4程序编译生成的软件交换机性能进行了优化，使得P4软件交换机编译器生成的代码的执行效率能够接近经过手工代码优化的软件交换机。</p>
+<p>对P4进行进一步的扩展上，CacheP4[13]从缓存机制的角度出发，加快P4数据平面的数据包转发处理操作，节省了时间和数据平面资源。P4-CoDel[14]利用P4实现最新的AQM（Active Queue Management，主动队列管理）算法，以便通过AQM算法轻易的增强通信效率。</p>
+<p>在应用方面，Order P4-66[15]将P4应用于网络安全领域，分析了受损的可编程设备对于网络性能下降的影响，并提出了降低损害的有效建议。MP-HULA[16]通过数据平面编程，实现传输层多路径感知负载平衡。</p>
+<h2 id="6-结束语">6 结束语</h2>
+<p>传统网络转发设备种类多样但彼此标准不同，网络受到功能固定的分组转发处理硬件和芯片硬件厂商不兼容协议的限制，存在网络设备更新缓慢、运行成本增加等问题。面对快速升级的网络需求和不断更新的网络业务，网络可编程的能力成为未来网络服务和应用的关键。</p>
+<p>网络可编程性的概念始于主动网络研究，随着控制平面和数据平面分离等相关研究经历了几个不同的发展阶段。在SDN兴起时，网络可编程主要体现在软件定义网络的控制平面，面对超大规模网络及大流量，基于SDN控制器对网络节点提供的开放接口进行管理，实现对网络功能和行为的按需管控和新业务的快速部署。控制面可编程催生了一些新应用的产生，比如与人工智能技术结合的DDos检测[17]，以及结合深度学习技术的路由优化[18]，移动通信技术的最新发展也应用了SDN，比如基于SDN的5G[19]、6G[20]移动通信网络架构。</p>
+<p>随着新一代高性能可编程数据分组处理芯片及数据平面高级编程语言的出现，以软件编程方式设定数据分组的处理流程并在芯片中编译执行成为现实。</p>
+<p>当前，随着数据中心、云计算等场景的兴起，服务器端 CPU（central processing unit）的负担逐渐加重，网络接口卡（NIC, network interface card）可编程[21]成为一个新的趋势，智能网络接口卡（即Smart NIC）可以将网络虚拟化、负载均衡等功能从服务器 CPU 中卸载，从而为应用提供更多的处理能力。因此，当前网络可编程主要集中在编程语言、可编程芯片、智能网络接口卡的研究上。</p>
+<p>本文回顾了可编程网络的主要发展过程，涉及早期可编程思想的来源、软件定义网络的主要架构、数据平面可编程以及可编程网络的新发展方向，在网络问题日益突出的今天，可编程网络无疑是解决各种问题的利器。</p>
+<h2 id="参考文献">参考文献</h2>
+<p>[1]	黄韬,刘江,霍如,魏亮,刘韵洁.未来网络体系架构研究综述[J].通信学报,2014,35(08):184-197.</p>
+<p>[2]	任高明.软件定义网络研究综述[J].信息与电脑(理论版),2020,32(04):167-169.</p>
+<p>[3]	McKeown N, Anderson T, Balakrishnan H, et al. OpenFlow: enabling innovation in campus networks[J]. ACM SIGCOMM computer communication review, 2008, 38(2): 69-74.</p>
+<p>[4]	Michel O, Bifulco R, Retvari G, et al. The programmable data plane: abstractions, architectures, algorithms, and applications[J]. ACM Computing Surveys (CSUR), 2021, 54(4): 1-36.</p>
+<p>[5]	耿俊杰,颜金尧.基于可编程数据平面的网络体系架构综述[J].中国传媒大学学报(自然科学版),2019,26(05):38-43.DOI:10.16196/j.cnki.issn.1673-4793.2019.05.007.</p>
+<p>[6]	Bosshart P, Daly D, Gibb G, et al. P4: Programming protocol-independent packet processors[J]. ACM SIGCOMM Computer Communication Review, 2014, 44(3): 87-95.</p>
+<p>[7]	赵敏,田野.P4与POF协议无关可编程网络技术比较研究[J].网络新媒体技术,2018,7(01):54-58.</p>
+<p>[8]	林耘森箫,毕军,周禹,张程,吴建平,刘争争,张乙然.基于P4的可编程数据平面研究及其应用[J].计算机学报,2019,42(11):2539-2560.</p>
+<p>[9]	Jose L, Yan L, Varghese G, et al. Compiling packet programs to reconfigurable switches[C]//12th USENIX Symposium on Networked Systems Design and Implementation (NSDI 15). 2015: 103-115.</p>
+<p>[10]	Benácek P, Pu V, Kubátová H. P4-to-vhdl: Automatic generation of 100 gbps packet parsers[C]//2016 IEEE 24th Annual International Symposium on Field-Programmable Custom Computing Machines (FCCM). IEEE, 2016: 148-155.</p>
+<p>[11]	Shahbaz M, Choi S, Pfaff B, et al. Pisces: A programmable, protocol-independent software switch[C]//Proceedings of the 2016 ACM SIGCOMM Conference. 2016: 525-538.</p>
+<p>[12]	Bhardwaj A, Shree A, Reddy V B, et al. A preliminary performance model for optimizing software packet processing pipelines[C]//Proceedings of the 8th Asia-Pacific Workshop on Systems. 2017: 1-7.</p>
+<p>[13]	Ma Z, Bi J, Zhang C, et al. Cachep4: A behavior-level caching mechanism for p4[M]//Proceedings of the SIGCOMM Posters and Demos. 2017: 108-110.</p>
+<p>[14]	Kundel R, Blendin J, Viernickel T, et al. P4-CoDel: Active queue management in programmable data planes[C]//2018 IEEE Conference on Network Function Virtualization and Software Defined Networks (NFV-SDN). IEEE, 2018: 1-4.</p>
+<p>[15]	Kassing S, Abbas H, Vanbever L, et al. Order P4-66: Characterizing and mitigating surreptitious programmable network device exploitation[J]. arXiv preprint arXiv:2103.16437, 2021.</p>
+<p>[16]	Benet C H, Kassler A J, Benson T, et al. Mp-hula: Multipath transport aware load balancing using programmable data planes[C]//Proceedings of the 2018 Morning Workshop on In-Network Computing. 2018: 7-13.</p>
+<p>[17]	孙妍姑.SDN下基于人工智能算法的DDoS攻击检测研究[J].淮南师范学院学报,2019,21(05):135-138.</p>
+<p>[18]	王桂芝,吕光宏,贾吾财,贾创辉,张建申.机器学习在SDN路由优化中的应用研究综述[J].计算机研究与发展,2020,57(04):688-698.</p>
+<p>[19]	范娟.基于SDN的5G移动通信网络架构研究[J].通讯世界,2018(07):118-119.</p>
+<p>[20]	王旭亮,全硕,刘增义,章军.面向6G的新型可编程网络架构研究[J].电信科学,2021,37(12):84-92.</p>
+<p>[21]	Stephens B, Akella A, Swift M M. Your programmable NIC should be a programmable switch[C]//Proceedings of the 17th ACM Workshop on Hot Topics in Networks. 2018: 36-42.</p>
+]]></description>
+</item>
+</channel>
+</rss>
