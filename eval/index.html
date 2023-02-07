@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>目标检测评估指标mAP - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="目标检测评估指标mAP" />
+<meta property="og:description" content="目标检测的评估指标mAP" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://leeshy-tech.github.io/eval/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-07T21:26:06+08:00" />
+<meta property="article:modified_time" content="2023-02-07T21:26:06+08:00" />
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
+
+<meta name="twitter:title" content="目标检测评估指标mAP"/>
+<meta name="twitter:description" content="目标检测的评估指标mAP"/>
+<meta name="application-name" content="Leeshy&#39;s Blog">
+<meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/eval/" /><link rel="prev" href="https://leeshy-tech.github.io/overview_of_programmable_networks/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "目标检测评估指标mAP",
+        "inLanguage": "zh-CN",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/leeshy-tech.github.io\/eval\/"
+        },"genre": "posts","keywords": "object detection","wordcount":  915 ,
+        "url": "https:\/\/leeshy-tech.github.io\/eval\/","datePublished": "2023-02-07T21:26:06+08:00","dateModified": "2023-02-07T21:26:06+08:00","publisher": {
+            "@type": "Organization",
+            "name": "Leeshy"},"author": {
+                "@type": "Person",
+                "name": "Leeshy"
+            },"description": ""
+    }
+    </script></head><body data-header-desktop="fixed" data-header-mobile="auto"><script>(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/posts/"> 文章 </a><a class="menu-item" href="/tags/"> 标签 </a><a class="menu-item" href="/categories/"> 分类 </a><a class="menu-item" href="/about/"> 关于 </a><span class="menu-item delimiter"></span><span class="menu-item search" id="search-desktop">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-desktop">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-desktop" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-desktop" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-desktop">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </span><a href="javascript:void(0);" class="menu-item theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Leeshy&#39;s Blog | To be humble"><img
+        class="lazyload logo"
+        src="/svg/loading.min.svg"
+        data-src="/HeadPhoto.jpg"
+        data-srcset="/HeadPhoto.jpg, /HeadPhoto.jpg 1.5x, /HeadPhoto.jpg 2x"
+        data-sizes="auto"
+        alt="/HeadPhoto.jpg"
+        title="/HeadPhoto.jpg" />Leeshy&#39;s Blog</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><div class="search-wrapper">
+                    <div class="search mobile" id="search-mobile">
+                        <input type="text" placeholder="搜索文章标题或内容..." id="search-input-mobile">
+                        <a href="#" class="search-button search-toggle" id="search-toggle-mobile" title="搜索">
+                            <i class="fas fa-search fa-fw"></i>
+                        </a>
+                        <a href="#" class="search-button search-clear" id="search-clear-mobile" title="清空">
+                            <i class="fas fa-times-circle fa-fw"></i>
+                        </a>
+                        <span class="search-button search-loading" id="search-loading-mobile">
+                            <i class="fas fa-spinner fa-fw fa-spin"></i>
+                        </span>
+                    </div>
+                    <a href="#" class="search-cancel" id="search-cancel-mobile">
+                        取消
+                    </a>
+                </div><a class="menu-item" href="/posts/" title="">文章</a><a class="menu-item" href="/tags/" title="">标签</a><a class="menu-item" href="/categories/" title="">分类</a><a class="menu-item" href="/about/" title="">关于</a><div class="menu-item"><a href="javascript:void(0);" class="theme-switch" title="切换主题">
+                    <i class="fas fa-adjust fa-fw"></i>
+                </a>
+            </div></div>
+    </div>
+</header><div class="search-dropdown desktop">
+    <div id="search-dropdown-desktop"></div>
+</div>
+<div class="search-dropdown mobile">
+    <div id="search-dropdown-mobile"></div>
+</div><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">目录</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">目标检测评估指标mAP</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/object-detection/"><i class="far fa-folder fa-fw"></i>object detection</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-07">2023-02-07</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 915 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+            </div>
+            
+            <hr><div class="details toc" id="toc-static"  data-kept="">
+                    <div class="details-summary toc-title">
+                        <span>目录</span>
+                        <span><i class="details-icon fas fa-angle-right"></i></span>
+                    </div>
+                    <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
+  <ul>
+    <li><a href="#目标检测任务">目标检测任务</a></li>
+    <li><a href="#特有名词">特有名词</a></li>
+    <li><a href="#mapmean-average-precision">mAP（mean Average Precision）</a>
+      <ul>
+        <li><a href="#iou">IoU</a></li>
+        <li><a href="#tpfnfptn">TP、FN、FP、TN</a></li>
+        <li><a href="#precisionrecall">Precision、Recall</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav></div>
+                </div><div class="content" id="content"><h2 id="目标检测任务">目标检测任务</h2>
+<p>目标检测任务是计算机视觉领域的一个分支 ，其关注图片中物体的类别和位置信息，给定一张图片，需要给出图片中感兴趣物体的类别、位置和置信度，位置通过一个矩形的检测框来表示。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230207225451580.png"
+        data-srcset="/image/objectionDetection/image-20230207225451580.png, /image/objectionDetection/image-20230207225451580.png 1.5x, /image/objectionDetection/image-20230207225451580.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230207225451580.png"
+        title="image-20230207225451580" /></p>
+<h2 id="特有名词">特有名词</h2>
+<p>ground truth box：人工标注的真实框，相当于标准答案。</p>
+<p>BB(bounding box)：预测框</p>
+<p>pipeline：流程（流水线）</p>
+<p>confidence scores：置信度，用于评估一个预测框中含有某个对象的概率。</p>
+<h2 id="mapmean-average-precision">mAP（mean Average Precision）</h2>
+<h3 id="iou">IoU</h3>
+<p>IoU(intersection over union)直译为交并比（交集除以并集）</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230207215205005.png"
+        data-srcset="/image/objectionDetection/image-20230207215205005.png, /image/objectionDetection/image-20230207215205005.png 1.5x, /image/objectionDetection/image-20230207215205005.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230207215205005.png"
+        title="image-20230207215205005" /></p>
+<p>从图形可以看出，IoU用来衡量两个框（预测框和真实框）之间的相似性。IoU越大，两个框越相似，说明模型预测的越好。</p>
+<h3 id="tpfnfptn">TP、FN、FP、TN</h3>
+<p>首先考虑以下的混淆矩阵：</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230207215925441.png"
+        data-srcset="/image/objectionDetection/image-20230207215925441.png, /image/objectionDetection/image-20230207215925441.png 1.5x, /image/objectionDetection/image-20230207215925441.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230207215925441.png"
+        title="image-20230207215925441" /></p>
+<p>与一般的分类问题相比，目标检测任务中True Positives、False Positives、True Negatives和 False Negatives的鉴别会更复杂：</p>
+<ul>
+<li>
+<p>对于模型给出的预测框，我们使用置信度阈值来评估一个框是Positive还是Negative。</p>
+</li>
+<li>
+<p>对于Positive预测框，计算与所有ground truth的IoU，取最大值，通过IoU阈值来评估预测为True Positive还是False Positive。</p>
+</li>
+<li>
+<p>ground truth的数量减去True Positive即为False Negative的数量。</p>
+</li>
+</ul>
+<h3 id="precisionrecall">Precision、Recall</h3>
+<p>精度
+$$
+\text { Precision }=\frac{T P}{T P+F P}
+$$
+召回率
+$$
+\text { Recall }=\frac{T P}{T P+F N}
+$$
+recall和precision是模型性能两个不同维度的度量：</p>
+<ul>
+<li>
+<p>recall度量的是「查全率」，所有的正样本是不是都被检测出来了。比如在肿瘤预测场景中，要求模型有更高的recall，不能放过每一个肿瘤。</p>
+</li>
+<li>
+<p>precision度量的是「查准率」，在所有检测出的正样本中是不是实际都为正样本。比如在垃圾邮件判断等场景中，要求有更高的precision，确保放到回收站的都是垃圾邮件。</p>
+</li>
+</ul>
+<p>这两个参数是矛盾的，二者不可能同时到达最大值，将recall-precision分别做横纵轴绘制图像，图像下面积即为AP（average precision）。</p>
+<p>mAP（mean Average Precision）为全类平均正确率，对所有类别的AP取平均值即为mAP。衡量模型在一个数据集上的所有类别的识别性能。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230207224925877.png"
+        data-srcset="/image/objectionDetection/image-20230207224925877.png, /image/objectionDetection/image-20230207224925877.png 1.5x, /image/objectionDetection/image-20230207224925877.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230207224925877.png"
+        title="image-20230207224925877" /></p>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/object-detection/">object detection</a>
+                </span></div><div class="post-info-line"><div class="post-info-mod">
+                <span>更新于 2023-02-07</span>
+            </div><div class="post-info-mod"><span>
+                            <a class="link-to-markdown" href="/eval/index.md" target="_blank">阅读原始文档</a>
+                        </span></div>
+        </div></div><div class="post-nav"><a href="/overview_of_programmable_networks/" class="prev" rel="prev" title="可编程网络前世今生"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
+</div></article></div>
+            </main>
+            <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>
+        </div><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw"></i><span itemprop="copyrightYear">2019 - 2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="https://github.com/leeshy-tech">Leeshy</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+</div>
+<script>
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('/sw.min.js?version=1.0.1', { scope: '/' })
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Registered');
+        }, err => console.error('Leeshy\u0027s Blog | To be humble\u00A0Service Worker registration failed: ', err));
+
+    navigator.serviceWorker
+        .ready
+        .then(() => {
+            console.info('Leeshy\u0027s Blog | To be humble\u00A0Service Worker Ready');
+        });
+}
+</script>
+</footer>
+        </div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="回到顶部">
+                <i class="fas fa-chevron-up fa-fw"></i>
+            </a></div><link rel="stylesheet" href="/lib/fontawesome-free/all.min.css"><link rel="stylesheet" href="/lib/animate/animate.min.css"><link rel="stylesheet" href="/lib/katex/katex.min.css"><link rel="stylesheet" href="/lib/katex/copy-tex.min.css"><script src="https://polyfill.io/v3/polyfill.min.js?features=Array.prototype.fill%2CArray.prototype.find%2CArray.from%2CIntersectionObserver%2CMath.sign%2CObject.assign%2CPromise%2CObject.entries%2Chtml5shiv%2CObject.values%2Cfetch%2CElement.prototype.after"></script><script src="/lib/autocomplete/autocomplete.min.js"></script><script src="/lib/lunr/lunr.min.js"></script><script src="/lib/lunr/lunr.stemmer.support.min.js"></script><script src="/lib/lunr/lunr.zh.min.js"></script><script src="/lib/lazysizes/lazysizes.min.js"></script><script src="/lib/clipboard/clipboard.min.js"></script><script src="/lib/katex/katex.min.js"></script><script src="/lib/katex/auto-render.min.js"></script><script src="/lib/katex/copy-tex.min.js"></script><script src="/lib/katex/mhchem.min.js"></script><script>window.config={"code":{"copyTitle":"复制到剪贴板","maxShownLines":10},"comment":{},"math":{"delimiters":[{"display":true,"left":"$$","right":"$$"},{"display":true,"left":"\\[","right":"\\]"},{"display":false,"left":"$","right":"$"},{"display":false,"left":"\\(","right":"\\)"}],"strict":false},"search":{"highlightTag":"em","lunrIndexURL":"/index.json","lunrLanguageCode":"zh","lunrSegmentitURL":"/lib/lunr/lunr.segmentit.js","maxResultLength":10,"noResultsFound":"没有找到结果","snippetLength":50,"type":"lunr"}};</script><script src="/js/theme.min.js"></script></body></html>
