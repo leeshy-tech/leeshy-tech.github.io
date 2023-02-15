@@ -51,7 +51,9 @@ A4纸一张：用于观察成像
 
 ## 实验效果
 
-<video src="/video/20230215184659.mp4"></video>
+<video controls="controls">
+    <source src="/video/20230215184659.mp4" type="video/mp4">
+</video>
 
 ## 参考资料
 
