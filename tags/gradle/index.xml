@@ -17,15 +17,15 @@
 <ol>
 <li>
 <p>groupid:公司或组织域名倒序</p>
-<p><!-- raw HTML omitted -->com.ys.maven<!-- raw HTML omitted --></p>
+<p><groupid>com.ys.maven</groupid></p>
 </li>
 <li>
 <p>artifactid:模块名，也是实际项目的名称</p>
-<p><!-- raw HTML omitted -->Maven_05<!-- raw HTML omitted --></p>
+<p><artifactid>Maven_05</artifactid></p>
 </li>
 <li>
 <p>version:当前项目的版本</p>
-<p><!-- raw HTML omitted -->0.0.1-SNAPSHOT<!-- raw HTML omitted --></p>
+<p><version>0.0.1-SNAPSHOT</version></p>
 </li>
 </ol>
 <h3 id="如何获取依赖坐标">如何获取依赖坐标</h3>

@@ -223,7 +223,7 @@
 <td>VLAN 优先级，改值取值区间为[0-7]。数字越大，优先级越高。</td>
 </tr>
 <tr>
-<td>dl_src=<!-- raw HTML omitted -->,dl_dst=<!-- raw HTML omitted --></td>
+<td>dl_src=<MAC>,dl_dst=<MAC></td>
 <td>匹配源或者目标的 MAC 地址</td>
 </tr>
 <tr>
@@ -231,7 +231,7 @@
 <td>匹配以太网协议类型 ,IPv4:0x0800,IPv6:0x086dd,ARP:0x0806</td>
 </tr>
 <tr>
-<td>nw_src=<!-- raw HTML omitted -->,nw_dst=<!-- raw HTML omitted --></td>
+<td>nw_src=<IP>,nw_dst=<IP></td>
 <td>匹配源或目的IP，前提要设定dl_type</td>
 </tr>
 <tr>
@@ -239,7 +239,7 @@
 <td>指定流表编号</td>
 </tr>
 <tr>
-<td>reg<!-- raw HTML omitted -->=value[/mask]</td>
+<td>reg<idx>=value[/mask]</td>
 <td>网桥中寄存器的值</td>
 </tr>
 <tr>
