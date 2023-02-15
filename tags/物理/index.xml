@@ -1,0 +1,54 @@
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title>物理 - 标签 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/tags/%E7%89%A9%E7%90%86/</link>
+        <description>物理 - 标签 - Leeshy&#39;s Blog | To be humble</description>
+        <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 15 Feb 2023 18:32:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/%E7%89%A9%E7%90%86/" rel="self" type="application/rss+xml" /><item>
+    <title>纹影法观测火焰流场</title>
+    <link>https://leeshy-tech.github.io/wenying/</link>
+    <pubDate>Wed, 15 Feb 2023 18:32:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/wenying/</guid>
+    <description><![CDATA[<h1 id="纹影法观测火焰流场">纹影法观测火焰流场</h1>
+<blockquote>
+<p>实验背景来自CUPT 2021题目5 Synchronised Candles</p>
+</blockquote>
+<h2 id="纹影法简介">纹影法简介</h2>
+<p>纹影法(Schlieren photography)是一种用于展现不同密度流体在流场中分布的光学方法。其最初思路源自罗伯特-胡克，并由奥古斯特-托普勒进行了改良。休伯特-沙尔丁首次为纹影法确定了名称并沿用至今。</p>
+<p>纹影法的成像的原理是通过光线在不同折射率介质中传播产生的折射等效应，导致光线在像平面上强度不再均匀而产生的明暗图样。当置于室内时，由于室内空气并非完全静止，此时可在摄像机上观察到细微的明暗变化。若将蜡烛等能够扰动气流的物体置于镜面前，则可以观察到其对周围流场产生的影响。</p>
+<p></p>
+<p></p>
+<h2 id="实验器材">实验器材</h2>
+<p>球形凹面镜一个（口径203mm，焦距750mm）</p>
+<p>铁架台：固定光源并控制高度</p>
+<p>铁质底座：固定凹面镜</p>
+<p>A4纸一张：用于观察成像</p>
+<p>刀片、打火机、LED灯、手机各一个、蜡烛若干</p>
+<p></p>
+<h2 id="实验步骤">实验步骤</h2>
+<ol>
+<li>
+<p>将LED灯固定在铁架台上，调整高度使其与凹面镜圆心处于同一高度。</p>
+<p></p>
+<p></p>
+</li>
+<li>
+<p>将白纸与LED灯放于同一平面，前后移动使得白纸上的像最小最清晰</p>
+<p></p>
+</li>
+<li>
+<p>将刀片与LED灯放于同一平面，使刀片正好挡住一半的光斑。此步骤是为了增强纹影图像的对比度</p>
+<p></p>
+</li>
+<li>
+<p>将手机放置于刀片后方，使光斑进入镜头，调整距离使得凹面镜区域明亮。手机感光度调为50，快门速度调为1/4000</p>
+<p></p>
+</li>
+</ol>
+<h2 id="实验效果">实验效果</h2>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<h2 id="参考资料">参考资料</h2>
+<p><a href="https://physlab.bupt.edu.cn/info/1311/1869.htm" target="_blank" rel="noopener noreffer">2017年物理实验竞赛获奖作品简介-纹影法的应用</a></p>
+]]></description>
+</item>
+</channel>
+</rss>
