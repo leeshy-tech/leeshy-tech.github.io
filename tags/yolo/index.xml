@@ -1,10 +1,10 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>object detection - 标签 - Leeshy&#39;s Blog | To be humble</title>
-        <link>https://leeshy-tech.github.io/tags/object-detection/</link>
-        <description>object detection - 标签 - Leeshy&#39;s Blog | To be humble</description>
+        <title>YOLO - 标签 - Leeshy&#39;s Blog | To be humble</title>
+        <link>https://leeshy-tech.github.io/tags/yolo/</link>
+        <description>YOLO - 标签 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/object-detection/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/yolo/" rel="self" type="application/rss+xml" /><item>
     <title>YOLO v1深度解读</title>
     <link>https://leeshy-tech.github.io/yolo/</link>
     <pubDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo/</guid>
@@ -62,61 +62,6 @@ $$</p>
 </ol>
 <h2 id="参考">参考</h2>
 <p><a href="https://www.bilibili.com/video/BV15w411Z7LG?p=4&amp;vd_source=c421bf5ed1b524a57c89542f6c02aceb" target="_blank" rel="noopener noreffer">【精读AI论文】YOLO V1目标检测，看我就够了</a></p>
-]]></description>
-</item>
-<item>
-    <title>目标检测评估指标mAP</title>
-    <link>https://leeshy-tech.github.io/eval/</link>
-    <pubDate>Tue, 07 Feb 2023 21:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/eval/</guid>
-    <description><![CDATA[<h2 id="目标检测任务">目标检测任务</h2>
-<p>目标检测任务是计算机视觉领域的一个分支 ，其关注图片中物体的类别和位置信息，给定一张图片，需要给出图片中感兴趣物体的类别、位置和置信度，位置通过一个矩形的检测框来表示。</p>
-<p></p>
-<h2 id="特有名词">特有名词</h2>
-<p>ground truth box：人工标注的真实框，相当于标准答案。</p>
-<p>BB(bounding box)：预测框</p>
-<p>pipeline：流程（流水线）</p>
-<p>confidence scores：置信度，用于评估一个预测框中含有某个对象的概率。</p>
-<h2 id="mapmean-average-precision">mAP（mean Average Precision）</h2>
-<h3 id="iou">IoU</h3>
-<p>IoU(intersection over union)直译为交并比（交集除以并集）</p>
-<p></p>
-<p>从图形可以看出，IoU用来衡量两个框（预测框和真实框）之间的相似性。IoU越大，两个框越相似，说明模型预测的越好。</p>
-<h3 id="tpfnfptn">TP、FN、FP、TN</h3>
-<p>首先考虑以下的混淆矩阵：</p>
-<p></p>
-<p>与一般的分类问题相比，目标检测任务中True Positives、False Positives、True Negatives和 False Negatives的鉴别会更复杂：</p>
-<ul>
-<li>
-<p>对于模型给出的预测框，我们使用置信度阈值来评估一个框是Positive还是Negative。</p>
-</li>
-<li>
-<p>对于Positive预测框，计算与所有ground truth的IoU，取最大值，通过IoU阈值来评估预测为True Positive还是False Positive。</p>
-</li>
-<li>
-<p>ground truth的数量减去True Positive即为False Negative的数量。</p>
-</li>
-</ul>
-<h3 id="precisionrecall">Precision、Recall</h3>
-<p>精度
-$$
-\text { Precision }=\frac{T P}{T P+F P}
-$$
-召回率
-$$
-\text { Recall }=\frac{T P}{T P+F N}
-$$
-recall和precision是模型性能两个不同维度的度量：</p>
-<ul>
-<li>
-<p>recall度量的是「查全率」，所有的正样本是不是都被检测出来了。比如在肿瘤预测场景中，要求模型有更高的recall，不能放过每一个肿瘤。</p>
-</li>
-<li>
-<p>precision度量的是「查准率」，在所有检测出的正样本中是不是实际都为正样本。比如在垃圾邮件判断等场景中，要求有更高的precision，确保放到回收站的都是垃圾邮件。</p>
-</li>
-</ul>
-<p>这两个参数是矛盾的，二者不可能同时到达最大值，将recall-precision分别做横纵轴绘制图像，图像下面积即为AP（average precision）。</p>
-<p>mAP（mean Average Precision）为全类平均正确率，对所有类别的AP取平均值即为mAP。衡量模型在一个数据集上的所有类别的识别性能。</p>
-<p></p>
 ]]></description>
 </item>
 </channel>

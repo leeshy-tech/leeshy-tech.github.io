@@ -4,7 +4,67 @@
         <link>https://leeshy-tech.github.io/categories/object-detection/</link>
         <description>object detection - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Tue, 07 Feb 2023 21:26:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/object-detection/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/object-detection/" rel="self" type="application/rss+xml" /><item>
+    <title>YOLO v1深度解读</title>
+    <link>https://leeshy-tech.github.io/yolo/</link>
+    <pubDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo/</guid>
+    <description><![CDATA[<h1 id="you-only-look-once-unified-real-time-object-detection">You Only Look Once: Unified, Real-Time Object Detection</h1>
+<h2 id="概况">概况</h2>
+<p><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/Redmon_You_Only_Look_CVPR_2016_paper.html" target="_blank" rel="noopener noreffer">You Only Look Once: Unified, Real-Time Object Detection</a></p>
+<p>CVPR 2016</p>
+<h2 id="训练阶段">训练阶段</h2>
+<ul>
+<li>将一幅图像分为7×7（S×S）个网格（grid cell），如果某个物体的中心落在某个网格内，就由该网格预测该物体。</li>
+<li>每个网格预测 B=2 个bounding box（BB），每个BB回归自身的坐标(x, y, w, h)和置信度confidence共5个值。置信度$ {Pr}(\text { Object }) * \mathrm{IOU}_{\text {pred }}^{\text {truth }}$反映BB含有对象的概率以及预测准确性，为0或IOU。</li>
+<li>每个网格预测 C 个类别条件概率${Pr}\left(\text { Class }_{i} \mid \text { Object }\right)$。</li>
+<li>输出维度为S×S×（5*B + C），对于PASCAL VOC数据集，输入448×448×3通道的彩色图像，输入7×7×30的张量。</li>
+</ul>
+<p></p>
+<h3 id="网络结构">网络结构</h3>
+<p>通过一个深度卷积神经网络抽取图像特征，模型参考GoogleNet</p>
+<p></p>
+<p>输入是448×448×3通道的彩色图像，经过若干卷积层、池化层变成7×7×1024的feature map，经全连接层回归得到7×7×30的张量。</p>
+<h3 id="损失函数">损失函数</h3>
+<p></p>
+<p>其中 $\mathbb{1}<em>{i}^{\text {obj}}$ 表示负责检测物体的grid cell，$\mathbb{1}</em>{ij}^{\text {obj }}$ 表示负责检测物体的BB，$\mathbb{1}<em>{ij}^{\text {noobj }}$表示不负责检测物体的BB ，使用两个参数 $λ</em>{coord}$ 和 $λ_{noobj}$进行损失加权。</p>
+<p>$ \lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {obj }}\left[\left(x</em>{i}-\hat{x}<em>{i}\right)^{2}+\left(y</em>{i}-\hat{y}_{i}\right)^{2}\right] $ 中心点定位误差（负责检测物体的BB）</p>
+<ul>
+<li>$\lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {obj }}\left[\left(\sqrt{w</em>{i}}-\sqrt{\hat{w}<em>{i}}\right)^{2}+\left(\sqrt{h</em>{i}}-\sqrt{\hat{h}_{i}}\right)^{2}\right]$ 宽高定位误差（负责检测物体的BB）</li>
+<li>$\sum_{i=0}^{s^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\mathrm{obj}}\left(C</em>{i}-\hat C_{i}\right)^{2}$ 置信度误差（负责检测物体的BB）</li>
+<li>$\lambda_{\text {noobj }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {noobj }}\left(C</em>{i}-\hat{C}_{t}\right)^{2}$ 置信度误差（不负责检测物体的BB）</li>
+<li>$\sum_{\mathbf{i}=0}^{S^{2}} \mathbb{1}<em>{\mathbf{i}}^{\mathrm{obj}} \sum</em>{c \in \text { classes }}\left(p_{i}(c)-\hat{p}_{i}(c)\right)^{2}$ 类别预测误差（负责检测物体的grid cell）</li>
+</ul>
+<h2 id="预测阶段">预测阶段</h2>
+<p>用模型进行预测，再进行后处理。</p>
+<p></p>
+<p>模型预测出98个BB，以及每个BB的类别全概率（计算得到）：</p>
+<p>$$
+{Pr}\left (\text { Class }<em>{i} \mid \text { Object }\right) * {Pr}(\text { Object }) * IOU</em>{\text {pred }}^{\text {truth }}={Pr}\left(\text { Class }<em>{i}\right) * IOU</em>{\text {pred }}^{\text {truth }}
+$$</p>
+<p>它代表BB含有某个类的概率以及BB与对象的匹配程度。</p>
+<p>对于特定类别：</p>
+<ul>
+<li>将小于设定阈值的概率置0，并将所有BB按概率排序，最后进行NMS（Non-maximum suppression，非极大值抑制）</li>
+</ul>
+<p></p>
+<p>非极大值抑制：</p>
+<ol>
+<li>对于概率最大的BB，计算所有BB与之的IOU，去除IOU大于某设定阈值的BB（概率置0）。（IOU大于某一阈值，就认定两个BB是预测了同一个物体，所以这一步的意义是去除重复的预测框）</li>
+<li>对余下的概率最大的BB，重复以上过程。</li>
+</ol>
+<p></p>
+<h2 id="实验结果">实验结果</h2>
+<ol>
+<li>在同准确率上是最快的，在同速度下是最准的，达到了实时性。</li>
+<li>定位错误最多，背景错误比R-CNN少很多，这是因为YOLO输入整张图片，能看到更大范围的图像。</li>
+<li>对于集成模型，与R-CNN继承能进一步提升准确率，但是速度没有提升。</li>
+<li>泛化性能好，在现实数据集训练的结果在艺术作品上也表现的很好，远超其他方法。</li>
+</ol>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.bilibili.com/video/BV15w411Z7LG?p=4&amp;vd_source=c421bf5ed1b524a57c89542f6c02aceb" target="_blank" rel="noopener noreffer">【精读AI论文】YOLO V1目标检测，看我就够了</a></p>
+]]></description>
+</item>
+<item>
     <title>目标检测评估指标mAP</title>
     <link>https://leeshy-tech.github.io/eval/</link>
     <pubDate>Tue, 07 Feb 2023 21:26:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/eval/</guid>
