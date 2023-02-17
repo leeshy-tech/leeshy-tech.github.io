@@ -28,7 +28,7 @@
         "mainEntityOfPage": {
             "@type": "WebPage",
             "@id": "https:\/\/leeshy-tech.github.io\/yolo\/"
-        },"genre": "posts","keywords": "object detection, YOLO","wordcount":  1141 ,
+        },"genre": "posts","keywords": "object detection, YOLO","wordcount":  844 ,
         "url": "https:\/\/leeshy-tech.github.io\/yolo\/","datePublished": "2023-02-17T13:04:06+08:00","dateModified": "2023-02-17T13:04:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
@@ -117,8 +117,8 @@
             <div class="toc-content" id="toc-content-auto"></div>
         </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">YOLO v1深度解读</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/object-detection/"><i class="far fa-folder fa-fw"></i>object detection</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-17">2023-02-17</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1141 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-17">2023-02-17</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 844 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -179,14 +179,14 @@
         data-sizes="auto"
         alt="/image/objectionDetection/image-20230217151158958.png"
         title="image-20230217151158958" /></p>
-<p>其中 $\mathbb{1}<em>{i}^{\text {obj}}$ 表示负责检测物体的grid cell，$\mathbb{1}</em>{ij}^{\text {obj }}$ 表示负责检测物体的BB，$\mathbb{1}<em>{ij}^{\text {noobj }}$表示不负责检测物体的BB ，使用两个参数 $λ</em>{coord}$ 和 $λ_{noobj}$进行损失加权。</p>
-<p>$ \lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {obj }}\left[\left(x</em>{i}-\hat{x}<em>{i}\right)^{2}+\left(y</em>{i}-\hat{y}_{i}\right)^{2}\right] $ 中心点定位误差（负责检测物体的BB）</p>
-<ul>
-<li>$\lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {obj }}\left[\left(\sqrt{w</em>{i}}-\sqrt{\hat{w}<em>{i}}\right)^{2}+\left(\sqrt{h</em>{i}}-\sqrt{\hat{h}_{i}}\right)^{2}\right]$ 宽高定位误差（负责检测物体的BB）</li>
-<li>$\sum_{i=0}^{s^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\mathrm{obj}}\left(C</em>{i}-\hat C_{i}\right)^{2}$ 置信度误差（负责检测物体的BB）</li>
-<li>$\lambda_{\text {noobj }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {noobj }}\left(C</em>{i}-\hat{C}_{t}\right)^{2}$ 置信度误差（不负责检测物体的BB）</li>
-<li>$\sum_{\mathbf{i}=0}^{S^{2}} \mathbb{1}<em>{\mathbf{i}}^{\mathrm{obj}} \sum</em>{c \in \text { classes }}\left(p_{i}(c)-\hat{p}_{i}(c)\right)^{2}$ 类别预测误差（负责检测物体的grid cell）</li>
-</ul>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230217155227050.png"
+        data-srcset="/image/objectionDetection/image-20230217155227050.png, /image/objectionDetection/image-20230217155227050.png 1.5x, /image/objectionDetection/image-20230217155227050.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230217155227050.png"
+        title="image-20230217155227050" /></p>
 <h2 id="预测阶段">预测阶段</h2>
 <p>用模型进行预测，再进行后处理。</p>
 <p><img
@@ -198,9 +198,14 @@
         alt="/image/objectionDetection/image-20230217140842894.png"
         title="image-20230217140842894" /></p>
 <p>模型预测出98个BB，以及每个BB的类别全概率（计算得到）：</p>
-<p>$$
-{Pr}\left (\text { Class }<em>{i} \mid \text { Object }\right) * {Pr}(\text { Object }) * IOU</em>{\text {pred }}^{\text {truth }}={Pr}\left(\text { Class }<em>{i}\right) * IOU</em>{\text {pred }}^{\text {truth }}
-$$</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230217155242252.png"
+        data-srcset="/image/objectionDetection/image-20230217155242252.png, /image/objectionDetection/image-20230217155242252.png 1.5x, /image/objectionDetection/image-20230217155242252.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230217155242252.png"
+        title="image-20230217155242252" /></p>
 <p>它代表BB含有某个类的概率以及BB与对象的匹配程度。</p>
 <p>对于特定类别：</p>
 <ul>

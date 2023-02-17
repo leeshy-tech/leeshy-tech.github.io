@@ -28,21 +28,12 @@
 <p>输入是448×448×3通道的彩色图像，经过若干卷积层、池化层变成7×7×1024的feature map，经全连接层回归得到7×7×30的张量。</p>
 <h3 id="损失函数">损失函数</h3>
 <p></p>
-<p>其中 $\mathbb{1}<em>{i}^{\text {obj}}$ 表示负责检测物体的grid cell，$\mathbb{1}</em>{ij}^{\text {obj }}$ 表示负责检测物体的BB，$\mathbb{1}<em>{ij}^{\text {noobj }}$表示不负责检测物体的BB ，使用两个参数 $λ</em>{coord}$ 和 $λ_{noobj}$进行损失加权。</p>
-<p>$ \lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {obj }}\left[\left(x</em>{i}-\hat{x}<em>{i}\right)^{2}+\left(y</em>{i}-\hat{y}_{i}\right)^{2}\right] $ 中心点定位误差（负责检测物体的BB）</p>
-<ul>
-<li>$\lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {obj }}\left[\left(\sqrt{w</em>{i}}-\sqrt{\hat{w}<em>{i}}\right)^{2}+\left(\sqrt{h</em>{i}}-\sqrt{\hat{h}_{i}}\right)^{2}\right]$ 宽高定位误差（负责检测物体的BB）</li>
-<li>$\sum_{i=0}^{s^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\mathrm{obj}}\left(C</em>{i}-\hat C_{i}\right)^{2}$ 置信度误差（负责检测物体的BB）</li>
-<li>$\lambda_{\text {noobj }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}<em>{i j}^{\text {noobj }}\left(C</em>{i}-\hat{C}_{t}\right)^{2}$ 置信度误差（不负责检测物体的BB）</li>
-<li>$\sum_{\mathbf{i}=0}^{S^{2}} \mathbb{1}<em>{\mathbf{i}}^{\mathrm{obj}} \sum</em>{c \in \text { classes }}\left(p_{i}(c)-\hat{p}_{i}(c)\right)^{2}$ 类别预测误差（负责检测物体的grid cell）</li>
-</ul>
+<p></p>
 <h2 id="预测阶段">预测阶段</h2>
 <p>用模型进行预测，再进行后处理。</p>
 <p></p>
 <p>模型预测出98个BB，以及每个BB的类别全概率（计算得到）：</p>
-<p>$$
-{Pr}\left (\text { Class }<em>{i} \mid \text { Object }\right) * {Pr}(\text { Object }) * IOU</em>{\text {pred }}^{\text {truth }}={Pr}\left(\text { Class }<em>{i}\right) * IOU</em>{\text {pred }}^{\text {truth }}
-$$</p>
+<p></p>
 <p>它代表BB含有某个类的概率以及BB与对象的匹配程度。</p>
 <p>对于特定类别：</p>
 <ul>

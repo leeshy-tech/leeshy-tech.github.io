@@ -29,14 +29,7 @@ CVPR 2016
 
 ![image-20230217151158958](/image/objectionDetection/image-20230217151158958.png)
 
-其中 $\mathbb{1}_{i}^{\text {obj}}$ 表示负责检测物体的grid cell，$\mathbb{1}_{ij}^{\text {obj }}$ 表示负责检测物体的BB，$\mathbb{1}_{ij}^{\text {noobj }}$表示不负责检测物体的BB ，使用两个参数 $λ_{coord}$ 和 $λ_{noobj}$进行损失加权。
-
-$ \lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}_{i j}^{\text {obj }}\left[\left(x_{i}-\hat{x}_{i}\right)^{2}+\left(y_{i}-\hat{y}_{i}\right)^{2}\right] $ 中心点定位误差（负责检测物体的BB）
-
-- $\lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}_{i j}^{\text {obj }}\left[\left(\sqrt{w_{i}}-\sqrt{\hat{w}_{i}}\right)^{2}+\left(\sqrt{h_{i}}-\sqrt{\hat{h}_{i}}\right)^{2}\right]$ 宽高定位误差（负责检测物体的BB）
-- $\sum_{i=0}^{s^{2}} \sum_{j=0}^{B} \mathbb{1}_{i j}^{\mathrm{obj}}\left(C_{i}-\hat C_{i}\right)^{2}$ 置信度误差（负责检测物体的BB）
-- $\lambda_{\text {noobj }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}_{i j}^{\text {noobj }}\left(C_{i}-\hat{C}_{t}\right)^{2}$ 置信度误差（不负责检测物体的BB）
-- $\sum_{\mathbf{i}=0}^{S^{2}} \mathbb{1}_{\mathbf{i}}^{\mathrm{obj}} \sum_{c \in \text { classes }}\left(p_{i}(c)-\hat{p}_{i}(c)\right)^{2}$ 类别预测误差（负责检测物体的grid cell）
+![image-20230217155227050](/image/objectionDetection/image-20230217155227050.png)
 
 ## 预测阶段
 
@@ -46,9 +39,7 @@ $ \lambda_{\text {coord }} \sum_{i=0}^{S^{2}} \sum_{j=0}^{B} \mathbb{1}_{i j}^{\
 
 模型预测出98个BB，以及每个BB的类别全概率（计算得到）：
 
-$$
-{Pr}\left (\text { Class }_{i} \mid \text { Object }\right) * {Pr}(\text { Object }) * IOU_{\text {pred }}^{\text {truth }}={Pr}\left(\text { Class }_{i}\right) * IOU_{\text {pred }}^{\text {truth }}
-$$
+![image-20230217155242252](/image/objectionDetection/image-20230217155242252.png)
 
 它代表BB含有某个类的概率以及BB与对象的匹配程度。
 
