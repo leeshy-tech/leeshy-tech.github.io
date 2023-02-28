@@ -4,32 +4,32 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>YOLO v1深度解读 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="YOLO v1深度解读" />
-<meta property="og:description" content="You Only Look Once: Unified, Real-Time Object Detection，统一实时的目标检测" />
+        <title>YOLO v3深度解读 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="YOLO v3深度解读" />
+<meta property="og:description" content="YOLOv3: An Incremental Improvement" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://leeshy-tech.github.io/yolo/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-02-17T13:04:06+08:00" />
-<meta property="article:modified_time" content="2023-02-17T13:04:06+08:00" />
+<meta property="og:url" content="https://leeshy-tech.github.io/yolo_v3/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-02-18T15:11:06+08:00" />
+<meta property="article:modified_time" content="2023-02-18T15:11:06+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
 
-<meta name="twitter:title" content="YOLO v1深度解读"/>
-<meta name="twitter:description" content="You Only Look Once: Unified, Real-Time Object Detection，统一实时的目标检测"/>
+<meta name="twitter:title" content="YOLO v3深度解读"/>
+<meta name="twitter:description" content="YOLOv3: An Incremental Improvement"/>
 <meta name="application-name" content="Leeshy&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/yolo/" /><link rel="prev" href="https://leeshy-tech.github.io/wenying/" /><link rel="next" href="https://leeshy-tech.github.io/yolo_v2/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/yolo_v3/" /><link rel="prev" href="https://leeshy-tech.github.io/yolo_v2/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "YOLO v1深度解读",
+        "headline": "YOLO v3深度解读",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/leeshy-tech.github.io\/yolo\/"
-        },"genre": "posts","keywords": "object detection, YOLO","wordcount":  844 ,
-        "url": "https:\/\/leeshy-tech.github.io\/yolo\/","datePublished": "2023-02-17T13:04:06+08:00","dateModified": "2023-02-17T13:04:06+08:00","publisher": {
+            "@id": "https:\/\/leeshy-tech.github.io\/yolo_v3\/"
+        },"genre": "posts","keywords": "object detection, YOLO","wordcount":  171 ,
+        "url": "https:\/\/leeshy-tech.github.io\/yolo_v3\/","datePublished": "2023-02-18T15:11:06+08:00","dateModified": "2023-02-18T15:11:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
                 "@type": "Person",
@@ -115,10 +115,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">YOLO v1深度解读</h2><div class="post-meta">
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">YOLO v3深度解读</h2><div class="post-meta">
                 <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/object-detection/"><i class="far fa-folder fa-fw"></i>object detection</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-17">2023-02-17</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 844 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 2 分钟</span>&nbsp;</div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 171 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -129,128 +129,73 @@
                     <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
     <li><a href="#概况">概况</a></li>
-    <li><a href="#训练阶段">训练阶段</a>
+    <li><a href="#算法">算法</a>
       <ul>
-        <li><a href="#网络结构">网络结构</a></li>
+        <li><a href="#骨干网络">骨干网络</a></li>
         <li><a href="#损失函数">损失函数</a></li>
       </ul>
     </li>
-    <li><a href="#预测阶段">预测阶段</a></li>
-    <li><a href="#实验结果">实验结果</a></li>
-    <li><a href="#参考">参考</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h1 id="you-only-look-once-unified-real-time-object-detection">You Only Look Once: Unified, Real-Time Object Detection</h1>
+                </div><div class="content" id="content"><h1 id="yolov3-an-incremental-improvement">YOLOv3: An Incremental Improvement</h1>
 <h2 id="概况">概况</h2>
-<p><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/Redmon_You_Only_Look_CVPR_2016_paper.html" target="_blank" rel="noopener noreffer">You Only Look Once: Unified, Real-Time Object Detection</a></p>
-<p>CVPR 2016</p>
-<h2 id="训练阶段">训练阶段</h2>
-<ul>
-<li>将一幅图像分为7×7（S×S）个网格（grid cell），如果某个物体的中心落在某个网格内，就由该网格预测该物体。</li>
-<li>每个网格预测 B=2 个bounding box（BB），每个BB回归自身的坐标(x, y, w, h)和置信度confidence共5个值。置信度$ {Pr}(\text { Object }) * \mathrm{IOU}_{\text {pred }}^{\text {truth }}$反映BB含有对象的概率以及预测准确性，为0或IOU。</li>
-<li>每个网格预测 C 个类别条件概率${Pr}\left(\text { Class }_{i} \mid \text { Object }\right)$。</li>
-<li>输出维度为S×S×（5*B + C），对于PASCAL VOC数据集，输入448×448×3通道的彩色图像，输入7×7×30的张量。</li>
-</ul>
+<p><a href="https://arxiv.org/abs/1804.02767" target="_blank" rel="noopener noreffer">YOLOv3: An Incremental Improvement</a></p>
+<p>arxiv 2018</p>
+<h2 id="算法">算法</h2>
+<h3 id="骨干网络">骨干网络</h3>
+<p>模型层数变深，并加入了残差连接。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217133437915.png"
-        data-srcset="/image/objectionDetection/image-20230217133437915.png, /image/objectionDetection/image-20230217133437915.png 1.5x, /image/objectionDetection/image-20230217133437915.png 2x"
+        data-src="/image/objectionDetection/image-20230218152805888.png"
+        data-srcset="/image/objectionDetection/image-20230218152805888.png, /image/objectionDetection/image-20230218152805888.png 1.5x, /image/objectionDetection/image-20230218152805888.png 2x"
         data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217133437915.png"
-        title="image-20230217133437915" /></p>
-<h3 id="网络结构">网络结构</h3>
-<p>通过一个深度卷积神经网络抽取图像特征，模型参考GoogleNet</p>
+        alt="/image/objectionDetection/image-20230218152805888.png"
+        title="image-20230218152805888" /></p>
+<p>Darknet-53实现了精度和速度的折中。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217132610274.png"
-        data-srcset="/image/objectionDetection/image-20230217132610274.png, /image/objectionDetection/image-20230217132610274.png 1.5x, /image/objectionDetection/image-20230217132610274.png 2x"
+        data-src="/image/objectionDetection/image-20230218153115427.png"
+        data-srcset="/image/objectionDetection/image-20230218153115427.png, /image/objectionDetection/image-20230218153115427.png 1.5x, /image/objectionDetection/image-20230218153115427.png 2x"
         data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217132610274.png"
-        title="image-20230217132610274" /></p>
-<p>输入是448×448×3通道的彩色图像，经过若干卷积层、池化层变成7×7×1024的feature map，经全连接层回归得到7×7×30的张量。</p>
+        alt="/image/objectionDetection/image-20230218153115427.png"
+        title="image-20230218153115427" /></p>
+<p>输入416*416的图像，骨干网络是一个全卷积网络，去除了全连接层，输出3个尺度的特征图，对应不同数量的grid cell（13 26 52），不同感受野负责不同尺度物体的预测。特征金字塔（Feature Pyramid Networks）思想。</p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230218154318822.png"
+        data-srcset="/image/objectionDetection/image-20230218154318822.png, /image/objectionDetection/image-20230218154318822.png 1.5x, /image/objectionDetection/image-20230218154318822.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230218154318822.png"
+        title="image-20230218154318822" /></p>
+<p><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/image/objectionDetection/image-20230218155044103.png"
+        data-srcset="/image/objectionDetection/image-20230218155044103.png, /image/objectionDetection/image-20230218155044103.png 1.5x, /image/objectionDetection/image-20230218155044103.png 2x"
+        data-sizes="auto"
+        alt="/image/objectionDetection/image-20230218155044103.png"
+        title="image-20230218155044103" /></p>
 <h3 id="损失函数">损失函数</h3>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217151158958.png"
-        data-srcset="/image/objectionDetection/image-20230217151158958.png, /image/objectionDetection/image-20230217151158958.png 1.5x, /image/objectionDetection/image-20230217151158958.png 2x"
+        data-src="/image/objectionDetection/image-20230218155618227.png"
+        data-srcset="/image/objectionDetection/image-20230218155618227.png, /image/objectionDetection/image-20230218155618227.png 1.5x, /image/objectionDetection/image-20230218155618227.png 2x"
         data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217151158958.png"
-        title="image-20230217151158958" /></p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217155227050.png"
-        data-srcset="/image/objectionDetection/image-20230217155227050.png, /image/objectionDetection/image-20230217155227050.png 1.5x, /image/objectionDetection/image-20230217155227050.png 2x"
-        data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217155227050.png"
-        title="image-20230217155227050" /></p>
-<h2 id="预测阶段">预测阶段</h2>
-<p>用模型进行预测，再进行后处理。</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217140842894.png"
-        data-srcset="/image/objectionDetection/image-20230217140842894.png, /image/objectionDetection/image-20230217140842894.png 1.5x, /image/objectionDetection/image-20230217140842894.png 2x"
-        data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217140842894.png"
-        title="image-20230217140842894" /></p>
-<p>模型预测出98个BB，以及每个BB的类别全概率（计算得到）：</p>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217155242252.png"
-        data-srcset="/image/objectionDetection/image-20230217155242252.png, /image/objectionDetection/image-20230217155242252.png 1.5x, /image/objectionDetection/image-20230217155242252.png 2x"
-        data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217155242252.png"
-        title="image-20230217155242252" /></p>
-<p>它代表BB含有某个类的概率以及BB与对象的匹配程度。</p>
-<p>对于特定类别：</p>
-<ul>
-<li>将小于设定阈值的概率置0，并将所有BB按概率排序，最后进行NMS（Non-maximum suppression，非极大值抑制）</li>
-</ul>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217141017169.png"
-        data-srcset="/image/objectionDetection/image-20230217141017169.png, /image/objectionDetection/image-20230217141017169.png 1.5x, /image/objectionDetection/image-20230217141017169.png 2x"
-        data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217141017169.png"
-        title="image-20230217141017169" /></p>
-<p>非极大值抑制：</p>
-<ol>
-<li>对于概率最大的BB，计算所有BB与之的IOU，去除IOU大于某设定阈值的BB（概率置0）。（IOU大于某一阈值，就认定两个BB是预测了同一个物体，所以这一步的意义是去除重复的预测框）</li>
-<li>对余下的概率最大的BB，重复以上过程。</li>
-</ol>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230217141408828.png"
-        data-srcset="/image/objectionDetection/image-20230217141408828.png, /image/objectionDetection/image-20230217141408828.png 1.5x, /image/objectionDetection/image-20230217141408828.png 2x"
-        data-sizes="auto"
-        alt="/image/objectionDetection/image-20230217141408828.png"
-        title="image-20230217141408828" /></p>
-<h2 id="实验结果">实验结果</h2>
-<ol>
-<li>在同准确率上是最快的，在同速度下是最准的，达到了实时性。</li>
-<li>定位错误最多，背景错误比R-CNN少很多，这是因为YOLO输入整张图片，能看到更大范围的图像。</li>
-<li>对于集成模型，与R-CNN继承能进一步提升准确率，但是速度没有提升。</li>
-<li>泛化性能好，在现实数据集训练的结果在艺术作品上也表现的很好，远超其他方法。</li>
-</ol>
-<h2 id="参考">参考</h2>
-<p><a href="https://www.bilibili.com/video/BV15w411Z7LG?p=4&amp;vd_source=c421bf5ed1b524a57c89542f6c02aceb" target="_blank" rel="noopener noreffer">【精读AI论文】YOLO V1目标检测，看我就够了</a></p>
+        alt="/image/objectionDetection/image-20230218155618227.png"
+        title="image-20230218155618227" /></p>
 </div><div class="post-footer" id="post-footer">
     <div class="post-info"><div class="post-info-tag"><span><a href="/tags/object-detection/">object detection</a>
                 </span><span><a href="/tags/yolo/">YOLO</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2023-02-17</span>
+                <span>更新于 2023-02-18</span>
             </div><div class="post-info-mod"><span>
-                            <a class="link-to-markdown" href="/yolo/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/yolo_v3/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-        </div></div><div class="post-nav"><a href="/wenying/" class="prev" rel="prev" title="纹影法观测火焰流场"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/yolo_v2/" class="next" rel="next" title="YOLO v2深度解读">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+        </div></div><div class="post-nav"><a href="/yolo_v2/" class="prev" rel="prev" title="YOLO v2深度解读"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
 </div></article></div>
             </main>
             <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>

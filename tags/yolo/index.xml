@@ -4,7 +4,78 @@
         <link>https://leeshy-tech.github.io/tags/yolo/</link>
         <description>YOLO - 标签 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/yolo/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 18 Feb 2023 15:11:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/tags/yolo/" rel="self" type="application/rss+xml" /><item>
+    <title>YOLO v3深度解读</title>
+    <link>https://leeshy-tech.github.io/yolo_v3/</link>
+    <pubDate>Sat, 18 Feb 2023 15:11:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo_v3/</guid>
+    <description><![CDATA[<h1 id="yolov3-an-incremental-improvement">YOLOv3: An Incremental Improvement</h1>
+<h2 id="概况">概况</h2>
+<p><a href="https://arxiv.org/abs/1804.02767" target="_blank" rel="noopener noreffer">YOLOv3: An Incremental Improvement</a></p>
+<p>arxiv 2018</p>
+<h2 id="算法">算法</h2>
+<h3 id="骨干网络">骨干网络</h3>
+<p>模型层数变深，并加入了残差连接。</p>
+<p></p>
+<p>Darknet-53实现了精度和速度的折中。</p>
+<p></p>
+<p>输入416*416的图像，骨干网络是一个全卷积网络，去除了全连接层，输出3个尺度的特征图，对应不同数量的grid cell（13 26 52），不同感受野负责不同尺度物体的预测。特征金字塔（Feature Pyramid Networks）思想。</p>
+<p></p>
+<p></p>
+<h3 id="损失函数">损失函数</h3>
+<p></p>
+]]></description>
+</item>
+<item>
+    <title>YOLO v2深度解读</title>
+    <link>https://leeshy-tech.github.io/yolo_v2/</link>
+    <pubDate>Sat, 18 Feb 2023 13:14:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo_v2/</guid>
+    <description><![CDATA[<h1 id="yolo9000-better-faster-stronger">YOLO9000: Better, Faster, Stronger</h1>
+<h2 id="概况">概况</h2>
+<p><a href="https://openaccess.thecvf.com/content_cvpr_2017/html/Redmon_YOLO9000_Better_Faster_CVPR_2017_paper.html" target="_blank" rel="noopener noreffer">YOLO9000: Better, Faster, Stronger</a></p>
+<p>CVPR 2017</p>
+<h2 id="better">Better</h2>
+<h3 id="batch-normalization">Batch Normalization</h3>
+<p></p>
+<h3 id="high-resloution-classifier">High Resloution Classifier</h3>
+<p>高分辨率分类器</p>
+<p>YOLO v1骨干网络是在224×224图像上训练，再运用到448×448图像的检测。YOLO v2使用448×448图像进行训练。</p>
+<p></p>
+<p></p>
+<h3 id="anchor--dimension-clusters--direct-location-prediction">Anchor / Dimension Clusters / Direct location prediction</h3>
+<p>预设一组锚框（anchor boxes），使得不同大小的锚框负责预测不同尺寸的物体。</p>
+<p></p>
+<p>每个grid cell产生5个anchor，类别信息改为由anchor预测，每个anchor带有4个位置参数，一个置信度参数和20个类别参数。</p>
+<p></p>
+<p>anchor的5个尺寸由对COCO和Pascal VOC数据集聚类得到。</p>
+<p></p>
+<p>在anchor坐标回归上，添加sigmoid函数，将BB中心始终约束在grid cell内。</p>
+<p></p>
+<h3 id="损失函数">损失函数</h3>
+<p></p>
+<h3 id="fine-grained-features">Fine-Grained Features</h3>
+<p>细粒度特征，把浅层网络的特征与深层网络特征叠加，整合不同尺度的特征。</p>
+<p></p>
+<p></p>
+<h3 id="multi-scale-training">Multi-Scale Training</h3>
+<p>输入不同尺度的图像，迫使模型学习到不同尺度的特征。输入大尺度图像，模型速度变慢，精度提高。对于小尺度图片，速度变快，精度降低。</p>
+<p></p>
+<p></p>
+<h3 id="所有trick的提升">所有trick的提升</h3>
+<p>加入anchor虽然减小了mAP，但是recall大大提升。</p>
+<p></p>
+<h2 id="faster">Faster</h2>
+<p>采用Darknet19作为骨干网络</p>
+<p></p>
+<p>整体结构：</p>
+<p></p>
+<h3 id="stronger">Stronger</h3>
+<p>检测类别变得更多：将COCO目标检测数据集和Imagenet分类数据集联合训练。</p>
+<p></p>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.bilibili.com/video/BV1Q64y1s74K/?spm_id_from=333.999.0.0&amp;vd_source=c421bf5ed1b524a57c89542f6c02aceb" target="_blank" rel="noopener noreffer">【精读AI论文】YOLO V2目标检测算法</a></p>
+]]></description>
+</item>
+<item>
     <title>YOLO v1深度解读</title>
     <link>https://leeshy-tech.github.io/yolo/</link>
     <pubDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo/</guid>

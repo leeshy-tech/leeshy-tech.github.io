@@ -4,9 +4,80 @@
         <link>https://leeshy-tech.github.io/</link>
         <description>Welcome to Leeshy&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</lastBuildDate>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 18 Feb 2023 15:11:06 &#43;0800</lastBuildDate>
             <atom:link href="https://leeshy-tech.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>YOLO v3深度解读</title>
+    <link>https://leeshy-tech.github.io/yolo_v3/</link>
+    <pubDate>Sat, 18 Feb 2023 15:11:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo_v3/</guid>
+    <description><![CDATA[<h1 id="yolov3-an-incremental-improvement">YOLOv3: An Incremental Improvement</h1>
+<h2 id="概况">概况</h2>
+<p><a href="https://arxiv.org/abs/1804.02767" target="_blank" rel="noopener noreffer">YOLOv3: An Incremental Improvement</a></p>
+<p>arxiv 2018</p>
+<h2 id="算法">算法</h2>
+<h3 id="骨干网络">骨干网络</h3>
+<p>模型层数变深，并加入了残差连接。</p>
+<p></p>
+<p>Darknet-53实现了精度和速度的折中。</p>
+<p></p>
+<p>输入416*416的图像，骨干网络是一个全卷积网络，去除了全连接层，输出3个尺度的特征图，对应不同数量的grid cell（13 26 52），不同感受野负责不同尺度物体的预测。特征金字塔（Feature Pyramid Networks）思想。</p>
+<p></p>
+<p></p>
+<h3 id="损失函数">损失函数</h3>
+<p></p>
+]]></description>
+</item>
+<item>
+    <title>YOLO v2深度解读</title>
+    <link>https://leeshy-tech.github.io/yolo_v2/</link>
+    <pubDate>Sat, 18 Feb 2023 13:14:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo_v2/</guid>
+    <description><![CDATA[<h1 id="yolo9000-better-faster-stronger">YOLO9000: Better, Faster, Stronger</h1>
+<h2 id="概况">概况</h2>
+<p><a href="https://openaccess.thecvf.com/content_cvpr_2017/html/Redmon_YOLO9000_Better_Faster_CVPR_2017_paper.html" target="_blank" rel="noopener noreffer">YOLO9000: Better, Faster, Stronger</a></p>
+<p>CVPR 2017</p>
+<h2 id="better">Better</h2>
+<h3 id="batch-normalization">Batch Normalization</h3>
+<p></p>
+<h3 id="high-resloution-classifier">High Resloution Classifier</h3>
+<p>高分辨率分类器</p>
+<p>YOLO v1骨干网络是在224×224图像上训练，再运用到448×448图像的检测。YOLO v2使用448×448图像进行训练。</p>
+<p></p>
+<p></p>
+<h3 id="anchor--dimension-clusters--direct-location-prediction">Anchor / Dimension Clusters / Direct location prediction</h3>
+<p>预设一组锚框（anchor boxes），使得不同大小的锚框负责预测不同尺寸的物体。</p>
+<p></p>
+<p>每个grid cell产生5个anchor，类别信息改为由anchor预测，每个anchor带有4个位置参数，一个置信度参数和20个类别参数。</p>
+<p></p>
+<p>anchor的5个尺寸由对COCO和Pascal VOC数据集聚类得到。</p>
+<p></p>
+<p>在anchor坐标回归上，添加sigmoid函数，将BB中心始终约束在grid cell内。</p>
+<p></p>
+<h3 id="损失函数">损失函数</h3>
+<p></p>
+<h3 id="fine-grained-features">Fine-Grained Features</h3>
+<p>细粒度特征，把浅层网络的特征与深层网络特征叠加，整合不同尺度的特征。</p>
+<p></p>
+<p></p>
+<h3 id="multi-scale-training">Multi-Scale Training</h3>
+<p>输入不同尺度的图像，迫使模型学习到不同尺度的特征。输入大尺度图像，模型速度变慢，精度提高。对于小尺度图片，速度变快，精度降低。</p>
+<p></p>
+<p></p>
+<h3 id="所有trick的提升">所有trick的提升</h3>
+<p>加入anchor虽然减小了mAP，但是recall大大提升。</p>
+<p></p>
+<h2 id="faster">Faster</h2>
+<p>采用Darknet19作为骨干网络</p>
+<p></p>
+<p>整体结构：</p>
+<p></p>
+<h3 id="stronger">Stronger</h3>
+<p>检测类别变得更多：将COCO目标检测数据集和Imagenet分类数据集联合训练。</p>
+<p></p>
+<h2 id="参考">参考</h2>
+<p><a href="https://www.bilibili.com/video/BV1Q64y1s74K/?spm_id_from=333.999.0.0&amp;vd_source=c421bf5ed1b524a57c89542f6c02aceb" target="_blank" rel="noopener noreffer">【精读AI论文】YOLO V2目标检测算法</a></p>
+]]></description>
+</item>
+<item>
     <title>YOLO v1深度解读</title>
     <link>https://leeshy-tech.github.io/yolo/</link>
     <pubDate>Fri, 17 Feb 2023 13:04:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo/</guid>
@@ -513,118 +584,6 @@ recall和precision是模型性能两个不同维度的度量：</p>
 <h2 id="2014p4-programming-protocol-independent-packet-processors">(2014)P4: Programming Protocol-Independent Packet Processors</h2>
 <p>P4：编写协议无关的包处理器</p>
 <p>​	P4 是一种用于编程独立于协议的包处理器的高级语言。 P4 与 OpenFlow 等 SDN 控制协议结合使用。 在目前的形式中，OpenFlow 明确指定了它所操作的协议头。 这组在几年内从 12 个字段增长到 41 个字段，增加了规范的复杂性，同时仍然不能提供添加新标头的灵活性。 在本文中，我们提出 P4 作为 OpenFlow 未来应该如何发展的草案建议。 我们有三个目标： (1) 现场可重构性：一旦部署，程序员应该能够改变交换机处理数据包的方式。 (2) 协议独立性：交换机不应与任何特定的网络协议绑定。 (3) 目标独立性：程序员应该能够独立于底层硬件的细节来描述数据包处理功能。 作为示例，我们描述了如何使用 P4 来配置交换机以添加新的分层标签。</p>
-]]></description>
-</item>
-<item>
-    <title>git使用笔记——commit格式</title>
-    <link>https://leeshy-tech.github.io/git_commit_format/</link>
-    <pubDate>Tue, 14 Jun 2022 14:58:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/git_commit_format/</guid>
-    <description><![CDATA[<blockquote>
-<p>起因是看到了三位大佬的工程https://github.com/Direktor799/rusted_os/commits/main，非常的赏心悦目，才知道commit也有固定的格式</p>
-</blockquote>
-<p>Commit Message格式，目前规范使用较多的是 <a href="https://github.com/angular/angular.js/blob/master/DEVELOPERS.md#-git-commit-guidelines" target="_blank" rel="noopener noreffer">Angular 团队的规范</a>, 继而衍生了 <a href="https://www.conventionalcommits.org/en/v1.0.0/" target="_blank" rel="noopener noreffer">Conventional Commits specification</a>. 很多工具也是基于此规范, 它的 message 格式如下:</p>
-<p>Commit格式包含三个部分，Header、Body、Footer</p>
-<pre tabindex="0"><code>&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;
-&lt;BLANK LINE&gt;
-&lt;body&gt;
-&lt;BLANK LINE&gt;
-&lt;footer&gt;
-</code></pre><ul>
-<li>首行header：必填，描述修改类型和内容
-<ul>
-<li>scope：commit影响的范围</li>
-<li>subject：commit的概述</li>
-</ul>
-</li>
-<li>body：commit具体修改的内容</li>
-<li>footer：备注，通常是 BREAKING CHANGE 或修复的 bug 的链接.</li>
-</ul>
-<h3 id="header">Header</h3>
-<p>Header只有一行，包括三个字段<code>type</code>（必填）<code>scope</code>（可选）<code>subject</code>（必填）</p>
-<h4 id="type">type</h4>
-<p>说明commit的类别</p>
-<ul>
-<li>feat：新增功能</li>
-<li>fix：bug 修复</li>
-<li>docs：文档更新</li>
-<li>style：不影响程序逻辑的代码修改(修改空白字符，格式缩进，补全缺失的分号等，没有改变代码逻辑)</li>
-<li>refactor：重构代码(既没有新增功能，也没有修复 bug)</li>
-<li>perf：性能, 体验优化</li>
-<li>test：新增测试用例或是更新现有测试</li>
-<li>build：主要目的是修改项目构建系统(例如 glup，webpack，rollup 的配置等)的提交</li>
-<li>ci：主要目的是修改项目继续集成流程(例如 Travis，Jenkins，GitLab CI，Circle等)的提交</li>
-<li>chore：不属于以上类型的其他类，比如构建流程, 依赖管理</li>
-<li>revert：回滚某个更早之前的提交</li>
-</ul>
-<h4 id="scope">scope</h4>
-<p>说明commit影响的范围，比如文件或者逻辑层。</p>
-<h4 id="subject">subject</h4>
-<p>commit简述</p>
-<ul>
-<li>以动词开头，使用第一人称现在时，比如<code>change</code>，而不是<code>changed</code>或<code>changes</code></li>
-<li>第一个字母小写</li>
-<li>结尾不加句号（<code>.</code>）</li>
-</ul>
-<h3 id="body">Body</h3>
-<p>commit详细描述</p>
-<h3 id="footer">Footer</h3>
-<p>只用于两种情况</p>
-<ol>
-<li>不兼容变动</li>
-<li>关闭Issue</li>
-</ol>
-]]></description>
-</item>
-<item>
-    <title>论文笔记——Oracle-MNIST：a Realistic Image Dataset for Benchmarking Machine Learning Algorithms</title>
-    <link>https://leeshy-tech.github.io/oracle-mnist/</link>
-    <pubDate>Sun, 12 Jun 2022 14:13:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/oracle-mnist/</guid>
-    <description><![CDATA[<h2 id="摘要">摘要</h2>
-<p>​	我们引入了Oracle-MNIST数据集，包括10个类别的30222个古代字符的28×28灰度图像，用于基准模式分类，特别是图像噪声和失真方面的挑战。训练集共有27222张图像，测试集每个类有300张图像。Oracle-MNIST与原始MNIST数据集共享相同的数据格式，允许与所有现有的分类器和系统直接兼容，但它构成了比MNIST更具挑战性的分类任务。由于三千年的埋藏和老化，古文字的形象受到了极其严重和独特的噪音影响，以及古文字的书写风格的巨大变化，这些都使其具有机器学习研究的现实感。该数据集可以在https://github.com/wm-bupt/oracle-mnist上免费获得。</p>
-<h2 id="1-引言">1 引言</h2>
-<p>​	在过去的几年里，由于专门的数据集作为实验测试平台和当前进展的公共基准的发布，机器学习(ML)取得了快速的进展，从而集中了研究社区的努力。计算机视觉中最广为人知的数据集是MNIST数据集，该数据集于1998年由LeCun等人(1998)首次引入。MNIST是一个10类数字分类数据集，由60,000张用于训练的灰度图像和10,000张用于测试的灰度图像组成。整个数据集相对较小，可以自由访问和使用，并以完全直接的方式进行编码和存储，这几乎肯定有助于它的广泛使用。</p>
-<p>​	然而，随着改进学习算法的发现，MNIST的性能已经饱和。例如，卷积神经网络(CNNs) (Krizhevsky等人，2012;He et al.， 2016)可以轻松达到99%以上的准确率。这部分归因于基准测试没有捕获许多真实场景的需求。为了避免饱和性能并为改进的ML算法提供挑战，构建了一些改进的MNIST数据集，例如EMNIST (Cohen等人，2017)和fashionn -MNIST (Xiao等人，2017)。EMNIST通过引入大写和小写字符扩展了类的数量，但额外的类需要改变MNIST使用的深度神经网络的框架。fashion - mnist包含10级时尚产品的7万张灰度图像。这些产品图片来源于Zalando的网站e1，由专业摄影师拍摄，清晰规范。然而，它未能在现实世界中尽可能广泛地捕捉各种变化。</p>
-<p>​	本文的目的是提供一个真实且具有挑战性的数据集Oracle-MNIST，以方便ML算法对真实的古代字符图像进行简单快速的评估。oracle - mnist包含属于10个类别的oracle字符的30222个图像。</p>
-<p></p>
-<ol>
-<li>
-<p>真实世界的挑战。</p>
-<p>与手写数字不同，甲骨文字符是从真实的甲骨文表面扫描而来。因此，Oracle-MNIST由于数千年的埋藏和老化而产生了极其严重和独特的噪音，并且在每个类别中都包含着各种各样的写作风格，这都使得ML研究更加现实和困难。</p>
-</li>
-<li>
-<p>易用性。</p>
-<p>与原来的MNIST相同，图像在Oracle-MNIST有28×28灰度像素。它可以立即兼容任何能够与MNIST数据集工作的ML包，因为它共享相同的数据格式。事实上，使用这个数据集需要做的唯一更改就是更改获取MNIST数据集的URL。</p>
-</li>
-</ol>
-<h2 id="2-oracle-mnist-数据集">2 Oracle-MNIST 数据集</h2>
-<h3 id="21甲骨文字符发现">2.1甲骨文字符发现</h3>
-<p>​	古代史依赖于对古文字的研究。甲骨文是中国最古老的象形文字(Flad et al.， 2008;Keightley, 1997)，近三千年的历史，为现代文明做出了巨大的贡献，使中华文化得以代代相传，成为唯一延续至今的文明。如图1所示，甲骨文被镌刻在龟甲和兽骨上，记录了商朝(公元前1600-1046年)的生活和历史，包括占卜、征战、狩猎、医疗和生育等。1899年，清朝(1644-1911)，一位名叫王希荣的商人首次发现了它们。20世纪初，中国的研究人员在商朝都城河南安阳的小屯村发掘了大量的甲骨文。此后，甲骨文文字的研究备受关注。它对于中国的词源学和书法，以及学习中国古代乃至世界的文化和历史都具有重要的意义。</p>
-<p></p>
-<p></p>
-<p></p>
-<p>​	甲骨文字符大多采用扫描图像存储，扫描图像是将一张纸盖在主体上，然后用卷墨拓印，再现甲骨文表面，如图2(a)所示。识别这些甲骨文字符对专家和机器来说都很困难。到目前为止，已经发现了近4500个不同的甲骨文字符，但只有大约2200个字符被成功破译。原因如下。(1)磨损和噪声。几个世纪以来，许多甲骨铭文遭到破坏，它们的文字现在已经残缺不全。铭文的老化过程也使其不易辨认，因此扫描的文字破损，并含有严重的噪音。(2)大方差。不同的写作风格导致了类内的高度差异。如图2(b)所示，属于同一类别的字符在笔画甚至拓扑结构上都存在较大差异。不同类别的一些字符彼此相似，这给识别带来了很大的困难。例如，图2(c)和图2(d)所示的“木”和“牛”两个类别的字符仅在一些小细节上有所不同。</p>
-<h3 id="22-数据集的细节">2.2 数据集的细节</h3>
-<p>​	Oracle-MNIST是基于<em>殷奇文苑网站</em>的集合。这些甲骨文字是从真实的甲骨文表面扫描而来的，因此会出现破碎和噪音严重的现象。每个扫描图像的中心都有一个字符。大多数原始图像都有灰色或黑色背景，分辨率也各不相同。</p>
-<p>​	我们选择了10个类的30222个常用字符构建Oracle-MNIST。然后将原始图像送入下面的转换管道，如图3所示。我们还试图通过一些图像增强技术，如灰度拉伸和直方图均衡化来处理图像。虽然成功地提高了图像的视觉质量，但识别性能略有下降。因此，Oracle-MNIST并没有采用图像增强技术。我们还提供原始图像，并将数据处理工作留给算法开发人员。</p>
-<ol>
-<li>将图像转换为8位灰度像素。</li>
-<li>如果前景比背景暗，则取消图像的强度。</li>
-<li>使用双三次插值算法将图像的最长边缘调整为28。</li>
-<li>将最短的边延长到28，并将图像放到画布的中心。</li>
-</ol>
-<p>​	我们利用字符的含义作为它们的类标签。这些标签是由考古学或古生物学专家手工标注的。表2给出了Oracle-MNIST中所有类标签的总结，并给出了每个类的示例。</p>
-<p>​	最后，我们将数据集分为训练集和测试集，并确保它们是不相交的。训练集由随机选取的27222张图像组成，测试集每类包含300张图像。图像和标签以与MNIST数据集相同的文件格式存储，MNIST数据集是为存储向量和多维矩阵而设计的。表1列出了结果文件。</p>
-<p></p>
-<h2 id="3-实验">3 实验</h2>
-<p>​	我们在Oracle-MNIST上评估了一些不同参数的算法，结果如表3所示。对于每种算法，通过三次重复实验报告了平均分类精度。MNIST和Fashion-MNIST数据集上的基准也包括在并排比较中。</p>
-<p>​	从结果中，我们有以下观察结果。首先，经典(浅层)ML算法在MNIST数据集上可以轻松实现97%，这证明了MNIST算法太容易评估。我们的Oracle-MNIST数据集提供了10类古代字符的图像，并进一步捕捉了现实世界中尽可能广泛的变化，这比MNIST数字数据和Fashion-MNIST数据提出了更具有挑战性的分类任务。我们可以看到，所有经典的(浅)ML算法在MNIST上表现最好，其次是fashionmnist，在oracle MNIST上表现最差。例如，随机森林分类器的准确率分别为97.1%、87.1%和64.9%。这是因为上文2.1节所述的类内方差和类间相似度较高，会给分类带来很大的困难。此外，由于模糊、噪声和遮挡等原因，扫描到的甲骨文图像会严重退化，甚至完全失去识别字形信息。</p>
-<p>​	其次，CNN优于Oracle-MNIST上所有的经典(浅)ML算法。得益于局部接收场和空间或时间子采样，CNN可以强制提取局部特征，降低输出对位移和失真的敏感性(LeCun et al.， 1995)。因此，现实世界的挑战，如不同的写作风格，噪音和闭塞，可以在一定程度上解决。然而，Oracle-MNIST上的性能还没有饱和。本文使用的CNN在Oracle-MNIST上的错误率为6.2%，还有改进的空间。尽管CNN具有强大的表示能力，但是识别这些古文字的问题还有待完全解决。</p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<h2 id="4-结论">4 结论</h2>
-<p>​	在本文中，我们提出了一个现实的和具有挑战性的基准数据集，即Oracle-MNIST。它包含10类30222个古文字的28×28灰度图像，用于对计算机视觉中的图像噪声和失真的鲁棒性进行基准测试。Oracle-MNIST被转换成一种与构建来处理MNIST数据集的分类器直接兼容的格式。由于数千年的埋藏和老化，这些古老的文字噪音大，书写风格各异，给识别带来了很大的困难。基准测试结果表明，古文字分类任务确实更具挑战性。</p>
 ]]></description>
 </item>
 </channel>
