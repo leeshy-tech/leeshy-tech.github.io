@@ -79,7 +79,7 @@ anchor的5个尺寸由对COCO和Pascal VOC数据集聚类得到。
 
 ![image-20230218145006603](/image/objectionDetection//image-20230218145006603.png)
 
-### Stronger
+## Stronger
 
 检测类别变得更多：将COCO目标检测数据集和Imagenet分类数据集联合训练。
 

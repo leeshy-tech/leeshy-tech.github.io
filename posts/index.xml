@@ -68,7 +68,7 @@
 <p></p>
 <p>整体结构：</p>
 <p></p>
-<h3 id="stronger">Stronger</h3>
+<h2 id="stronger">Stronger</h2>
 <p>检测类别变得更多：将COCO目标检测数据集和Imagenet分类数据集联合训练。</p>
 <p></p>
 <h2 id="参考">参考</h2>
