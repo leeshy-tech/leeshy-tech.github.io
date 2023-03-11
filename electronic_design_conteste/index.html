@@ -4,32 +4,32 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="robots" content="noodp" />
-        <title>YOLO v3深度解读 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="YOLO v3深度解读" />
-<meta property="og:description" content="YOLOv3: An Incremental Improvement" />
+        <title>数字-模拟信号混合传输收发机 - Leeshy&#39;s Blog | To be humble</title><meta name="description" content="Welcome to Leeshy&#39;s Blog"><meta property="og:title" content="数字-模拟信号混合传输收发机" />
+<meta property="og:description" content="2021年全国大学生电子设计竞赛E题——数字-模拟信号混合传输收发机" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://leeshy-tech.github.io/yolo_v3/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-02-18T15:11:06+08:00" />
-<meta property="article:modified_time" content="2023-02-18T15:11:06+08:00" />
+<meta property="og:url" content="https://leeshy-tech.github.io/electronic_design_conteste/" /><meta property="og:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-03-08T18:50:06+08:00" />
+<meta property="article:modified_time" content="2023-03-08T18:50:06+08:00" />
 
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:image" content="https://leeshy-tech.github.io/HeadPhoto.jpg"/>
 
-<meta name="twitter:title" content="YOLO v3深度解读"/>
-<meta name="twitter:description" content="YOLOv3: An Incremental Improvement"/>
+<meta name="twitter:title" content="数字-模拟信号混合传输收发机"/>
+<meta name="twitter:description" content="2021年全国大学生电子设计竞赛E题——数字-模拟信号混合传输收发机"/>
 <meta name="application-name" content="Leeshy&#39;s Blog">
 <meta name="apple-mobile-web-app-title" content="Leeshy&#39;s Blog"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/yolo_v3/" /><link rel="prev" href="https://leeshy-tech.github.io/yolo_v2/" /><link rel="next" href="https://leeshy-tech.github.io/electronic_design_conteste/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://leeshy-tech.github.io/electronic_design_conteste/" /><link rel="prev" href="https://leeshy-tech.github.io/yolo_v3/" /><link rel="stylesheet" href="/css/page.min.css"><link rel="stylesheet" href="/css/home.min.css"><script type="application/ld+json">
     {
         "@context": "http://schema.org",
         "@type": "BlogPosting",
-        "headline": "YOLO v3深度解读",
+        "headline": "数字-模拟信号混合传输收发机",
         "inLanguage": "zh-CN",
         "mainEntityOfPage": {
             "@type": "WebPage",
-            "@id": "https:\/\/leeshy-tech.github.io\/yolo_v3\/"
-        },"genre": "posts","keywords": "object detection, YOLO","wordcount":  171 ,
-        "url": "https:\/\/leeshy-tech.github.io\/yolo_v3\/","datePublished": "2023-02-18T15:11:06+08:00","dateModified": "2023-02-18T15:11:06+08:00","publisher": {
+            "@id": "https:\/\/leeshy-tech.github.io\/electronic_design_conteste\/"
+        },"genre": "posts","keywords": "电赛","wordcount":  1274 ,
+        "url": "https:\/\/leeshy-tech.github.io\/electronic_design_conteste\/","datePublished": "2023-03-08T18:50:06+08:00","dateModified": "2023-03-08T18:50:06+08:00","publisher": {
             "@type": "Organization",
             "name": "Leeshy"},"author": {
                 "@type": "Person",
@@ -115,10 +115,10 @@
                 <div class="container"><div class="toc" id="toc-auto">
             <h2 class="toc-title">目录</h2>
             <div class="toc-content" id="toc-content-auto"></div>
-        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">YOLO v3深度解读</h2><div class="post-meta">
-                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/object-detection/"><i class="far fa-folder fa-fw"></i>object detection</a></span></div>
-                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-02-18">2023-02-18</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 171 字</span>&nbsp;
-                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 1 分钟</span>&nbsp;</div>
+        </div><article class="page single" data-toc="enable"><div class="single-card" ><h2 class="single-title animated flipInX">数字-模拟信号混合传输收发机</h2><div class="post-meta">
+                <div class="post-meta-line"><span class="post-author"><a href="https://github.com/leeshy-tech" title="Author" target="_blank" rel="noopener noreffer author" class="author"><i class="fas fa-user-circle fa-fw"></i>Leeshy</a></span>&nbsp;<span class="post-category">出版于  <a href="/categories/electronic-design/"><i class="far fa-folder fa-fw"></i>Electronic Design</a></span></div>
+                <div class="post-meta-line"><span><i class="far fa-calendar-alt fa-fw"></i>&nbsp;<time datetime="2023-03-08">2023-03-08</time></span>&nbsp;<span><i class="fas fa-pencil-alt fa-fw"></i>&nbsp;约 1274 字</span>&nbsp;
+                    <span><i class="far fa-clock fa-fw"></i>&nbsp;预计阅读 3 分钟</span>&nbsp;</div>
             </div>
             
             <hr><div class="details toc" id="toc-static"  data-kept="">
@@ -128,75 +128,110 @@
                     </div>
                     <div class="details-content toc-content" id="toc-content-static"><nav id="TableOfContents">
   <ul>
-    <li><a href="#概况">概况</a></li>
-    <li><a href="#算法">算法</a>
-      <ul>
-        <li><a href="#骨干网络">骨干网络</a></li>
-        <li><a href="#损失函数">损失函数</a></li>
-      </ul>
-    </li>
+    <li><a href="#题目要求">题目要求</a></li>
+    <li><a href="#拟定方案">拟定方案</a></li>
+    <li><a href="#器件选型">器件选型</a></li>
   </ul>
 </nav></div>
-                </div><div class="content" id="content"><h1 id="yolov3-an-incremental-improvement">YOLOv3: An Incremental Improvement</h1>
-<h2 id="概况">概况</h2>
-<p><a href="https://arxiv.org/abs/1804.02767" target="_blank" rel="noopener noreffer">YOLOv3: An Incremental Improvement</a></p>
-<p>arxiv 2018</p>
-<h2 id="算法">算法</h2>
-<h3 id="骨干网络">骨干网络</h3>
-<p>模型层数变深，并加入了残差连接。</p>
+                </div><div class="content" id="content"><h1 id="数字-模拟信号混合传输收发机">数字-模拟信号混合传输收发机</h1>
+<blockquote>
+<p>背景是2021年举办的电子设计大赛题目，做个回顾为复试做准备</p>
+</blockquote>
+<h2 id="题目要求">题目要求</h2>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230218152805888.png"
-        data-srcset="/image/objectionDetection/image-20230218152805888.png, /image/objectionDetection/image-20230218152805888.png 1.5x, /image/objectionDetection/image-20230218152805888.png 2x"
+        data-src="/image/electronicDesign/image-20230308185725115.png"
+        data-srcset="/image/electronicDesign/image-20230308185725115.png, /image/electronicDesign/image-20230308185725115.png 1.5x, /image/electronicDesign/image-20230308185725115.png 2x"
         data-sizes="auto"
-        alt="/image/objectionDetection/image-20230218152805888.png"
-        title="image-20230218152805888" /></p>
-<p>Darknet-53实现了精度和速度的折中。</p>
+        alt="/image/electronicDesign/image-20230308185725115.png"
+        title="image-20230308185725115" /></p>
+<ul>
+<li>
+<p>设计并制作在同一信道进行数字-模拟信号混合传输的无线收发机。其中，数字信号由 4 个 0~9 的一组数字构成；模拟信号为语音信号，频率范围为100Hz~5kHz。采用无线传输，载波频率范围为 20~30MHz，信道带宽不大于 25kHz，收发设备间最短的传输距离不小于 100cm。收发机的发送端完成数字信号和模拟信号合路处理，在同一信道调制发送。</p>
+</li>
+<li>
+<p>收发机的发送端完成数字信号和模拟信号合路处理，在同一信道调制发送。收发机的接收端完成接收解调，分离出数字信号和模拟信号，数字信号用数码管显示，模拟信号用示波器观测。</p>
+</li>
+<li>
+<p>基本要求</p>
+<p>（1） 实现模拟信号传输。模拟信号为 100Hz~5kHz 的语音信号，要求接收端解调后的模拟信号波形无明显失真。在只有模拟信号传输时，接收端的数码显示处于熄灭状态。</p>
+<p>（2） 实现数字信号传输。首先键入 4 个 0~9 的一组数字，在发送端进行存储并显示，然后按下发送键对数字信号连续循环传输。在接收端解调出数字信号，并通过 4 个数码管显示。要求开始发送到数码管显示的响应时间不大于 2 秒。当发送端按下停止键，结束数字信号传输，同时在发送端清除已传数字的显示，等待键入新的数字。</p>
+<p>（3）实现数字-模拟信号的混合传输。任意键入一组数字，与模拟信号混合调制后进行传输。要求接收端能正确解调数字信号和模拟信号，数字显示正确，模拟信号波形无明显失真。</p>
+<p>（4） 收发机的信道带宽不大于 <strong>25kHz</strong>，载波频率范围为 <strong>20~30MHz</strong>。要求收发机可在不少于 3 个载波频率中选择设置，具体的载波频率自行确定。</p>
+</li>
+<li>
+<p>发挥部分</p>
+<p>（1）在发送端停止数字信号传输后，接收端数码显示延迟 5 秒自动熄灭。</p>
+<p>（2）在满足基本要求的前提下，收发机发送端的功耗越低越好。</p>
+<p>（3）在满足基本要求的前提下，收发机所传输的模拟信号频率范围扩展到50Hz~10kHz。</p>
+</li>
+<li>
+<p>说明</p>
+<p>（1）数字和模拟信号必须先经过合路电路处理，然后在同一信道上调制传输，其调制方式和调制度自行确定。在合路电路的输出端应留有观测端口，用于示波器观测合路信号的波形变化。</p>
+<p>（2）收发机的发送端和接收端之间不得有任何连线。</p>
+<p>（3）收发机的发送端与天线的连接采用 SMA 接插头，发送端为 F（母）头，天线端为 M（公）头。天线的长度不超过 1 米。</p>
+<p>（4）收发机的发送端和接收端均采用电池单电源供电，发送端的供电电路应留有供电电压和电流的测试端口。</p>
+<p>（5）收发机的载波频率选取应尽量避开环境电波干扰。</p>
+<p>（6）本题目中信道带宽约定为已调信号的 -40dB 带宽，通过频谱仪进行测量。</p>
+</li>
+</ul>
+<h2 id="拟定方案">拟定方案</h2>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230218153115427.png"
-        data-srcset="/image/objectionDetection/image-20230218153115427.png, /image/objectionDetection/image-20230218153115427.png 1.5x, /image/objectionDetection/image-20230218153115427.png 2x"
+        data-src="/image/electronicDesign/image-20230308200938611.png"
+        data-srcset="/image/electronicDesign/image-20230308200938611.png, /image/electronicDesign/image-20230308200938611.png 1.5x, /image/electronicDesign/image-20230308200938611.png 2x"
         data-sizes="auto"
-        alt="/image/objectionDetection/image-20230218153115427.png"
-        title="image-20230218153115427" /></p>
-<p>输入416*416的图像，骨干网络是一个全卷积网络，去除了全连接层，输出3个尺度的特征图，对应不同数量的grid cell（13 26 52），不同感受野负责不同尺度物体的预测。特征金字塔（Feature Pyramid Networks）思想。</p>
+        alt="/image/electronicDesign/image-20230308200938611.png"
+        title="image-20230308200938611" /></p>
+<ul>
+<li>
+<p>调制解调方案</p>
+<p>模拟信号为 <strong>100Hz~5kHz</strong> 的语音信号，带宽不大于 <strong>25kHz</strong>，载波频率范围为 <strong>20~30MHz</strong>。经计算FM调制是达不到要求的，并且FM调制实现更复杂，所以采用AM调制。</p>
+</li>
+<li>
+<p>数字信号生成</p>
+<p>接收端解调的信号是一个数字和模拟信号叠加的信号，为了尽可能减小误码率，采用二进制正负交替的不归零码，在接收端用0判决。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230218154318822.png"
-        data-srcset="/image/objectionDetection/image-20230218154318822.png, /image/objectionDetection/image-20230218154318822.png 1.5x, /image/objectionDetection/image-20230218154318822.png 2x"
+        data-src="/image/electronicDesign/image-20230308202305066.png"
+        data-srcset="/image/electronicDesign/image-20230308202305066.png, /image/electronicDesign/image-20230308202305066.png 1.5x, /image/electronicDesign/image-20230308202305066.png 2x"
         data-sizes="auto"
-        alt="/image/objectionDetection/image-20230218154318822.png"
-        title="image-20230218154318822" /></p>
+        alt="/image/electronicDesign/image-20230308202305066.png"
+        title="image-20230308202305066" /></p>
+<p>正负信号通过stm32控制模拟开关，交替导通产生。</p>
 <p><img
         class="lazyload"
         src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230218155044103.png"
-        data-srcset="/image/objectionDetection/image-20230218155044103.png, /image/objectionDetection/image-20230218155044103.png 1.5x, /image/objectionDetection/image-20230218155044103.png 2x"
+        data-src="/image/electronicDesign/image-20230308203030653.png"
+        data-srcset="/image/electronicDesign/image-20230308203030653.png, /image/electronicDesign/image-20230308203030653.png 1.5x, /image/electronicDesign/image-20230308203030653.png 2x"
         data-sizes="auto"
-        alt="/image/objectionDetection/image-20230218155044103.png"
-        title="image-20230218155044103" /></p>
-<h3 id="损失函数">损失函数</h3>
-<p><img
-        class="lazyload"
-        src="/svg/loading.min.svg"
-        data-src="/image/objectionDetection/image-20230218155618227.png"
-        data-srcset="/image/objectionDetection/image-20230218155618227.png, /image/objectionDetection/image-20230218155618227.png 1.5x, /image/objectionDetection/image-20230218155618227.png 2x"
-        data-sizes="auto"
-        alt="/image/objectionDetection/image-20230218155618227.png"
-        title="image-20230218155618227" /></p>
+        alt="/image/electronicDesign/image-20230308203030653.png"
+        title="image-20230308203030653" /></p>
+</li>
+<li>
+<p>载波生成</p>
+<p>stm32控制DDS模块产生载波</p>
+</li>
+<li>
+<p>加法器乘法器</p>
+<p>采用模电书上的基于运放的基础电路即可</p>
+</li>
+<li>
+<p>供电选择</p>
+</li>
+</ul>
+<h2 id="器件选型">器件选型</h2>
 </div><div class="post-footer" id="post-footer">
-    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/object-detection/">object detection</a>
-                </span><span><a href="/tags/yolo/">YOLO</a>
+    <div class="post-info"><div class="post-info-tag"><span><a href="/tags/%E7%94%B5%E8%B5%9B/">电赛</a>
                 </span></div><div class="post-info-line"><div class="post-info-mod">
-                <span>更新于 2023-02-18</span>
+                <span>更新于 2023-03-08</span>
             </div><div class="post-info-mod"><span>
-                            <a class="link-to-markdown" href="/yolo_v3/index.md" target="_blank">阅读原始文档</a>
+                            <a class="link-to-markdown" href="/electronic_design_conteste/index.md" target="_blank">阅读原始文档</a>
                         </span></div>
-        </div></div><div class="post-nav"><a href="/yolo_v2/" class="prev" rel="prev" title="YOLO v2深度解读"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a>
-            <a href="/electronic_design_conteste/" class="next" rel="next" title="数字-模拟信号混合传输收发机">Next Post<i class="fas fa-angle-right fa-fw"></i></a></div></div>
+        </div></div><div class="post-nav"><a href="/yolo_v3/" class="prev" rel="prev" title="YOLO v3深度解读"><i class="fas fa-angle-left fa-fw"></i>Previous Post</a></div></div>
 </div></article></div>
             </main>
             <footer class="footer"><div class="footer-container"><div class="footer-line">由 <a href="https://gohugo.io/" target="_blank" rel="noopener noreffer" title="Hugo 0.91.2">Hugo</a> 强力驱动 | 主题 - <a href="https://github.com/khusika/FeelIt" target="_blank" rel="noopener noreffer" title="FeelIt 1.0.1"><i class="fas fa-hand-holding-heart fa-fw"></i> FeelIt</a>

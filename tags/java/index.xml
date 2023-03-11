@@ -1052,46 +1052,5 @@ StoreConfig对象：关联数据⽂件配置(数据库)</p>
 <p><a href="https://developer.harmonyos.com/cn/docs/documentation/doc-guides/ability-intent-0000000000038799" target="_blank" rel="noopener noreffer">HarmonyOS文档——intent</a></p>
 ]]></description>
 </item>
-<item>
-    <title>程序报错总结——HarmonyOS</title>
-    <link>https://leeshy-tech.github.io/harmonyos_application_error/</link>
-    <pubDate>Thu, 27 Jan 2022 22:27:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/harmonyos_application_error/</guid>
-    <description><![CDATA[<h3 id="1">1</h3>
-<div class="details admonition bug open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-bug fa-fw"></i>Bug<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">不可转换的类型；无法将 &lsquo;ohos.agp.components.Component&rsquo; 转换为 &lsquo;ohos.ai.cv.text.Text&rsquo;</div>
-        </div>
-    </div>
-<p>原因：使用Tab键补全Text时，Studio自动引库引到了错误的库<code>import ohos.ai.cv.text.Text;</code>，实际应当是<code>import ohos.agp.components.Text;</code>。</p>
-<p></p>
-<h3 id="2">2</h3>
-<div class="details admonition bug open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-bug fa-fw"></i>Bug<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">java.lang.NullPointerException: Attempt to invoke virtual method &lsquo;void ohos.agp.components.Button.setClickedListener(ohos.agp.components.Component$ClickedListener)&rsquo; on a null object reference</div>
-        </div>
-    </div>
-<p>原因：在写xml文件时，误把注释写成了//，应该是<code>&lt;!-- --&gt;</code>。这里它不会直接报错，而是说我获得的按键对象为空，说明xml构建出了问题。</p>
-<p></p>
-<h3 id="3">3</h3>
-<div class="details admonition bug open">
-        <div class="details-summary admonition-title">
-            <i class="icon fas fa-bug fa-fw"></i>Bug<i class="details-icon fas fa-angle-right fa-fw"></i>
-        </div>
-        <div class="details-content">
-            <div class="admonition-content">ohos.agp.window.wmc.AGPWindowManager$O000000: Can&rsquo;t show toast, Looper.don&rsquo;t prepare</div>
-        </div>
-    </div>
-<p></p>
-<p>原因：一般是因为在子线程中直接操作UI导致的，这个主要是指导致UI重绘的操作，指上图中的.show()，.setText()是可以在子线程中正常使用的。</p>
-<p>解决办法：</p>
-<p>利用getUITaskDispatcher把UI操作返回到主线程中。</p>
-]]></description>
-</item>
 </channel>
 </rss>

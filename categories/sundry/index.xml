@@ -52,5 +52,114 @@
 <p><a href="https://physlab.bupt.edu.cn/info/1311/1869.htm" target="_blank" rel="noopener noreffer">2017年物理实验竞赛获奖作品简介-纹影法的应用</a></p>
 ]]></description>
 </item>
+<item>
+    <title>Linux——图片url生成</title>
+    <link>https://leeshy-tech.github.io/linux_image_url/</link>
+    <pubDate>Thu, 17 Mar 2022 20:45:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/linux_image_url/</guid>
+    <description><![CDATA[<h1 id="图片url生成">图片url生成</h1>
+<h2 id="准备">准备</h2>
+<h3 id="安装jdkjre">安装JDK，JRE</h3>
+<ul>
+<li>
+<p>下载linux的jdk，jre压缩包：</p>
+<ul>
+<li><a href="https://www.oracle.com/java/technologies/downloads/#java8" target="_blank" rel="noopener noreffer">https://www.oracle.com/java/technologies/downloads/#java8</a></li>
+<li>用xftp传到服务器上。</li>
+<li>解压<code>tar -zxvf jdk-17_linux-x64_bin.tar.gz jre-8u321-linux-x64.tar.gz</code>，记住此时所在的路径（pwd命令可查）。</li>
+</ul>
+</li>
+<li>
+<p>配置环境变量：</p>
+<ul>
+<li>
+<p><code>cd /etc</code></p>
+</li>
+<li>
+<p><code>vim profile</code></p>
+</li>
+<li>
+<p>i进入编辑模式</p>
+</li>
+<li>
+<p>文件末尾加上如下代码，JAVA_HOME,JRE_HOME分别为解压的文件夹的路径：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="nb">export</span> <span class="nv">JAVA_HOME</span><span class="o">=</span>/home/ubuntu/jdk-17.0.2
+<span class="nb">export</span> <span class="nv">JRE_HOME</span><span class="o">=</span>/home/ubuntu/jre1.8.0_321
+<span class="nb">export</span> <span class="nv">CLASSPATH</span><span class="o">=</span>.:<span class="nv">$JAVA_HOME</span>/lib:<span class="nv">$JRE_HOME</span>/lib
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$JAVA_HOME</span>/bin:<span class="nv">$PATH</span>
+</code></pre></div></li>
+<li>
+<p><code>Esc</code>退出，输入<code>:wq</code>保存退出。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>使能配置：<code>source /etc/profile</code></p>
+</li>
+<li>
+<p>检验：<code>java -version</code>，输出版本信息，安装成功。</p>
+</li>
+</ul>
+<h3 id="安装tomcat">安装tomcat</h3>
+<ul>
+<li>
+<p>下载安装包：</p>
+<ul>
+<li>
+<p><a href="https://tomcat.apache.org/download-10.cgi" target="_blank" rel="noopener noreffer">https://tomcat.apache.org/download-10.cgi</a></p>
+<p></p>
+</li>
+<li>
+<p>用xftp传到服务器上，解压<code>tar -zxvf apache-tomcat-10.0.18.tar.gz</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>进入bin目录，启动tomcat</p>
+<ul>
+<li>
+<p><code>cd apache-tomcat-10.0.18/bin</code></p>
+</li>
+<li>
+<p><code>./startup.sh</code></p>
+<p></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="防火墙设置">防火墙设置</h3>
+<p>到服务器控制台，开启8080端口：</p>
+<p></p>
+<p>浏览器访问<code>服务器IP:8080</code>地址，看到tomcat默认页说明tomcat安装运行成功。</p>
+<p></p>
+<h2 id="生成图片url">生成图片url</h2>
+<ul>
+<li>
+<p>假设图片存放在服务器路径：<code>/home/ubuntu/image</code></p>
+</li>
+<li>
+<p>进入tomcat文件夹的conf路径，编辑server.xml：</p>
+<ul>
+<li>
+<p><code>cd conf</code></p>
+</li>
+<li>
+<p><code>vim server.xml</code></p>
+</li>
+<li>
+<p>结尾处插入此代码<code>&lt;Context docBase=&quot;/home/ubuntu/image&quot; path=&quot;/pictures&quot; debug=&quot;0&quot; reloadable=&quot;true&quot;/&gt;</code></p>
+<p></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>则可以通过<code>url=http://ip:8080/path/图片名+后缀</code>访问该图片。</p>
+<p></p>
+<h2 id="结束语">结束语</h2>
+<h3 id="参考文献">参考文献</h3>
+<p><a href="https://www.bilibili.com/video/BV1uh411a7Jg?p=268" target="_blank" rel="noopener noreffer">https://www.bilibili.com/video/BV1uh411a7Jg?p=268</a></p>
+<p><a href="https://blog.csdn.net/dyt443733328/article/details/102587168" target="_blank" rel="noopener noreffer">tomcat启动“成功”，但是浏览器无法访问</a></p>
+<p><a href="https://blog.csdn.net/Wyx_wx/article/details/89117746" target="_blank" rel="noopener noreffer">访问 Linux 服务器上的文件（以图片为例</a></p>
+]]></description>
+</item>
 </channel>
 </rss>

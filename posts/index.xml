@@ -4,7 +4,76 @@
         <link>https://leeshy-tech.github.io/posts/</link>
         <description>所有文章 | Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Sat, 18 Feb 2023 15:11:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 08 Mar 2023 18:50:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/posts/" rel="self" type="application/rss+xml" /><item>
+    <title>数字-模拟信号混合传输收发机</title>
+    <link>https://leeshy-tech.github.io/electronic_design_conteste/</link>
+    <pubDate>Wed, 08 Mar 2023 18:50:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/electronic_design_conteste/</guid>
+    <description><![CDATA[<h1 id="数字-模拟信号混合传输收发机">数字-模拟信号混合传输收发机</h1>
+<blockquote>
+<p>背景是2021年举办的电子设计大赛题目，做个回顾为复试做准备</p>
+</blockquote>
+<h2 id="题目要求">题目要求</h2>
+<p></p>
+<ul>
+<li>
+<p>设计并制作在同一信道进行数字-模拟信号混合传输的无线收发机。其中，数字信号由 4 个 0~9 的一组数字构成；模拟信号为语音信号，频率范围为100Hz~5kHz。采用无线传输，载波频率范围为 20~30MHz，信道带宽不大于 25kHz，收发设备间最短的传输距离不小于 100cm。收发机的发送端完成数字信号和模拟信号合路处理，在同一信道调制发送。</p>
+</li>
+<li>
+<p>收发机的发送端完成数字信号和模拟信号合路处理，在同一信道调制发送。收发机的接收端完成接收解调，分离出数字信号和模拟信号，数字信号用数码管显示，模拟信号用示波器观测。</p>
+</li>
+<li>
+<p>基本要求</p>
+<p>（1） 实现模拟信号传输。模拟信号为 100Hz~5kHz 的语音信号，要求接收端解调后的模拟信号波形无明显失真。在只有模拟信号传输时，接收端的数码显示处于熄灭状态。</p>
+<p>（2） 实现数字信号传输。首先键入 4 个 0~9 的一组数字，在发送端进行存储并显示，然后按下发送键对数字信号连续循环传输。在接收端解调出数字信号，并通过 4 个数码管显示。要求开始发送到数码管显示的响应时间不大于 2 秒。当发送端按下停止键，结束数字信号传输，同时在发送端清除已传数字的显示，等待键入新的数字。</p>
+<p>（3）实现数字-模拟信号的混合传输。任意键入一组数字，与模拟信号混合调制后进行传输。要求接收端能正确解调数字信号和模拟信号，数字显示正确，模拟信号波形无明显失真。</p>
+<p>（4） 收发机的信道带宽不大于 <strong>25kHz</strong>，载波频率范围为 <strong>20~30MHz</strong>。要求收发机可在不少于 3 个载波频率中选择设置，具体的载波频率自行确定。</p>
+</li>
+<li>
+<p>发挥部分</p>
+<p>（1）在发送端停止数字信号传输后，接收端数码显示延迟 5 秒自动熄灭。</p>
+<p>（2）在满足基本要求的前提下，收发机发送端的功耗越低越好。</p>
+<p>（3）在满足基本要求的前提下，收发机所传输的模拟信号频率范围扩展到50Hz~10kHz。</p>
+</li>
+<li>
+<p>说明</p>
+<p>（1）数字和模拟信号必须先经过合路电路处理，然后在同一信道上调制传输，其调制方式和调制度自行确定。在合路电路的输出端应留有观测端口，用于示波器观测合路信号的波形变化。</p>
+<p>（2）收发机的发送端和接收端之间不得有任何连线。</p>
+<p>（3）收发机的发送端与天线的连接采用 SMA 接插头，发送端为 F（母）头，天线端为 M（公）头。天线的长度不超过 1 米。</p>
+<p>（4）收发机的发送端和接收端均采用电池单电源供电，发送端的供电电路应留有供电电压和电流的测试端口。</p>
+<p>（5）收发机的载波频率选取应尽量避开环境电波干扰。</p>
+<p>（6）本题目中信道带宽约定为已调信号的 -40dB 带宽，通过频谱仪进行测量。</p>
+</li>
+</ul>
+<h2 id="拟定方案">拟定方案</h2>
+<p></p>
+<ul>
+<li>
+<p>调制解调方案</p>
+<p>模拟信号为 <strong>100Hz~5kHz</strong> 的语音信号，带宽不大于 <strong>25kHz</strong>，载波频率范围为 <strong>20~30MHz</strong>。经计算FM调制是达不到要求的，并且FM调制实现更复杂，所以采用AM调制。</p>
+</li>
+<li>
+<p>数字信号生成</p>
+<p>接收端解调的信号是一个数字和模拟信号叠加的信号，为了尽可能减小误码率，采用二进制正负交替的不归零码，在接收端用0判决。</p>
+<p></p>
+<p>正负信号通过stm32控制模拟开关，交替导通产生。</p>
+<p></p>
+</li>
+<li>
+<p>载波生成</p>
+<p>stm32控制DDS模块产生载波</p>
+</li>
+<li>
+<p>加法器乘法器</p>
+<p>采用模电书上的基于运放的基础电路即可</p>
+</li>
+<li>
+<p>供电选择</p>
+</li>
+</ul>
+<h2 id="器件选型">器件选型</h2>
+]]></description>
+</item>
+<item>
     <title>YOLO v3深度解读</title>
     <link>https://leeshy-tech.github.io/yolo_v3/</link>
     <pubDate>Sat, 18 Feb 2023 15:11:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/yolo_v3/</guid>
@@ -330,39 +399,6 @@ recall和precision是模型性能两个不同维度的度量：</p>
 <p>[19]	范娟.基于SDN的5G移动通信网络架构研究[J].通讯世界,2018(07):118-119.</p>
 <p>[20]	王旭亮,全硕,刘增义,章军.面向6G的新型可编程网络架构研究[J].电信科学,2021,37(12):84-92.</p>
 <p>[21]	Stephens B, Akella A, Swift M M. Your programmable NIC should be a programmable switch[C]//Proceedings of the 17th ACM Workshop on Hot Topics in Networks. 2018: 36-42.</p>
-]]></description>
-</item>
-<item>
-    <title>考研</title>
-    <link>https://leeshy-tech.github.io/goodbye/</link>
-    <pubDate>Sun, 31 Jul 2022 21:49:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/goodbye/</guid>
-    <description><![CDATA[<h1 id="考研">考研</h1>
-<p>从2022/07/02正式开始准备考研了，到考研结束之前应该不会再对博客进行更新了。</p>
-<p>此贴记录一些flag，考研结束之后挨个做。</p>
-<p>也许这些东西对复试也会有点帮助？</p>
-<h2 id="新博客">新博客</h2>
-<p>这个博客主题是照着lgt的搭的，其实当时也不是很想照搬别人的博客，但是主题看来看去都看不入眼，很喜欢这种简洁风格。但是没想到cl大师和maxlinn同学也是feellt主题，有丝分裂了属于是，等考研结束就换一个。</p>
-<h2 id="课程记录">课程记录</h2>
-<p>本科的一些课程还是下了很多功夫的，之后简单写个贴记录一下。</p>
-<h3 id="数字系统设计实验">数字系统设计实验</h3>
-<p>虽然数电学的很垃圾（主要是打那个破物理比赛去了），但是数电实验当时确实下了很多功夫，当时不仅完成了所有要求，还做了个lcd屏的显示（参考<a href="https://www.cnblogs.com/Clouds42/p/11938079.html" target="_blank" rel="noopener noreffer">https://www.cnblogs.com/Clouds42/p/11938079.html</a>），美中不足的是代码没组织好，模块分的不够清楚。</p>
-<h3 id="信息网络建模与仿真">信息网络建模与仿真</h3>
-<p>这部分代码已经传到github上好久了，一直偷懒没写东西，这门课的随机数和随机过程生成的相关知识挺有用的。</p>
-<h3 id="模式识别及应用">模式识别及应用</h3>
-<p>这门课基于老师的数据集Oracle-MNIST做了一些模型的实践，主要是《动手学深度学习》这本书的例子改的，也写一些东西吧。</p>
-<h3 id="信息系统设计">信息系统设计</h3>
-<p>这门课做了后端、鸿蒙软件和硬件的开发，写一些东西把自己做的东西理一理。</p>
-<h2 id="竞赛记录">竞赛记录</h2>
-<p>参加的比赛很有限，成果更有限，教训非常多。</p>
-<h3 id="cupt-物理学术竞赛">CUPT 物理学术竞赛</h3>
-<p>这个从校赛打到华北赛，打到心态崩溃弃赛了，最主要的工作量在题目“振荡火焰”上，当时做了一个纹影法观察火焰流场的实验，当时也查了很多资料走了很多弯路，也简单记录一下吧。</p>
-<h3 id="电子设计大赛">电子设计大赛</h3>
-<p>这位更是重量级，题目是“数字模拟信号混合传输系统”，备赛的时候准备的不是这道题，因为学了通原觉得自己行了，再加上准备的题目要使用TI官方的开发板，就临时转到这道题上去了，当时最大的遗憾就是没有准备，这个题理论并不复杂，并且选的人很少，如果延迟比赛的两个月学校能给实验室，亲手搭出来过调制解调系统，至少能拿个国奖吧。</p>
-<h3 id="大创">大创</h3>
-<p>题目是“基于SDN的无人机通信网络研究”，由于大二也是第一次接触SDN，所以前期学习花了很多时间，最后成果也一般，但是过程中还是学了不少东西，也在博客上写了一些东西了。</p>
-<h2 id="考研总结">考研总结</h2>
-<p>要是成功了就是经验贴，要是没成功就是教训贴。</p>
-<p>可能会写个日记，定期push到github上。</p>
 ]]></description>
 </item>
 <item>

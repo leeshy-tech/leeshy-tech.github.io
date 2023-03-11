@@ -4,7 +4,76 @@
         <link>https://leeshy-tech.github.io/categories/electronic-design/</link>
         <description>Electronic Design - 分类 - Leeshy&#39;s Blog | To be humble</description>
         <generator>Hugo -- gohugo.io</generator><language>zh-CN</language><managingEditor>saili@bupt.edu.cn (Leeshy)</managingEditor>
-            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 09 Feb 2022 22:15:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/electronic-design/" rel="self" type="application/rss+xml" /><item>
+            <webMaster>saili@bupt.edu.cn (Leeshy)</webMaster><lastBuildDate>Wed, 08 Mar 2023 18:50:06 &#43;0800</lastBuildDate><atom:link href="https://leeshy-tech.github.io/categories/electronic-design/" rel="self" type="application/rss+xml" /><item>
+    <title>数字-模拟信号混合传输收发机</title>
+    <link>https://leeshy-tech.github.io/electronic_design_conteste/</link>
+    <pubDate>Wed, 08 Mar 2023 18:50:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/electronic_design_conteste/</guid>
+    <description><![CDATA[<h1 id="数字-模拟信号混合传输收发机">数字-模拟信号混合传输收发机</h1>
+<blockquote>
+<p>背景是2021年举办的电子设计大赛题目，做个回顾为复试做准备</p>
+</blockquote>
+<h2 id="题目要求">题目要求</h2>
+<p></p>
+<ul>
+<li>
+<p>设计并制作在同一信道进行数字-模拟信号混合传输的无线收发机。其中，数字信号由 4 个 0~9 的一组数字构成；模拟信号为语音信号，频率范围为100Hz~5kHz。采用无线传输，载波频率范围为 20~30MHz，信道带宽不大于 25kHz，收发设备间最短的传输距离不小于 100cm。收发机的发送端完成数字信号和模拟信号合路处理，在同一信道调制发送。</p>
+</li>
+<li>
+<p>收发机的发送端完成数字信号和模拟信号合路处理，在同一信道调制发送。收发机的接收端完成接收解调，分离出数字信号和模拟信号，数字信号用数码管显示，模拟信号用示波器观测。</p>
+</li>
+<li>
+<p>基本要求</p>
+<p>（1） 实现模拟信号传输。模拟信号为 100Hz~5kHz 的语音信号，要求接收端解调后的模拟信号波形无明显失真。在只有模拟信号传输时，接收端的数码显示处于熄灭状态。</p>
+<p>（2） 实现数字信号传输。首先键入 4 个 0~9 的一组数字，在发送端进行存储并显示，然后按下发送键对数字信号连续循环传输。在接收端解调出数字信号，并通过 4 个数码管显示。要求开始发送到数码管显示的响应时间不大于 2 秒。当发送端按下停止键，结束数字信号传输，同时在发送端清除已传数字的显示，等待键入新的数字。</p>
+<p>（3）实现数字-模拟信号的混合传输。任意键入一组数字，与模拟信号混合调制后进行传输。要求接收端能正确解调数字信号和模拟信号，数字显示正确，模拟信号波形无明显失真。</p>
+<p>（4） 收发机的信道带宽不大于 <strong>25kHz</strong>，载波频率范围为 <strong>20~30MHz</strong>。要求收发机可在不少于 3 个载波频率中选择设置，具体的载波频率自行确定。</p>
+</li>
+<li>
+<p>发挥部分</p>
+<p>（1）在发送端停止数字信号传输后，接收端数码显示延迟 5 秒自动熄灭。</p>
+<p>（2）在满足基本要求的前提下，收发机发送端的功耗越低越好。</p>
+<p>（3）在满足基本要求的前提下，收发机所传输的模拟信号频率范围扩展到50Hz~10kHz。</p>
+</li>
+<li>
+<p>说明</p>
+<p>（1）数字和模拟信号必须先经过合路电路处理，然后在同一信道上调制传输，其调制方式和调制度自行确定。在合路电路的输出端应留有观测端口，用于示波器观测合路信号的波形变化。</p>
+<p>（2）收发机的发送端和接收端之间不得有任何连线。</p>
+<p>（3）收发机的发送端与天线的连接采用 SMA 接插头，发送端为 F（母）头，天线端为 M（公）头。天线的长度不超过 1 米。</p>
+<p>（4）收发机的发送端和接收端均采用电池单电源供电，发送端的供电电路应留有供电电压和电流的测试端口。</p>
+<p>（5）收发机的载波频率选取应尽量避开环境电波干扰。</p>
+<p>（6）本题目中信道带宽约定为已调信号的 -40dB 带宽，通过频谱仪进行测量。</p>
+</li>
+</ul>
+<h2 id="拟定方案">拟定方案</h2>
+<p></p>
+<ul>
+<li>
+<p>调制解调方案</p>
+<p>模拟信号为 <strong>100Hz~5kHz</strong> 的语音信号，带宽不大于 <strong>25kHz</strong>，载波频率范围为 <strong>20~30MHz</strong>。经计算FM调制是达不到要求的，并且FM调制实现更复杂，所以采用AM调制。</p>
+</li>
+<li>
+<p>数字信号生成</p>
+<p>接收端解调的信号是一个数字和模拟信号叠加的信号，为了尽可能减小误码率，采用二进制正负交替的不归零码，在接收端用0判决。</p>
+<p></p>
+<p>正负信号通过stm32控制模拟开关，交替导通产生。</p>
+<p></p>
+</li>
+<li>
+<p>载波生成</p>
+<p>stm32控制DDS模块产生载波</p>
+</li>
+<li>
+<p>加法器乘法器</p>
+<p>采用模电书上的基于运放的基础电路即可</p>
+</li>
+<li>
+<p>供电选择</p>
+</li>
+</ul>
+<h2 id="器件选型">器件选型</h2>
+]]></description>
+</item>
+<item>
     <title>模拟开关——CD4066、CD4051</title>
     <link>https://leeshy-tech.github.io/analogue_switch/</link>
     <pubDate>Wed, 09 Feb 2022 22:15:06 &#43;0800</pubDate><author>saili@bupt.edu.cn (Leeshy)</author><guid>https://leeshy-tech.github.io/analogue_switch/</guid>
